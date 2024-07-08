@@ -17,13 +17,4 @@ class AdminController extends Controller
     }
 
 
-    public function signup()
-    {
-        return view('admin.auth.signup');
-    }
-
-
-    public function handleSignup(Request $request) {
-        
-    }
 }

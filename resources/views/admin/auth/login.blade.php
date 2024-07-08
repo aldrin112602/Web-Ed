@@ -34,7 +34,6 @@
 
     <div>
         <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Log In</button>
-        <p class="text-sm mt-3 text-center">Don't have an account? <a href="{{ route('admin.signup') }}" class="hover:underline hover:text-blue-800 text-blue-600 font-semibold">Sign Up</a></p>
     </div>
 </form>
 
