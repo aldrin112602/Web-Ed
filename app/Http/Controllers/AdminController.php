@@ -15,4 +15,15 @@ class AdminController extends Controller
     public function handleLogin(Request $request) {
         
     }
+
+
+    public function signup()
+    {
+        return view('admin.auth.signup');
+    }
+
+
+    public function handleSignup(Request $request) {
+        
+    }
 }
