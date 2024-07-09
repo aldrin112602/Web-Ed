@@ -2,5 +2,6 @@
 
 @section('title', 'Create Admin Account')
 @section('content')
-    <h1>Hotdog</h1>
+        <div class="text-slate-100 p-2 bg-blue-400">Create Admin Account</div>
+
 @endsection

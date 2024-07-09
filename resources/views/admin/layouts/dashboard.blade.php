@@ -26,9 +26,9 @@
                 </li>
             </ul>
         </div>
-        <div class="block md:flex min-h-screen">
+        <div class="flex min-h-screen items-start justify-start">
             <!-- sidebar -->
-            <div class="border-t min-h-screen p-4 bg-white shadow md:w-64">
+            <div class="border-t min-h-screen p-4 bg-white shadow w-1/5">
                 <div class="p-3 flex items-center justify-start gap-3">
                     <button style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
                         <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
@@ -81,12 +81,11 @@
                 </div>
             </div>
             <!-- sidebar -->
-             <!-- main content -->
-              <div class="p-3">
-
-              </div>
-             <!-- main content -->
-            
+            <!-- main content -->
+            <div class="min-h-screen w-4/5">
+                @yield('content')
+            </div>
+            <!-- main content -->
         </div>
     </main>
 </body>
