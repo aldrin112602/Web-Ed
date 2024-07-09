@@ -10,3 +10,9 @@ Route::get('/', function () {
 // admin routes
 Route::get('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'handleLogin'])->name('admin.handleLogin');
+
+Route::middleware('auth:admin')->group(function () {
+    Route::get('admin/dashboard', function () {
+        return view('admin.dashboard');
+    });
+});
