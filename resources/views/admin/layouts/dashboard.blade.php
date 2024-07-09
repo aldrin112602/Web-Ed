@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Create Account')</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @vite('resources/css/app.css')
 </head>
 
@@ -26,9 +27,9 @@
                 </li>
             </ul>
         </div>
-        <div class="flex min-h-screen items-start justify-start">
+        <div class="block md:flex min-h-screen items-start justify-start">
             <!-- sidebar -->
-            <div class="border-t min-h-screen p-4 bg-white shadow w-1/5">
+            <div class="hidden md:block border-t min-h-screen p-4 bg-white shadow md:w-1/5 w-full">
                 <div class="p-3 flex items-center justify-start gap-3">
                     <button style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
                         <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
@@ -82,12 +83,23 @@
             </div>
             <!-- sidebar -->
             <!-- main content -->
-            <div class="min-h-screen w-4/5">
+            <div class="min-h-screen md:w-4/5 w-full">
                 @yield('content')
             </div>
             <!-- main content -->
         </div>
     </main>
+    <script>
+        $(document).ready(() => {
+            $('.toggle-password').on('click', function() {
+                const passwordInput = $($(this).attr('toggle'));
+                const isPassword = passwordInput.attr('type') === 'password';
+                passwordInput.attr('type', isPassword ? 'text' : 'password');
+                $(this).toggleClass('fa-eye fa-eye-slash');
+            });
+        });
+    </script>
+
 </body>
 
 </html>
