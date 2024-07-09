@@ -46,7 +46,7 @@
                 <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 bg-blue-50 rounded text-blue-500">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-user-group"></i>Account Management</a>
                 </div>
                 <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
