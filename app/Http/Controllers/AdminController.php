@@ -26,7 +26,8 @@ class AdminController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials)) {
             // Authentication passed
-            return redirect()->intended('admin/dashboard');
+            // return redirect()->intended('admin/dashboard');
+            return view('admin.auth.login');
         }
 
         // Authentication failed
