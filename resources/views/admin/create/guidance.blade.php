@@ -1,3 +1,7 @@
-<div>
-    <!-- An unexamined life is not worth living. - Socrates -->
-</div>
+@extends('admin.layouts.dashboard')
+
+@section('title', 'Create Admin Account')
+@section('content')
+        <div class="text-slate-100 p-2 bg-blue-400">Create Guidance Account</div>
+
+@endsection
