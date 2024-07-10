@@ -10,6 +10,9 @@ class AdminController extends Controller
 {
     public function login()
     {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->intended('admin');
+        }
         return view('admin.auth.login');
     }
 
@@ -25,7 +28,7 @@ class AdminController extends Controller
 
         if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
-            return redirect()->intended('admin/dashboard');
+            return redirect()->intended('admin');
         }
 
         // Authentication failed
@@ -38,6 +41,16 @@ class AdminController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             return view('admin.dashboard');
+        }
+
+        return redirect()->route('admin.login');
+    }
+
+
+    public function home()
+    {
+        if (Auth::guard('admin')->check()) {
+            return view('admin.home');
         }
 
         return redirect()->route('admin.login');

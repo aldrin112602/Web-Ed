@@ -18,6 +18,7 @@ Route::prefix('admin')->group(function () {
 
     // Routes requiring admin authentication
     Route::middleware('auth:admin')->group(function () {
+        Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
         // Admin create accounts (admin/teacher/guidance/student)

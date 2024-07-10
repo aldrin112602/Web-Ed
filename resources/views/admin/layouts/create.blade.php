@@ -50,35 +50,35 @@
                         <img src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
                     </div>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
-                    <a href="#!" class="text-sm flex items-center justify-start gap-3">
+                <div class="p-3 {{ request()->is('admin') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('admin.home') }}" class="text-sm flex items-center justify-start gap-3">
                         <i class="fa-solid fa-house"></i>Home</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
-                    <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
+                <div class="p-3 {{ request()->is('admin/dashboard') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('admin.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
-                <div class="p-3 bg-blue-50 rounded text-blue-500">
+                <div class="p-3 {{ (request()->is('admin/create/admin') || request()->is('admin/create/teacher') || request()->is('admin/create/guidance') || request()->is('admin/create/student')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-user-group"></i>Account Management</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 {{ request()->is('admin/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bullhorn"></i></i>Attendance Report</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 {{ request()->is('admin/attendance_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-sheet-plastic"></i>Attendance Sheet</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 {{ request()->is('admin/students_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Students Grade</a>
                 </div>
                 <div class="py-2">
                     <hr>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 {{ request()->is('admin/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 {{ request()->is('admin/settings') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>
                 </div>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 {{ request()->is('admin/logout') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
                 </div>
                 <hr>
