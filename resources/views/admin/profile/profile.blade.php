@@ -26,7 +26,7 @@
         <div class="py-3">
             <hr>
         </div>
-
+        <h1 class="font-bold text-gray-600">Personal info</h1>
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/3 w-full">
                 <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
@@ -40,7 +40,7 @@
                 <label for="email" class="block text-gray-700 text-sm mb-1">Email</label>
                 <input readonly type="text" id="email" name="email" class="form-input w-full rounded border-gray-300" value="{{ $user->email }}">
             </div>
-            
+
         </div>
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/3 w-full">
@@ -48,19 +48,35 @@
                 <input readonly type="number" id="phone_number" phone_number="phone_number" class="form-input w-full rounded border-gray-300" value="{{ $user->phone_number }}">
             </div>
             <div class="md:w-1/3 w-full">
-                <label for="username" class="block text-gray-700 text-sm mb-1">Username</label>
-                <input readonly type="text" id="username" name="username" class="form-input w-full rounded border-gray-300" value="{{ $user->username }}">
+                <label for="address" class="block text-gray-700 text-sm mb-1">Address</label>
+                <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300" value="{{ $user->address }}">
             </div>
             <div class="md:w-1/3 w-full">
                 <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
                 <input readonly type="text" id="gender" name="gender" class="form-input w-full rounded border-gray-300" value="{{ $user->gender }}">
             </div>
         </div>
+        <div class="flex my-2 items-center justify-start gap-3 mt-3">
+            <button type="submit" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
+            <button type="submit" class="hidden bg-white text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Save</button>
+        </div>
         <hr class="my-6">
-        <div class="flex my-2 items-center justify-start gap-3">
-                <button type="submit" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
-                <button type="submit" class=" bg-white text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Save</button>
+
+        <h1 class="font-bold text-gray-600">Change password</h1>
+        <div class="block md:flex align-center justify-between my-2 gap-5">
+            <div class="md:w-1/2 w-full">
+                <label for="password" class="block text-gray-700 text-sm mb-1">Enter old password</label>
+                <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300" value="{{ old('password') }}">
             </div>
+            <div class="md:w-1/2 w-full">
+                <label for="new_password" class="block text-gray-700 text-sm mb-1">Enter new password</label>
+                <input type="password" id="new_password" name="new_password" class="form-input w-full rounded border-gray-300" value="{{ old('new_password') }}">
+            </div>
+        </div>
+        <a href="#!" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
+        <br>
+        <button type="submit" class="mt-2 px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Save</button>
+        <br><br><br>
     </div>
 
 
