@@ -47,12 +47,10 @@ class AdminCreateController extends Controller
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:student_accounts,username',
             'password' => 'required|string|min:6|max:255',
-            'strand' => 'required|string',
+            'strand' => 'required',
             'grade' => 'required',
             'parents_contact_number' => 'required|string|min:11|max:11',
             'email' => 'nullable|email|unique:student_accounts,email',
-            'position' => 'nullable|string|max:255',
-            'role' => 'nullable|string|max:255',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
             'phone_number' => 'nullable|string|min:11|max:11'
         ]);
@@ -62,6 +60,8 @@ class AdminCreateController extends Controller
         $profilePath = $request->file('profile')->store('profiles', 'public');
         $account->profile = $profilePath;
 
+
+        $account->save();
         return redirect()
             ->back()
             ->with('success', 'Account added successfully!');

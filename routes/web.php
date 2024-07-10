@@ -43,6 +43,10 @@ Route::prefix('admin')->group(function () {
         Route::post('create/guidance', [AdminCreate::class, 'createGuidance'])->name('admin.handleCreate.guidance');
         Route::post('create/student', [AdminCreate::class, 'createStudent'])->name('admin.handleCreate.student');
         // End Admin create accounts (admin/teacher/guidance/student)
+
+
+        // logout route
+        Route::post('logout', [Admin::class, 'logout'])->name('admin.logout');
     });
 });
 

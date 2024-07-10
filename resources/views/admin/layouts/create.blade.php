@@ -78,8 +78,13 @@
                 <div class="p-3 {{ request()->is('admin/settings') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>
                 </div>
-                <div class="p-3 {{ request()->is('admin/logout') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</a>
+                <div class="p-3 hover:bg-blue-50 hover:text-blue-500 text-gray-700 rounded">
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
+                        @csrf
+                        <button type="button" class="text-sm flex items-center justify-start gap-3" id="logout-btn">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                        </button>
+                    </form>
                 </div>
                 <hr>
                 <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
@@ -177,6 +182,26 @@
         });
     </script>
     @endif
+
+    <script>
+        $(document).ready(function() {
+            $('#logout-btn').click(function() {
+                Swal.fire({
+                    title: 'Logout',
+                    text: 'Are you sure you want to logout?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, logout'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#logout-form').submit();
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
