@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique()->nullable();
             $table->string('role')->default('Guidance')->nullable();
-            $table->string('profile')->nullable();
+            $table->text('profile')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('position')->nullable();
             $table->string('role')->default('Admin')->nullable();
-            $table->string('profile')->nullable();
+            $table->text('profile')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\AdminAccount;
 use App\Models\GuidanceAccount;
@@ -23,7 +23,7 @@ class AdminCreateController extends Controller
             'position' => 'nullable|string|max:255',
             'role' => 'nullable|string|max:255',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^[0-9]{10,15}$/'
+            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
         ]);
 
         $account = new AdminAccount($request->all());
@@ -47,7 +47,7 @@ class AdminCreateController extends Controller
             'gender' => 'required|string|in:male,female',
             'strand' => 'required|string',
             'grade' => 'required|numeric|between:11,12',
-            'parents_contact_number' => 'required|string|regex:/^[0-9]{10,15}$/',
+            'parents_contact_number' => 'required|string|regex:/^(09|\+639)\d{9}$/',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'username' => 'required|string|unique:students,username',
             'password' => 'required|string|min:8',
@@ -69,7 +69,7 @@ class AdminCreateController extends Controller
             'email' => 'nullable|email|unique:teacher_accounts,email',
             'role' => 'nullable|string|max:255',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^[0-9]{10,15}$/'
+            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
         ]);
     
         $account = new TeacherAccount($request->all());
@@ -98,7 +98,7 @@ class AdminCreateController extends Controller
             'email' => 'nullable|email|unique:guidance_accounts,email',
             'role' => 'nullable|string|max:255',
             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^[0-9]{10,15}$/'
+            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
         ]);
     
         $account = new GuidanceAccount($request->all());
@@ -117,21 +117,37 @@ class AdminCreateController extends Controller
     // View creates
     public function viewCreateAdmin()
     {
-        return view('admin.create.admin');
+        if (Auth::guard('admin')->check()) {
+            return view('admin.create.admin');
+        }
+
+        return redirect()->route('admin.login');
     }
 
     public function viewCreateStudent()
     {
-        return view('admin.create.student');
+        if (Auth::guard('admin')->check()) {
+            return view('admin.create.student');
+        }
+        
+        return redirect()->route('admin.login');
     }
 
     public function viewCreateTeacher()
     {
-        return view('admin.create.teacher');
+        if (Auth::guard('admin')->check()) {
+            return view('admin.create.teacher');
+        }
+        
+        return redirect()->route('admin.login');
     }
 
     public function viewCreateGuidance()
     {
-        return view('admin.create.guidance');
+        if (Auth::guard('admin')->check()) {
+            return view('admin.create.guidance');
+        }
+        
+        return redirect()->route('admin.login');
     }
 }
