@@ -36,7 +36,7 @@
                 </li>
             </ul>
         </div>
-        <div class="block md:flex h-screen items-start justify-start bg-slate-500">
+        <div class="block md:flex h-screen items-start justify-start">
             <!-- sidebar -->
             <div class="hidden lg:block border-t  p-4 bg-white shadow md:w-1/5 w-full" style="height: 100%">
                 <div class="p-3 flex items-center justify-start gap-3">

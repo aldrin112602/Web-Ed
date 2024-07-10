@@ -63,12 +63,21 @@
 
                 </div>
 
-                <div class="w-full">
-                        <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
-                        <input type="number" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
-                        @error('parents_contact_number')
-                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                <div class="block md:flex align-center justify-between my-2 gap-5">
+                        <div class="md:w-1/2 w-full">
+                                <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
+                                <input type="number" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
+                                @error('parents_contact_number')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+                        <div class="md:w-1/2 w-full">
+                                <label for="profile" class="block text-gray-700 text-sm mb-1">Upload profile</label>
+                                <input type="file" id="profile" name="profile" class="form-input w-full rounded border-gray-300 @error('profile') border-red-500 @enderror" value="{{ old('profile') }}">
+                                @error('profile')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
                 </div>
 
                 <div class="py-6">
