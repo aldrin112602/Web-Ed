@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\AdminAccount; 
-
+use App\Models\AdminAccount;
 
 class AdminController extends Controller
 {
@@ -18,21 +17,29 @@ class AdminController extends Controller
     {
         // Validate the input
         $request->validate([
-            'username' => 'required',
-            'password' => 'required',
+            'username' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         $credentials = $request->only('username', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
-            // return redirect()->intended('admin/dashboard');
-            return view('admin.auth.login');
+            return redirect()->intended('admin/dashboard');
         }
 
         // Authentication failed
         return redirect()->back()->withErrors([
             'password' => 'Invalid username or password.',
         ])->withInput($request->except('password'));
+    }
+
+    public function dashboard()
+    {
+        if (Auth::guard('admin')->check()) {
+            return view('admin.dashboard');
+        }
+
+        return redirect()->route('admin.login');
     }
 }

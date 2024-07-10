@@ -15,7 +15,7 @@ class AdminCreateController extends Controller
             'name' => ['required', 'string', 'max:255', new TwoWords],
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:admin_accounts,username',
-            'password' => 'required|string|min:8|max:255',
+            'password' => 'required|string|min:6|max:255',
             'email' => 'nullable|email|unique:admin_accounts,email',
             'position' => 'nullable|string|max:255',
             'role' => 'nullable|string|max:255',
@@ -31,8 +31,9 @@ class AdminCreateController extends Controller
         }
 
         $adminAccount->save();
-
-        // Code to handle successful creation or redirection goes here
+        return redirect()
+            ->back()
+            ->with('success', 'Admin account added successfully!');
     }
 
     public function createStudent(Request $request)

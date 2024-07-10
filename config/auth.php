@@ -40,10 +40,21 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admin_accounts', // admin_accounts provider
+            'provider' => 'admins',
+        ],
+        'teacher' => [
+            'driver' => 'session',
+            'provider' => 'teachers',
+        ],
+        'guidance' => [
+            'driver' => 'session',
+            'provider' => 'guidances',
+        ],
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'students',
         ],
     ],
 
@@ -65,10 +76,25 @@ return [
     */
 
     'providers' => [
-
-        'admin_accounts' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\AdminAccount::class,
+        ],
+        'teachers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\TeacherAccount::class,
+        ],
+        'guidances' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\GuidanceAccount::class,
+        ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\StudentAccount::class,
         ],
 
         // 'users' => [

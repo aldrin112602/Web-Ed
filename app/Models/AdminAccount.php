@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
-class AdminAccount extends Model
+class AdminAccount extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
  
     protected $fillable = [
         'id_number',
