@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2024 at 09:03 AM
+-- Generation Time: Jul 10, 2024 at 11:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,6 +39,8 @@ CREATE TABLE `admin_accounts` (
   `role` varchar(255) DEFAULT 'Admin',
   `profile` text DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -47,8 +49,9 @@ CREATE TABLE `admin_accounts` (
 -- Dumping data for table `admin_accounts`
 --
 
-INSERT INTO `admin_accounts` (`id`, `id_number`, `name`, `gender`, `username`, `password`, `email`, `position`, `role`, `profile`, `phone_number`, `created_at`, `updated_at`) VALUES
-(1, '10846508002', 'Aldrin Caballero', 'Male', 'aldrin02', '$2y$12$PNIgNNSCT6jBPaYEMhaiY.7nAAV78TkYFojZMkBqezpcrBaTTCFra', NULL, NULL, 'Admin', NULL, NULL, '2024-07-09 22:52:19', '2024-07-09 22:52:19');
+INSERT INTO `admin_accounts` (`id`, `id_number`, `name`, `gender`, `username`, `password`, `email`, `position`, `role`, `profile`, `phone_number`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, '10846508001', 'Aldrin Caballero', 'Male', 'aldrin02', '$2y$12$xx0rMxT6bgl49sHMvST6dOYYymqHlFiHRy7SbUJ8mapi1wtlRxYDK', NULL, NULL, 'Admin', 'profiles/JGCJYeYLZ2YCVmlwwnUTASBWaSXDjiKMEl5C1gyL.png', NULL, NULL, NULL, '2024-07-10 01:21:42', '2024-07-10 01:21:42'),
+(2, '10846508002', 'Jenny Rose Perez', 'Female', 'Jenny02', '$2y$12$quB/JG8DwuLn9nbWOhJVjeTLNAQoBn8BmDtEgjvHDIZQCQ.OCBbDe', NULL, NULL, 'Admin', 'profiles/cFevuwt68yo8NkJMk0NXHmMSUwEZxhfYGw5Ay7Ob.jpg', NULL, NULL, NULL, '2024-07-10 01:29:05', '2024-07-10 01:29:05');
 
 -- --------------------------------------------------------
 
@@ -107,6 +110,8 @@ CREATE TABLE `guidance_accounts` (
   `role` varchar(255) DEFAULT 'Guidance',
   `profile` text DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -168,8 +173,19 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2024_07_09_035354_create_admin_accounts_table', 1),
 (4, '2024_07_09_035425_create_teacher_accounts_table', 1),
 (5, '2024_07_09_035448_create_student_accounts_table', 1),
-(6, '2024_07_09_035515_create_guidance_accounts_table', 1),
-(7, '2024_07_09_051621_create_sessions_table', 1);
+(6, '2024_07_09_035515_create_guidance_accounts_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_reset_tokens`
+--
+
+CREATE TABLE `password_reset_tokens` (
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -191,7 +207,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('T4qmQfFs5Njm18NqNdzqpuWFU6Bz3chfONO7w1yp', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUXNFUTdDQXRPSTZaeHBsRmNkNFpGVk13Qnd4OEp4T2xsbnp0YkFJUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjM6InVybCI7YTowOnt9czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1720594893);
+('aYdZ59Mg6yp7sKlWip7npwfrE5P0nuu87eexFphW', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaGZaVWlMd2pUUWNmaVVYeE9OdWNNZHRLeHVaOTcwc3o0MEFOcWJzMCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9sb2dpbiI7fXM6MzoidXJsIjthOjA6e319', 1720603800);
 
 -- --------------------------------------------------------
 
@@ -210,9 +226,11 @@ CREATE TABLE `student_accounts` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `role` varchar(255) DEFAULT 'Teacher',
+  `role` varchar(255) DEFAULT 'Student',
   `profile` text DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -236,6 +254,8 @@ CREATE TABLE `teacher_accounts` (
   `role` varchar(255) DEFAULT 'Teacher',
   `profile` text DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -301,6 +321,12 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `password_reset_tokens`
+--
+ALTER TABLE `password_reset_tokens`
+  ADD PRIMARY KEY (`email`);
+
+--
 -- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
@@ -334,7 +360,7 @@ ALTER TABLE `teacher_accounts`
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -358,7 +384,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student_accounts`

@@ -25,8 +25,11 @@ return new class extends Migration
             $table->string('role')->default('Student')->nullable();
             $table->text('profile')->nullable();
             $table->string('phone_number')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -35,5 +38,28 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('student_accounts');
+    }
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 };

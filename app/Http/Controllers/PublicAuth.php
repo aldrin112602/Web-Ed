@@ -25,18 +25,17 @@ class PublicAuth extends Controller
             'email' => 'nullable|email|unique:admin_accounts,email',
             'position' => 'nullable|string|max:255',
             'role' => 'nullable|string|max:255',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'nullable|string|min:11|max:11'
         ]);
 
         $account = new AdminAccount($request->all());
 
-        if ($request->hasFile('profile')) {
-            $profilePath = $request->file('profile')->store('profiles', 'public');
-            $account->profile = $profilePath;
-        }
+        $profilePath = $request->file('profile')->store('profiles', 'public');
+        $account->profile = $profilePath;
 
         $account->save();
+
         return redirect()
             ->back()
             ->with('success', 'Account added successfully!');
