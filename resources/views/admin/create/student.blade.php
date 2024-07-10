@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Student Account</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-        <form action="{{ route('admin.handleCreate.admin') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+        <form action="{{ route('admin.handleCreate.student') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
                 @csrf
 
                 <div class="w-full">
@@ -17,7 +17,7 @@
                 <div class="block md:flex align-center justify-between my-2 gap-5">
                         <div class="md:w-1/2 w-full">
                                 <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
-                                <input type="number" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
+                                <input type="text" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
                                 @error('name')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror

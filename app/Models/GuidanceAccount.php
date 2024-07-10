@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
-class GUidanceAccount extends Authenticatable
+class GuidanceAccount extends Authenticatable
 {
     use HasFactory, Notifiable;
  

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\AdminAccount;
+use App\Models\GuidanceAccount;
+use App\Models\StudentAccount;
+use App\Models\TeacherAccount;
 use App\Rules\TwoWords;
 
 class AdminCreateController extends Controller
@@ -23,17 +26,17 @@ class AdminCreateController extends Controller
             'phone_number' => 'nullable|string|regex:/^[0-9]{10,15}$/'
         ]);
 
-        $adminAccount = new AdminAccount($request->all());
+        $account = new AdminAccount($request->all());
 
         if ($request->hasFile('profile')) {
             $profilePath = $request->file('profile')->store('profiles', 'public');
-            $adminAccount->profile = $profilePath;
+            $account->profile = $profilePath;
         }
 
-        $adminAccount->save();
+        $account->save();
         return redirect()
             ->back()
-            ->with('success', 'Admin account added successfully!');
+            ->with('success', 'Account added successfully!');
     }
 
     public function createStudent(Request $request)
@@ -50,35 +53,65 @@ class AdminCreateController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        // Code to create student goes here
+
     }
 
     public function createTeacher(Request $request)
     {
         $request->validate([
-            'id_number' => 'required|numeric|unique:teachers,id_number',
-            'name' => 'required|string|max:255',
-            'gender' => 'required|string|in:male,female',
+            'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
             'position' => 'required|string|max:255',
+            'username' => 'required|string|unique:teacher_accounts,username',
+            'password' => 'required|string|min:6|max:255',
             'grade_handle' => 'required|string',
-            'username' => 'required|string|unique:teachers,username',
-            'password' => 'required|string|min:8',
+            'email' => 'nullable|email|unique:teacher_accounts,email',
+            'role' => 'nullable|string|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone_number' => 'nullable|string|regex:/^[0-9]{10,15}$/'
         ]);
+    
+        $account = new TeacherAccount($request->all());
 
-        // Code to create teacher goes here
+        if ($request->hasFile('profile')) {
+            $profilePath = $request->file('profile')->store('profiles', 'public');
+            $account->profile = $profilePath;
+        }
+
+        $account->save();
+        return redirect()
+            ->back()
+            ->with('success', 'Account added successfully!');
+
+
     }
 
     public function createGuidance(Request $request)
     {
         $request->validate([
-            'id_number' => 'required|numeric|unique:guidances,id_number',
-            'name' => 'required|string|max:255',
-            'gender' => 'required|string|in:male,female',
-            'username' => 'required|string|unique:guidances,username',
-            'password' => 'required|string|min:8',
+            'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
+            'username' => 'required|string|unique:guidance_accounts,username',
+            'password' => 'required|string|min:6|max:255',
+            'email' => 'nullable|email|unique:guidance_accounts,email',
+            'role' => 'nullable|string|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone_number' => 'nullable|string|regex:/^[0-9]{10,15}$/'
         ]);
+    
+        $account = new GuidanceAccount($request->all());
 
-        // Code to create guidance counselor goes here
+        if ($request->hasFile('profile')) {
+            $profilePath = $request->file('profile')->store('profiles', 'public');
+            $account->profile = $profilePath;
+        }
+
+        $account->save();
+        return redirect()
+            ->back()
+            ->with('success', 'Account added successfully!');
     }
 
     // View creates
