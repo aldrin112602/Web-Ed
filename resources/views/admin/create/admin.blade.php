@@ -17,7 +17,7 @@
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
-                <input type="number" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
+                <input type="text" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
                 @error('name')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
@@ -47,10 +47,12 @@
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="md:w-1/2 w-full relative">
+            <div class="md:w-1/2 w-full">
                 <label for="password" class="block text-gray-700 text-sm mb-1">Password</label>
-                <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300 @error('password') border-red-500 @enderror" value="{{ old('password') }}">
-                <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password absolute top-1/2 right-2 transform -translate-y-1/2 cursor-pointer mt-3 text-gray-600 text-sm mr-2"></span>
+                <div class="relative w-full">
+                    <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300 @error('password') border-red-500 @enderror" value="{{ old('password') }}">
+                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password absolute top-1/2 right-2 transform-translate-y-1/2 cursor-pointer text-gray-600 text-sm mr-2" style="transform: translateY(-47%);"></span>
+                </div>
                 @error('password')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
