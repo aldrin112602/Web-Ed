@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\AdminAccount;
@@ -22,18 +23,17 @@ class AdminCreateController extends Controller
             'email' => 'nullable|email|unique:admin_accounts,email',
             'position' => 'nullable|string|max:255',
             'role' => 'nullable|string|max:255',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'nullable|string|min:11|max:11'
         ]);
 
         $account = new AdminAccount($request->all());
 
-        if ($request->hasFile('profile')) {
-            $profilePath = $request->file('profile')->store('profiles', 'public');
-            $account->profile = $profilePath;
-        }
+        $profilePath = $request->file('profile')->store('profiles', 'public');
+        $account->profile = $profilePath;
 
         $account->save();
+
         return redirect()
             ->back()
             ->with('success', 'Account added successfully!');
@@ -42,18 +42,29 @@ class AdminCreateController extends Controller
     public function createStudent(Request $request)
     {
         $request->validate([
-            'id_number' => 'required|numeric|unique:students,id_number',
-            'name' => 'required|string|max:255',
-            'gender' => 'required|string|in:male,female',
+            'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
+            'username' => 'required|string|unique:student_accounts,username',
+            'password' => 'required|string|min:6|max:255',
             'strand' => 'required|string',
-            'grade' => 'required|numeric|between:11,12',
-            'parents_contact_number' => 'required|string|regex:/^(09|\+639)\d{9}$/',
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'username' => 'required|string|unique:students,username',
-            'password' => 'required|string|min:8',
+            'grade' => 'required',
+            'parents_contact_number' => 'required|string|min:11|max:11',
+            'email' => 'nullable|email|unique:student_accounts,email',
+            'position' => 'nullable|string|max:255',
+            'role' => 'nullable|string|max:255',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'nullable|string|min:11|max:11'
         ]);
 
+        $account = new StudentAccount($request->all());
 
+        $profilePath = $request->file('profile')->store('profiles', 'public');
+        $account->profile = $profilePath;
+
+        return redirect()
+            ->back()
+            ->with('success', 'Account added successfully!');
     }
 
     public function createTeacher(Request $request)
@@ -68,23 +79,20 @@ class AdminCreateController extends Controller
             'grade_handle' => 'required|string',
             'email' => 'nullable|email|unique:teacher_accounts,email',
             'role' => 'nullable|string|max:255',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'nullable|string|min:11|max:11'
         ]);
-    
+
         $account = new TeacherAccount($request->all());
 
-        if ($request->hasFile('profile')) {
-            $profilePath = $request->file('profile')->store('profiles', 'public');
-            $account->profile = $profilePath;
-        }
+        $profilePath = $request->file('profile')->store('profiles', 'public');
+        $account->profile = $profilePath;
+
 
         $account->save();
         return redirect()
             ->back()
             ->with('success', 'Account added successfully!');
-
-
     }
 
     public function createGuidance(Request $request)
@@ -97,16 +105,15 @@ class AdminCreateController extends Controller
             'password' => 'required|string|min:6|max:255',
             'email' => 'nullable|email|unique:guidance_accounts,email',
             'role' => 'nullable|string|max:255',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'phone_number' => 'nullable|string|regex:/^(09|\+639)\d{9}$/'
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'nullable|string|min:11|max:11'
         ]);
-    
+
         $account = new GuidanceAccount($request->all());
 
-        if ($request->hasFile('profile')) {
-            $profilePath = $request->file('profile')->store('profiles', 'public');
-            $account->profile = $profilePath;
-        }
+        $profilePath = $request->file('profile')->store('profiles', 'public');
+        $account->profile = $profilePath;
+
 
         $account->save();
         return redirect()
@@ -129,7 +136,7 @@ class AdminCreateController extends Controller
         if (Auth::guard('admin')->check()) {
             return view('admin.create.student');
         }
-        
+
         return redirect()->route('admin.login');
     }
 
@@ -138,7 +145,7 @@ class AdminCreateController extends Controller
         if (Auth::guard('admin')->check()) {
             return view('admin.create.teacher');
         }
-        
+
         return redirect()->route('admin.login');
     }
 
@@ -147,7 +154,7 @@ class AdminCreateController extends Controller
         if (Auth::guard('admin')->check()) {
             return view('admin.create.guidance');
         }
-        
+
         return redirect()->route('admin.login');
     }
 }

@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin_accounts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_number` bigint(20) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `admin_accounts` (
 --
 
 INSERT INTO `admin_accounts` (`id`, `id_number`, `name`, `gender`, `username`, `password`, `email`, `position`, `role`, `profile`, `phone_number`, `created_at`, `updated_at`) VALUES
-(1, 10846508002, 'Aldrin Caballero', 'Male', 'aldrin02', '$2y$12$PNIgNNSCT6jBPaYEMhaiY.7nAAV78TkYFojZMkBqezpcrBaTTCFra', NULL, NULL, 'Admin', NULL, NULL, '2024-07-09 22:52:19', '2024-07-09 22:52:19');
+(1, '10846508002', 'Aldrin Caballero', 'Male', 'aldrin02', '$2y$12$PNIgNNSCT6jBPaYEMhaiY.7nAAV78TkYFojZMkBqezpcrBaTTCFra', NULL, NULL, 'Admin', NULL, NULL, '2024-07-09 22:52:19', '2024-07-09 22:52:19');
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `guidance_accounts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_number` bigint(20) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -201,7 +201,7 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 
 CREATE TABLE `student_accounts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_number` bigint(20) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `strand` varchar(255) NOT NULL,
@@ -225,7 +225,7 @@ CREATE TABLE `student_accounts` (
 
 CREATE TABLE `teacher_accounts` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_number` bigint(20) NOT NULL,
+  `id_number` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `position` varchar(255) NOT NULL,

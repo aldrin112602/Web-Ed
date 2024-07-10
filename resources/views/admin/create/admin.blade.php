@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Admin Account</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form action="{{ route('admin.handleCreate.admin') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form enctype="multipart/form-data" action="{{ route('admin.handleCreate.admin') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
 
         <div class="w-full">
@@ -58,6 +58,29 @@
                 @enderror
             </div>
         </div>
+
+
+        <label for="file-upload" class="block text-gray-700 text-sm mb-1">Upload profile</label>
+        <div class="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-6 cursor-pointer @error('profile') border-red-500 @enderror" id="dropzone">
+            <input id="file-upload" name="profile" type="file" class="absolute inset-0 w-full h-full opacity-0 z-50" accept="image/*" />
+            <div class="text-center">
+                <img class="mx-auto h-12 w-12" src="https://www.svgrepo.com/show/357902/image-upload.svg" alt="">
+                <h3 class="mt-2 text-sm font-medium text-gray-900">
+                    <label for="file-upload" class="relative cursor-pointer">
+                        <span>Drag and drop</span>
+                        <span class="text-indigo-600"> or browse</span>
+                        <span>to upload</span>
+                    </label>
+                </h3>
+                <p class="mt-1 text-xs text-gray-500">
+                    PNG, JPG, GIF up to 10MB
+                </p>
+            </div>
+            <img src="" class="mt-4 mx-auto max-h-40 hidden" id="preview">
+        </div>
+        @error('profile')
+        <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+        @enderror
 
         <div class="mt-6">
             <button type="submit" class="w-full md:w-40 bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Add account</button>

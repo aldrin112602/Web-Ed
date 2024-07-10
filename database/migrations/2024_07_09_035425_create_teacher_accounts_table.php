@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('teacher_accounts', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_number')->unique();
+            $table->string('id_number')->unique();
             $table->string('name');
             $table->string('gender');
             $table->string('position');

@@ -18,6 +18,7 @@ class StudentAccount extends Authenticatable
         'id_number',
         'name',
         'gender',
+        'strand',
         'grade',
         'parents_contact_number',
         'username',
@@ -25,8 +26,10 @@ class StudentAccount extends Authenticatable
         'email',
         'role',
         'profile',
-        'phone_number'
+        'phone_number',
     ];
+    
+    
 
     public function setPasswordAttribute($value)
     {
