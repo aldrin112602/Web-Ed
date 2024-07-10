@@ -3,7 +3,7 @@
 @section('title', 'Create Admin Account')
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Guidance Account</div>
-<div class="min-w-full flex items-center justify-center" style="min-height: 560px">
+<div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
     <form action="{{ route('admin.handleCreate.admin') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
 
@@ -16,6 +16,13 @@
         </div>
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
+                <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
+                <input type="number" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
+                @error('name')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="md:w-1/2 w-full">
                 <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
                 <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
                     <option value="" disabled class="hidden" selected>-- Select one --</option>
@@ -23,13 +30,6 @@
                     <option value="Female" {{ old('gender') == "Female" ? "selected" : ""  }}>Female</option>
                 </select>
                 @error('gender')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="md:w-1/2 w-full">
-                <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
-                <input type="number" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
-                @error('name')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>

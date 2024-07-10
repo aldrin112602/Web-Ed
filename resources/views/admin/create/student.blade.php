@@ -3,7 +3,7 @@
 @section('title', 'Create Admin Account')
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Student Account</div>
-<div class="min-w-full flex items-center justify-center" style="min-height: 560px">
+<div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
         <form action="{{ route('admin.handleCreate.admin') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
                 @csrf
 
@@ -16,6 +16,13 @@
                 </div>
                 <div class="block md:flex align-center justify-between my-2 gap-5">
                         <div class="md:w-1/2 w-full">
+                                <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
+                                <input type="number" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
+                                @error('name')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+                        <div class="md:w-1/2 w-full">
                                 <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
                                 <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
                                         <option value="" disabled class="hidden" selected>-- Select one --</option>
@@ -26,13 +33,42 @@
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                         </div>
+                </div>
+
+                <div class="block md:flex align-center justify-between my-2 gap-5">
                         <div class="md:w-1/2 w-full">
-                                <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
-                                <input type="number" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') }}">
-                                @error('name')
+                                <label for="strand" class="block text-gray-700 text-sm mb-1">Strand</label>
+                                <select name="strand" id="strand" class="form-select w-full rounded border-gray-300 @error('strand') border-red-500 @enderror">
+                                        <option value="" disabled class="hidden" selected>-- Select one --</option>
+                                        <option value="ABM" {{ old('strand') == "ABM" ? "selected" : ""  }}>ABM</option>
+                                        <option value="ICT" {{ old('strand') == "ICT" ? "selected" : ""  }}>ICT</option>
+                                        <option value="H.E" {{ old('strand') == "H.E" ? "selected" : ""  }}>HE</option>
+                                        <option value="HUMSS" {{ old('strand') == "HUMSS" ? "selected" : ""  }}>HUMSS</option>
+                                </select>
+                                @error('strand')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                         </div>
+                        <div class="md:w-1/2 w-full">
+                                <label for="grade" class="block text-gray-700 text-sm mb-1">Grade</label>
+                                <select name="grade" id="grade" class="form-select w-full rounded border-gray-300 @error('grade') border-red-500 @enderror">
+                                        <option value="" disabled class="hidden" selected>-- Select one --</option>
+                                        <option value="11" {{ old('grade') == "11" ? "selected" : ""  }}>Grade 11</option>
+                                        <option value="12" {{ old('grade') == "12" ? "selected" : ""  }}>Grade 12</option>
+                                </select>
+                                @error('grade')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+
+                </div>
+
+                <div class="w-full">
+                        <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
+                        <input type="number" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
+                        @error('parents_contact_number')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
                 </div>
 
                 <div class="py-6">
