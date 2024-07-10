@@ -20,11 +20,11 @@ class AdminCreateController extends Controller
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:admin_accounts,username',
             'password' => 'required|string|min:6|max:255',
-            'email' => 'nullable|email|unique:admin_accounts,email',
+            'email' => 'required|email|unique:admin_accounts,email',
             'position' => 'nullable|string|max:255',
             'role' => 'nullable|string|max:255',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'phone_number' => 'nullable|string|min:11|max:11'
+            'phone_number' => 'required|string|min:11|max:11'
         ]);
 
         $account = new AdminAccount($request->all());
@@ -50,9 +50,9 @@ class AdminCreateController extends Controller
             'strand' => 'required',
             'grade' => 'required',
             'parents_contact_number' => 'required|string|min:11|max:11',
-            'email' => 'nullable|email|unique:student_accounts,email',
+            'email' => 'required|email|unique:student_accounts,email',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'phone_number' => 'nullable|string|min:11|max:11'
+            'phone_number' => 'required|string|min:11|max:11'
         ]);
 
         $account = new StudentAccount($request->all());
@@ -77,10 +77,10 @@ class AdminCreateController extends Controller
             'username' => 'required|string|unique:teacher_accounts,username',
             'password' => 'required|string|min:6|max:255',
             'grade_handle' => 'required|string',
-            'email' => 'nullable|email|unique:teacher_accounts,email',
+            'email' => 'required|email|unique:teacher_accounts,email',
             'role' => 'nullable|string|max:255',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'phone_number' => 'nullable|string|min:11|max:11'
+            'phone_number' => 'required|string|min:11|max:11'
         ]);
 
         $account = new TeacherAccount($request->all());
@@ -103,10 +103,10 @@ class AdminCreateController extends Controller
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:guidance_accounts,username',
             'password' => 'required|string|min:6|max:255',
-            'email' => 'nullable|email|unique:guidance_accounts,email',
+            'email' => 'required|email|unique:guidance_accounts,email',
             'role' => 'nullable|string|max:255',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'phone_number' => 'nullable|string|min:11|max:11'
+            'phone_number' => 'required|string|min:11|max:11'
         ]);
 
         $account = new GuidanceAccount($request->all());
@@ -125,7 +125,8 @@ class AdminCreateController extends Controller
     public function viewCreateAdmin()
     {
         if (Auth::guard('admin')->check()) {
-            return view('admin.create.admin');
+            $user = Auth::guard('admin')->user();
+            return view('admin.create.admin', ['user' => $user]);
         }
 
         return redirect()->route('admin.login');
@@ -134,7 +135,8 @@ class AdminCreateController extends Controller
     public function viewCreateStudent()
     {
         if (Auth::guard('admin')->check()) {
-            return view('admin.create.student');
+            $user = Auth::guard('admin')->user();
+            return view('admin.create.student', ['user' => $user]);
         }
 
         return redirect()->route('admin.login');
@@ -143,7 +145,8 @@ class AdminCreateController extends Controller
     public function viewCreateTeacher()
     {
         if (Auth::guard('admin')->check()) {
-            return view('admin.create.teacher');
+            $user = Auth::guard('admin')->user();
+            return view('admin.create.teacher', ['user' => $user]);
         }
 
         return redirect()->route('admin.login');
@@ -152,7 +155,8 @@ class AdminCreateController extends Controller
     public function viewCreateGuidance()
     {
         if (Auth::guard('admin')->check()) {
-            return view('admin.create.guidance');
+            $user = Auth::guard('admin')->user();
+            return view('admin.create.guidance', ['user' => $user]);
         }
 
         return redirect()->route('admin.login');

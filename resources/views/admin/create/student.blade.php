@@ -70,6 +70,23 @@
                         @enderror
                 </div>
 
+                <div class="block md:flex align-center justify-between my-2 gap-5">
+                        <div class="md:w-1/2 w-full">
+                                <label for="email" class="block text-gray-700 text-sm mb-1">Email</label>
+                                <input type="email" id="email" name="email" class="form-input w-full rounded border-gray-300 @error('email') border-red-500 @enderror" value="{{ old('email') }}">
+                                @error('email')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+                        <div class="md:w-1/2 w-full">
+                                <label for="phone_number" class="block text-gray-700 text-sm mb-1">Phone number</label>
+                                <input type="phone_number" id="phone_number" name="tel" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
+                                @error('phone_number')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+                </div>
+
                 <div class="py-6">
                         <hr>
                 </div>

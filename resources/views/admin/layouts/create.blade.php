@@ -75,8 +75,8 @@
                 <div class="p-3 {{ request()->is('admin/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
                 </div>
-                <div class="p-3 {{ request()->is('admin/settings') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>
+                <div class="p-3 {{ (request()->is('admin/settings') || request()->is('admin/profile')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('admin.profile') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>
                 </div>
                 <div class="p-3 hover:bg-blue-50 hover:text-blue-500 text-gray-700 rounded">
                     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST">
@@ -87,12 +87,12 @@
                     </form>
                 </div>
                 <hr>
-                <div class="p-3 hover:bg-blue-50 rounded hover:text-blue-500 text-gray-700">
+                <div class="p-3 text-gray-700">
                     <div class="flex justify-start items-center gap-2">
-                        <img src="https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png" alt="User profile" class="rounded-full" style="height: 33px; width: 33px;">
+                        <img src="{{ asset('storage/' . $user->profile) ?? 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="User profile" class="rounded-full border" style="height: 45px; width: 45px;">
                         <div class="flex flex-col justify-start items-start">
-                            <span class="text-gray-600 text-sm font-semibold">John Doe</span>
-                            <span class="text-gray-500 text-sm">sample@gmail.com</span>
+                            <span class="text-gray-600 text-sm font-semibold">{{ $user->name }}</span>
+                            <span class="text-gray-500 text-sm">{{ $user->email }}</span>
                         </div>
                     </div>
                 </div>
@@ -106,58 +106,66 @@
         </div>
     </main>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropzone = document.getElementById('dropzone');
-            const fileInput = document.getElementById('file-upload');
-            const preview = document.getElementById('preview');
+        try {
+            document.addEventListener('DOMContentLoaded', () => {
+                const dropzone = document.getElementById('dropzone');
+                const fileInput = document.getElementById('file-upload');
+                const preview = document.getElementById('preview');
 
-            const displayPreview = (file) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    preview.src = reader.result;
-                    preview.classList.remove('hidden');
+                const displayPreview = (file) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        preview.src = reader.result;
+                        preview.classList.remove('hidden');
+                    };
                 };
-            };
 
-            dropzone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropzone.classList.add('border-indigo-600');
-            });
+                dropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropzone.classList.add('border-indigo-600');
+                });
 
-            dropzone.addEventListener('dragleave', (e) => {
-                e.preventDefault();
-                dropzone.classList.remove('border-indigo-600');
-            });
+                dropzone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    dropzone.classList.remove('border-indigo-600');
+                });
 
-            dropzone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropzone.classList.remove('border-indigo-600');
-                const file = e.dataTransfer.files[0];
-                if (file) {
-                    displayPreview(file);
-                    fileInput.files = e.dataTransfer.files;
-                }
-            });
+                dropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropzone.classList.remove('border-indigo-600');
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        displayPreview(file);
+                        fileInput.files = e.dataTransfer.files;
+                    }
+                });
 
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    displayPreview(file);
-                }
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        displayPreview(file);
+                    }
+                });
             });
-        });
+        } catch (err) {
+
+        }
     </script>
 
     <script>
-        $(document).ready(() => {
-            $('.toggle-password').on('click', function() {
-                const passwordInput = $($(this).attr('toggle'));
-                const isPassword = passwordInput.attr('type') === 'password';
-                passwordInput.attr('type', isPassword ? 'text' : 'password');
-                $(this).toggleClass('fa-eye fa-eye-slash');
+        try {
+            $(document).ready(() => {
+                $('.toggle-password').on('click', function() {
+                    const passwordInput = $($(this).attr('toggle'));
+                    const isPassword = passwordInput.attr('type') === 'password';
+                    passwordInput.attr('type', isPassword ? 'text' : 'password');
+                    $(this).toggleClass('fa-eye fa-eye-slash');
+                });
             });
-        });
+        } catch (err) {
+
+        }
     </script>
     @if (session('success'))
     <script>
@@ -184,23 +192,27 @@
     @endif
 
     <script>
-        $(document).ready(function() {
-            $('#logout-btn').click(function() {
-                Swal.fire({
-                    title: 'Logout',
-                    text: 'Are you sure you want to logout?',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, logout'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#logout-form').submit();
-                    }
+        try {
+            $(document).ready(function() {
+                $('#logout-btn').click(function() {
+                    Swal.fire({
+                        title: 'Logout',
+                        text: 'Are you sure you want to logout?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, logout'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#logout-form').submit();
+                        }
+                    });
                 });
             });
-        });
+        } catch (err) {
+
+        }
     </script>
 
 </body>

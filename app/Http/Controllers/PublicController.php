@@ -7,7 +7,7 @@ use App\Rules\TwoWords;
 
 // For testing use only
 
-class PublicAuth extends Controller
+class PublicController extends Controller
 {
     public function login() {
         return redirect()->intended('/');
