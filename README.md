@@ -18,10 +18,10 @@
 - This will show the version of your nodeJS and Git
 - If all successfully shows their versions, then now run:
   ```bash
-  git --global user.name "<Your name>"
+  git config --global user.name "<Your name>"
   ```
   ```bash
-  git --global user.email "<Your email address>"
+  git config --global user.email "<Your email address>"
   ```
 - Make sure you remove the `<` and `>`
 - Next clone this repository:
