@@ -23,7 +23,7 @@
 
 <body class="bg-gray-100">
     <main class="min-h-screen">
-        <div class="w-full flex items-center justify-between bg-white px-8 py-3 shadow">
+        <div class="w-full flex items-center justify-between bg-white px-8 py-3 shadow border-b">
             <h2 class="text-blue-900 font-semibold">WebEd</h2>
             <ul class="flex items-center justify-end gap-5">
                 <li>
@@ -40,7 +40,7 @@
         </div>
         <div class="block md:flex h-screen items-start justify-start">
             <!-- sidebar -->
-            <div class="hidden md:block border-t  p-4 bg-white shadow" style="height: 100%; min-width: 280px">
+            <div class="hidden md:block  p-4 bg-white shadow" style="height: 100%; min-width: 280px">
                 <div class="p-3 flex items-center justify-start gap-3">
                     <button style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
                         <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
