@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\TwoWords;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -21,8 +23,8 @@ class AdminController extends Controller
         if (Auth::guard('admin')->check()) {
             Auth::guard('admin')->logout();
             return redirect()
-            ->route('admin.login')
-            ->with('success', 'Logout successfully!');
+                ->route('admin.login')
+                ->with('success', 'Logout successfully!');
         }
     }
 
@@ -74,6 +76,82 @@ class AdminController extends Controller
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
             return view('admin.profile.profile', ['user' => $user]);
+        }
+
+        return redirect()->route('admin.login');
+    }
+
+
+
+    public function updateAccount(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+
+            // Validate the input
+            $request->validate([
+                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'gender' => 'required|string|in:Male,Female',
+                'address' => 'required|string|max:255',
+                'phone_number' => 'required|string|min:11|max:11'
+            ]);
+
+            if ($user->id_number != $request->id_number) {
+                $request->validate([
+                    'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number'
+                ]);
+            }
+
+            if ($user->email != $request->email) {
+                $request->validate([
+                    'email' => 'required|email|unique:admin_accounts,email',
+                ]);
+            }
+
+            $user->update([
+                'name' => $request->name,
+                'id_number' => $request->id_number,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'address' => $request->address,
+                'gender' => $request->gender,
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Profile updated successfully!');
+        }
+
+        return redirect()->route('admin.login');
+    }
+
+
+
+    public function updatePassword(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+
+            $request->validate([
+                'password' => 'required|string',
+                'new_password' => 'required|string|min:6|max:255',
+            ]);
+
+
+            if (!Hash::check($request->password, $user->password)) {
+                return redirect()
+                    ->back()
+                    ->withErrors(['password' => 'The current password is incorrect.'])
+                    ->withInput();
+            }
+
+            $user->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+
+            return redirect()
+                ->back()
+                ->with('success', 'Password updated successfully!');
         }
 
         return redirect()->route('admin.login');

@@ -40,7 +40,7 @@
         </div>
         <div class="block md:flex h-screen items-start justify-start">
             <!-- sidebar -->
-            <div class="hidden lg:block border-t  p-4 bg-white shadow md:w-1/5 w-full" style="height: 100%">
+            <div class="hidden md:block border-t  p-4 bg-white shadow w-auto" style="height: 100%">
                 <div class="p-3 flex items-center justify-start gap-3">
                     <button style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
                         <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
@@ -90,16 +90,16 @@
                 <div class="p-3 text-gray-700">
                     <div class="flex justify-start items-center gap-2">
                         <img src="{{ asset('storage/' . $user->profile) ?? 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="User profile" class="rounded-full border" style="height: 45px; width: 45px;">
-                        <div class="flex flex-col justify-start items-start">
-                            <span class="text-gray-600 text-sm font-semibold">{{ $user->name }}</span>
-                            <span class="text-gray-500 text-sm">{{ $user->email }}</span>
+                        <div class="flex flex-col justify-start items-start flex-wrap">
+                            <span class="text-gray-600 text-xs font-semibold">{{ $user->name }}</span>
+                            <span class="text-gray-500 text-xs">{{ $user->email }}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- sidebar -->
             <!-- main content -->
-            <div class="h-full lg:w-4/5 w-full" style="overflow-y: auto;">
+            <div class="h-full md:w-4/5 w-full" style="overflow-y: auto;">
                 @yield('content')
             </div>
             <!-- main content -->

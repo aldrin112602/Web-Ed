@@ -22,6 +22,7 @@ class AdminAccount extends Authenticatable
         'position',
         'role',
         'profile',
+        'address',
         'phone_number'
     ];
 

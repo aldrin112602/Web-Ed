@@ -27,7 +27,11 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
 
     Route::get('profile', [Admin::class, 'profile'])->name('admin.profile');
-    
+
+    // Update admin profile info
+    Route::put('profile/updateAccount', [Admin::class, 'updateAccount'])->name('admin.updateAccount');
+    Route::put('profile/updatePassword', [Admin::class, 'updatePassword'])->name('admin.updatePassword');
+
 
     // Routes requiring admin authentication
     Route::middleware('auth:admin')->group(function () {
@@ -60,7 +64,6 @@ Route::prefix('teacher')->group(function () {
 
     // Routes requiring teacher authentication
     Route::middleware('auth:teacher')->group(function () {
-        
     });
 });
 
@@ -73,7 +76,6 @@ Route::prefix('student')->group(function () {
 
     // Routes requiring student authentication
     Route::middleware('auth:student')->group(function () {
-        
     });
 });
 
@@ -84,6 +86,5 @@ Route::prefix('guidance')->group(function () {
 
     // Routes requiring guidance authentication
     Route::middleware('auth:guidance')->group(function () {
-        
     });
 });
