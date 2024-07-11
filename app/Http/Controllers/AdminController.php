@@ -151,7 +151,7 @@ class AdminController extends Controller
             // Update the password
             $user->password = $request->new_password;
             $user->save();
-            
+
             // Re-authenticate the user with the new password
             Auth::guard('admin')->login($user);
             return redirect()->back()->with('success', 'Password updated successfully!');
@@ -165,32 +165,45 @@ class AdminController extends Controller
 
 
     public function updateProfilePhoto(Request $request)
-{
-    if (Auth::guard('admin')->check()) {
-        $user = Auth::guard('admin')->user();
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
 
-        // Validate the uploaded file
-        $request->validate([
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+            $request->validate([
+                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        // Handle file upload and update user profile
-        if ($request->hasFile('profile_photo')) {
+            if ($request->hasFile('profile_photo')) {
+                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                    Storage::disk('public')->delete($user->profile);
+                }
+
+                $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
+                $user->profile = $profilePhotoPath;
+                $user->save();
+
+                return redirect()->back()->with('success', 'Profile photo updated successfully!');
+            }
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
+    }
+
+
+    public function deleteProfilePhoto()
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+
             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
                 Storage::disk('public')->delete($user->profile);
             }
-
-            $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
-            $user->profile = $profilePhotoPath;
+            $user->profile = null;
             $user->save();
 
-            return redirect()->back()->with('success', 'Profile photo updated successfully!');
+            return redirect()->back()->with('success', 'Profile photo deleted successfully!');
         }
+
+        return redirect()->back()->withErrors(['error' => 'Failed to delete profile photo. Please try again.']);
     }
-
-    return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
-}
-
-
-    
 }

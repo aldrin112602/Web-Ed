@@ -29,6 +29,8 @@ Route::prefix('admin')->group(function () {
     // admin profile
     Route::get('profile', [Admin::class, 'profile'])->name('admin.profile');
     Route::post('updateProfilePhoto', [Admin::class, 'updateProfilePhoto'])->name('admin.updateProfilePhoto');
+    Route::delete('deleteProfilePhoto', [Admin::class, 'deleteProfilePhoto'])->name('admin.deleteProfilePhoto');
+
 
     // Update admin profile info
     Route::put('profile/updateAccount', [Admin::class, 'updateAccount'])->name('admin.updateAccount');

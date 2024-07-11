@@ -7,11 +7,12 @@
     <div class="md:px-20 px-10">
         <div class="block md:flex items-center justify-between">
             <div class="flex my-2 items-center justify-start gap-3">
-                <form action="{{ route('admin.updateProfilePhoto') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                <form action="{{ route('admin.updateProfilePhoto') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
                     @csrf
                     <input type="file" name="profile_photo" id="profile_photo" class="hidden" accept="image/*">
                     <label for="profile_photo" class="cursor-pointer">
-                        <img src="{{ asset('storage/' . $user->profile) ?? 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
+                    <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
+
                     </label>
                 </form>
                 <div>
@@ -26,7 +27,11 @@
             </div>
             <div class="flex my-2 items-center justify-start gap-3">
                 <button type="button" id="uploadButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Upload New Photo</button>
-                <button type="submit" class=" bg-slate-50 text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Delete</button>
+                <form action="{{ route('admin.deleteProfilePhoto') }}" method="POST" id="deleteForm" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" id="deleteButton" class="bg-slate-50 text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Delete</button>
+                </form>
             </div>
         </div>
 
@@ -38,6 +43,22 @@
 
                 $('#profile_photo').change(function() {
                     $('#uploadForm').submit();
+                });
+
+                $('#deleteButton').click(function() {
+                    Swal.fire({
+                        title: 'Delete',
+                        text: 'Are you sure to delete your profile photo?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#deleteForm').submit();
+                        }
+                    });
                 });
             });
         </script>
