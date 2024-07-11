@@ -1,68 +1,85 @@
-## WebEd
-## Step by Step to setup the project
-- Install composer
-- Install nodeJS
-- Install git
-- Install xampp
-### Clone this repository
-- Open git bash terminal or CMD
-- Check if all installation success
-- run:
-  ```bash
-  composer --version
-  ```
-- This will show the version of your composer
-  ```bash
-  npm --version && git --version
-  ```
-- This will show the version of your nodeJS and Git
-- If all successfully shows their versions, then now run:
-  ```bash
-  git config --global user.name "<Your name>"
-  ```
-  ```bash
-  git config --global user.email "<Your email address>"
-  ```
-- Make sure you remove the `<` and `>`
-- Next clone this repository:
-  ```bash
-  git clone https://github.com/aldrin112602/Web-Ed.git
-  ```
-- After installation complete run:
-  ```bash
-  code Web-Ed
-  ```
-- This will open the project to your `visual studio code (vscode blue)`
-- Now open terminal in your `Vscode` and nd follow the steps below 👇 
-### install composer dev dependencies
+## WebEd: Step-by-Step Setup Guide
+
+### Prerequisites
+
+Make sure you have the following installed on your system:
+- [Composer](https://getcomposer.org/)
+- [Node.js](https://nodejs.org/)
+- [Git](https://git-scm.com/)
+- [XAMPP](https://www.apachefriends.org/) or similar for local server environment.
+
+### Clone the Repository
+
+1. Open your terminal (Git Bash or CMD).
+2. Verify installations:
+   ```bash
+   composer --version
+   npm --version
+   git --version
+   ```
+3. Set up your Git credentials:
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your@example.com"
+   ```
+
+4. Clone the repository:
+   ```bash
+   git clone https://github.com/aldrin112602/Web-Ed.git
+   ```
+
+### Setup Project in VS Code
+
+1. Navigate to the project directory:
+   ```bash
+   code Web-Ed
+   ```
+   This will open VS Code with your project.
+
+2. Open a terminal in VS Code and follow these steps.
+
+### Install Dependencies
+
+#### Composer (PHP)
+
+Install PHP dependencies:
 ```bash
 composer install
 ```
 
-### Install node dev dependencies
-```terminal
+#### Node.js (JavaScript)
+
+Install JavaScript dependencies:
+```bash
 npm install
 ```
 
-### setup storage
+### Configure Storage
+
+Set up symbolic link for storage:
 ```bash
 php artisan storage:link
 ```
 
-### start server (first terminal)
-```bash
-php artisan serve
-```
+### Start Local Server
 
-### start server (second terminal)
-```bash
-npm run dev
-```
-### Xampp
-- Start Apache
-- Start Mysql
+1. Start PHP server (first terminal):
+   ```bash
+   php artisan serve
+   ```
 
-### run migration
+2. Compile assets with Node.js (second terminal):
+   ```bash
+   npm run dev
+   ```
+
+### XAMPP Configuration
+
+Ensure Apache and MySQL are running in XAMPP.
+
+### Database Migration
+
+Run migrations to set up your database:
 ```bash
 php artisan migrate
 ```
