@@ -3,10 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\AdminController as Admin;
-// use App\Http\Controllers\TeacherController as Teacher;
-// use App\Http\Controllers\StudentController as Student;
-// use App\Http\Controllers\GuidanceController as Guidance;
+use App\Http\Controllers\TeacherController as Teacher;
+use App\Http\Controllers\StudentController as Student;
+use App\Http\Controllers\GuidanceController as Guidance;
 use App\Http\Controllers\AdminCreateController as AdminCreate;
+use App\Http\Controllers\AccountManagementController as AccountManagement;
 
 // for test only
 // Route::get('/create', function() {
@@ -26,21 +27,22 @@ Route::prefix('admin')->group(function () {
     Route::get('login', [Admin::class, 'login'])->name('admin.login');
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
 
-    // admin profile
-    Route::get('profile', [Admin::class, 'profile'])->name('admin.profile');
-    Route::post('updateProfilePhoto', [Admin::class, 'updateProfilePhoto'])->name('admin.updateProfilePhoto');
-    Route::delete('deleteProfilePhoto', [Admin::class, 'deleteProfilePhoto'])->name('admin.deleteProfilePhoto');
-
-
-    // Update admin profile info
-    Route::put('profile/updateAccount', [Admin::class, 'updateAccount'])->name('admin.updateAccount');
-    Route::put('profile/updatePassword', [Admin::class, 'updatePassword'])->name('admin.updatePassword');
-
 
     // Routes requiring admin authentication
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
+
+
+        // admin profile
+        Route::get('profile', [Admin::class, 'profile'])->name('admin.profile');
+        Route::post('updateProfilePhoto', [Admin::class, 'updateProfilePhoto'])->name('admin.updateProfilePhoto');
+        Route::delete('deleteProfilePhoto', [Admin::class, 'deleteProfilePhoto'])->name('admin.deleteProfilePhoto');
+
+
+        // Update admin profile info
+        Route::put('profile/updateAccount', [Admin::class, 'updateAccount'])->name('admin.updateAccount');
+        Route::put('profile/updatePassword', [Admin::class, 'updatePassword'])->name('admin.updatePassword');
 
         // Admin create accounts (admin/teacher/guidance/student)
         Route::get('create/admin', [AdminCreate::class, 'viewCreateAdmin'])->name('admin.create.admin');
@@ -54,9 +56,20 @@ Route::prefix('admin')->group(function () {
         Route::post('create/student', [AdminCreate::class, 'createStudent'])->name('admin.handleCreate.student');
         // End Admin create accounts (admin/teacher/guidance/student)
 
-
         // logout route
         Route::post('logout', [Admin::class, 'logout'])->name('admin.logout');
+
+
+        // for account management
+        Route::prefix('account_management')->group(function () {
+            // student list
+            Route::get('student_list', [AccountManagement::class, 'student_list'])->name('admin.student_list');
+            Route::get('admin_list', [AccountManagement::class, 'admin_list'])->name('admin.admin_list');
+            Route::get('teacher_list', [AccountManagement::class, 'teacher_list'])->name('admin.teacher_list');
+            Route::get('guidance_list', [AccountManagement::class, 'guidance_list'])->name('admin.guidance_list');
+        });
+        // End account management
+
     });
 });
 
