@@ -126,7 +126,8 @@ class AdminCreateController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            return view('admin.create.admin', ['user' => $user]);
+            $id_number = $this->getRandomNumbers();
+            return view('admin.create.admin', ['user' => $user, 'id_number' => $id_number]);
         }
 
         return redirect()->route('admin.login');
@@ -136,7 +137,8 @@ class AdminCreateController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            return view('admin.create.student', ['user' => $user]);
+            $id_number = $this->getRandomNumbers();
+            return view('admin.create.student', ['user' => $user, 'id_number' => $id_number]);
         }
 
         return redirect()->route('admin.login');
@@ -146,7 +148,8 @@ class AdminCreateController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            return view('admin.create.teacher', ['user' => $user]);
+            $id_number = $this->getRandomNumbers();
+            return view('admin.create.teacher', ['user' => $user, 'id_number' => $id_number]);
         }
 
         return redirect()->route('admin.login');
@@ -156,9 +159,19 @@ class AdminCreateController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            return view('admin.create.guidance', ['user' => $user]);
+            $id_number = $this->getRandomNumbers();
+            return view('admin.create.guidance', ['user' => $user, 'id_number' => $id_number]);
         }
 
         return redirect()->route('admin.login');
+    }
+
+    public function getRandomNumbers($count = 10)
+    {
+        $randomNumbers = [];
+        for ($i = 0; $i < $count; $i++) {
+            $randomNumbers[] = rand();
+        }
+        return $randomNumbers;
     }
 }

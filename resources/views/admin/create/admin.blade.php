@@ -9,7 +9,7 @@
 
         <div class="w-full">
             <label for="id_number" class="block text-gray-700 text-sm mb-1">ID number</label>
-            <input type="number" id="id_number" name="id_number" class="form-input w-full rounded border-gray-300 @error('id_number') border-red-500 @enderror" value="{{ old('id_number') }}">
+            <input type="number" id="id_number" name="id_number" class="form-input w-full rounded border-gray-300 @error('id_number') border-red-500 @enderror" value="{{ old('id_number') ?? $id_number }}">
             @error('id_number')
             <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
