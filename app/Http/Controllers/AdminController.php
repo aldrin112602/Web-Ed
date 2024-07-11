@@ -117,6 +117,9 @@ class AdminController extends Controller
                 'gender' => $request->gender,
             ]);
 
+            // Re-authenticate the user with the new password
+            Auth::guard('admin')->login($user);
+
             return redirect()
                 ->back()
                 ->with('success', 'Profile updated successfully!');
@@ -131,27 +134,24 @@ class AdminController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-
+            // Validate the input
             $request->validate([
                 'password' => 'required|string',
                 'new_password' => 'required|string|min:6|max:255',
             ]);
-
-
+            // Check if the current password matches
             if (!Hash::check($request->password, $user->password)) {
                 return redirect()
                     ->back()
                     ->withErrors(['password' => 'The current password is incorrect.'])
                     ->withInput();
             }
-
-            $user->update([
-                'password' => Hash::make($request->new_password)
-            ]);
-
-            return redirect()
-                ->back()
-                ->with('success', 'Password updated successfully!');
+            // Update the password
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            // Re-authenticate the user with the new password
+            Auth::guard('admin')->login($user);
+            return redirect()->back() ->with('success', 'Password updated successfully!');
         }
 
         return redirect()->route('admin.login');
