@@ -26,7 +26,7 @@
                     <option value="Second Semester">Second Semester</option>
                 </select>
             </div>
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-md">Add Student</button>
+            <a href="{{ route('admin.create.teacher') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md">Add Teacher</a>
         </div>
 
         <hr class="my-3">

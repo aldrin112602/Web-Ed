@@ -18,7 +18,11 @@
                     <option value="Female">Female</option>
                 </select>
                 <select class="py-2 border rounded-md">
-                    <option>Strand</option>
+                    <option selected class="hidden" disabled value="">Strand</option>
+                    <option value="ABM">ABM</option>
+                    <option value="ICT">ICT</option>
+                    <option value="HUMSS">HUMSS</option>
+                    <option value="HE">HE</option>
                 </select>
                 <select class="py-2 border rounded-md">
                     <option selected class="hidden" disabled value="">Semester</option>
@@ -26,12 +30,18 @@
                     <option value="Second Semester">Second Semester</option>
                 </select>
             </div>
-            <button class="px-4 py-2 bg-blue-500 text-white rounded-md">Add Student</button>
+            <a href="{{ route('admin.create.student') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Student</a>
         </div>
 
         <hr class="my-3">
 
-        <h1 class="font-semibold text-slate-600">STUDENT LIST</h1>
+        <div class="flex items-center justify-between">
+            <h1 class="font-semibold text-slate-600">STUDENT LIST</h1>
+            <div class="flex gap-2">
+                <button class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
+                <button class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</button>
+            </div>
+        </div>
 
         <hr class="my-3">
         <p class="text-sm text-slate-500 mb-3">Showing 1 - 10 of 1,700 students</p>
