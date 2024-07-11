@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -146,12 +146,14 @@ class AdminController extends Controller
                     ->withErrors(['password' => 'The current password is incorrect.'])
                     ->withInput();
             }
+
             // Update the password
-            $user->password = Hash::make($request->new_password);
+            $user->password = $request->new_password;
             $user->save();
+            
             // Re-authenticate the user with the new password
             Auth::guard('admin')->login($user);
-            return redirect()->back() ->with('success', 'Password updated successfully!');
+            return redirect()->back()->with('success', 'Password updated successfully!');
         }
 
         return redirect()->route('admin.login');
