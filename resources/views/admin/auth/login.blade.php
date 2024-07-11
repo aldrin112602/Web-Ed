@@ -17,7 +17,11 @@
 
     <div class="mb-4">
         <label for="password" class="block text-gray-700">Password</label>
-        <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300 @error('password') border-red-500 @enderror" value="{{ old('password') }}">
+        <div class="relative w-full">
+            <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300 @error('password') border-red-500 @enderror" value="{{ old('password') }}">
+            <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password absolute top-1/2 right-2 transform-translate-y-1/2 cursor-pointer text-gray-600 text-sm mr-2" style="transform: translateY(-47%);"></span>
+        </div>
+
         @error('password')
         <span class="text-red-500 text-sm">{{ $message }}</span>
         @enderror
