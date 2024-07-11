@@ -71,10 +71,10 @@
 
                         <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div role="none">
-                                <a href="#" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list"></i> Admin List</a>
-                                <a href="#" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-1"><i class="fa-solid fa-list"></i> Guidance List</a>
-                                <a href="#" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa-solid fa-list"></i> Teacher List</a>
-                                <a href="#" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa-solid fa-list"></i> Student List</a>
+                                <a href="{{ route('admin.admin_list') }}" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list"></i> Admin List</a>
+                                <a href="{{ route('admin.guidance_list') }}" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-1"><i class="fa-solid fa-list"></i> Guidance List</a>
+                                <a href="{{ route('admin.teacher_list') }}" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa-solid fa-list"></i> Teacher List</a>
+                                <a href="{{ route('admin.student_list') }}" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa-solid fa-list"></i> Student List</a>
 
                             </div>
                         </div>
