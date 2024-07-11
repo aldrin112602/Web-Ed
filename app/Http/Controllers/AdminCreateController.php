@@ -166,12 +166,11 @@ class AdminCreateController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function getRandomNumbers($count = 10)
-    {
+    public function getRandomNumbers($count = 1) {
         $randomNumbers = [];
         for ($i = 0; $i < $count; $i++) {
-            $randomNumbers[] = rand();
+            $randomNumbers[] = rand(1000000000, 9999999999);
         }
-        return $randomNumbers;
+        return $randomNumbers[0];
     }
 }
