@@ -40,7 +40,7 @@
         </div>
         <div class="block md:flex h-screen items-start justify-start">
             <!-- sidebar -->
-            <div class="hidden md:block border-t  p-4 bg-white shadow w-auto" style="height: 100%">
+            <div class="hidden md:block border-t  p-4 bg-white shadow" style="height: 100%; min-width: 280px">
                 <div class="p-3 flex items-center justify-start gap-3">
                     <button style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
                         <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
@@ -99,7 +99,7 @@
             </div>
             <!-- sidebar -->
             <!-- main content -->
-            <div class="h-full md:w-4/5 w-full" style="overflow-y: auto;">
+            <div class="h-full w-full" style="overflow-y: auto;">
                 @yield('content')
             </div>
             <!-- main content -->
@@ -185,6 +185,30 @@
             Toast.fire({
                 icon: 'success',
                 title: "{{ session('success') }}"
+            });
+
+        });
+    </script>
+    @endif
+
+    @if (session('ERROR'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+
+            Toast.fire({
+                icon: 'error',
+                title: "{{ session('error') }}"
             });
 
         });

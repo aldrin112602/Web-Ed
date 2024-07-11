@@ -7,7 +7,13 @@
     <div class="md:px-20 px-10">
         <div class="block md:flex items-center justify-between">
             <div class="flex my-2 items-center justify-start gap-3">
-                <img src="{{ asset('storage/' . $user->profile) ?? 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
+                <form action="{{ route('admin.updateProfilePhoto') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                    @csrf
+                    <input type="file" name="profile_photo" id="profile_photo" class="hidden" accept="image/*">
+                    <label for="profile_photo" class="cursor-pointer">
+                        <img src="{{ asset('storage/' . $user->profile) ?? 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
+                    </label>
+                </form>
                 <div>
                     <h1 class="font-semibold text-sm md:text-lg text-blue-900">{{ $user->name }}</h1>
                     <p class="text-gray-600 text-sm">
@@ -19,10 +25,23 @@
                 </div>
             </div>
             <div class="flex my-2 items-center justify-start gap-3">
-                <button type="submit" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Upload New Photo</button>
+                <button type="button" id="uploadButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Upload New Photo</button>
                 <button type="submit" class=" bg-slate-50 text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Delete</button>
             </div>
         </div>
+
+        <script>
+            $(document).ready(function() {
+                $('#uploadButton').click(function() {
+                    $('#profile_photo').click();
+                });
+
+                $('#profile_photo').change(function() {
+                    $('#uploadForm').submit();
+                });
+            });
+        </script>
+
         <div class="py-3">
             <hr>
         </div>
@@ -32,21 +51,21 @@
             @method('PUT')
             <div class="block md:flex align-center justify-between my-2 gap-5">
                 <div class="md:w-1/3 w-full">
-                    <label for="name" class="block text-gray-700 text-sm mb-1">Name</label>
+                    <label for="name" class="block text-gray-700 text-sm mb-1 mt-2">Name</label>
                     <input readonly type="text" id="name" name="name" class="form-input w-full rounded border-gray-300 @error('name') border-red-500 @enderror" value="{{ old('name') ?? $user->name }}">
                     @error('name')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="md:w-1/3 w-full">
-                    <label for="id_number" class="block text-gray-700 text-sm mb-1">ID No.</label>
+                    <label for="id_number" class="block text-gray-700 text-sm mb-1 mt-2">ID No.</label>
                     <input readonly type="number" id="id_number" name="id_number" class="form-input w-full rounded border-gray-300 @error('id_number') border-red-500 @enderror" value="{{ old('id_number') ?? $user->id_number }}">
                     @error('id_number')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="md:w-1/3 w-full">
-                    <label for="email" class="block text-gray-700 text-sm mb-1">Email</label>
+                    <label for="email" class="block text-gray-700 text-sm mb-1 mt-2">Email</label>
                     <input readonly type="text" id="email" name="email" class="form-input w-full rounded border-gray-300 @error('email') border-red-500 @enderror" value="{{ old('email') ?? $user->email }}">
                     @error('email')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -55,21 +74,21 @@
             </div>
             <div class="block md:flex align-center justify-between my-2 gap-5">
                 <div class="md:w-1/3 w-full">
-                    <label for="phone_number" class="block text-gray-700 text-sm mb-1">Phone number</label>
+                    <label for="phone_number" class="block text-gray-700 text-sm mb-1 mt-2">Phone number</label>
                     <input readonly type="number" id="phone_number" name="phone_number" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $user->phone_number }}">
                     @error('phone_number')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="md:w-1/3 w-full">
-                    <label for="address" class="block text-gray-700 text-sm mb-1">Address</label>
+                    <label for="address" class="block text-gray-700 text-sm mb-1 mt-2">Address</label>
                     <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $user->address }}">
                     @error('address')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="md:w-1/3 w-full">
-                    <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
+                    <label for="gender" class="block text-gray-700 text-sm mb-1 mt-2">Gender</label>
                     <input readonly type="text" id="gender" name="gender" class="form-input w-full rounded border-gray-300 @error('gender') border-red-500 @enderror" value="{{ old('gender') ?? $user->gender }}">
                     @error('gender')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -91,7 +110,7 @@
                 });
             });
         </script>
-         @if ($errors->has('name') || $errors->has('email') || $errors->has('phone_number') || $errors->has('address') || $errors->has('gender'))
+        @if ($errors->has('name') || $errors->has('email') || $errors->has('phone_number') || $errors->has('address') || $errors->has('gender'))
         <script>
             $(() => {
                 $('#editButton').click();
@@ -106,14 +125,14 @@
             @method('PUT')
             <div class="block md:flex align-center justify-between my-2 gap-5">
                 <div class="md:w-1/2 w-full">
-                    <label for="password" class="block text-gray-700 text-sm mb-1">Enter current password</label>
+                    <label for="password" class="block text-gray-700 text-sm mb-1 mt-2">Enter current password</label>
                     <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300 @error('password') border-red-500 @enderror" value="{{ old('password') }}">
                     @error('password')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="md:w-1/2 w-full">
-                    <label for="new_password" class="block text-gray-700 text-sm mb-1">Enter new password</label>
+                    <label for="new_password" class="block text-gray-700 text-sm mb-1 mt-2">Enter new password</label>
                     <input type="password" id="new_password" name="new_password" class="form-input w-full rounded border-gray-300 @error('new_password') border-red-500 @enderror" value="{{ old('new_password') }}">
                     @error('new_password')
                     <span class="text-red-500 text-sm">{{ $message }}</span>

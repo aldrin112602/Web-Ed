@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -158,4 +159,38 @@ class AdminController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+
+
+
+
+    public function updateProfilePhoto(Request $request)
+{
+    if (Auth::guard('admin')->check()) {
+        $user = Auth::guard('admin')->user();
+
+        // Validate the uploaded file
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Handle file upload and update user profile
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                Storage::disk('public')->delete($user->profile);
+            }
+
+            $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
+            $user->profile = $profilePhotoPath;
+            $user->save();
+
+            return redirect()->back()->with('success', 'Profile photo updated successfully!');
+        }
+    }
+
+    return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
+}
+
+
+    
 }
