@@ -7,7 +7,7 @@ php artisan storage:link
 
 ### run migration
 ```bash
-php artisan migration
+php artisan migrate
 ```
 
 ### start server (first terminal)
