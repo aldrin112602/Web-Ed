@@ -44,7 +44,10 @@
         </div>
 
         <hr class="my-3">
-        <p class="text-sm text-slate-500 mb-3">Showing 1 - 10 of 1,700 students</p>
+        @if ($account_list->count())
+        <p class="text-sm text-slate-500 mb-3">
+            Showing {{ $account_list->firstItem() }} - {{ $account_list->lastItem() }} of {{ $account_list->total() }} students
+        </p>
 
         <!-- Student List Table -->
         <div class="overflow-x-auto">
@@ -80,6 +83,13 @@
                 </tbody>
             </table>
         </div>
+        <!-- Display pagination links -->
+        <div class="w-full mb-4 mt-4">
+            {{ $account_list->links() }}
+        </div>
+        @else
+        <p>No records found.</p>
+        @endif
     </div>
 </div>
 @endsection

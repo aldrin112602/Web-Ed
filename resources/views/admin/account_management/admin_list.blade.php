@@ -53,18 +53,18 @@
                     </tr>
                 </thead>
                 @foreach($account_list as $list)
-                    <tr>
-                        <td class="p-3 text-center border">{{ $list->id_number }}</td>
-                        <td class="p-3 text-center border">{{ $list->username }}</td>
-                        <td class="p-3 text-center border">{{ $list->name }}</td>
-                        <td class="p-3 text-center border">{{ $list->gender }}</td>
-                        <td class="p-3 text-center border">{{ $list->address }}</td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    @endforeach
+                <tr>
+                    <td class="p-3 text-center border">{{ $list->id_number }}</td>
+                    <td class="p-3 text-center border">{{ $list->username }}</td>
+                    <td class="p-3 text-center border">{{ $list->name }}</td>
+                    <td class="p-3 text-center border">{{ $list->gender }}</td>
+                    <td class="p-3 text-center border">{{ $list->address }}</td>
+                    <td class="p-3 text-center border">
+                        <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
+                        <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                    </td>
+                </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>
