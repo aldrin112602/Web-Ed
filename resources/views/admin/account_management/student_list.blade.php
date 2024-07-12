@@ -17,6 +17,7 @@
                         <option value="" disabled selected hidden>Gender</option>
                         <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
                         <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                        <option value="All" {{ request()->get('gender') == "All" ? "selected" : "" }}>All</option>
                     </select>
                     <select name="strand" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
                         <option value="" disabled selected hidden>Strand</option>
@@ -24,11 +25,13 @@
                         <option value="ICT" {{ request()->get('strand') == 'ICT' ? 'selected' : '' }}>ICT</option>
                         <option value="HUMSS" {{ request()->get('strand') == 'HUMSS' ? 'selected' : '' }}>HUMSS</option>
                         <option value="HE" {{ request()->get('strand') == 'HE' ? 'selected' : '' }}>HE</option>
+                        <option value="All" {{ request()->get('strand') == "All" ? "selected" : "" }}>All</option>
                     </select>
-                    <select name="semester" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
-                        <option value="" disabled selected hidden>Semester</option>
-                        <option value="First Semester" {{ request()->get('semester') == 'First Semester' ? 'selected' : '' }}>First Semester</option>
-                        <option value="Second Semester" {{ request()->get('semester') == 'Second Semester' ? 'selected' : '' }}>Second Semester</option>
+                    <select name="grade" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                        <option value="" disabled selected hidden>Grade</option>
+                        <option value="11" {{ request()->get('grade') == '11' ? 'selected' : '' }}>Grade 11</option>
+                        <option value="12" {{ request()->get('grade') == '12' ? 'selected' : '' }}>Grade 12</option>
+                        <option value="All" {{ request()->get('grade') == "All" ? "selected" : "" }}>All</option>
                     </select>
                 </form>
             </div>
@@ -61,27 +64,29 @@
             <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="p-4 text-center border">ID No.</th>
-                        <th class="p-4 text-center border">Username</th>
-                        <th class="p-4 text-center border">Name</th>
-                        <th class="p-4 text-center border">Gender</th>
-                        <th class="p-4 text-center border">Strand</th>
-                        <th class="p-4 text-center border">Subjects</th>
-                        <th class="p-4 text-center border">Action</th>
+                        <th class="py-3 px-2 text-center border">ID No.</th>
+                        <th class="py-3 px-2 text-center border">Username</th>
+                        <th class="py-3 px-2 text-center border">Name</th>
+                        <th class="py-3 px-2 text-center border">Gender</th>
+                        <th class="py-3 px-2 text-center border">Grade</th>
+                        <th class="py-3 px-2 text-center border">Strand</th>
+                        <th class="py-3 px-2 text-center border">Subjects</th>
+                        <th class="py-3 px-2 text-center border">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($account_list as $list)
                     <tr>
-                        <td class="p-3 text-center border">{{ $list->id_number }}</td>
-                        <td class="p-3 text-center border">{{ $list->username }}</td>
-                        <td class="p-3 text-center border">{{ $list->name }}</td>
-                        <td class="p-3 text-center border">{{ $list->gender }}</td>
-                        <td class="p-3 text-center border">{{ $list->strand }}</td>
-                        <td class="p-3 text-center border">
+                        <td class="py-2 text-center border">{{ $list->id_number }}</td>
+                        <td class="py-2 text-center border">{{ $list->username }}</td>
+                        <td class="py-2 text-center border">{{ $list->name }}</td>
+                        <td class="py-2 text-center border">{{ $list->gender }}</td>
+                        <td class="py-2 text-center border">{{ $list->grade }}</td>
+                        <td class="py-2 text-center border">{{ $list->strand }}</td>
+                        <td class="py-2 text-center border">
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
                         </td>
-                        <td class="p-3 text-center border">
+                        <td class="py-2 text-center border">
                             <a href="{{ route('admin.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                             <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.student', $list->id) }}" method="POST" style="display: none;">
