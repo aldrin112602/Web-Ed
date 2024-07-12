@@ -8,27 +8,29 @@
         <hr class="my-3">
         <div class="block md:flex flex-col md:flex-row justify-between items-center mb-4 space-y-2 md:space-y-0 md:space-x-4">
             <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-                <div class="md:w-3/4 relative">
-                    <input type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
-                    <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
-                </div>
-                <select class=" py-2 border rounded-md">
-                    <option selected class="hidden" disabled value="">Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <select class="py-2 border rounded-md">
-                    <option selected class="hidden" disabled value="">Strand</option>
-                    <option value="ABM">ABM</option>
-                    <option value="ICT">ICT</option>
-                    <option value="HUMSS">HUMSS</option>
-                    <option value="HE">HE</option>
-                </select>
-                <select class="py-2 border rounded-md">
-                    <option selected class="hidden" disabled value="">Semester</option>
-                    <option value="First Semester">First Semester</option>
-                    <option value="Second Semester">Second Semester</option>
-                </select>
+                <form id="filterForm" method="GET" action="{{ route('admin.student_list') }}" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+                    <div class="md:w-3/4 relative">
+                        <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
+                        <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
+                    </div>
+                    <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                        <option value="" disabled selected hidden>Gender</option>
+                        <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                    </select>
+                    <select name="strand" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                        <option value="" disabled selected hidden>Strand</option>
+                        <option value="ABM" {{ request()->get('strand') == 'ABM' ? 'selected' : '' }}>ABM</option>
+                        <option value="ICT" {{ request()->get('strand') == 'ICT' ? 'selected' : '' }}>ICT</option>
+                        <option value="HUMSS" {{ request()->get('strand') == 'HUMSS' ? 'selected' : '' }}>HUMSS</option>
+                        <option value="HE" {{ request()->get('strand') == 'HE' ? 'selected' : '' }}>HE</option>
+                    </select>
+                    <select name="semester" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                        <option value="" disabled selected hidden>Semester</option>
+                        <option value="First Semester" {{ request()->get('semester') == 'First Semester' ? 'selected' : '' }}>First Semester</option>
+                        <option value="Second Semester" {{ request()->get('semester') == 'Second Semester' ? 'selected' : '' }}>Second Semester</option>
+                    </select>
+                </form>
             </div>
             <a href="{{ route('admin.create.student') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Student</a>
         </div>
@@ -51,7 +53,12 @@
 
         <!-- Student List Table -->
         <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200">
+            <script>
+                $(() => {
+                    $('#tbl_list tbody tr').addClass('tbl_tr');
+                })
+            </script>
+            <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="p-4 text-center border">ID No.</th>
@@ -59,7 +66,7 @@
                         <th class="p-4 text-center border">Name</th>
                         <th class="p-4 text-center border">Gender</th>
                         <th class="p-4 text-center border">Strand</th>
-                        <th class="p-4 text-center border">Subject</th>
+                        <th class="p-4 text-center border">Subjects</th>
                         <th class="p-4 text-center border">Action</th>
                     </tr>
                 </thead>
@@ -85,7 +92,7 @@
         </div>
         <!-- Display pagination links -->
         <div class="w-full mb-4 mt-4">
-            {{ $account_list->links() }}
+            {{ $account_list->appends(request()->query())->links() }}
         </div>
         @else
         <p>No records found.</p>
