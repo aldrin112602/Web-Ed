@@ -27,6 +27,7 @@ class StudentAccount extends Authenticatable
         'role',
         'profile',
         'phone_number',
+        'address'
     ];
     
     

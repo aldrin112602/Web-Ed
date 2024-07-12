@@ -91,23 +91,14 @@ class AdminController extends Controller
 
             // Validate the input
             $request->validate([
+                'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
                 'name' => ['required', 'string', 'max:255', new TwoWords],
+                'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
                 'gender' => 'required|string|in:Male,Female',
                 'address' => 'required|string|max:255',
-                'phone_number' => 'required|string|min:11|max:11'
+                'phone_number' => 'required|string|min:11|max:11',
             ]);
 
-            if ($user->id_number != $request->id_number) {
-                $request->validate([
-                    'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number'
-                ]);
-            }
-
-            if ($user->email != $request->email) {
-                $request->validate([
-                    'email' => 'required|email|unique:admin_accounts,email',
-                ]);
-            }
 
             $user->update([
                 'name' => $request->name,

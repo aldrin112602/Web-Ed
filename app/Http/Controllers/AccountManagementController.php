@@ -8,7 +8,8 @@ use App\Models\StudentAccount;
 use App\Models\AdminAccount;
 use App\Models\TeacherAccount;
 use App\Models\GuidanceAccount;
-
+use App\Rules\TwoWords;
+use Illuminate\Support\Facades\Storage;
 
 class AccountManagementController extends Controller
 {
@@ -107,20 +108,52 @@ class AccountManagementController extends Controller
 
     public function updateStudent(Request $request, $id) {
         if (Auth::guard('admin')->check()) {
-            $student = StudentAccount::findOrFail($id);
+            $user = StudentAccount::findOrFail($id);
 
-            // Validate and update student data
             $request->validate([
-                'name' => 'required|string|max:255',
-                
+                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'new_password' => 'nullable|string|min:6|max:255',
+                'parents_contact_number' => 'required|string|min:11|max:11',
+                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'phone_number' => 'required|string|min:11|max:11',
+                'address' => 'nullable|string|max:255',
+                'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
+                'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
             ]);
+    
+            $user->update([
+                'name' => $request->name,
+                'id_number' => $request->id_number,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'strand' => $request->strand,
+                'grade' => $request->grade,
+                'parents_contact_number' => $request->parents_contact_number,
+            ]);
+    
+            if ($request->filled('new_password')) {
+                $user->password = $request->new_password;
+            }
+ 
+            if ($request->hasFile('profile')) {
+                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                    Storage::disk('public')->delete($user->profile);
+                }
 
-            $student->update($request->all());
-
+                $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
+                $user->profile = $profilePhotoPath;
+                $user->profile = $profilePhotoPath;
+            }
+    
+            $user->save();
+    
             return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
         }
-
+    
         return redirect()->route('admin.login');
     }
+    
 }
 

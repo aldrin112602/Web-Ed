@@ -23,7 +23,8 @@ class TeacherAccount extends Authenticatable
         'password',
         'email',
         'profile',
-        'phone_number'
+        'phone_number',
+        'address'
     ];
 
     public function setPasswordAttribute($value)
