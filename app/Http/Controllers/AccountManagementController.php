@@ -21,14 +21,6 @@ class AccountManagementController extends Controller
 
             $query = StudentAccount::query();
 
-            // Apply search filter
-            if ($request->search != '') {
-                $query->where(function ($q) use ($request) {
-                    $q->where('name', 'like', '%' . $request->search . '%')
-                        ->orWhere('id_number', 'like', '%' . $request->search . '%')
-                        ->orWhere('username', 'like', '%' . $request->search . '%');
-                });
-            }
 
             // Apply gender filter
             if ($request->has('gender') && $request->gender != '') {
@@ -59,11 +51,30 @@ class AccountManagementController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function teacher_list()
+    public function teacher_list(Request $request)
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $account_list = TeacherAccount::paginate(10);
+
+            $query = TeacherAccount::query();
+
+            // Apply gender filter
+            if ($request->has('gender') && $request->gender != '' && $request->gender != 'All') {
+                $query->where('gender', $request->gender);
+            }
+
+            // Apply position filter
+            if ($request->has('position') && $request->position != '' && $request->position != 'All') {
+                $query->where('position', $request->position);
+            }
+
+            // Apply grade_handle filter
+            if ($request->has('grade_handle') && $request->grade_handle != '' && $request->grade_handle != 'All') {
+                $query->where('grade_handle', $request->grade_handle);
+            }
+
+            $account_list = $query->paginate(10);
+
             return view('admin.account_management.teacher_list', ['user' => $user, 'account_list' => $account_list]);
         }
 
