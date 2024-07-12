@@ -36,7 +36,7 @@ class AccountsTableSeeder extends Seeder
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
                 'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
-                'phone_number' => $faker->phoneNumber,
+                'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
 
@@ -49,7 +49,7 @@ class AccountsTableSeeder extends Seeder
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
                 'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
-                'phone_number' => $faker->phoneNumber,
+                'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
 
@@ -61,7 +61,7 @@ class AccountsTableSeeder extends Seeder
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
                 'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
-                'phone_number' => $faker->phoneNumber,
+                'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
 
@@ -76,7 +76,7 @@ class AccountsTableSeeder extends Seeder
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
                 'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
-                'phone_number' => $faker->phoneNumber,
+                'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
         }
