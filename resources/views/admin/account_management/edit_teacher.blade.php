@@ -37,49 +37,40 @@
 
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
-                <label for="strand" class="block text-gray-700 text-sm mb-1">Strand</label>
-                <select name="strand" id="strand" class="form-select w-full rounded border-gray-300 @error('strand') border-red-500 @enderror">
+                <label for="position" class="block text-gray-700 text-sm mb-1">Position</label>
+                <select name="position" id="position" class="form-select w-full rounded border-gray-300 @error('position') border-red-500 @enderror">
                     <option value="" disabled class="hidden" selected>-- Select one --</option>
-                    <option value="ABM" {{ (old('strand') ?? $teacher->strand) == "ABM" ? "selected" : ""  }}>ABM</option>
-                    <option value="ICT" {{ (old('strand') ?? $teacher->strand) == "ICT" ? "selected" : ""  }}>ICT</option>
-                    <option value="H.E" {{ (old('strand') ?? $teacher->strand) == "H.E" ? "selected" : ""  }}>HE</option>
-                    <option value="HUMSS" {{ (old('strand') ?? $teacher->strand) == "HUMSS" ? "selected" : ""  }}>HUMSS</option>
+                    <option value="Teacher 1" {{ (old('position') ?? $teacher->position) == "Teacher 1" ? "selected" : ""  }}>Teacher 1</option>
+                    <option value="Teacher 2" {{ (old('position') ?? $teacher->position) == "Teacher 2" ? "selected" : ""  }}>Teacher 2</option>
+                    <option value="Teacher 3" {{ (old('position') ?? $teacher->position) == "Teacher 3" ? "selected" : ""  }}>Teacher 3</option>
                 </select>
-                @error('strand')
+                @error('position')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
-
             <div class="md:w-1/2 w-full">
-                <label for="grade" class="block text-gray-700 text-sm mb-1">Grade</label>
-                <select name="grade" id="grade" class="form-select w-full rounded border-gray-300 @error('grade') border-red-500 @enderror">
+                <label for="grade_handle" class="block text-gray-700 text-sm mb-1">Grade handle</label>
+                <select name="grade_handle" id="grade_handle" class="form-select w-full rounded border-gray-300 @error('grade_handle') border-red-500 @enderror">
                     <option value="" disabled class="hidden" selected>-- Select one --</option>
-                    <option value="11" {{ (old('grade') ?? $teacher->grade) == "11" ? "selected" : ""  }}>Grade 11</option>
-                    <option value="12" {{ (old('grade') ?? $teacher->grade) == "12" ? "selected" : ""  }}>Grade 12</option>
+                    <optgroup label="G11">
+                        <option value="11 ABM" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 ABM" ? "selected" : "" }}>ABM</option>
+                        <option value="11 ICT" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 ICT" ? "selected" : "" }}>ICT</option>
+                        <option value="11 HUMSS" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HUMSS" ? "selected" : "" }}>HUMSS</option>
+                        <option value="11 HE" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HE" ? "selected" : "" }}>H.E</option>
+                    </optgroup>
+                    <optgroup label="G12">
+                        <option value="12 ABM" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 ABM" ? "selected" : "" }}>ABM</option>
+                        <option value="12 ICT" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 ICT" ? "selected" : "" }}>ICT</option>
+                        <option value="12 HUMSS" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 HUMSS" ? "selected" : "" }}>HUMSS</option>
+                        <option value="12 H.E" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 H.E" ? "selected" : "" }}>H.E</option>
+                    </optgroup>
                 </select>
-                @error('grade')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
 
-        </div>
-        <div class="block md:flex align-center justify-between my-2 gap-5">
-            <div class="md:w-1/2 w-full">
-                <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
-                <input type="tel" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') ?? $teacher->parents_contact_number }}">
-                @error('parents_contact_number')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="md:w-1/2 w-full">
-                <label for="address" class="block text-gray-700 text-sm mb-1">Address</label>
-                <input type="tel" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $teacher->address }}">
-                @error('parents_contact_number')
+                @error('grade_handle')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
         </div>
-
 
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
@@ -97,6 +88,14 @@
                 @enderror
             </div>
         </div>
+
+        <div class="w-full">
+                <label for="address" class="block text-gray-700 text-sm mb-1">Address</label>
+                <input type="tel" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $teacher->address }}">
+                @error('parents_contact_number')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
 
         <div class="py-6">
             <hr>
