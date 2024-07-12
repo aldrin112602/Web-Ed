@@ -42,14 +42,14 @@
             <table class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="border">ID No.</th>
-                        <th class="border">Username</th>
-                        <th class="border">Name</th>
-                        <th class="border">Gender</th>
-                        <th class="border">Position</th>
-                        <th class="border">Grade Handle</th>
-                        <th class="border">Subject</th>
-                        <th class="border">Action</th>
+                        <th class="border py-2">ID No.</th>
+                        <th class="border py-2">Username</th>
+                        <th class="border py-2">Name</th>
+                        <th class="border py-2">Gender</th>
+                        <th class="border py-2">Position</th>
+                        <th class="border py-2">Grade Handle</th>
+                        <th class="border py-2">Subject</th>
+                        <th class="border py-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,11 +62,11 @@
                         <td class="py-2 text-center border">{{ $list->position }}</td>
                         <td class="py-2 text-center border">{{ $list->grade_handle }}</td>
                         <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                            <button class="px-2 py-2 bg-indigo-600 text-white rounded-md">View</button>
                         </td>
                         <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            <button class="px-2 py-2 bg-blue-500 text-white rounded-md">Edit</button>
+                            <button class="px-2 py-2 bg-red-500 text-white rounded-md">Delete</button>
                         </td>
                     </tr>
                     @endforeach

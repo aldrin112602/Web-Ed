@@ -41,25 +41,25 @@
 
         <!-- Guidance List Table -->
         <div class="overflow-x-auto">
-            <table class="w-screen bg-white border border-gray-200">
+            <table class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="p-4 text-center border">ID No.</th>
-                        <th class="p-4 text-center border">Username</th>
-                        <th class="p-4 text-center border">Name</th>
-                        <th class="p-4 text-center border">Gender</th>
-                        <th class="p-4 text-center border">Address</th>
-                        <th class="p-4 text-center border">Action</th>
+                        <th class="py-2 text-center border">ID No.</th>
+                        <th class="py-2 text-center border">Username</th>
+                        <th class="py-2 text-center border">Name</th>
+                        <th class="py-2 text-center border">Gender</th>
+                        <!-- <th class="py-2 text-center border">Address</th> -->
+                        <th class="py-2 text-center border">Action</th>
                     </tr>
                 </thead>
                 @foreach($account_list as $list)
                 <tr>
-                    <td class="p-3 text-center border">{{ $list->id_number }}</td>
-                    <td class="p-3 text-center border">{{ $list->username }}</td>
-                    <td class="p-3 text-center border">{{ $list->name }}</td>
-                    <td class="p-3 text-center border">{{ $list->gender }}</td>
-                    <td class="p-3 text-center border">{{ $list->address }}</td>
-                    <td class="p-3 text-center border">
+                    <td class="py-2 text-center border">{{ $list->id_number }}</td>
+                    <td class="py-2 text-center border">{{ $list->username }}</td>
+                    <td class="py-2 text-center border">{{ $list->name }}</td>
+                    <td class="py-2 text-center border">{{ $list->gender }}</td>
+                    <!-- <td class="py-2 text-center border">{{ $list->address }}</td> -->
+                    <td class="py-2 text-center border">
                         <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
                         <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                     </td>
