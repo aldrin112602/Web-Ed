@@ -37,6 +37,10 @@
         <p class="text-sm text-slate-500 mb-3">Showing 1 - 100 of 1,700 teachers</p>
 
         <!-- Teacher List Table -->
+        <div class="w-30 mb-4">
+            <!-- Display pagination links -->
+            {{ $account_list->links() }}
+        </div>
         <div id="hotdog" class="overflow-x-auto w-full">
             <table class="w-screen bg-white border border-gray-200">
                 <thead class="bg-gray-100">
@@ -52,7 +56,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($account_list as $list)
+                    @foreach($account_list as $list)
                     <tr>
                         <td class="p-3 text-center border">{{ $list->id_number }}</td>
                         <td class="p-3 text-center border">{{ $list->username }}</td>
