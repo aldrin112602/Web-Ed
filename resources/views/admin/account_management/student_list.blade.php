@@ -64,6 +64,7 @@
             <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
+                        <th class="py-2 px-1 text-center border"><input type="checkbox" id="selectAll"></th>
                         <th class="py-3 px-2 text-center border">ID No.</th>
                         <th class="py-3 px-2 text-center border">Username</th>
                         <th class="py-3 px-2 text-center border">Name</th>
@@ -77,6 +78,7 @@
                 <tbody>
                     @foreach($account_list as $list)
                     <tr>
+                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
                         <td class="py-2 text-center border">{{ $list->id_number }}</td>
                         <td class="py-2 text-center border">{{ $list->username }}</td>
                         <td class="py-2 text-center border">{{ $list->name }}</td>

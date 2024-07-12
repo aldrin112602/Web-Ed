@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('gender');
             $table->string('strand');
+            $table->string('section')->nullable();
             $table->integer('grade');
             $table->string('parents_contact_number');
             $table->string('username')->unique();

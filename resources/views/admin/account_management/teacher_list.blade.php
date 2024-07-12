@@ -73,25 +73,27 @@
             <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="p-4 text-center border">ID No.</th>
-                        <th class="p-4 text-center border">Username</th>
-                        <th class="p-4 text-center border">Name</th>
-                        <th class="p-4 text-center border">Gender</th>
-                        <th class="p-4 text-center border">Position</th>
-                        <th class="p-4 text-center border">Grade handle</th>
-                        <th class="p-4 text-center border">Action</th>
+                        <th class="py-2 px-1 text-center border"><input type="checkbox" id="selectAll"></th>
+                        <th class="py-2 px-1 text-center border">ID No.</th>
+                        <th class="py-2 px-1 text-center border">Username</th>
+                        <th class="py-2 px-1 text-center border">Name</th>
+                        <th class="py-2 px-1 text-center border">Gender</th>
+                        <th class="py-2 px-1 text-center border">Position</th>
+                        <th class="py-2 px-1 text-center border">Grade handle</th>
+                        <th class="py-2 px-1 text-center border">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($account_list as $list)
                     <tr>
-                        <td class="p-3 text-center border">{{ $list->id_number }}</td>
-                        <td class="p-3 text-center border">{{ $list->username }}</td>
-                        <td class="p-3 text-center border">{{ $list->name }}</td>
-                        <td class="p-3 text-center border">{{ $list->gender }}</td>
-                        <td class="p-3 text-center border">{{ $list->position }}</td>
-                        <td class="p-3 text-center border">Grade {{ $list->grade_handle }}</td>
-                        <td class="p-3 text-center border">
+                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
+                        <td class="py-2 text-center border">{{ $list->id_number }}</td>
+                        <td class="py-2 text-center border">{{ $list->username }}</td>
+                        <td class="py-2 text-center border">{{ $list->name }}</td>
+                        <td class="py-2 text-center border">{{ $list->gender }}</td>
+                        <td class="py-2 text-center border">{{ $list->position }}</td>
+                        <td class="py-2 text-center border">Grade {{ $list->grade_handle }}</td>
+                        <td class="py-2 text-center border">
                             <a href="{{ route('admin.edit.teacher', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                             <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.teacher', $list->id) }}" method="POST" style="display: none;">
@@ -104,6 +106,7 @@
                 </tbody>
             </table>
         </div>
+        
         <!-- Display pagination links -->
         <div class="w-full mb-4 mt-4">
             {{ $account_list->appends(request()->query())->links() }}

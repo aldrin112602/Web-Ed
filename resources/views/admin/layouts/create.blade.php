@@ -296,6 +296,16 @@
         }
     </script>
 
+    <script>
+        let selectAll = document.getElementById('selectAll')
+        if (selectAll) {
+            selectAll.addEventListener('change', function() {
+                let checkboxes = document.querySelectorAll('.selectRow');
+                checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+            });
+        }
+    </script>
+
 </body>
 
 </html>
