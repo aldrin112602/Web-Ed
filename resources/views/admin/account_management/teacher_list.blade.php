@@ -39,32 +39,32 @@
             Showing {{ $account_list->firstItem() }} - {{ $account_list->lastItem() }} of {{ $account_list->total() }} teachers
         </p>
         <div id="hotdog" class="overflow-x-auto w-full">
-            <table class="w-screen bg-white border border-gray-200">
+            <table class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="p-4 text-center border">ID No.</th>
-                        <th class="p-4 text-center border">Username</th>
-                        <th class="p-4 text-center border">Name</th>
-                        <th class="p-4 text-center border">Gender</th>
-                        <th class="p-4 text-center border">Position</th>
-                        <th class="p-4 text-center border">Grade Handle</th>
-                        <th class="p-4 text-center border">Subject</th>
-                        <th class="p-4 text-center border">Action</th>
+                        <th class="border">ID No.</th>
+                        <th class="border">Username</th>
+                        <th class="border">Name</th>
+                        <th class="border">Gender</th>
+                        <th class="border">Position</th>
+                        <th class="border">Grade Handle</th>
+                        <th class="border">Subject</th>
+                        <th class="border">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($account_list as $list)
                     <tr>
-                        <td class="p-3 text-center border">{{ $list->id_number }}</td>
-                        <td class="p-3 text-center border">{{ $list->username }}</td>
-                        <td class="p-3 text-center border">{{ $list->name }}</td>
-                        <td class="p-3 text-center border">{{ $list->gender }}</td>
-                        <td class="p-3 text-center border">{{ $list->position }}</td>
-                        <td class="p-3 text-center border">{{ $list->grade_handle }}</td>
-                        <td class="p-3 text-center border">
+                        <td class="py-2 text-center border">{{ $list->id_number }}</td>
+                        <td class="py-2 text-center border">{{ $list->username }}</td>
+                        <td class="py-2 text-center border">{{ $list->name }}</td>
+                        <td class="py-2 text-center border">{{ $list->gender }}</td>
+                        <td class="py-2 text-center border">{{ $list->position }}</td>
+                        <td class="py-2 text-center border">{{ $list->grade_handle }}</td>
+                        <td class="py-2 text-center border">
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
                         </td>
-                        <td class="p-3 text-center border">
+                        <td class="py-2 text-center border">
                             <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
                             <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                         </td>
