@@ -31,33 +31,35 @@
 
         <hr class="my-3">
 
-        <h1 class="font-semibold text-slate-600">STUDENT LIST</h1>
+        <h1 class="font-semibold text-slate-600">TEACHER LIST</h1>
 
         <hr class="my-3">
-        <p class="text-sm text-slate-500 mb-3">Showing 1 - 10 of 1,700 students</p>
+        <p class="text-sm text-slate-500 mb-3">Showing 1 - 100 of 1,700 teachers</p>
 
-        <!-- Student List Table -->
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white border border-gray-200">
+        <!-- Teacher List Table -->
+        <div id="hotdog" class="overflow-x-auto w-full">
+            <table class="w-screen bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="p-4 text-center border">ID No.</th>
                         <th class="p-4 text-center border">Username</th>
                         <th class="p-4 text-center border">Name</th>
                         <th class="p-4 text-center border">Gender</th>
-                        <th class="p-4 text-center border">Strand</th>
+                        <th class="p-4 text-center border">Position</th>
+                        <th class="p-4 text-center border">Grade Handle</th>
                         <th class="p-4 text-center border">Subject</th>
                         <th class="p-4 text-center border">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Example Row -->
+                @foreach($account_list as $list)
                     <tr>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">Delgado, Mark H.</td>
-                        <td class="p-3 text-center border">Male</td>
-                        <td class="p-3 text-center border">ICT</td>
+                        <td class="p-3 text-center border">{{ $list->id_number }}</td>
+                        <td class="p-3 text-center border">{{ $list->username }}</td>
+                        <td class="p-3 text-center border">{{ $list->name }}</td>
+                        <td class="p-3 text-center border">{{ $list->gender }}</td>
+                        <td class="p-3 text-center border">{{ $list->position }}</td>
+                        <td class="p-3 text-center border">{{ $list->grade_handle }}</td>
                         <td class="p-3 text-center border">
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
                         </td>
@@ -66,77 +68,7 @@
                             <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">Delgado, Mark H.</td>
-                        <td class="p-3 text-center border">Male</td>
-                        <td class="p-3 text-center border">ICT</td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                        </td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">Delgado, Mark H.</td>
-                        <td class="p-3 text-center border">Male</td>
-                        <td class="p-3 text-center border">ICT</td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                        </td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">Delgado, Mark H.</td>
-                        <td class="p-3 text-center border">Male</td>
-                        <td class="p-3 text-center border">ICT</td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                        </td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">Delgado, Mark H.</td>
-                        <td class="p-3 text-center border">Male</td>
-                        <td class="p-3 text-center border">ICT</td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                        </td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">20240956</td>
-                        <td class="p-3 text-center border">Delgado, Mark H.</td>
-                        <td class="p-3 text-center border">Male</td>
-                        <td class="p-3 text-center border">ICT</td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                        </td>
-                        <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- Add more rows as needed -->
+                    @endforeach
                 </tbody>
             </table>
         </div>

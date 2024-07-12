@@ -15,7 +15,7 @@ class AccountManagementController extends Controller
     public function student_list() {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $account_list = StudentAccount::all();
+            $account_list = StudentAccount::paginate(10);
             return view('admin.account_management.student_list', ['user' => $user, 'account_list' => $account_list]);
         }
 
@@ -25,7 +25,7 @@ class AccountManagementController extends Controller
     public function admin_list() {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $account_list = AdminAccount::all();
+            $account_list = AdminAccount::paginate(10);
             return view('admin.account_management.admin_list', ['user' => $user, 'account_list' => $account_list]);
         }
 
@@ -35,7 +35,7 @@ class AccountManagementController extends Controller
     public function teacher_list() {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $account_list = TeacherAccount::all();
+            $account_list = TeacherAccount::paginate(10);
             return view('admin.account_management.teacher_list', ['user' => $user, 'account_list' => $account_list]);
         }
 
@@ -45,7 +45,7 @@ class AccountManagementController extends Controller
     public function guidance_list() {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $account_list = TeacherAccount::all();
+            $account_list = TeacherAccount::paginate(10);
             return view('admin.account_management.guidance_list', ['user' => $user, 'account_list' => $account_list]);
         }
 

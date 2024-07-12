@@ -11,7 +11,7 @@
     @vite('resources/css/app.css')
 
     <style>
-        ::-webkit-scrollbar {
+        html::-webkit-scrollbar {
             display: none;
         }
 
