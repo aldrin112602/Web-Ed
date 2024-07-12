@@ -112,7 +112,7 @@ class AccountManagementController extends Controller
             // Validate and update student data
             $request->validate([
                 'name' => 'required|string|max:255',
-                // Add more validation rules as needed
+                
             ]);
 
             $student->update($request->all());

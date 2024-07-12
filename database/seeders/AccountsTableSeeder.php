@@ -30,12 +30,11 @@ class AccountsTableSeeder extends Seeder
                 'name' => $faker->name,
                 'gender' => $faker->randomElement(['Male', 'Female']),
                 'strand' => $faker->randomElement(['ICT', 'ABM', 'HE', 'HUMSS']),
-                'grade' => $faker->numberBetween(1, 12),
-                'parents_contact_number' => $faker->phoneNumber,
+                'grade' => $faker->randomElement([11, 12]),
+                'parents_contact_number' => '09' . $faker->unique()->numerify('#########'),
                 'username' => $faker->userName,
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
-                'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
                 'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
@@ -48,7 +47,6 @@ class AccountsTableSeeder extends Seeder
                 'username' => $faker->userName,
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
-                'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
                 'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
@@ -60,7 +58,6 @@ class AccountsTableSeeder extends Seeder
                 'username' => $faker->userName,
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
-                'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
                 'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
@@ -75,7 +72,6 @@ class AccountsTableSeeder extends Seeder
                 'username' => $faker->userName,
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
-                'profile' => 'profiles/CB3weYefVHn3ZEGU9autkG8mhIGhgdyLOXUFLdws.jpg',
                 'phone_number' => '09' . $faker->unique()->numerify('#########'),
                 'address' => $faker->address,
             ]);
