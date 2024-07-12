@@ -72,6 +72,13 @@ Route::prefix('admin')->group(function () {
             Route::delete('student/{id}', [AccountManagement::class, 'deleteStudent'])->name('admin.delete.student');
             Route::get('student/{id}/edit', [AccountManagement::class, 'editStudent'])->name('admin.edit.student');
             Route::put('student/{id}', [AccountManagement::class, 'updateStudent'])->name('admin.update.student');
+
+
+
+            // Specific routes for Teacher edit and delete
+            Route::delete('teacher/{id}', [AccountManagement::class, 'deleteTeacher'])->name('admin.delete.teacher');
+            Route::get('teacher/{id}/edit', [AccountManagement::class, 'editTeacher'])->name('admin.edit.teacher');
+            Route::put('teacher/{id}', [AccountManagement::class, 'updateTeacher'])->name('admin.update.teacher');
         });
         // End account management
 

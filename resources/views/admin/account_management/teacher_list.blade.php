@@ -90,11 +90,11 @@
                         <td class="p-3 text-center border">{{ $list->name }}</td>
                         <td class="p-3 text-center border">{{ $list->gender }}</td>
                         <td class="p-3 text-center border">{{ $list->position }}</td>
-                        <td class="p-3 text-center border">{{ $list->grade_handle }}</td>
+                        <td class="p-3 text-center border">Grade {{ $list->grade_handle }}</td>
                         <td class="p-3 text-center border">
-                            <a href="{{ route('admin.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
+                            <a href="{{ route('admin.edit.teacher', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                            <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.student', $list->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.teacher', $list->id) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
