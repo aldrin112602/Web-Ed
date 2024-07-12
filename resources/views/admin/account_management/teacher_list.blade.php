@@ -34,13 +34,10 @@
         <h1 class="font-semibold text-slate-600">TEACHER LIST</h1>
 
         <hr class="my-3">
-        <p class="text-sm text-slate-500 mb-3">Showing 1 - 100 of 1,700 teachers</p>
-
-        <!-- Teacher List Table -->
-        <div class="w-30 mb-4">
-            <!-- Display pagination links -->
-            {{ $account_list->links() }}
-        </div>
+        @if ($account_list->count())
+        <p class="text-sm text-slate-500 mb-3">
+            Showing {{ $account_list->firstItem() }} - {{ $account_list->lastItem() }} of {{ $account_list->total() }} teachers
+        </p>
         <div id="hotdog" class="overflow-x-auto w-full">
             <table class="w-screen bg-white border border-gray-200">
                 <thead class="bg-gray-100">
@@ -76,6 +73,13 @@
                 </tbody>
             </table>
         </div>
+        <!-- Display pagination links -->
+        <div class="w-full mb-4 mt-4">
+            {{ $account_list->links() }}
+        </div>
+        @else
+        <p>No records found.</p>
+        @endif
     </div>
 </div>
 @endsection
