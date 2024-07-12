@@ -80,7 +80,7 @@
                         </div>
                         <div class="md:w-1/2 w-full">
                                 <label for="phone_number" class="block text-gray-700 text-sm mb-1">Phone number</label>
-                                <input type="phone_number" id="phone_number" name="tel" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
+                                <input type="tel" id="phone_number" name="phone_number" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
                                 @error('phone_number')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror

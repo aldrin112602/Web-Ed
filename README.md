@@ -83,3 +83,11 @@ Run migrations to set up your database:
 ```bash
 php artisan migrate
 ```
+
+### Run the Seeder
+
+Run the seeder to populate the database with the new data:
+
+```bash
+php artisan db:seed
+```
