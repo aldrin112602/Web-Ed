@@ -79,4 +79,48 @@ class AccountManagementController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+
+
+    public function deleteStudent($id) {
+        if (Auth::guard('admin')->check()) {
+            $student = StudentAccount::findOrFail($id);
+            $student->delete();
+
+            return redirect()->route('admin.student_list')->with('success', 'Student deleted successfully');
+        }
+
+        return redirect()->route('admin.login');
+    }
+
+    public function editStudent($id) {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            $student = StudentAccount::findOrFail($id);
+
+            return view('admin.account_management.edit_student', ['user' => $user, 'student' => $student]);
+        }
+
+        return redirect()->route('admin.login');
+    }
+
+
+    public function updateStudent(Request $request, $id) {
+        if (Auth::guard('admin')->check()) {
+            $student = StudentAccount::findOrFail($id);
+
+            // Validate and update student data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                // Add more validation rules as needed
+            ]);
+
+            $student->update($request->all());
+
+            return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
+        }
+
+        return redirect()->route('admin.login');
+    }
 }
+

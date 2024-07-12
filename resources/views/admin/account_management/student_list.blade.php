@@ -82,8 +82,12 @@
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
                         </td>
                         <td class="p-3 text-center border">
-                            <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            <a href="{{ route('admin.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
+                            <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.student', $list->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                         </td>
                     </tr>
                     @endforeach

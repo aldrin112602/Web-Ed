@@ -62,11 +62,16 @@ Route::prefix('admin')->group(function () {
 
         // for account management
         Route::prefix('account_management')->group(function () {
-            // student list
+            // Account list
             Route::get('student_list', [AccountManagement::class, 'student_list'])->name('admin.student_list');
             Route::get('admin_list', [AccountManagement::class, 'admin_list'])->name('admin.admin_list');
             Route::get('teacher_list', [AccountManagement::class, 'teacher_list'])->name('admin.teacher_list');
             Route::get('guidance_list', [AccountManagement::class, 'guidance_list'])->name('admin.guidance_list');
+
+             // Specific routes for student edit and delete
+            Route::delete('student/{id}', [AccountManagement::class, 'deleteStudent'])->name('admin.delete.student');
+            Route::get('student/{id}/edit', [AccountManagement::class, 'editStudent'])->name('admin.edit.student');
+            Route::put('student/{id}', [AccountManagement::class, 'updateStudent'])->name('admin.update.student');
         });
         // End account management
 
