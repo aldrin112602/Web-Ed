@@ -3,13 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\AdminController as Admin;
-use App\Http\Controllers\TeacherController as Teacher;
-use App\Http\Controllers\StudentController as Student;
-use App\Http\Controllers\GuidanceController as Guidance;
+// use App\Http\Controllers\TeacherController as Teacher;
+// use App\Http\Controllers\StudentController as Student;
+// use App\Http\Controllers\GuidanceController as Guidance;
 use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
-use App\Exports\AdminsExport;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\ExcelController;
 
 // for test only
 // Route::get('/create', function() {
@@ -22,6 +21,7 @@ use Maatwebsite\Excel\Facades\Excel;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/login', [PublicController::class, 'login'])->name('login');
 
 // Admin routes
@@ -75,22 +75,15 @@ Route::prefix('admin')->group(function () {
             Route::get('student/{id}/edit', [AccountManagement::class, 'editStudent'])->name('admin.edit.student');
             Route::put('student/{id}', [AccountManagement::class, 'updateStudent'])->name('admin.update.student');
 
-
-
             // Specific routes for Teacher edit and delete
             Route::delete('teacher/{id}', [AccountManagement::class, 'deleteTeacher'])->name('admin.delete.teacher');
             Route::get('teacher/{id}/edit', [AccountManagement::class, 'editTeacher'])->name('admin.edit.teacher');
             Route::put('teacher/{id}', [AccountManagement::class, 'updateTeacher'])->name('admin.update.teacher');
 
-
-
-
-
             // Specific routes for Admin edit and delete
             Route::delete('admin/{id}', [AccountManagement::class, 'deleteAdmin'])->name('admin.delete.admin');
             Route::get('admin/{id}/edit', [AccountManagement::class, 'editAdmin'])->name('admin.edit.admin');
             Route::put('admin/{id}', [AccountManagement::class, 'updateAdmin'])->name('admin.update.admin');
-
 
 
             // Specific routes for Guidance edit and delete
@@ -99,6 +92,14 @@ Route::prefix('admin')->group(function () {
             Route::put('guidance/{id}', [AccountManagement::class, 'updateGuidance'])->name('admin.update.guidance');
         });
         // End account management
+
+
+        // Accounts exporting routes
+        Route::get('export/admin_list', [ExcelController::class, 'exportAdminList'])->name('admin.export.admin');
+        Route::get('export/student_list', [ExcelController::class, 'exportStudentList'])->name('admin.export.student');
+        Route::get('export/guidance_list', [ExcelController::class, 'exportGuidanceList'])->name('admin.export.guidance');
+        Route::get('export/teacher_list', [ExcelController::class, 'exportTeacherList'])->name('admin.export.teacher');
+        // End Accounts exporting routes
 
     });
 });

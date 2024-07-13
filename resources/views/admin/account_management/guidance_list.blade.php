@@ -30,7 +30,7 @@
             <h1 class="font-semibold text-slate-600">GUIDANCE LIST</h1>
             <div class="flex gap-2">
                 <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
-                <button class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</button>
+                <a href="{{ route('admin.export.guidance') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
             </div>
         </div>
 

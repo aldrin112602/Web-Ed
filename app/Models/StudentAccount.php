@@ -19,6 +19,7 @@ class StudentAccount extends Authenticatable
         'name',
         'gender',
         'strand',
+        'section',
         'grade',
         'parents_contact_number',
         'username',
