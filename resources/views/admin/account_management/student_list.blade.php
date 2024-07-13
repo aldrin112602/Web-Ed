@@ -43,7 +43,7 @@
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">STUDENT LIST</h1>
             <div class="flex gap-2">
-                <button class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
                 <button class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</button>
             </div>
         </div>
@@ -55,7 +55,7 @@
         </p>
 
         <!-- Student List Table -->
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto" id="tablePreview">
             <script>
                 $(() => {
                     $('#tbl_list tbody tr').addClass('tbl_tr');

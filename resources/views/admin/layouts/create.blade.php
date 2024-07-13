@@ -20,6 +20,38 @@
         * {
             scroll-behavior: smooth;
         }
+
+        @media print {
+            #tablePreview {
+                position: fixed;
+                top: 0;
+                left: 0;
+                background: white;
+                z-index: 100;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            #tablePreview ._header {
+                display: block !important;
+            }
+
+            #tablePreview h2 {
+                display: block !important;
+            }
+
+            #tablePreview table tr td:first-child,
+            #tablePreview table tr th:first-child,
+            #tablePreview table tr td:last-child,
+            #tablePreview table tr th:last-child {
+                display: none !important;
+            }
+
+            #tablePreview table tr input[type="checkbox"]:not(:checked)+.ellipsis-text {
+                display: none !important;
+            }
+
+        }
     </style>
 </head>
 

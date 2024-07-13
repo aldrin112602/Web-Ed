@@ -8,6 +8,8 @@ use App\Http\Controllers\StudentController as Student;
 use App\Http\Controllers\GuidanceController as Guidance;
 use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
+use App\Exports\AdminsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 // for test only
 // Route::get('/create', function() {
