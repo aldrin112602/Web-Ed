@@ -1,6 +1,6 @@
 @extends('admin.layouts.create')
 
-@section('title', 'Account Management | Student List')
+@section('title', 'Account Management | Guidance List')
 @section('content')
 <div>
     <div class="container mx-auto p-4 bg-white">
@@ -8,25 +8,20 @@
         <hr class="my-3">
         <div class="block md:flex flex-col md:flex-row justify-between items-center mb-4 space-y-2 md:space-y-0 md:space-x-4">
             <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-                <div class="md:w-3/4 relative">
-                    <input type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
-                    <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
-                </div>
-                <select class=" py-2 border rounded-md">
-                    <option selected class="hidden" disabled value="">Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-                <select class="py-2 border rounded-md">
-                    <option>Strand</option>
-                </select>
-                <select class="py-2 border rounded-md">
-                    <option selected class="hidden" disabled value="">Semester</option>
-                    <option value="First Semester">First Semester</option>
-                    <option value="Second Semester">Second Semester</option>
-                </select>
+                <form id="filterForm" method="GET" action="{{ route('admin.guidance_list') }}" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+                    <div class="md:w-3/4 relative">
+                        <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
+                        <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
+                    </div>
+                    <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                        <option value="" disabled selected hidden>Gender</option>
+                        <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                        <option value="All" {{ request()->get('gender') == "All" ? "selected" : "" }}>All</option>
+                    </select>
+                </form>
             </div>
-            <a href="{{ route('admin.create.guidance') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md">Add Guidance</a>
+            <a href="{{ route('admin.create.guidance') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Guidance</a>
         </div>
 
         <hr class="my-3">
@@ -42,44 +37,54 @@
         <hr class="my-3">
         @if ($account_list->count())
         <p class="text-sm text-slate-500 mb-3">
-            Showing {{ $account_list->firstItem() }} - {{ $account_list->lastItem() }} of {{ $account_list->total() }} guidances
+            Showing {{ $account_list->firstItem() }} - {{ $account_list->lastItem() }} of {{ $account_list->total() }} admins
         </p>
 
         <!-- Guidance List Table -->
         <div class="overflow-x-auto" id="tablePreview">
-            <table class="min-w-full bg-white border border-gray-200">
+            <script>
+                $(() => {
+                    $('#tbl_list tbody tr').addClass('tbl_tr');
+                })
+            </script>
+            <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="py-2 px-1 text-center border"><input type="checkbox" id="selectAll"></th>
-                        <th class="py-2 text-center border">ID No.</th>
-                        <th class="py-2 text-center border">Username</th>
-                        <th class="py-2 text-center border">Name</th>
-                        <th class="py-2 text-center border">Gender</th>
-                        <!-- <th class="py-2 text-center border">Address</th> -->
-                        <th class="py-2 text-center border">Action</th>
+                        <th class="py-3 px-2 text-center border">ID No.</th>
+                        <th class="py-3 px-2 text-center border">Username</th>
+                        <th class="py-3 px-2 text-center border">Name</th>
+                        <th class="py-3 px-2 text-center border">Gender</th>
+                        <th class="py-3 px-2 text-center border">Phone Number</th>
+                        <th class="py-3 px-2 text-center border">Action</th>
                     </tr>
                 </thead>
-                @foreach($account_list as $list)
-                <tr>
-                    <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
-                    <td class="py-2 text-center border">{{ $list->id_number }}</td>
-                    <td class="py-2 text-center border">{{ $list->username }}</td>
-                    <td class="py-2 text-center border">{{ $list->name }}</td>
-                    <td class="py-2 text-center border">{{ $list->gender }}</td>
-                    <!-- <td class="py-2 text-center border">{{ $list->address }}</td> -->
-                    <td class="py-2 text-center border">
-                        <button class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</button>
-                        <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                    </td>
-                </tr>
-                @endforeach
+                <tbody>
+                    @foreach($account_list as $list)
+                    <tr>
+                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
+                        <td class="py-2 text-center border">{{ $list->id_number }}</td>
+                        <td class="py-2 text-center border">{{ $list->username }}</td>
+                        <td class="py-2 text-center border">{{ $list->name }}</td>
+                        <td class="py-2 text-center border">{{ $list->gender }}</td>
+                        <td class="py-2 text-center border">{{ $list->phone_number }}</td>
+                        <td class="py-2 text-center border">
+                        <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                            <a href="{{ route('admin.edit.guidance', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
+                            <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.guidance', $list->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
-
         <!-- Display pagination links -->
         <div class="w-full mb-4 mt-4">
-            {{ $account_list->links() }}
+            {{ $account_list->appends(request()->query())->links() }}
         </div>
         @else
         <p>No records found.</p>

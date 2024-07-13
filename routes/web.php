@@ -70,7 +70,7 @@ Route::prefix('admin')->group(function () {
             Route::get('teacher_list', [AccountManagement::class, 'teacher_list'])->name('admin.teacher_list');
             Route::get('guidance_list', [AccountManagement::class, 'guidance_list'])->name('admin.guidance_list');
 
-             // Specific routes for student edit and delete
+            // Specific routes for student edit and delete
             Route::delete('student/{id}', [AccountManagement::class, 'deleteStudent'])->name('admin.delete.student');
             Route::get('student/{id}/edit', [AccountManagement::class, 'editStudent'])->name('admin.edit.student');
             Route::put('student/{id}', [AccountManagement::class, 'updateStudent'])->name('admin.update.student');
@@ -81,6 +81,22 @@ Route::prefix('admin')->group(function () {
             Route::delete('teacher/{id}', [AccountManagement::class, 'deleteTeacher'])->name('admin.delete.teacher');
             Route::get('teacher/{id}/edit', [AccountManagement::class, 'editTeacher'])->name('admin.edit.teacher');
             Route::put('teacher/{id}', [AccountManagement::class, 'updateTeacher'])->name('admin.update.teacher');
+
+
+
+
+
+            // Specific routes for Admin edit and delete
+            Route::delete('admin/{id}', [AccountManagement::class, 'deleteAdmin'])->name('admin.delete.admin');
+            Route::get('admin/{id}/edit', [AccountManagement::class, 'editAdmin'])->name('admin.edit.admin');
+            Route::put('admin/{id}', [AccountManagement::class, 'updateAdmin'])->name('admin.update.admin');
+
+
+
+            // Specific routes for Guidance edit and delete
+            Route::delete('guidance/{id}', [AccountManagement::class, 'deleteGuidance'])->name('admin.delete.guidance');
+            Route::get('guidance/{id}/edit', [AccountManagement::class, 'editGuidance'])->name('admin.edit.guidance');
+            Route::put('guidance/{id}', [AccountManagement::class, 'updateGuidance'])->name('admin.update.guidance');
         });
         // End account management
 
