@@ -24,12 +24,13 @@ class AccountsTableSeeder extends Seeder
         $faker = Faker::create();
         $defaultPassword = 'password';
 
-        foreach (range(1, 100) as $index) {
+        foreach (range(1, 60) as $index) {
             Student::create([
                 'id_number' => $faker->unique()->numerify('##########'),
                 'name' => $faker->name,
                 'gender' => $faker->randomElement(['Male', 'Female']),
                 'strand' => $faker->randomElement(['ICT', 'ABM', 'HE', 'HUMSS']),
+                'section' => $faker->randomElement(['A', 'B', 'C', 'D', 'E']),
                 'grade' => $faker->randomElement([11, 12]),
                 'parents_contact_number' => '09' . $faker->unique()->numerify('#########'),
                 'username' => $faker->userName,
