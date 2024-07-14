@@ -1,0 +1,94 @@
+@extends('admin.layouts.create')
+
+@section('title', 'Subject List')
+@section('content')
+<div>
+    <div class="container mx-auto p-4 bg-white">
+        <!-- Search and Filters -->
+        <hr class="my-3">
+        <div class="block md:flex flex-col md:flex-row justify-between items-center mb-4 space-y-2 md:space-y-0 md:space-x-4">
+            <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+                <form id="filterForm" method="GET" action="{{ route('admin.subject_list') }}" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+                    <div class="md:w-3/4 relative">
+                        <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
+                        <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
+                    </div>
+                    <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                        <option value="" disabled selected hidden>Gender</option>
+                        <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                        <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                        <option value="All" {{ request()->get('gender') == "All" ? "selected" : "" }}>All</option>
+                    </select>
+                </form>
+            </div>
+            <a href="{{ route('admin.create.subject') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Subject</a>
+        </div>
+
+        <hr class="my-3">
+
+        <div class="flex items-center justify-between">
+            <h1 class="font-semibold text-slate-600">SUBJECT LIST</h1>
+            <div class="flex gap-2">
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
+                <a href="{{ route('admin.export.subject') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
+            </div>
+        </div>
+
+        <hr class="my-3">
+        @if ($subject_list->count())
+        <p class="text-sm text-slate-500 mb-3">
+            Showing {{ $subject_list->firstItem() }} - {{ $subject_list->lastItem() }} of {{ $subject_list->total() }} admins
+        </p>
+
+        <!-- Admin List Table -->
+        <div class="overflow-x-auto" id="tablePreview">
+            <script>
+                $(() => {
+                    $('#tbl_list tbody tr').addClass('tbl_tr');
+                })
+            </script>
+            <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="py-2 px-1 text-center border"><input type="checkbox" id="selectAll"></th>
+                        <th class="py-3 px-2 text-center border">ID No.</th>
+                        <th class="py-3 px-2 text-center border">Username</th>
+                        <th class="py-3 px-2 text-center border">Name</th>
+                        <th class="py-3 px-2 text-center border">Gender</th>
+                        <th class="py-3 px-2 text-center border">Phone Number</th>
+                        <th class="py-3 px-2 text-center border">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($subject_list as $list)
+                    <tr>
+                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
+                        <td class="py-2 text-center border">{{ $list->id_number }}</td>
+                        <td class="py-2 text-center border">{{ $list->username }}</td>
+                        <td class="py-2 text-center border">{{ $list->name }}</td>
+                        <td class="py-2 text-center border">{{ $list->gender }}</td>
+                        <td class="py-2 text-center border">{{ $list->phone_number }}</td>
+                        <td class="py-2 text-center border">
+                        <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                            <a href="{{ route('admin.edit.subject', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
+                            <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.subject', $list->id) }}" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <!-- Display pagination links -->
+        <div class="w-full mb-4 mt-4">
+            {{ $subject_list->appends(request()->query())->links() }}
+        </div>
+        @else
+        <p>No records found.</p>
+        @endif
+    </div>
+</div>
+@endsection
