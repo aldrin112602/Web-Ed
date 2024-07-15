@@ -50,7 +50,7 @@ Route::prefix('admin')->group(function () {
             Route::get('create', [SubjectController::class, 'viewCreateSubject'])->name('admin.create.subject');
             Route::post('create', [SubjectController::class, 'createSubject'])->name('admin.handleCreate.subject');
             Route::delete('{id}', [SubjectController::class, 'deleteSubject'])->name('admin.delete.subject');
-            Route::get('{id}/edit', [SubjectController::class, 'editSubject'])->name('admin.edit.subject');
+            Route::get('{id}/edit', [SubjectController::class, 'viewEditSubject'])->name('admin.edit.subject');
             Route::put('{id}', [SubjectController::class, 'updateSubject'])->name('admin.update.subject');
         });
 

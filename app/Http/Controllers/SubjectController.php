@@ -97,13 +97,13 @@ class SubjectController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function editSubject($id)
+    public function viewEditSubject($id)
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
             $subject = SubjectModel::findOrFail($id);
 
-            return view('admin.subject.subject_list', ['user' => $user, 'subject' => $subject]);
+            return view('admin.subject.edit', ['user' => $user, 'subject' => $subject]);
         }
 
         return redirect()->route('admin.login');
@@ -129,7 +129,7 @@ class SubjectController extends Controller
 
             $user->save();
 
-            return redirect()->route('admin.subject.subject_list')->with('success', 'Subject updated successfully');
+            return redirect()->route('admin.subject_list')->with('success', 'Subject updated successfully');
         }
 
         return redirect()->route('admin.login');

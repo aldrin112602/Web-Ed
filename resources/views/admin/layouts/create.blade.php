@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-3 {{ request()->is('admin/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                <div class="p-3 {{ (request()->is('admin/subject/list') || request()->is('admin/subject/create') || request()->is('admin/subject/{id}/edit')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('admin.subject_list') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bullhorn"></i></i>Subjects</a>
                 </div>
                 <div class="p-3 {{ request()->is('admin/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
