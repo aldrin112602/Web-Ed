@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController as Admin;
 use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\SubjectController;
 
 // for test only
 // Route::get('/create', function() {
@@ -58,6 +59,12 @@ Route::prefix('admin')->group(function () {
         Route::post('create/student', [AdminCreate::class, 'createStudent'])->name('admin.handleCreate.student');
         // End Admin create accounts (admin/teacher/guidance/student)
 
+        // Admin subjects
+        Route::get('subject/subject_list', [SubjectController::class, 'subject_list'])->name('admin.subject_list');
+        Route::get('subject/create/subject', [SubjectController::class, 'createSubject'])->name('admin.create.subject');
+        // End Admin subjects
+
+
         // logout route
         Route::post('logout', [Admin::class, 'logout'])->name('admin.logout');
 
@@ -94,12 +101,24 @@ Route::prefix('admin')->group(function () {
         // End account management
 
 
+        // subject management
+        Route::prefix('subject')->group(function () {
+            Route::delete('subject/{id}', [SubjectController::class, 'deleteSubject'])->name('admin.delete.subject');
+            Route::get('subject/{id}/edit', [SubjectController::class, 'editSubject'])->name('admin.edit.subject');
+            Route::put('subject/{id}', [SubjectController::class, 'updateSubject'])->name('admin.update.subject');
+        });
+
+
         // Accounts exporting routes
         Route::get('export/admin_list', [ExcelController::class, 'exportAdminList'])->name('admin.export.admin');
         Route::get('export/student_list', [ExcelController::class, 'exportStudentList'])->name('admin.export.student');
         Route::get('export/guidance_list', [ExcelController::class, 'exportGuidanceList'])->name('admin.export.guidance');
         Route::get('export/teacher_list', [ExcelController::class, 'exportTeacherList'])->name('admin.export.teacher');
         // End Accounts exporting routes
+
+
+        // Exporting subject
+        Route::get('export/subject_list', [ExcelController::class, 'exportSubjectList'])->name('admin.export.subject');
 
     });
 });

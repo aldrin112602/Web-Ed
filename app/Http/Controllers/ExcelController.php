@@ -9,6 +9,7 @@ use App\Models\StudentAccount;
 use App\Models\AdminAccount;
 use App\Models\TeacherAccount;
 use App\Models\GuidanceAccount;
+use App\Models\SubjectModel;
 
 class ExcelController extends Controller
 {
@@ -192,6 +193,45 @@ class ExcelController extends Controller
 
         $writer = new Xlsx($spreadsheet);
         $fileName = 'teacher_list_' . uniqid() . '.xlsx';
+
+        $response = new StreamedResponse(function () use ($writer) {
+            $writer->save('php://output');
+        });
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
+    }
+
+
+    public function exportSubjectList()
+    {
+        $subjects = SubjectModel::all();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set the header
+        $sheet->setCellValue('A1', 'Subject');
+        $sheet->setCellValue('B1', 'Teacher');
+        $sheet->setCellValue('C1', 'Time');
+        $sheet->setCellValue('D1', 'Created at');
+        $sheet->setCellValue('E1', 'Updated at');
+
+        // Populate data
+        $row = 2;
+        foreach ($subjects as $subject) {
+            $sheet->setCellValue('A' . $row, $subject->subject);
+            $sheet->setCellValue('B' . $row, $subject->teacher);
+            $sheet->setCellValue('C' . $row, $subject->time);
+            $sheet->setCellValue('D' . $row, $subject->created_at);
+            $sheet->setCellValue('E' . $row, $subject->updated_at);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'subject_list_' . uniqid() . '.xlsx';
 
         $response = new StreamedResponse(function () use ($writer) {
             $writer->save('php://output');
