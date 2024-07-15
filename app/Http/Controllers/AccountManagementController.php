@@ -343,11 +343,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
-                'grade_handle' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:guidance_accounts,email,' . $user->id,
-                'gender' => 'required|string|in:Male,Female',
-                'position' => 'required|string|max:255',
-                'role' => 'required|string|max:255',
             ]);
 
             // Update user attributes
@@ -358,9 +354,6 @@ class AccountManagementController extends Controller
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
                 'gender' => $request->gender,
-                'grade_handle' => $request->grade_handle,
-                'position' => $request->position,
-                'role' => $request->role,
             ]);
 
             // Handle new password if provided
@@ -438,11 +431,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
-                'grade_handle' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
-                'gender' => 'required|string|in:Male,Female',
-                'position' => 'required|string|max:255',
-                'role' => 'required|string|max:255',
             ]);
 
             // Update user attributes
@@ -453,9 +442,6 @@ class AccountManagementController extends Controller
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
                 'gender' => $request->gender,
-                'grade_handle' => $request->grade_handle,
-                'position' => $request->position,
-                'role' => $request->role,
             ]);
 
             // Handle new password if provided
