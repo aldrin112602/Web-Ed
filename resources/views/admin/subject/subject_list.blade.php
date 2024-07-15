@@ -54,8 +54,6 @@
                         <th class="py-3 px-2 text-center border">Subject</th>
                         <th class="py-3 px-2 text-center border">Teacher</th>
                         <th class="py-3 px-2 text-center border">Time</th>
-                        <th class="py-3 px-2 text-center border">Created at</th>
-                        <th class="py-3 px-2 text-center border">Updated at</th>
                         <th class="py-3 px-2 text-center border">Action</th>
                     </tr>
                 </thead>
@@ -66,10 +64,8 @@
                         <td class="py-2 text-center border">{{ $list->subject }}</td>
                         <td class="py-2 text-center border">{{ $list->teacher }}</td>
                         <td class="py-2 text-center border">{{ $list->time }}</td>
-                        <td class="py-2 text-center border">{{ $list->created_at }}</td>
-                        <td class="py-2 text-center border">{{ $list->updated_at }}</td>
+                        
                         <td class="py-2 text-center border">
-                        <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
                             <a href="{{ route('admin.edit.subject', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                             <form id="delete-form-{{ $list->id }}" action="{{ route('admin.delete.subject', $list->id) }}" method="POST" style="display: none;">
