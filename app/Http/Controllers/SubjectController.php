@@ -49,7 +49,7 @@ class SubjectController extends Controller
             $subject = SubjectModel::findOrFail($id);
             $subject->delete();
 
-            return redirect()->route('admin.subject.subject_list')->with('success', 'Subject deleted successfully');
+            return redirect()->route('admin.subject_list')->with('success', 'Subject deleted successfully');
         }
 
         return redirect()->route('admin.login');
