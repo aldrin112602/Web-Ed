@@ -56,13 +56,13 @@
                         <option value="11 ABM" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 ABM" ? "selected" : "" }}>ABM</option>
                         <option value="11 ICT" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 ICT" ? "selected" : "" }}>ICT</option>
                         <option value="11 HUMSS" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HUMSS" ? "selected" : "" }}>HUMSS</option>
-                        <option value="11 HE" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HE" ? "selected" : "" }}>H.E</option>
+                        <option value="11 HE" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HE" ? "selected" : "" }}>HE</option>
                     </optgroup>
                     <optgroup label="G12">
                         <option value="12 ABM" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 ABM" ? "selected" : "" }}>ABM</option>
                         <option value="12 ICT" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 ICT" ? "selected" : "" }}>ICT</option>
                         <option value="12 HUMSS" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 HUMSS" ? "selected" : "" }}>HUMSS</option>
-                        <option value="12 H.E" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 H.E" ? "selected" : "" }}>H.E</option>
+                        <option value="12 HE" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 HE" ? "selected" : "" }}>HE</option>
                     </optgroup>
                 </select>
 

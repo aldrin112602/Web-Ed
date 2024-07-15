@@ -252,9 +252,7 @@ class AccountManagementController extends Controller
                 'address' => 'nullable|string|max:255',
                 'grade_handle' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:teacher_accounts,email,' . $user->id,
-                'gender' => 'required|string|in:Male,Female',
-                'position' => 'required|string|max:255',
-                'role' => 'required|string|max:255',
+                'position' => 'required',
             ]);
 
             // Update user attributes
@@ -267,7 +265,6 @@ class AccountManagementController extends Controller
                 'gender' => $request->gender,
                 'grade_handle' => $request->grade_handle,
                 'position' => $request->position,
-                'role' => $request->role,
             ]);
 
             // Handle new password if provided
