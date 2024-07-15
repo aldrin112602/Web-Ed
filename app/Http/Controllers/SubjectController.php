@@ -32,8 +32,50 @@ class SubjectController extends Controller
     }
 
 
-    public function createSubject() {
-        
+    public function createSubject(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required',
+            'teacher' => 'required',
+            'time_start' => 'required',
+            'time_end' => 'required',
+        ]);
+
+        $time_start_12hr = $this->convertTo12HourFormat($request->time_start);
+        $time_end_12hr = $this->convertTo12HourFormat($request->time_end);
+
+        $subject = new SubjectModel([
+            'subject' => $request->subject,
+            'teacher' => $request->teacher,
+            'time' => $time_start_12hr . ' - ' . $time_end_12hr
+        ]);
+
+        $subject->save();
+        return redirect()->route('admin.subject_list')->with('success', 'Subject created successfully');
+    }
+
+    // Helper function
+    public function convertTo12HourFormat($time)
+    {
+        $hours = intval(explode(':', $time)[0]);
+        $minutes = explode(':', $time)[1];
+        $period = $hours >= 12 ? 'PM' : 'AM';
+
+        $hours = $hours % 12;
+        $hours = $hours ? $hours : 12;
+
+        return sprintf('%02d:%02d %s', $hours, $minutes, $period);
+    }
+
+
+    public function viewCreateSubject()
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            return view('admin.subject.create', ['user' => $user]);
+        }
+
+        return redirect()->route('admin.login');
     }
 
     /***
@@ -96,5 +138,3 @@ class SubjectController extends Controller
 
 
 }
-
- 
