@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\Auth\AdminPasswordResetController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -98,6 +100,12 @@ Route::prefix('admin')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportSubjectList'])->name('admin.export.subject');
         });
     });
+
+    // for reset password
+    Route::get('password/reset', [AdminPasswordResetController::class, 'request'])->name('password.request');
+    Route::post('password/email', [AdminPasswordResetController::class, 'email'])->name('admin.password.email');
+    Route::get('password/reset/{token}', [AdminPasswordResetController::class, 'reset'])->name('password.reset');
+    Route::post('password/reset', [AdminPasswordResetController::class, 'update'])->name('password.update');
 });
 
 // Teacher routes
