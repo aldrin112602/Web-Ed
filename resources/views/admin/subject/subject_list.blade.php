@@ -9,16 +9,10 @@
         <div class="block md:flex flex-col md:flex-row justify-between items-center mb-4 space-y-2 md:space-y-0 md:space-x-4">
             <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
                 <form id="filterForm" method="GET" action="{{ route('admin.subject_list') }}" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
-                    <div class="md:w-3/4 relative">
+                    <div class="relative">
                         <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
                         <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
                     </div>
-                    <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
-                        <option value="" disabled selected hidden>Gender</option>
-                        <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-                        <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
-                        <option value="All" {{ request()->get('gender') == "All" ? "selected" : "" }}>All</option>
-                    </select>
                 </form>
             </div>
             <a href="{{ route('admin.create.subject') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Subject</a>
