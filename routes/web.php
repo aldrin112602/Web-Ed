@@ -7,19 +7,7 @@ use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\Auth\PasswordResetController;
-
-
-use Illuminate\Support\Facades\Mail;
-
-Route::get('/test-email', function () {
-    Mail::raw('Hello lord', function ($message) {
-        $message->to('caballeroaldrin02@gmail.com')
-                ->subject('Test Email');
-    });
-
-    return 'Test email sent!';
-});
+use App\Http\Controllers\AdminOtpController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,10 +21,10 @@ Route::prefix('admin')->group(function () {
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
 
     // for reset password
-    Route::get('forgot-password', [PasswordResetController::class, 'request'])->middleware('guest')->name('admin.password.request');
-    Route::post('forgot-password', [PasswordResetController::class, 'sendOtp'])->middleware('guest')->name('admin.password.otp');
-    Route::get('reset-password/{token}', [PasswordResetController::class, 'reset'])->middleware('guest')->name('admin.password.reset');
-    Route::post('reset-password', [PasswordResetController::class, 'update'])->middleware('guest')->name('admin.password.update');
+    Route::get('forgot-password', [AdminOtpController::class, 'request'])->name('admin.password.request');
+    Route::post('forgot-password', [AdminOtpController::class, 'sendOtp'])->name('admin.password.otp');
+    Route::get('reset-password', [AdminOtpController::class, 'reset'])->name('admin.password.reset');
+    Route::post('reset-password', [AdminOtpController::class, 'update'])->name('admin.password.update');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');

@@ -5,7 +5,6 @@
 @section('content')
 <form action="{{ route('admin.password.update') }}" method="post" class="w-full max-w-md bg-white rounded-lg p-8">
     @csrf
-    <input type="hidden" name="token" value="{{ $token }}">
 
     <h2 class="text-2xl font-bold text-center mb-6">New Password</h2>
     <p class="text-sm text-gray-400 mb-4">Set the new password for your account.</p>
