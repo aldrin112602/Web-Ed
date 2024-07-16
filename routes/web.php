@@ -26,6 +26,10 @@ Route::prefix('admin')->group(function () {
     Route::get('reset-password', [AdminOtpController::class, 'reset'])->name('admin.password.reset');
     Route::post('reset-password', [AdminOtpController::class, 'update'])->name('admin.password.update');
 
+    Route::get('verify-otp', [AdminOtpController::class, 'verifyFormOtp'])->name('admin.verify-form.otp');
+
+    Route::post('verify-otp', [AdminOtpController::class, 'verifyOtp'])->name('admin.verify.otp');
+
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');

@@ -41,7 +41,7 @@ class AdminOtpController extends Controller
                 Session::put('otp_email', $request->email);
                 Session::put('otp', $otp);
 
-                return redirect()->route('admin.password.reset');
+                return redirect()->route('admin.verify-form.otp')->with('success', 'OTP sent successfully!');
             }
 
             return back()->withErrors(['email' => 'Failed to send OTP, please try again']);
@@ -60,16 +60,21 @@ class AdminOtpController extends Controller
             return back()->withErrors(['otp' => 'Email not found in session']);
         }
 
+
         $otpEntry = AdminOtpAccount::where('email', $email)
-            ->where('otp', $request->otp)
             ->where('expires_at', '>', Carbon::now())
             ->first();
 
         if (!$otpEntry) {
-            return back()->withErrors(['otp' => 'Invalid or expired OTP']);
+            return back()->withErrors(['otp' => 'The OTP has been expired']);
         }
 
-        return redirect()->route('admin.password.reset');
+        if (!AdminOtpAccount::where('email', $email)->where('otp', $request->otp)->first()) {
+            return back()->withErrors(['otp' => 'Invalid OTP, please try again']);
+        }
+
+        return redirect()->route('admin.password.reset')
+            ->with('success', 'OTP verified successfully!');
     }
 
     public function request()
@@ -77,13 +82,50 @@ class AdminOtpController extends Controller
         return view('admin.auth.email');
     }
 
+    public function verifyFormOtp()
+    {
+        $email = Session::get('otp_email');
+        if (!$email) {
+            return back()->withErrors(['otp' => 'Email not found in session']);
+        }
+
+        return view('admin.auth.verify-otp');
+    }
+
     public function reset()
     {
         return view('admin.auth.reset');
     }
 
-    public function update()
+    public function update(Request $request)
     {
+        $email = Session::get('otp_email');
+        if (!$email) {
+            return back()->withErrors(['error' => 'Email not found in session']);
+        }
+
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed',
+            'password_confirmation' => 'required|string|min:6',
+        ]);
+
+        $user = AdminAccount::where('email', $email)->first();
+        if ($user) {
+            $user->password = $request->password;
+            $user->save();
+
+            // Delete OTP entry
+            AdminOtpAccount::where('email', $email)->delete();
+
+            // Clear session
+            Session::forget('otp_email');
+            Session::forget('otp');
+
+            return redirect()->route('admin.login')
+                ->with('success', 'Password reset successfully!');
+        } else {
+            return back()->withErrors(['error' => 'Email not found in session']);
+        }
     }
 
 
