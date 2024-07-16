@@ -7,8 +7,19 @@ use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\Auth\AdminPasswordResetController;
+use App\Http\Controllers\Auth\PasswordResetController;
 
+
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    Mail::raw('Hello lord', function ($message) {
+        $message->to('caballeroaldrin02@gmail.com')
+                ->subject('Test Email');
+    });
+
+    return 'Test email sent!';
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +31,12 @@ Route::get('/login', [PublicController::class, 'login'])->name('login');
 Route::prefix('admin')->group(function () {
     Route::get('login', [Admin::class, 'login'])->name('admin.login');
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
+
+    // for reset password
+    Route::get('forgot-password', [PasswordResetController::class, 'request'])->middleware('guest')->name('admin.password.request');
+    Route::post('forgot-password', [PasswordResetController::class, 'sendOtp'])->middleware('guest')->name('admin.password.otp');
+    Route::get('reset-password/{token}', [PasswordResetController::class, 'reset'])->middleware('guest')->name('admin.password.reset');
+    Route::post('reset-password', [PasswordResetController::class, 'update'])->middleware('guest')->name('admin.password.update');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
@@ -101,11 +118,7 @@ Route::prefix('admin')->group(function () {
         });
     });
 
-    // for reset password
-    Route::get('password/reset', [AdminPasswordResetController::class, 'request'])->name('password.request');
-    Route::post('password/email', [AdminPasswordResetController::class, 'email'])->name('admin.password.email');
-    Route::get('password/reset/{token}', [AdminPasswordResetController::class, 'reset'])->name('password.reset');
-    Route::post('password/reset', [AdminPasswordResetController::class, 'update'])->name('password.update');
+    
 });
 
 // Teacher routes
