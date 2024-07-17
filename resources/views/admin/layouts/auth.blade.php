@@ -7,8 +7,8 @@
     @vite('resources/css/app.css')
     <style>
         body {
-            background-image: url("{{ asset('admin_auth_bg.png') }}");
-            background-size: cover;
+            background-image: url("{{ asset('images/admin_auth_bg.png') }}");
+            background-size: 100vw 100vh;
             background-repeat: no-repeat;
         }
     </style>

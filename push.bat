@@ -6,7 +6,7 @@ set /p changes=<temp.txt
 if not defined changes goto pause
 
 git add .
-git commit -a -m "Changes: %changes%"
+git commit -m "Changes: %changes%"
 
 git push
 
