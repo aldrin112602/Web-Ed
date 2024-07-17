@@ -1,4 +1,4 @@
-@extends('admin.layouts.create')
+@extends('admin.layouts.app')
 
 @section('title', 'Update Student Account')
 @section('content')

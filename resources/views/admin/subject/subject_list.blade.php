@@ -1,4 +1,4 @@
-@extends('admin.layouts.create')
+@extends('admin.layouts.app')
 
 @section('title', 'Subject List')
 @section('content')

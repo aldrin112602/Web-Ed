@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\AdminController as Admin;
+use App\Http\Controllers\TeacherController as Teacher;
 use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AdminOtpController;
+use App\Http\Controllers\TeacherOtpController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -115,11 +117,38 @@ Route::prefix('admin')->group(function () {
 
 // Teacher routes
 Route::prefix('teacher')->group(function () {
-    // Route::get('login', [Teacher::class, 'login'])->name('teacher.login');
-    // Route::post('login', [Teacher::class, 'handleLogin'])->name('teacher.handleLogin');
+    Route::get('login', [Teacher::class, 'login'])->name('teacher.login');
+    Route::post('login', [Teacher::class, 'handleLogin'])->name('teacher.handleLogin');
+
+    // for reset password
+    Route::get('forgot-password', [TeacherOtpController::class, 'request'])->name('teacher.password.request');
+    Route::post('forgot-password', [TeacherOtpController::class, 'sendOtp'])->name('teacher.password.otp');
+    Route::get('reset-password', [TeacherOtpController::class, 'reset'])->name('teacher.password.reset');
+    Route::post('reset-password', [TeacherOtpController::class, 'update'])->name('teacher.password.update');
+
+    Route::get('verify-otp', [TeacherOtpController::class, 'verifyFormOtp'])->name('teacher.verify-form.otp');
+
+    Route::post('verify-otp', [TeacherOtpController::class, 'verifyOtp'])->name('teacher.verify.otp');
+
+
 
     Route::middleware('auth:teacher')->group(function () {
         // Add teacher-specific routes here
+        Route::get('/', [Teacher::class, 'home'])->name('teacher.home');
+        Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
+
+
+        // Teacher logout route
+        Route::post('logout', [Teacher::class, 'logout'])->name('teacher.logout');
+
+        // teacher profile routes
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [Teacher::class, 'profile'])->name('teacher.profile');
+            Route::post('updatePhoto', [Teacher::class, 'updateProfilePhoto'])->name('teacher.updateProfilePhoto');
+            Route::delete('deletePhoto', [Teacher::class, 'deleteProfilePhoto'])->name('teacher.deleteProfilePhoto');
+            Route::put('updateAccount', [Teacher::class, 'updateAccount'])->name('teacher.updateAccount');
+            Route::put('updatePassword', [Teacher::class, 'updatePassword'])->name('teacher.updatePassword');
+        });
     });
 });
 
