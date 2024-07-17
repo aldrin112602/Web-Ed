@@ -6,7 +6,7 @@
 <form action="{{ route('guidance.handleLogin') }}" method="post" class="w-full max-w-md bg-white  rounded-lg p-8" style="box-shadow: 0 0 10px 100vw rgba(0, 0, 0, 0.4);">
     @csrf
 
-    <h2 class="text-2xl font-bold text-center mb-6 text-gray-500">Student Login</h2>
+    <h2 class="text-2xl font-bold text-center mb-6 text-gray-500">Guidance Login</h2>
     <div class="mb-4">
         <label for="username" class="block text-gray-700">Username</label>
         <input type="text" id="username" name="username" class="form-input w-full rounded border-gray-300 @error('username') border-red-500 @enderror" value="{{ old('username') }}">
