@@ -4,12 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\AdminController as Admin;
 use App\Http\Controllers\TeacherController as Teacher;
+use App\Http\Controllers\StudentController as Student;
+use App\Http\Controllers\GuidanceController as Guidance;
 use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AdminOtpController;
 use App\Http\Controllers\TeacherOtpController;
+use App\Http\Controllers\StudentOtpController;
+use App\Http\Controllers\GuidanceOtpController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -154,20 +158,78 @@ Route::prefix('teacher')->group(function () {
 
 // Student routes
 Route::prefix('student')->group(function () {
-    // Route::get('login', [Student::class, 'login'])->name('student.login');
-    // Route::post('login', [Student::class, 'handleLogin'])->name('student.handleLogin');
+    Route::get('login', [Student::class, 'login'])->name('student.login');
+    Route::post('login', [Student::class, 'handleLogin'])->name('student.handleLogin');
+
+    // for reset password
+    Route::get('forgot-password', [StudentOtpController::class, 'request'])->name('student.password.request');
+    Route::post('forgot-password', [StudentOtpController::class, 'sendOtp'])->name('student.password.otp');
+    Route::get('reset-password', [StudentOtpController::class, 'reset'])->name('student.password.reset');
+    Route::post('reset-password', [StudentOtpController::class, 'update'])->name('student.password.update');
+
+    Route::get('verify-otp', [StudentOtpController::class, 'verifyFormOtp'])->name('student.verify-form.otp');
+
+    Route::post('verify-otp', [StudentOtpController::class, 'verifyOtp'])->name('student.verify.otp');
+
+
 
     Route::middleware('auth:student')->group(function () {
-        // Add student-specific routes here
+        // Add Student-specific routes here
+        Route::get('/', [Student::class, 'home'])->name('student.home');
+        Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');
+
+
+        // Student logout route
+        Route::post('logout', [Student::class, 'logout'])->name('student.logout');
+
+        // Student profile routes
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [Student::class, 'profile'])->name('student.profile');
+            Route::post('updatePhoto', [Student::class, 'updateProfilePhoto'])->name('student.updateProfilePhoto');
+            Route::delete('deletePhoto', [Student::class, 'deleteProfilePhoto'])->name('student.deleteProfilePhoto');
+            Route::put('updateAccount', [Student::class, 'updateAccount'])->name('student.updateAccount');
+            Route::put('updatePassword', [Student::class, 'updatePassword'])->name('student.updatePassword');
+        });
     });
 });
 
+
+
+
+
 // Guidance routes
 Route::prefix('guidance')->group(function () {
-    // Route::get('login', [Guidance::class, 'login'])->name('guidance.login');
-    // Route::post('login', [Guidance::class, 'handleLogin'])->name('guidance.handleLogin');
+    Route::get('login', [Guidance::class, 'login'])->name('guidance.login');
+    Route::post('login', [Guidance::class, 'handleLogin'])->name('guidance.handleLogin');
+
+    // for reset password
+    Route::get('forgot-password', [GuidanceOtpController::class, 'request'])->name('guidance.password.request');
+    Route::post('forgot-password', [GuidanceOtpController::class, 'sendOtp'])->name('guidance.password.otp');
+    Route::get('reset-password', [GuidanceOtpController::class, 'reset'])->name('guidance.password.reset');
+    Route::post('reset-password', [GuidanceOtpController::class, 'update'])->name('guidance.password.update');
+
+    Route::get('verify-otp', [GuidanceOtpController::class, 'verifyFormOtp'])->name('guidance.verify-form.otp');
+
+    Route::post('verify-otp', [StudentOtpController::class, 'verifyOtp'])->name('guidance.verify.otp');
+
+
 
     Route::middleware('auth:guidance')->group(function () {
-        // Add guidance-specific routes here
+        // Add Student-specific routes here
+        Route::get('/', [Guidance::class, 'home'])->name('guidance.home');
+        Route::get('dashboard', [Guidance::class, 'dashboard'])->name('guidance.dashboard');
+
+
+        // Student logout route
+        Route::post('logout', [Guidance::class, 'logout'])->name('guidance.logout');
+
+        // Student profile routes
+        Route::prefix('profile')->group(function () {
+            Route::get('/', [Guidance::class, 'profile'])->name('guidance.profile');
+            Route::post('updatePhoto', [Guidance::class, 'updateProfilePhoto'])->name('guidance.updateProfilePhoto');
+            Route::delete('deletePhoto', [Guidance::class, 'deleteProfilePhoto'])->name('guidance.deleteProfilePhoto');
+            Route::put('updateAccount', [Guidance::class, 'updateAccount'])->name('guidance.updateAccount');
+            Route::put('updatePassword', [Guidance::class, 'updatePassword'])->name('guidance.updatePassword');
+        });
     });
 });
