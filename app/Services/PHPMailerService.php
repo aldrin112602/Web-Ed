@@ -32,8 +32,15 @@ class PHPMailerService
 
             // Content
             $this->mailer->isHTML(true);
-            $this->mailer->Subject = 'Your OTP Code';
-            $this->mailer->Body    = 'Your OTP code is: ' . $otp;
+            $this->mailer->Subject = 'OTP Verification';
+            $this->mailer->Body    = '<div style="background: #f0f0f0; padding: 30px;">
+        <p style="padding: 20px; font-size: 20px; background: #fff; color: #222; box-shadow: 2px 2px 10px rgba(0,0,0,0.1); border-radius: 10px; text-align: center; margin: auto;">
+            Please use the following One Time Password (OTP) to change your password: 
+            <b style="font-size: 30px; display: block; margin-top: 10px; text-decoration: underline;">' . $otp . '</b>
+            <br>Warning: Do not share this OTP with anyone. 
+            <br> Thank you!
+        </p>
+    </div>';
 
             $this->mailer->send();
             return true;
