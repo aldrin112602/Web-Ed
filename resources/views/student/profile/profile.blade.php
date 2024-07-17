@@ -25,42 +25,42 @@
                     </p>
                 </div>
             </div>
-            <div class="flex my-2 items-center justify-start gap-3">
+            <!-- <div class="flex my-2 items-center justify-start gap-3">
                 <button type="button" id="uploadButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Upload New Photo</button>
                 <form action="{{ route('student.deleteProfilePhoto') }}" method="POST" id="deleteForm" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="button" id="deleteButton" class="bg-slate-50 text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Delete</button>
                 </form>
-            </div>
+            </div> -->
         </div>
 
         <script>
-            $(document).ready(function() {
-                $('#uploadButton').click(function() {
-                    $('#profile_photo').click();
-                });
+            // $(document).ready(function() {
+            //     $('#uploadButton').click(function() {
+            //         $('#profile_photo').click();
+            //     });
 
-                $('#profile_photo').change(function() {
-                    $('#uploadForm').submit();
-                });
+            //     $('#profile_photo').change(function() {
+            //         $('#uploadForm').submit();
+            //     });
 
-                $('#deleteButton').click(function() {
-                    Swal.fire({
-                        title: 'Delete',
-                        text: 'Are you sure to delete your profile photo?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $('#deleteForm').submit();
-                        }
-                    });
-                });
-            });
+            //     $('#deleteButton').click(function() {
+            //         Swal.fire({
+            //             title: 'Delete',
+            //             text: 'Are you sure to delete your profile photo?',
+            //             icon: 'warning',
+            //             showCancelButton: true,
+            //             confirmButtonColor: '#3085d6',
+            //             cancelButtonColor: '#d33',
+            //             confirmButtonText: 'Yes, delete it!'
+            //         }).then((result) => {
+            //             if (result.isConfirmed) {
+            //                 $('#deleteForm').submit();
+            //             }
+            //         });
+            //     });
+            // });
         </script>
 
         <div class="py-3">
@@ -102,12 +102,13 @@
                     @enderror
                 </div>
                 <div class="md:w-1/3 w-full">
-                    <label for="address" class="block text-gray-700 text-sm mb-1 mt-2">Address</label>
-                    <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $user->address }}">
-                    @error('address')
+                    <label for="username" class="block text-gray-700 text-sm mb-1 mt-2">Username</label>
+                    <input readonly type="text" id="username" username="username" class="form-input w-full rounded border-gray-300 @error('username') border-red-500 @enderror" value="{{ old('username') ?? $user->username }}">
+                    @error('name')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
+                
                 <div class="md:w-1/3 w-full">
                     <label for="gender" class="block text-gray-700 text-sm mb-1 mt-2">Gender</label>
                     <input readonly type="text" id="gender" name="gender" class="form-input w-full rounded border-gray-300 @error('gender') border-red-500 @enderror" value="{{ old('gender') ?? $user->gender }}">
@@ -116,20 +117,28 @@
                     @enderror
                 </div>
             </div>
+
+            <div class="w-full">
+                    <label for="address" class="block text-gray-700 text-sm mb-1 mt-2">Address</label>
+                    <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $user->address }}">
+                    @error('address')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
             <div class="flex my-2 items-center justify-start gap-3 mt-3">
-                <button type="button" id="editButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
-                <button type="submit" id="saveButton" class="hidden bg-slate-900 text-slate-50 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Save changes</button>
+                <!-- <button type="button" id="editButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Edit</button> -->
+                <!-- <button type="submit" id="saveButton" class="hidden bg-slate-900 text-slate-50 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Save changes</button> -->
             </div>
         </form>
         <script>
-            $(document).ready(function() {
-                $('#editButton').click(function() {
-                    $('#personal_info input').prop('readonly', false);
-                    $('#name').focus();
-                    $('#saveButton').removeClass('hidden');
-                    $(this).addClass('hidden');
-                });
-            });
+            // $(document).ready(function() {
+            //     $('#editButton').click(function() {
+            //         $('#personal_info input').prop('readonly', false);
+            //         $('#name').focus();
+            //         $('#saveButton').removeClass('hidden');
+            //         $(this).addClass('hidden');
+            //     });
+            // });
         </script>
         @if ($errors->has('name') || $errors->has('email') || $errors->has('phone_number') || $errors->has('address') || $errors->has('gender'))
         <script>
@@ -140,7 +149,7 @@
         @endif
         <hr class="my-6">
 
-        <h1 class="font-bold text-gray-600">Update password</h1>
+        <!-- <h1 class="font-bold text-gray-600">Update password</h1>
         <form action="{{ route('student.updatePassword') }}" method="post">
             @csrf
             @method('PUT')
@@ -163,7 +172,7 @@
             <a href="route('student.password.request')" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
             <br>
             <button type="submit" class="mt-2 px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Update password</button>
-        </form>
+        </form> -->
         <br><br><br>
     </div>
 
