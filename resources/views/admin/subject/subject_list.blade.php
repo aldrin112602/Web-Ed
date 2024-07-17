@@ -31,7 +31,7 @@
         <hr class="my-3">
         @if ($subject_list->count())
         <p class="text-sm text-slate-500 mb-3">
-            Showing {{ $subject_list->firstItem() }} - {{ $subject_list->lastItem() }} of {{ $subject_list->total() }} admins
+            Showing {{ $subject_list->firstItem() }} - {{ $subject_list->lastItem() }} of {{ $subject_list->total() }} subjects
         </p>
 
         <!-- Admin List Table -->
