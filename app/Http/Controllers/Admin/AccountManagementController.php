@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\StudentAccount;
-use App\Models\AdminAccount;
-use App\Models\TeacherAccount;
-use App\Models\GuidanceAccount;
+use App\Models\Student\StudentAccount;
+use App\Models\Admin\AdminAccount;
+use App\Models\Teacher\TeacherAccount;
+use App\Models\Guidance\GuidanceAccount;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Storage;
 

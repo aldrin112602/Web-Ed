@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Teacher;
 
+use App\Http\Controllers\Controller;
 use App\Services\PHPMailerService;
-use App\Models\AdminOtpAccount;
-use App\Models\AdminAccount;
+use App\Models\Teacher\TeacherOtpAccount;
+use App\Models\Teacher\TeacherAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 use Carbon\Carbon;
 
-class AdminOtpController extends Controller
+class TeacherOtpController extends Controller
 {
     protected $mailerService;
 
@@ -23,7 +24,7 @@ class AdminOtpController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $user = AdminAccount::where('email', $request->email)->first();
+        $user = TeacherAccount::where('email', $request->email)->first();
         if ($user) {
             $otp = $this->getRandomNumbers();
             $expiresAt = Carbon::now()->addMinutes(10);
@@ -31,7 +32,7 @@ class AdminOtpController extends Controller
             $sent = $this->mailerService->sendOtp($request->email, $otp);
 
             if ($sent) {
-                AdminOtpAccount::create([
+                TeacherOtpAccount::create([
                     'email' => $request->email,
                     'otp' => $otp,
                     'expires_at' => $expiresAt,
@@ -41,7 +42,7 @@ class AdminOtpController extends Controller
                 Session::put('otp_email', $request->email);
                 Session::put('otp', $otp);
 
-                return redirect()->route('admin.verify-form.otp')->with('success', 'OTP sent successfully!');
+                return redirect()->route('teacher.verify-form.otp')->with('success', 'OTP sent successfully!');
             }
 
             return back()->withErrors(['email' => 'Failed to send OTP, please try again']);
@@ -61,7 +62,7 @@ class AdminOtpController extends Controller
         }
 
 
-        $otpEntry = AdminOtpAccount::where('email', $email)
+        $otpEntry = TeacherOtpAccount::where('email', $email)
             ->where('expires_at', '>', Carbon::now())
             ->first();
 
@@ -69,11 +70,11 @@ class AdminOtpController extends Controller
             return back()->withErrors(['otp' => 'The OTP has been expired']);
         }
 
-        if (!AdminOtpAccount::where('email', $email)->where('otp', $request->otp)->first()) {
+        if (!TeacherOtpAccount::where('email', $email)->where('otp', $request->otp)->first()) {
             return back()->withErrors(['otp' => 'Invalid OTP, please try again']);
         }
 
-        return redirect()->route('admin.password.reset')
+        return redirect()->route('teacher.password.reset')
             ->with('success', 'OTP verified successfully!');
     }
 
@@ -83,7 +84,7 @@ class AdminOtpController extends Controller
         Session::forget('otp_email');
         Session::forget('otp');
 
-        return view('admin.auth.email');
+        return view('teacher.auth.email');
     }
 
     public function verifyFormOtp()
@@ -93,12 +94,12 @@ class AdminOtpController extends Controller
             return back()->withErrors(['otp' => 'Email not found in session']);
         }
 
-        return view('admin.auth.verify-otp');
+        return view('teacher.auth.verify-otp');
     }
 
     public function reset()
     {
-        return view('admin.auth.reset');
+        return view('teacher.auth.reset');
     }
 
     public function update(Request $request)
@@ -113,19 +114,19 @@ class AdminOtpController extends Controller
             'password_confirmation' => 'required|string|min:6',
         ]);
 
-        $user = AdminAccount::where('email', $email)->first();
+        $user = TeacherAccount::where('email', $email)->first();
         if ($user) {
             $user->password = $request->password;
             $user->save();
 
             // Delete OTP entry
-            AdminOtpAccount::where('email', $email)->delete();
+            TeacherOtpAccount::where('email', $email)->delete();
 
             // Clear session
             Session::forget('otp_email');
             Session::forget('otp');
 
-            return redirect()->route('admin.login')
+            return redirect()->route('teacher.login')
                 ->with('success', 'Password reset successfully!');
         } else {
             return back()->withErrors(['error' => 'Email not found in session']);

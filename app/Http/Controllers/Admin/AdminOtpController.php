@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Services\PHPMailerService;
-use App\Models\GuidanceOtpAccount;
-use App\Models\GuidanceAccount;
+use App\Models\Admin\AdminOtpAccount;
+use App\Models\Admin\AdminAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 use Carbon\Carbon;
 
-class GuidanceOtpController extends Controller
+class AdminOtpController extends Controller
 {
     protected $mailerService;
 
@@ -23,7 +24,7 @@ class GuidanceOtpController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $user = GuidanceAccount::where('email', $request->email)->first();
+        $user = AdminAccount::where('email', $request->email)->first();
         if ($user) {
             $otp = $this->getRandomNumbers();
             $expiresAt = Carbon::now()->addMinutes(10);
@@ -31,7 +32,7 @@ class GuidanceOtpController extends Controller
             $sent = $this->mailerService->sendOtp($request->email, $otp);
 
             if ($sent) {
-                GuidanceOtpAccount::create([
+                AdminOtpAccount::create([
                     'email' => $request->email,
                     'otp' => $otp,
                     'expires_at' => $expiresAt,
@@ -41,7 +42,7 @@ class GuidanceOtpController extends Controller
                 Session::put('otp_email', $request->email);
                 Session::put('otp', $otp);
 
-                return redirect()->route('guidance.verify-form.otp')->with('success', 'OTP sent successfully!');
+                return redirect()->route('admin.verify-form.otp')->with('success', 'OTP sent successfully!');
             }
 
             return back()->withErrors(['email' => 'Failed to send OTP, please try again']);
@@ -61,7 +62,7 @@ class GuidanceOtpController extends Controller
         }
 
 
-        $otpEntry = GuidanceOtpAccount::where('email', $email)
+        $otpEntry = AdminOtpAccount::where('email', $email)
             ->where('expires_at', '>', Carbon::now())
             ->first();
 
@@ -69,11 +70,11 @@ class GuidanceOtpController extends Controller
             return back()->withErrors(['otp' => 'The OTP has been expired']);
         }
 
-        if (!GuidanceOtpAccount::where('email', $email)->where('otp', $request->otp)->first()) {
+        if (!AdminOtpAccount::where('email', $email)->where('otp', $request->otp)->first()) {
             return back()->withErrors(['otp' => 'Invalid OTP, please try again']);
         }
 
-        return redirect()->route('guidance.password.reset')
+        return redirect()->route('admin.password.reset')
             ->with('success', 'OTP verified successfully!');
     }
 
@@ -83,7 +84,7 @@ class GuidanceOtpController extends Controller
         Session::forget('otp_email');
         Session::forget('otp');
 
-        return view('guidance.auth.email');
+        return view('admin.auth.email');
     }
 
     public function verifyFormOtp()
@@ -93,12 +94,12 @@ class GuidanceOtpController extends Controller
             return back()->withErrors(['otp' => 'Email not found in session']);
         }
 
-        return view('guidance.auth.verify-otp');
+        return view('admin.auth.verify-otp');
     }
 
     public function reset()
     {
-        return view('guidance.auth.reset');
+        return view('admin.auth.reset');
     }
 
     public function update(Request $request)
@@ -113,19 +114,19 @@ class GuidanceOtpController extends Controller
             'password_confirmation' => 'required|string|min:6',
         ]);
 
-        $user = GuidanceAccount::where('email', $email)->first();
+        $user = AdminAccount::where('email', $email)->first();
         if ($user) {
             $user->password = $request->password;
             $user->save();
 
             // Delete OTP entry
-            GuidanceOtpAccount::where('email', $email)->delete();
+            AdminOtpAccount::where('email', $email)->delete();
 
             // Clear session
             Session::forget('otp_email');
             Session::forget('otp');
 
-            return redirect()->route('guidance.login')
+            return redirect()->route('admin.login')
                 ->with('success', 'Password reset successfully!');
         } else {
             return back()->withErrors(['error' => 'Email not found in session']);

@@ -2,18 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
-use App\Http\Controllers\AdminController as Admin;
-use App\Http\Controllers\TeacherController as Teacher;
-use App\Http\Controllers\StudentController as Student;
-use App\Http\Controllers\GuidanceController as Guidance;
-use App\Http\Controllers\AdminCreateController as AdminCreate;
-use App\Http\Controllers\AccountManagementController as AccountManagement;
-use App\Http\Controllers\ExcelController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\AdminOtpController;
-use App\Http\Controllers\TeacherOtpController;
-use App\Http\Controllers\StudentOtpController;
-use App\Http\Controllers\GuidanceOtpController;
+use App\Http\Controllers\Admin\AdminController as Admin;
+use App\Http\Controllers\Teacher\TeacherController as Teacher;
+use App\Http\Controllers\Student\StudentController as Student;
+use App\Http\Controllers\Guidance\GuidanceController as Guidance;
+use App\Http\Controllers\Admin\AdminCreateController as AdminCreate;
+use App\Http\Controllers\Admin\AccountManagementController as AccountManagement;
+use App\Http\Controllers\Admin\ExcelController;
+use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\Admin\AdminOtpController;
+use App\Http\Controllers\Teacher\TeacherOtpController;
+use App\Http\Controllers\Student\StudentOtpController;
+use App\Http\Controllers\Guidance\GuidanceOtpController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -115,8 +115,6 @@ Route::prefix('admin')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportSubjectList'])->name('admin.export.subject');
         });
     });
-
-    
 });
 
 // Teacher routes

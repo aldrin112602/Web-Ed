@@ -76,25 +76,25 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
-        ],
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => env('AUTH_MODEL', App\Models\User::class),
+        // ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\AdminAccount::class,
+            'model' => App\Models\Admin\AdminAccount::class,
         ],
         'teachers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\TeacherAccount::class,
+            'model' => App\Models\Teacher\TeacherAccount::class,
         ],
         'guidances' => [
             'driver' => 'eloquent',
-            'model' => App\Models\GuidanceAccount::class,
+            'model' => App\Models\Guidance\GuidanceAccount::class,
         ],
         'students' => [
             'driver' => 'eloquent',
-            'model' => App\Models\StudentAccount::class,
+            'model' => App\Models\Student\StudentAccount::class,
         ],
 
         // 'users' => [

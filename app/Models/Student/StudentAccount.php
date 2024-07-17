@@ -1,30 +1,37 @@
 <?php
-namespace App\Models;
 
+namespace App\Models\Student;
+
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Auth\Passwords\CanResetPassword as ResetPasswordTrait;
 use Illuminate\Support\Facades\Hash;
 
-class AdminAccount extends Authenticatable implements CanResetPassword
+class StudentAccount extends Authenticatable
 {
-    use HasFactory, Notifiable, ResetPasswordTrait;
-
+    use HasFactory, Notifiable;
+ 
+    use HasFactory;
+ 
     protected $fillable = [
         'id_number',
         'name',
         'gender',
+        'strand',
+        'section',
+        'grade',
+        'parents_contact_number',
         'username',
         'password',
         'email',
-        'position',
         'role',
         'profile',
-        'address',
-        'phone_number'
+        'phone_number',
+        'address'
     ];
+    
+    
 
     public function setPasswordAttribute($value)
     {

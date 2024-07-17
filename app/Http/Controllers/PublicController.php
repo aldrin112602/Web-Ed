@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Models\AdminAccount;
+use App\Models\Admin\AdminAccount;
 use App\Rules\TwoWords;
 
 

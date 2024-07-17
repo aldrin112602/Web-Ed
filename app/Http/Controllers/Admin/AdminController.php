@@ -1,34 +1,35 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
-class StudentController extends Controller
+class AdminController extends Controller
 {
     public function login()
     {
-        if (Auth::guard('student')->check()) {
-            return redirect()->intended('student');
+        if (Auth::guard('admin')->check()) {
+            return redirect()->intended('admin');
         }
         // Clear session
         Session::forget('otp_email');
         Session::forget('otp');
 
-        return view('student.auth.login');
+        return view('admin.auth.login');
     }
 
 
     public function logout()
     {
-        if (Auth::guard('student')->check()) {
-            Auth::guard('student')->logout();
+        if (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();
             return redirect()
-                ->route('student.login')
+                ->route('admin.login')
                 ->with('success', 'Logout successfully!');
         }
     }
@@ -43,10 +44,10 @@ class StudentController extends Controller
 
         $credentials = $request->only('username', 'password');
 
-        if (Auth::guard('student')->attempt($credentials, $request->filled('remember'))) {
+        if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
 
-            return redirect()->intended('student');
+            return redirect()->intended('admin');
         }
 
         // Authentication failed
@@ -57,41 +58,41 @@ class StudentController extends Controller
 
     public function dashboard()
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
-            return view('student.dashboard', ['user' => $user]);
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            return view('admin.dashboard', ['user' => $user]);
         }
 
-        return redirect()->route('student.login');
+        return redirect()->route('admin.login');
     }
 
 
     public function home()
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
-            return view('student.home', ['user' => $user]);
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            return view('admin.home', ['user' => $user]);
         }
 
-        return redirect()->route('student.login');
+        return redirect()->route('admin.login');
     }
 
     public function profile()
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
-            return view('student.profile.profile', ['user' => $user]);
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            return view('admin.profile.profile', ['user' => $user]);
         }
 
-        return redirect()->route('student.login');
+        return redirect()->route('admin.login');
     }
 
 
 
     public function updateAccount(Request $request)
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
 
             // Validate the input
             $request->validate([
@@ -114,22 +115,22 @@ class StudentController extends Controller
             ]);
 
             // Re-authenticate the user with the new password
-            Auth::guard('student')->login($user);
+            Auth::guard('admin')->login($user);
 
             return redirect()
                 ->back()
                 ->with('success', 'Profile updated successfully!');
         }
 
-        return redirect()->route('student.login');
+        return redirect()->route('admin.login');
     }
 
 
 
     public function updatePassword(Request $request)
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
             // Validate the input
             $request->validate([
                 'password' => 'required|string',
@@ -148,11 +149,11 @@ class StudentController extends Controller
             $user->save();
 
             // Re-authenticate the user with the new password
-            Auth::guard('student')->login($user);
+            Auth::guard('admin')->login($user);
             return redirect()->back()->with('success', 'Password updated successfully!');
         }
 
-        return redirect()->route('student.login');
+        return redirect()->route('admin.login');
     }
 
 
@@ -161,8 +162,8 @@ class StudentController extends Controller
 
     public function updateProfilePhoto(Request $request)
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
 
             $request->validate([
                 'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -187,8 +188,8 @@ class StudentController extends Controller
 
     public function deleteProfilePhoto()
     {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
 
             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
                 Storage::disk('public')->delete($user->profile);

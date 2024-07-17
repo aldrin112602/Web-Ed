@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use App\Models\StudentAccount;
-use App\Models\AdminAccount;
-use App\Models\TeacherAccount;
-use App\Models\GuidanceAccount;
-use App\Models\SubjectModel;
+use App\Models\Student\StudentAccount;
+use App\Models\Admin\AdminAccount;
+use App\Models\Teacher\TeacherAccount;
+use App\Models\Guidance\GuidanceAccount;
+use App\Models\Admin\SubjectModel;
 
 class ExcelController extends Controller
 {

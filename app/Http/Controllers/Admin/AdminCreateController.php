@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\AdminAccount;
-use App\Models\GuidanceAccount;
-use App\Models\StudentAccount;
-use App\Models\TeacherAccount;
+use App\Models\Admin\AdminAccount;
+use App\Models\Guidance\GuidanceAccount;
+use App\Models\Student\StudentAccount;
+use App\Models\Teacher\TeacherAccount;
 use App\Rules\TwoWords;
 
 class AdminCreateController extends Controller
