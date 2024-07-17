@@ -79,6 +79,10 @@ class AdminOtpController extends Controller
 
     public function request()
     {
+        // Clear session
+        Session::forget('otp_email');
+        Session::forget('otp');
+
         return view('admin.auth.email');
     }
 
