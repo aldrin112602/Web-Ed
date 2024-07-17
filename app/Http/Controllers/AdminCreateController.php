@@ -130,6 +130,7 @@ class AdminCreateController extends Controller
             return view('admin.create.admin', ['user' => $user, 'id_number' => $id_number]);
         }
 
+
         return redirect()->route('admin.login');
     }
 
@@ -166,7 +167,8 @@ class AdminCreateController extends Controller
         return redirect()->route('admin.login');
     }
 
-    public function getRandomNumbers($count = 1) {
+    public function getRandomNumbers($count = 1)
+    {
         $randomNumbers = [];
         for ($i = 0; $i < $count; $i++) {
             $randomNumbers[] = rand(1000000000, 9999999999);
