@@ -7,7 +7,7 @@ use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Session;
 class AdminController extends Controller
 {
     public function login()
@@ -15,6 +15,10 @@ class AdminController extends Controller
         if (Auth::guard('admin')->check()) {
             return redirect()->intended('admin');
         }
+        // Clear session
+        Session::forget('otp_email');
+        Session::forget('otp');
+
         return view('admin.auth.login');
     }
 

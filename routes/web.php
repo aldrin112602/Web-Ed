@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminCreateController as AdminCreate;
 use App\Http\Controllers\AccountManagementController as AccountManagement;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\AdminOtpController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,6 +19,16 @@ Route::get('/login', [PublicController::class, 'login'])->name('login');
 Route::prefix('admin')->group(function () {
     Route::get('login', [Admin::class, 'login'])->name('admin.login');
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
+
+    // for reset password
+    Route::get('forgot-password', [AdminOtpController::class, 'request'])->name('admin.password.request');
+    Route::post('forgot-password', [AdminOtpController::class, 'sendOtp'])->name('admin.password.otp');
+    Route::get('reset-password', [AdminOtpController::class, 'reset'])->name('admin.password.reset');
+    Route::post('reset-password', [AdminOtpController::class, 'update'])->name('admin.password.update');
+
+    Route::get('verify-otp', [AdminOtpController::class, 'verifyFormOtp'])->name('admin.verify-form.otp');
+
+    Route::post('verify-otp', [AdminOtpController::class, 'verifyOtp'])->name('admin.verify.otp');
 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
@@ -98,6 +109,8 @@ Route::prefix('admin')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportSubjectList'])->name('admin.export.subject');
         });
     });
+
+    
 });
 
 // Teacher routes

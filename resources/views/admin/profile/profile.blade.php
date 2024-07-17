@@ -160,7 +160,7 @@
                     @enderror
                 </div>
             </div>
-            <a href="#!" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
+            <a href="route('admin.password.request')" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
             <br>
             <button type="submit" class="mt-2 px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Update password</button>
         </form>
