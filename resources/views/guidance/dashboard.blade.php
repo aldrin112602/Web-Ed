@@ -1,4 +1,4 @@
-@extends('teacher.layouts.app')
+@extends('guidance.layouts.app')
 
 @section('title', 'Dashboard')
 @section('content')

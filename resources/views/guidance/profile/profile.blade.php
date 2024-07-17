@@ -1,4 +1,4 @@
-@extends('student.layouts.app')
+@extends('guidance.layouts.app')
 
 @section('title', 'User Profile')
 @section('content')
@@ -7,7 +7,7 @@
     <div class="md:px-20 px-10">
         <div class="block md:flex items-center justify-between">
             <div class="flex my-2 items-center justify-start gap-3">
-                <form action="{{ route('student.updateProfilePhoto') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <form action="{{ route('guidance.updateProfilePhoto') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
                     @csrf
                     <input type="file" name="profile_photo" id="profile_photo" class="hidden" accept="image/*">
                     <label for="profile_photo" class="cursor-pointer">
@@ -27,7 +27,7 @@
             </div>
             <div class="flex my-2 items-center justify-start gap-3">
                 <button type="button" id="uploadButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Upload New Photo</button>
-                <form action="{{ route('student.deleteProfilePhoto') }}" method="POST" id="deleteForm" style="display:inline;">
+                <form action="{{ route('guidance.deleteProfilePhoto') }}" method="POST" id="deleteForm" style="display:inline;">
                     @csrf
                     @method('DELETE')
                     <button type="button" id="deleteButton" class="bg-slate-50 text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Delete</button>
@@ -67,7 +67,7 @@
             <hr>
         </div>
         <h1 class="font-bold text-gray-600">Personal info</h1>
-        <form action="{{ route('student.updateAccount') }}" method="post" id="personal_info">
+        <form action="{{ route('guidance.updateAccount') }}" method="post" id="personal_info">
             @csrf
             @method('PUT')
             <div class="block md:flex align-center justify-between my-2 gap-5">
@@ -141,7 +141,7 @@
         <hr class="my-6">
 
         <h1 class="font-bold text-gray-600">Update password</h1>
-        <form action="{{ route('student.updatePassword') }}" method="post">
+        <form action="{{ route('guidance.updatePassword') }}" method="post">
             @csrf
             @method('PUT')
             <div class="block md:flex align-center justify-between my-2 gap-5">
@@ -160,7 +160,7 @@
                     @enderror
                 </div>
             </div>
-            <a href="route('student.password.request')" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
+            <a href="route('guidance.password.request')" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
             <br>
             <button type="submit" class="mt-2 px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Update password</button>
         </form>
