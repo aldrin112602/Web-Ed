@@ -210,20 +210,20 @@ Route::prefix('guidance')->group(function () {
 
     Route::get('verify-otp', [GuidanceOtpController::class, 'verifyFormOtp'])->name('guidance.verify-form.otp');
 
-    Route::post('verify-otp', [StudentOtpController::class, 'verifyOtp'])->name('guidance.verify.otp');
+    Route::post('verify-otp', [GuidanceOtpController::class, 'verifyOtp'])->name('guidance.verify.otp');
 
 
 
     Route::middleware('auth:guidance')->group(function () {
-        // Add Student-specific routes here
+        // Add Guidance-specific routes here
         Route::get('/', [Guidance::class, 'home'])->name('guidance.home');
         Route::get('dashboard', [Guidance::class, 'dashboard'])->name('guidance.dashboard');
 
 
-        // Student logout route
+        // Guidance logout route
         Route::post('logout', [Guidance::class, 'logout'])->name('guidance.logout');
 
-        // Student profile routes
+        // Guidance profile routes
         Route::prefix('profile')->group(function () {
             Route::get('/', [Guidance::class, 'profile'])->name('guidance.profile');
             Route::post('updatePhoto', [Guidance::class, 'updateProfilePhoto'])->name('guidance.updateProfilePhoto');
