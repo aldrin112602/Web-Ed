@@ -16,9 +16,14 @@
         </div>
 
         <div class="w-full">
-            <label for="teacher" class="block text-gray-700 mt-2 text-sm mb-1">Assign Teacher</label>
-            <input type="text" id="teacher" name="teacher" class="form-input w-full rounded border-gray-300 @error('teacher') border-red-500 @enderror" value="{{ old('teacher') }}">
-            @error('teacher')
+            <label for="assign_teacher" class="block text-gray-700 mt-2 text-sm mb-1">Assign Teacher</label>
+            <select name="assign_teacher" id="assign_teacher" class="form-select w-full rounded border-gray-300 @error('assign_teacher') border-red-500 @enderror" value="{{ old('assign_teacher') }}">
+                <option value="" disabled class="hidden" selected> -- Assign Teacher --</option>
+                @foreach ($teachersAccount as $teacher)
+                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                @endforeach
+            </select>
+            @error('assign_teacher')
             <span class="text-red-500 text-sm">{{ $message }}</span>
             @enderror
         </div>

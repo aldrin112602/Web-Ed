@@ -2,16 +2,12 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Faker\Factory as Faker;
-use App\Models\StudentAccount as Student;
-use App\Models\AdminAccount as Admin;
-use App\Models\TeacherAccount as Teacher;
-use App\Models\GuidanceAccount as Guidance;
+use App\Models\Student\StudentAccount as Student;
+use App\Models\Admin\AdminAccount as Admin;
+use App\Models\Teacher\TeacherAccount as Teacher;
+use App\Models\Guidance\GuidanceAccount as Guidance;
 
 
 class AccountsTableSeeder extends Seeder

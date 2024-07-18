@@ -14,9 +14,13 @@ return new class extends Migration
         Schema::create('subject_models', function (Blueprint $table) {
             $table->id();
             $table->string('subject')->nullable();
-            $table->string('teacher')->nullable();
+            $table->unsignedBigInteger('teacher_id')->nullable();
             $table->string('time')->nullable();
             $table->timestamps();
+
+
+            // Add the foreign key constraint
+            $table->foreign('teacher_id')->references('id')->on('teacher_accounts')->onDelete('set null');
         });
     }
 

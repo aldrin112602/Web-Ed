@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\SubjectModel;
+use App\Models\Teacher\TeacherAccount;
 
 class SubjectController extends Controller
 {
@@ -37,7 +38,7 @@ class SubjectController extends Controller
     {
         $request->validate([
             'subject' => 'required',
-            'teacher' => 'required',
+            'assign_teacher' => 'required|exists:teacher_accounts,id',
             'time_start' => 'required',
             'time_end' => 'required',
         ]);
@@ -47,7 +48,7 @@ class SubjectController extends Controller
 
         $subject = new SubjectModel([
             'subject' => $request->subject,
-            'teacher' => $request->teacher,
+            'teacher_id' => $request->assign_teacher,
             'time' => $time_start_12hr . ' - ' . $time_end_12hr
         ]);
 
@@ -73,7 +74,8 @@ class SubjectController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            return view('admin.subject.create', ['user' => $user]);
+            $teachersAccount = TeacherAccount::all();
+            return view('admin.subject.create', ['user' => $user, 'teachersAccount' => $teachersAccount]);
         }
 
         return redirect()->route('admin.login');

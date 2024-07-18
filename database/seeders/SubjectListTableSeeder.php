@@ -4,8 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
-use App\Models\SubjectModel as Subject;
-use App\Models\TeacherAccount as Teacher;
+use App\Models\Admin\SubjectModel as Subject;
+use App\Models\Teacher\TeacherAccount as Teacher;
 
 class SubjectListTableSeeder extends Seeder
 {
@@ -42,7 +42,7 @@ class SubjectListTableSeeder extends Seeder
 
             Subject::create([
                 'subject' => $faker->randomElement($subjects),
-                'teacher' => $teacher->name,
+                'teacher_id' => $teacher->id,
                 'time' => "$startTime - $endTime"
             ]);
         }
