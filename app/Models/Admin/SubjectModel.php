@@ -6,7 +6,7 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Teacher\TeacherAccount;
 
 class SubjectModel extends Authenticatable
 {
@@ -17,5 +17,10 @@ class SubjectModel extends Authenticatable
         'teacher_id',
         'time'
     ];
+
+    public function teacherAccount()
+    {
+        return $this->belongsTo(TeacherAccount::class, 'teacher_id');
+    }
 
 }

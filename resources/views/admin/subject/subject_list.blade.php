@@ -56,7 +56,7 @@
                     <tr>
                         <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
                         <td class="py-2 text-center border">{{ $list->subject }}</td>
-                        <td class="py-2 text-center border">{{ $list->teacher }}</td>
+                        <td class="py-2 text-center border">{{ $list->teacherAccount->name ?? 'N/A' }}</td>
                         <td class="py-2 text-center border">{{ $list->time }}</td>
                         
                         <td class="py-2 text-center border">

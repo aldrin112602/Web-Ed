@@ -27,7 +27,8 @@ class SubjectController extends Controller
 
             $subject_list = $query->paginate(10);
 
-            return view('admin.subject.subject_list', ['user' => $user, 'subject_list' => $subject_list]);
+            $teachersAccount = TeacherAccount::all();
+            return view('admin.subject.subject_list', ['user' => $user, 'subject_list' => $subject_list, 'teachersAccount' => $teachersAccount]);
         }
 
         return redirect()->route('admin.login');
