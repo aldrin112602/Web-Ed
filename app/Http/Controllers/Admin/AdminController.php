@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AdminAccount;
+use App\Models\Guidance\GuidanceAccount;
+use App\Models\Student\StudentAccount;
 use App\Models\Teacher\TeacherAccount;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
@@ -65,12 +67,16 @@ class AdminController extends Controller
             $user = Auth::guard('admin')->user();
             $teachersCount = count(TeacherAccount::all());
             $adminsCount = count(AdminAccount::all());
+            $guidancesCount = count(GuidanceAccount::all());
+            $studentsCount = count(StudentAccount::all());
             return view(
                 'admin.dashboard',
                 [
                     'user' => $user,
                     'teachersCount' => $teachersCount,
-                    'adminsCount' => $adminsCount
+                    'adminsCount' => $adminsCount,
+                    'guidancesCount' => $guidancesCount,
+                    'studentsCount' => $studentsCount
                 ]
             );
         }
