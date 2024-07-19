@@ -11,6 +11,17 @@ use App\Models\Teacher\TeacherAccount;
 class SubjectController extends Controller
 {
 
+    public function subject()
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+
+            return view('admin.subject.subject', ['user' => $user]);
+        }
+
+        return redirect()->route('admin.login');
+    }
+    
     public function subject_list(Request $request)
     {
         if (Auth::guard('admin')->check()) {

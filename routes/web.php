@@ -63,6 +63,7 @@ Route::prefix('admin')->group(function () {
 
         // Admin subjects routes
         Route::prefix('subject')->group(function () {
+            Route::get('/', [SubjectController::class, 'subject'])->name('admin.subject');
             Route::get('list', [SubjectController::class, 'subject_list'])->name('admin.subject_list');
             Route::get('create', [SubjectController::class, 'viewCreateSubject'])->name('admin.create.subject');
             Route::post('create', [SubjectController::class, 'createSubject'])->name('admin.handleCreate.subject');
