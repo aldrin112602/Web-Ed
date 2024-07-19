@@ -341,6 +341,43 @@
         }
     </script>
 
+    <script>
+        $(document).ready(function() {
+            // Individual checkbox change event
+            $('.highlight-checkbox').change(function() {
+                if ($(this).is(':checked')) {
+                    $(this).closest('tr').addClass('bg-blue-50 text-blue-700');
+                } else {
+                    $(this).closest('tr').removeClass('bg-blue-50 text-blue-700');
+                }
+            });
+
+            // Select all checkbox change event
+            $('#selectAll').change(function() {
+                if ($(this).is(':checked')) {
+                    $('.highlight-checkbox').each(function() {
+                        $(this).prop('checked', true);
+                        $(this).closest('tr').addClass('bg-blue-50 text-blue-700');
+                    });
+                } else {
+                    $('.highlight-checkbox').each(function() {
+                        $(this).prop('checked', false);
+                        $(this).closest('tr').removeClass('bg-blue-50 text-blue-700');
+                    });
+                }
+            });
+
+            // Uncheck #selectAll if any individual checkbox is unchecked
+            $('.highlight-checkbox').change(function() {
+                if (!$(this).is(':checked')) {
+                    $('#selectAll').prop('checked', false);
+                } else if ($('.highlight-checkbox:checked').length === $('.highlight-checkbox').length) {
+                    $('#selectAll').prop('checked', true);
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

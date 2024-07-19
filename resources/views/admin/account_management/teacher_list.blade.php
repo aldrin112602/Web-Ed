@@ -86,7 +86,7 @@
                 <tbody>
                     @foreach($account_list as $list)
                     <tr>
-                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow" data-id="{{ $list->id }}"></td>
+                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow highlight-checkbox" data-id="{{ $list->id }}"></td>
                         <td class="py-2 text-center border">{{ $list->id_number }}</td>
                         <td class="py-2 text-center border">{{ $list->username }}</td>
                         <td class="py-2 text-center border">{{ $list->name }}</td>
