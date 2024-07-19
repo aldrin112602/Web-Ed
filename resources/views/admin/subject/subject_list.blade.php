@@ -23,6 +23,9 @@
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">SUBJECT LIST</h1>
             <div class="flex gap-2">
+                <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-trash"></i>
+                    Delete</button>
                 <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
                 <a href="{{ route('admin.export.subject') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
             </div>
@@ -58,7 +61,7 @@
                         <td class="py-2 text-center border">{{ $list->subject }}</td>
                         <td class="py-2 text-center border">{{ $list->teacherAccount->name ?? 'N/A' }}</td>
                         <td class="py-2 text-center border">{{ $list->time }}</td>
-                        
+
                         <td class="py-2 text-center border">
                             <a href="{{ route('admin.edit.subject', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
@@ -80,5 +83,10 @@
         <p>No records found.</p>
         @endif
     </div>
+    <form id="deleteSelectedForm" action="{{ route('admin.delete.selected.subjects') }}" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="selected_ids" id="selected_ids">
+    </form>
 </div>
 @endsection

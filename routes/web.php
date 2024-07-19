@@ -48,6 +48,7 @@ Route::prefix('admin')->group(function () {
         Route::delete('/admin/delete-selected-admins', [deleteSelected::class, 'deleteSelectedAdmins'])->name('admin.delete.selected.admins');
         Route::delete('/admin/delete-selected-teachers', [deleteSelected::class, 'deleteSelectedTeachers'])->name('admin.delete.selected.teachers');
         Route::delete('/admin/delete-selected-guidances', [deleteSelected::class, 'deleteSelectedGuidances'])->name('admin.delete.selected.guidances');
+        Route::delete('/admin/delete-selected-subjects', [deleteSelected::class, 'deleteSelectedSubjects'])->name('admin.delete.selected.subjects');
 
 
         // Admin profile routes
