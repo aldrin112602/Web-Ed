@@ -3,6 +3,9 @@
 @section('title', 'Subject List')
 @section('content')
 <div class="p-5 bg-slate-50">
+    <div class="flex justify-end py-4">
+    <a href="{{ route('admin.subject_list') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-list"></i> Subject List</a>
+    </div>
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
             <div class="bg-white shadow rounded-lg p-4 flex items-center">
