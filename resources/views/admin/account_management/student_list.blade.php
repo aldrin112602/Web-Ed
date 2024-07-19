@@ -124,10 +124,10 @@
         @endif
     </div>
     <form id="deleteSelectedForm" action="{{ route('admin.delete.selected.students') }}" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-    <input type="hidden" name="selected_ids" id="selected_ids">
-</form>
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="selected_ids" id="selected_ids">
+    </form>
 
 </div>
 @endsection

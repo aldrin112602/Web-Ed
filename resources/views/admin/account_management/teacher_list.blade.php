@@ -106,7 +106,7 @@
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Display pagination links -->
         <div class="w-full mb-4 mt-4">
             {{ $account_list->appends(request()->query())->links() }}
@@ -116,10 +116,10 @@
         @endif
     </div>
     <form id="deleteSelectedForm" action="{{ route('admin.delete.selected.teachers') }}" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-    <input type="hidden" name="selected_ids" id="selected_ids">
-</form>
+        @csrf
+        @method('DELETE')
+        <input type="hidden" name="selected_ids" id="selected_ids">
+    </form>
 
 </div>
 @endsection
