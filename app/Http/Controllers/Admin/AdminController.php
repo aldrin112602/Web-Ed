@@ -220,4 +220,8 @@ class AdminController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Failed to delete profile photo. Please try again.']);
     }
+
+
+
+    
 }

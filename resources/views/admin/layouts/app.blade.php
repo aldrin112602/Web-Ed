@@ -375,6 +375,39 @@
                     $('#selectAll').prop('checked', true);
                 }
             });
+
+            // Delete selected rows
+            $('#deleteSelected').click(function() {
+                const selectedIds = $('.highlight-checkbox:checked').map(function() {
+                    return $(this).data('id');
+                }).get();
+
+                if (selectedIds.length > 0) {
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#selected_ids').val(selectedIds);
+                            $('#deleteSelectedForm').submit();
+                        }
+                    })
+                } else {
+                    // alert('No rows selected.');
+                    Swal.fire({
+                        title: 'No Rows Selected',
+                        text: "Please select at least one row to delete.",
+                        icon: 'info',
+                    });
+
+                }
+            });
         });
     </script>
 

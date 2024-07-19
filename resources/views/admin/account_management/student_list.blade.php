@@ -12,6 +12,7 @@
                     <div class="md:w-3/4 relative">
                         <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8">
                         <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
+
                     </div>
                     <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
                         <option value="" disabled selected hidden>Gender</option>
@@ -35,7 +36,9 @@
                     </select>
                 </form>
             </div>
-            <a href="{{ route('admin.create.student') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Student</a>
+            <a href="{{ route('admin.create.student') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
+                <i class="fas fa-plus"></i>
+                Add Student</a>
         </div>
 
         <hr class="my-3">
@@ -43,8 +46,15 @@
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">STUDENT LIST</h1>
             <div class="flex gap-2">
-                <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
-                <a href="{{ route('admin.export.student') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
+                <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-trash"></i>
+                    Delete</button>
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-print"></i>
+                    Print</button>
+                <a href="{{ route('admin.export.student') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
+                    <i class="fa-solid fa-file-export"></i>
+                    Export</a>
             </div>
         </div>
 
@@ -64,7 +74,9 @@
             <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="py-2 px-1 text-center border"><input type="checkbox" id="selectAll"></th>
+                        <th class="py-2 px-1 text-center border">
+                            <input type="checkbox" id="selectAll">
+                        </th>
                         <th class="py-3 px-2 text-center border">ID No.</th>
                         <th class="py-3 px-2 text-center border">Username</th>
                         <th class="py-3 px-2 text-center border">Name</th>
@@ -78,7 +90,9 @@
                 <tbody>
                     @foreach($account_list as $list)
                     <tr>
-                        <td class="py-2 text-center border"><input type="checkbox" class="selectRow highlight-checkbox" data-id="{{ $list->id }}"></td>
+                        <td class="py-2 text-center border">
+                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="{{ $list->id }}">
+                        </td>
                         <td class="py-2 text-center border">{{ $list->id_number }}</td>
                         <td class="py-2 text-center border">{{ $list->username }}</td>
                         <td class="py-2 text-center border">{{ $list->name }}</td>
@@ -109,5 +123,11 @@
         <p>No records found.</p>
         @endif
     </div>
+    <form id="deleteSelectedForm" action="{{ route('admin.delete.selected.students') }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+    <input type="hidden" name="selected_ids" id="selected_ids">
+</form>
+
 </div>
 @endsection

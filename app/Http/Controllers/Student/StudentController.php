@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+
+
 class StudentController extends Controller
 {
     public function login()
@@ -202,4 +204,8 @@ class StudentController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Failed to delete profile photo. Please try again.']);
     }
+
+
+
+    
 }

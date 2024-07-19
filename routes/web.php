@@ -15,6 +15,8 @@ use App\Http\Controllers\Teacher\TeacherOtpController;
 use App\Http\Controllers\Student\StudentOtpController;
 use App\Http\Controllers\Guidance\GuidanceOtpController;
 
+use App\Http\Controllers\Admin\deleteSelected;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -39,6 +41,14 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
+
+
+        // for deleting selected accounts
+        Route::delete('/admin/delete-selected-students', [deleteSelected::class, 'deleteSelectedStudents'])->name('admin.delete.selected.students');
+        Route::delete('/admin/delete-selected-admins', [deleteSelected::class, 'deleteSelectedAdmins'])->name('admin.delete.selected.admins');
+        Route::delete('/admin/delete-selected-teachers', [deleteSelected::class, 'deleteSelectedTeachers'])->name('admin.delete.selected.teachers');
+        Route::delete('/admin/delete-selected-guidances', [deleteSelected::class, 'deleteSelectedGuidances'])->name('admin.delete.selected.guidances');
+
 
         // Admin profile routes
         Route::prefix('profile')->group(function () {

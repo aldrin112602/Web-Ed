@@ -115,5 +115,11 @@
         <p>No records found.</p>
         @endif
     </div>
+    <form id="deleteSelectedForm" action="{{ route('admin.delete.selected.teachers') }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+    <input type="hidden" name="selected_ids" id="selected_ids">
+</form>
+
 </div>
 @endsection
