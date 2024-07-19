@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\AdminAccount;
+use App\Models\Teacher\TeacherAccount;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+
 class AdminController extends Controller
 {
     public function login()
@@ -60,7 +63,16 @@ class AdminController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            return view('admin.dashboard', ['user' => $user]);
+            $teachersCount = count(TeacherAccount::all());
+            $adminsCount = count(AdminAccount::all());
+            return view(
+                'admin.dashboard',
+                [
+                    'user' => $user,
+                    'teachersCount' => $teachersCount,
+                    'adminsCount' => $adminsCount
+                ]
+            );
         }
 
         return redirect()->route('admin.login');
