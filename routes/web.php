@@ -16,6 +16,7 @@ use App\Http\Controllers\Student\StudentOtpController;
 use App\Http\Controllers\Guidance\GuidanceOtpController;
 use App\Http\Controllers\Admin\deleteSelected;
 use App\Http\Controllers\Admin\attendanceController as Attendace;
+use App\Http\Controllers\PusherController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,6 +44,12 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
+
+
+        // pusher
+        Route::get('pusher', [PusherController::class, 'index'])->name('admin.pusher');
+        Route::get('pusher/broadcast', [PusherController::class, 'broadcast'])->name('admin.broadcast');
+        Route::get('pusher/receive', [PusherController::class, 'receive'])->name('admin.receive');
 
 
         // for attendace
