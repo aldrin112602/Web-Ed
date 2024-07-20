@@ -11,7 +11,7 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
 
     @vite('resources/css/app.css')
-
+    @livewireStyles
     <style>
         html::-webkit-scrollbar {
             display: none;
@@ -409,8 +409,9 @@
                 }
             });
         });
-    </script>
 
+    </script>
+    @livewireScripts
 </body>
 
 </html>
