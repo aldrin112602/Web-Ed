@@ -14,8 +14,8 @@ use App\Http\Controllers\Admin\AdminOtpController;
 use App\Http\Controllers\Teacher\TeacherOtpController;
 use App\Http\Controllers\Student\StudentOtpController;
 use App\Http\Controllers\Guidance\GuidanceOtpController;
-
 use App\Http\Controllers\Admin\deleteSelected;
+use App\Http\Controllers\Admin\attendanceController as Attendace;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +27,8 @@ Route::get('/login', [PublicController::class, 'login'])->name('login');
 Route::prefix('admin')->group(function () {
     Route::get('login', [Admin::class, 'login'])->name('admin.login');
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
+
+
 
     // for reset password
     Route::get('forgot-password', [AdminOtpController::class, 'request'])->name('admin.password.request');
@@ -41,6 +43,14 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
+
+
+        // for attendace
+        Route::prefix('attendance')->group(function () {
+            Route::get('report', [Attendace::class, 'attendaceReport'])->name('admin.attendance.report');
+            Route::get('absent', [Attendace::class, 'attendaceAbsent'])->name('admin.attendance.absent');
+            Route::get('present', [Attendace::class, 'attendacePresent'])->name('admin.attendance.present');
+        });
 
 
         // for deleting selected accounts
