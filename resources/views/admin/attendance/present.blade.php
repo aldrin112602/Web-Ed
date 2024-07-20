@@ -1,3 +1,6 @@
-<div>
-    <!-- Always remember that you are absolutely unique. Just like everyone else. - Margaret Mead -->
-</div>
+@extends('admin.layouts.app')
+
+@section('title', 'Attendance Present')
+@section('content')
+<h1>Present</h1>
+@endsection

@@ -1,3 +1,6 @@
-<div>
-    <!-- Live as if you were to die tomorrow. Learn as if you were to live forever. - Mahatma Gandhi -->
-</div>
+@extends('admin.layouts.app')
+
+@section('title', 'Attendance Absent')
+@section('content')
+<h1>Absent</h1>
+@endsection

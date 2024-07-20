@@ -1,3 +1,6 @@
-<div>
-    <!-- Simplicity is an acquired taste. - Katharine Gerould -->
-</div>
+@extends('admin.layouts.app')
+
+@section('title', 'Attendance Report')
+@section('content')
+<h1>Report</h1>
+@endsection
