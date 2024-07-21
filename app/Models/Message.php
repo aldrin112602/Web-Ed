@@ -3,20 +3,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['conversation_id', 'sender_type', 'sender_id', 'message'];
+    protected $fillable = [
+        'sender_id', 'sender_type', 'receiver_id', 'receiver_type', 'message',
+    ];
 
-    public function conversation()
+    public function sender()
     {
-        return $this->belongsTo(Conversation::class);
+        return $this->morphTo();
     }
 
-    public function sender(): MorphTo
+    public function receiver()
     {
         return $this->morphTo();
     }

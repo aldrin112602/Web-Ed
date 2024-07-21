@@ -76,10 +76,7 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => env('AUTH_MODEL', App\Models\User::class),
-        // ],
+       
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin\AdminAccount::class,
@@ -96,11 +93,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Student\StudentAccount::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*

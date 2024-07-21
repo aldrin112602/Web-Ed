@@ -16,7 +16,7 @@ use App\Http\Controllers\Student\StudentOtpController;
 use App\Http\Controllers\Guidance\GuidanceOtpController;
 use App\Http\Controllers\Admin\deleteSelected;
 use App\Http\Controllers\Admin\attendanceController as Attendace;
-use App\Http\Controllers\PusherController;
+use App\Http\Controllers\ConversationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,10 +46,10 @@ Route::prefix('admin')->group(function () {
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
 
-        // pusher
-        Route::get('pusher', [PusherController::class, 'index'])->name('admin.pusher');
-        Route::get('pusher/broadcast', [PusherController::class, 'broadcast'])->name('admin.broadcast');
-        Route::get('pusher/receive', [PusherController::class, 'receive'])->name('admin.receive');
+        Route::get('/chats', [ConversationController::class, 'index'])->name('chats.index');
+        // Route::get('/chats/messages/{userId}', [ConversationController::class, 'loadMessages']);
+        Route::get('/chats/messages', [ConversationController::class, 'loadMessages'])->name('chats.loadMessages');
+        Route::post('/chats/send', [ConversationController::class, 'sendMessage']);
 
 
         // for attendace
@@ -169,6 +169,12 @@ Route::prefix('teacher')->group(function () {
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
 
 
+        // Chat routes for teacher
+        Route::get('/chats', [ConversationController::class, 'index'])->name('teacher.chats.index');
+        Route::get('/chats/messages/{userId}', [ConversationController::class, 'loadMessages'])->name('teacher.chats.messages');
+        Route::post('/chats/send', [ConversationController::class, 'sendMessage'])->name('teacher.chats.send');
+
+
         // Teacher logout route
         Route::post('logout', [Teacher::class, 'logout'])->name('teacher.logout');
 
@@ -204,6 +210,11 @@ Route::prefix('student')->group(function () {
         // Add Student-specific routes here
         Route::get('/', [Student::class, 'home'])->name('student.home');
         Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');
+
+        // Chat routes for student
+        Route::get('/chats', [ConversationController::class, 'index'])->name('student.chats.index');
+        Route::get('/chats/messages/{userId}', [ConversationController::class, 'loadMessages'])->name('student.chats.messages');
+        Route::post('/chats/send', [ConversationController::class, 'sendMessage'])->name('student.chats.send');
 
 
         // Student logout route
@@ -245,6 +256,12 @@ Route::prefix('guidance')->group(function () {
         // Add Guidance-specific routes here
         Route::get('/', [Guidance::class, 'home'])->name('guidance.home');
         Route::get('dashboard', [Guidance::class, 'dashboard'])->name('guidance.dashboard');
+
+
+        // Chat routes for guidance
+        Route::get('/chats', [ConversationController::class, 'index'])->name('guidance.chats.index');
+        Route::get('/chats/messages/{userId}', [ConversationController::class, 'loadMessages'])->name('guidance.chats.messages');
+        Route::post('/chats/send', [ConversationController::class, 'sendMessage'])->name('guidance.chats.send');
 
 
         // Guidance logout route
