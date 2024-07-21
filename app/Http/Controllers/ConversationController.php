@@ -52,7 +52,9 @@ class ConversationController extends Controller
     public function sendMessage(Request $request)
     {
         $message = new Message();
+        $user = Auth::user();
         $message->sender_id = Auth::id();
+        $message->id_number = $user->id_number;
         $message->sender_type = get_class(Auth::user());
         $message->receiver_id = $request->get('receiver_id');
         $message->receiver_type = str_replace('\\\\', '\\', $request->get('receiver_type'));
