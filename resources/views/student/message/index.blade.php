@@ -71,24 +71,31 @@
 <script>
     let selectedUserId;
     let selectedUserType;
+    let onLoadMessage = false;
 
     function loadChat(userId, userType) {
         selectedUserId = userId;
         selectedUserType = userType;
 
         $.getJSON(`/student/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
-            console.log(data);
             const messagesDiv = $('#messages');
             messagesDiv.empty();
             if (data.length > 0) {
                 $.each(data, function(index, message) {
-                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div>${message.message}<hr class="my-2">
+                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div title="${message.time_ago}">${message.message}
+                    <hr class="my-2">
                     <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
-                    </div></div>`);
+                    </div>
+                    `);
                     messagesDiv.append(messageElement);
                 });
             } else {
                 messagesDiv.html('<div class="h-full flex items-center justify-center"><span>No messages yet.</span></div>');
+            }
+            // Auto-scroll to the bottom
+            if(!onLoadMessage) {
+                messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
+                onLoadMessage = true;
             }
         });
     }
@@ -112,11 +119,20 @@
             success: function(data) {
                 loadChat(selectedUserId, selectedUserType);
                 $('#message-input').val(null);
+                // Auto-scroll to the bottom after sending a message
+                const messagesDiv = $('#messages');
+                messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
             }
         });
     }
+
+    setInterval(() => {
+        if(selectedUserId && selectedUserType) {
+            loadChat(selectedUserId, selectedUserType);
+        }
+    }, 2000);
 </script>
 @endsection

@@ -4,14 +4,18 @@
 @section('content')
 
 <style>
-    .msg {
-        display: flex;
-        align-items: center;
-        justify-content: start;
-    }
 
-    .msg div {
-        border-radius: 10px 10px 10px 0px;
+
+.msg {
+        display: flex;
+        align-items: end;
+        justify-content: start;
+        gap: 6px;
+
+}
+
+.msg div {
+        border-radius: 10px  10px 10px 0px;
         background-color: #aaa;
         padding: 10px;
         color: #222;
@@ -21,16 +25,21 @@
         display: flex;
         align-items: center;
         justify-content: end;
+        gap: 0;
     }
 
+    .msg_id_{{$user->id_number}}  img {
+        display: none;
+    }
     .msg_id_{{$user->id_number}} div {
-        border-radius: 10px 10px 0px 10px;
+        border-radius: 10px  10px 0px 10px;
         background-color: dodgerblue;
         padding: 10px;
         color: white;
     }
-</style>
 
+
+</style>
 <div class="flex h-screen">
     <!-- Left Column: List of Users -->
     <div class="w-1/3 border-r">
@@ -69,28 +78,39 @@
 <script>
     let selectedUserId;
     let selectedUserType;
+    let onLoadMessage = false;
 
     function loadChat(userId, userType) {
         selectedUserId = userId;
         selectedUserType = userType;
 
         $.getJSON(`/admin/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
-            console.log(data);
             const messagesDiv = $('#messages');
             messagesDiv.empty();
+
+            console.log(data)
             if (data.length > 0) {
                 $.each(data, function(index, message) {
-                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div title="${message.time_ago}">${message.message}
-                    <hr class="my-2">
-                    <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
-                    </div>`);
+                    const profile = message.receiver_account?.profile;
+                    const profileUrl = profile ? `/storage/${profile}` : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
+
+                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`
+                        <img src="${profileUrl}" style="width: 30px; height: 30px; object-fit: cover;">
+                        <div title="${message.time_ago}">${message.message}
+                        <hr class="my-2">
+                        <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
+                        </div>
+                    `);
                     messagesDiv.append(messageElement);
                 });
             } else {
                 messagesDiv.html('<div class="h-full flex items-center justify-center"><span>No messages yet.</span></div>');
             }
             // Auto-scroll to the bottom
-            messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
+            if(!onLoadMessage) {
+                messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
+                onLoadMessage = true;
+            }
         });
     }
 
@@ -113,6 +133,9 @@
             success: function(data) {
                 loadChat(selectedUserId, selectedUserType);
                 $('#message-input').val(null);
+                // Auto-scroll to the bottom after sending a message
+                const messagesDiv = $('#messages');
+                messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
             },
             error: function(xhr, status, error) {
                 console.error('Error:', error);
@@ -120,9 +143,8 @@
         });
     }
 
-    // Periodically update chat every 5 seconds
-    setInterval(function() {
-        if (selectedUserId && selectedUserType) {
+    setInterval(() => {
+        if(selectedUserId && selectedUserType) {
             loadChat(selectedUserId, selectedUserType);
         }
     }, 2000);

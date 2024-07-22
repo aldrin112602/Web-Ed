@@ -17,7 +17,7 @@ class AdminConversationController extends Controller
     public function index()
     {
         $user = Auth::guard('admin')->user();
-        
+
         $teachers = TeacherAccount::all();
         $admins = AdminAccount::all();
         $students = StudentAccount::all();
@@ -54,6 +54,11 @@ class AdminConversationController extends Controller
         // Add human-readable time format
         $messages->each(function ($message) {
             $message->time_ago = Carbon::parse($message->created_at)->diffForHumans();
+            // get user account of the receiver
+            $receiverModel = $message->receiver_type;
+            $senderModel = $message->sender_type;
+            $message->receiver_account = $receiverModel::find($message->receiver_id);
+            $message->sender_account = $senderModel::find($message->sender_id);
         });
 
         return response()->json($messages);
@@ -62,7 +67,7 @@ class AdminConversationController extends Controller
     public function sendMessage(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        
+
         $message = new Message();
         $message->sender_id = $user->id;
         $message->id_number = $user->id_number;
