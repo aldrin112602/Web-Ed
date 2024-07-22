@@ -24,7 +24,8 @@ class AdminAccount extends Authenticatable implements CanResetPassword
         'role',
         'profile',
         'address',
-        'phone_number'
+        'phone_number',
+        'extension_name'
     ];
 
     public function setPasswordAttribute($value)

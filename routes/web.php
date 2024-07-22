@@ -45,7 +45,6 @@ Route::prefix('admin')->group(function () {
     Route::post('verify-otp', [AdminOtpController::class, 'verifyOtp'])->name('admin.verify.otp');
 
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/', [Admin::class, 'home'])->name('admin.home');
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
         // chat conversation
@@ -167,7 +166,6 @@ Route::prefix('teacher')->group(function () {
 
     Route::middleware('auth:teacher')->group(function () {
         // Add teacher-specific routes here
-        Route::get('/', [Teacher::class, 'home'])->name('teacher.home');
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
 
 
@@ -212,7 +210,6 @@ Route::prefix('student')->group(function () {
 
     Route::middleware('auth:student')->group(function () {
         // Add Student-specific routes here
-        Route::get('/', [Student::class, 'home'])->name('student.home');
         Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');
 
         // chat conversation
@@ -258,7 +255,6 @@ Route::prefix('guidance')->group(function () {
 
     Route::middleware('auth:guidance')->group(function () {
         // Add Guidance-specific routes here
-        Route::get('/', [Guidance::class, 'home'])->name('guidance.home');
         Route::get('dashboard', [Guidance::class, 'dashboard'])->name('guidance.dashboard');
 
 

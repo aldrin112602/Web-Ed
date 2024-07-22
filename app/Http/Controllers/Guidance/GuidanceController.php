@@ -14,7 +14,7 @@ class GuidanceController extends Controller
     public function login()
     {
         if (Auth::guard('guidance')->check()) {
-            return redirect()->intended('guidance');
+            return redirect()->intended('guidance/dashboard');
         }
         // Clear session
         Session::forget('otp_email');
@@ -47,7 +47,7 @@ class GuidanceController extends Controller
         if (Auth::guard('guidance')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
 
-            return redirect()->intended('guidance');
+            return redirect()->intended('guidance/dashboard');
         }
 
         // Authentication failed

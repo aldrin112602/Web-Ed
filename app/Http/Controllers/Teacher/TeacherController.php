@@ -14,7 +14,7 @@ class TeacherController extends Controller
     public function login()
     {
         if (Auth::guard('teacher')->check()) {
-            return redirect()->intended('teacher');
+            return redirect()->intended('teacher/dashboard');
         }
         // Clear session
         Session::forget('otp_email');
@@ -47,7 +47,7 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
 
-            return redirect()->intended('teacher');
+            return redirect()->intended('teacher/dashboard');
         }
 
         // Authentication failed

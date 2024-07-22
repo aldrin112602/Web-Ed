@@ -19,7 +19,7 @@ class AdminController extends Controller
     public function login()
     {
         if (Auth::guard('admin')->check()) {
-            return redirect()->intended('admin');
+            return redirect()->intended('admin/dashboard');
         }
         // Clear session
         Session::forget('otp_email');
@@ -52,7 +52,7 @@ class AdminController extends Controller
         if (Auth::guard('admin')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
 
-            return redirect()->intended('admin');
+            return redirect()->intended('admin/dashboard');
         }
 
         // Authentication failed

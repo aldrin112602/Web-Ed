@@ -85,10 +85,7 @@
                         <img src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
                     </div>
                 </div>
-                <div class="p-3 {{ request()->is('teacher') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('teacher.home') }}" class="text-sm flex items-center justify-start gap-3">
-                        <i class="fa-solid fa-house"></i>Home</a>
-                </div>
+                
                 <div class="p-3 {{ request()->is('teacher/dashboard') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('teacher.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>

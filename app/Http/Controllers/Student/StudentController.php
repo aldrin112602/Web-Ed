@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function login()
     {
         if (Auth::guard('student')->check()) {
-            return redirect()->intended('student');
+            return redirect()->intended('student/dashboard');
         }
         // Clear session
         Session::forget('otp_email');
@@ -49,7 +49,7 @@ class StudentController extends Controller
         if (Auth::guard('student')->attempt($credentials, $request->filled('remember'))) {
             // Authentication passed
 
-            return redirect()->intended('student');
+            return redirect()->intended('student/dashboard');
         }
 
         // Authentication failed

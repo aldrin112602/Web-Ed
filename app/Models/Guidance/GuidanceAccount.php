@@ -24,7 +24,9 @@ class GuidanceAccount extends Authenticatable
         'role',
         'profile',
         'phone_number',
-        'address'
+        'address',
+        'extension_name'
+
     ];
 
     public function setPasswordAttribute($value)
