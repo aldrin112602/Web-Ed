@@ -10,6 +10,7 @@ use App\Models\Student\StudentAccount;
 use App\Models\Admin\AdminAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
+use Illuminate\Support\Carbon;
 
 class GuidanceConversationController extends Controller
 {
@@ -35,33 +36,44 @@ class GuidanceConversationController extends Controller
     {
         $userId = $request->get('user_id');
         $userType = $request->get('user_type');
-        $messages = Message::where(function ($query) use ($userId, $userType) {
-            $query->where('sender_id', Auth::id())
-                ->where('sender_type', get_class(Auth::user()))
+        $user = Auth::guard('admin')->user();
+
+        $messages = Message::where(function ($query) use ($userId, $userType, $user) {
+            $query->where('sender_id', $user->id)
+                ->where('sender_type', get_class($user))
                 ->where('receiver_id', $userId)
                 ->where('receiver_type', $userType);
-        })->orWhere(function ($query) use ($userId, $userType) {
+        })->orWhere(function ($query) use ($userId, $userType, $user) {
             $query->where('sender_id', $userId)
                 ->where('sender_type', $userType)
-                ->where('receiver_id', Auth::id())
-                ->where('receiver_type', get_class(Auth::user()));
+                ->where('receiver_id', $user->id)
+                ->where('receiver_type', get_class($user));
         })->get();
+
+        // Add human-readable time format
+        $messages->each(function ($message) {
+            $message->time_ago = Carbon::parse($message->created_at)->diffForHumans();
+        });
 
         return response()->json($messages);
     }
 
     public function sendMessage(Request $request)
     {
+        $user = Auth::guard('admin')->user();
+        
         $message = new Message();
-        $user = Auth::guard('guidance')->user();
-        $message->sender_id = Auth::id();
+        $message->sender_id = $user->id;
         $message->id_number = $user->id_number;
-        $message->sender_type = get_class(Auth::user());
+        $message->sender_type = get_class($user);
         $message->receiver_id = $request->get('receiver_id');
         $message->receiver_type = str_replace('\\\\', '\\', $request->get('receiver_type'));
         $message->message = $request->get('message');
         $message->save();
 
-        return response()->json($message);
+        return response()->json([
+            'message' => $message,
+            'time_ago' => Carbon::parse($message->created_at)->diffForHumans()
+        ]);
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Student\StudentAccount;
 use App\Models\Admin\AdminAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
+use Carbon\Carbon;
 
 class AdminConversationController extends Controller
 {
@@ -50,6 +51,11 @@ class AdminConversationController extends Controller
                 ->where('receiver_type', get_class($user));
         })->get();
 
+        // Add human-readable time format
+        $messages->each(function ($message) {
+            $message->time_ago = Carbon::parse($message->created_at)->diffForHumans();
+        });
+
         return response()->json($messages);
     }
 
@@ -66,6 +72,9 @@ class AdminConversationController extends Controller
         $message->message = $request->get('message');
         $message->save();
 
-        return response()->json($message);
+        return response()->json([
+            'message' => $message,
+            'time_ago' => Carbon::parse($message->created_at)->diffForHumans()
+        ]);
     }
 }

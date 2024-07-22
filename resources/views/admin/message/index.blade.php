@@ -82,7 +82,11 @@
             messagesDiv.empty();
             if (data.length > 0) {
                 $.each(data, function(index, message) {
-                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div>${message.message}</div>`);
+                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div title="${message.time_ago}">${message.message}
+                    <hr class="my-2">
+                    <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
+                    </div>
+                    `);
                     messagesDiv.append(messageElement);
                 });
             } else {
