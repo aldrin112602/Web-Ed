@@ -22,15 +22,86 @@ class AdminConversationController extends Controller
         $admins = AdminAccount::all();
         $students = StudentAccount::all();
         $guidances = GuidanceAccount::all();
+        $allConversations = $this->getAllConversations();
 
         $allUsers = [...$teachers, ...$admins, ...$students, ...$guidances];
         return view(
             'admin.message.index',
             [
                 'user' => $user,
-                'allUsers' => $allUsers
+                'allUsers' => $allUsers,
+                'allConversations' => $allConversations
             ]
         );
+    }
+
+
+    public function getAllConversations()
+    {
+        $user = Auth::guard('admin')->user();
+        $conversations = collect();
+
+        $sentMessages = Message::where('sender_id', $user->id)
+            ->where('sender_type', get_class($user))
+            ->get();
+
+        $receivedMessages = Message::where('receiver_id', $user->id)
+            ->where('receiver_type', get_class($user))
+            ->get();
+
+        foreach ($sentMessages as $message) {
+            $receiverType = $message->receiver_type;
+            $receiverId = $message->receiver_id;
+
+            $receiver = null;
+
+            switch ($receiverType) {
+                case AdminAccount::class:
+                    $receiver = AdminAccount::find($receiverId);
+                    break;
+                case TeacherAccount::class:
+                    $receiver = TeacherAccount::find($receiverId);
+                    break;
+                case StudentAccount::class:
+                    $receiver = StudentAccount::find($receiverId);
+                    break;
+                case GuidanceAccount::class:
+                    $receiver = GuidanceAccount::find($receiverId);
+                    break;
+            }
+
+            if ($receiver && !$conversations->contains('id', $receiver->id)) {
+                $conversations->push($receiver);
+            }
+        }
+
+        foreach ($receivedMessages as $message) {
+            $senderType = $message->sender_type;
+            $senderId = $message->sender_id;
+
+            $sender = null;
+
+            switch ($senderType) {
+                case AdminAccount::class:
+                    $sender = AdminAccount::find($senderId);
+                    break;
+                case TeacherAccount::class:
+                    $sender = TeacherAccount::find($senderId);
+                    break;
+                case StudentAccount::class:
+                    $sender = StudentAccount::find($senderId);
+                    break;
+                case GuidanceAccount::class:
+                    $sender = GuidanceAccount::find($senderId);
+                    break;
+            }
+
+            if ($sender && !$conversations->contains('id', $sender->id)) {
+                $conversations->push($sender);
+            }
+        }
+
+        return $conversations;
     }
 
     public function loadMessages(Request $request)
