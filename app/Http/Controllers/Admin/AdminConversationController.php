@@ -15,7 +15,7 @@ class AdminConversationController extends Controller
 {
     public function index()
     {
-        $user = Auth::user(); // Get the authenticated user
+        $user = Auth::guard('admin')->user();
         $teachers = TeacherAccount::all();
         $admins = AdminAccount::all();
         $students = StudentAccount::all();
@@ -53,7 +53,7 @@ class AdminConversationController extends Controller
     public function sendMessage(Request $request)
     {
         $message = new Message();
-        $user = Auth::user();
+        $user = Auth::guard('admin')->user();
         $message->sender_id = Auth::id();
         $message->id_number = $user->id_number;
         $message->sender_type = get_class(Auth::user());
