@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
 
     <style>
@@ -66,7 +66,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="hover:text-blue-500" href="#!">
+                    <a class="hover:text-blue-500" href="{{ route('guidance.chats.index') }}">
                         <i class="fa-regular fa-message"></i>
                     </a>
                 </li>

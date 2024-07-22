@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guidance;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Message;
@@ -10,7 +11,7 @@ use App\Models\Admin\AdminAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
 
-class ConversationController extends Controller
+class GuidanceConversationController extends Controller
 {
     public function index()
     {
@@ -22,7 +23,7 @@ class ConversationController extends Controller
 
         $allUsers = [...$teachers, ...$admins, ...$students, ...$guidances];
         return view(
-            'admin.message.index',
+            'guidance.message.index',
             [
                 'user' => $user,
                 'allUsers' => $allUsers

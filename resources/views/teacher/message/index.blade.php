@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('teacher.layouts.app')
 
 @section('title', 'Chats')
 @section('content')
@@ -76,7 +76,7 @@
         selectedUserId = userId;
         selectedUserType = userType;
 
-        $.getJSON(`/admin/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
+        $.getJSON(`/teacher/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
             console.log(data);
             const messagesDiv = $('#messages');
             messagesDiv.empty();
@@ -96,7 +96,7 @@
         const message = messageInput.val();
 
         $.ajax({
-            url: '/admin/chats/send',
+            url: '/teacher/chats/send',
             type: 'POST',
             contentType: 'application/json',
             headers: {
