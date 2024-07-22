@@ -263,7 +263,7 @@ Route::prefix('guidance')->group(function () {
 
 
         // chat conversation
-        Route::get('/chats', [GuidanceConversationController::class, 'index'])->name('chats.index')->name('guidance.chats.index');
+        Route::get('/chats', [GuidanceConversationController::class, 'index'])->name('guidance.chats.index');
         Route::get('/chats/messages', [GuidanceConversationController::class, 'loadMessages'])->name('guidance.chats.loadMessages');
         Route::post('/chats/send', [GuidanceConversationController::class, 'sendMessage']);
 
