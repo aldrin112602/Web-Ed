@@ -40,17 +40,17 @@
 
 
 </style>
-<div class="flex h-screen">
+<div class="grid grid-cols-3 h-full max-h-screen">
     <!-- Left Column: List of Users -->
-    <div class="w-1/3 border-r">
+    <div class="border-r">
         <div class="p-2 relative bg-white">
             <input oninput="w3.filterHTML('#user_list', '.user', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8 border border-slate-200">
             <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 20px; transform: translateY(-50%)"></i>
         </div>
-        <h2 class="text-lg font-bold p-2 pt-0 bg-white border-b text-slate-700">Chats</h2>
-        <div class="overflow-y-auto h-full" id="user_list">
+        <h2 class="text-lg font-bold p-2 pt-0 bg-white border-b text-slate-700">All users</h2>
+        <div class="overflow-y-auto" id="user_list" style="height: 430px;">
             @foreach($allUsers as $_user)
-            <div class="py-2 px-4 bg-white border-b shadow hover:bg-gray-200 cursor-pointer flex items-center user" onclick="loadChat({{ $_user->id }}, '{{ addslashes(get_class($_user)) }}')">
+            <div class="py-2 px-4 bg-white border-b shadow hover:bg-gray-200 cursor-pointer flex items-center user" onclick="loadChat({{ $_user->id }}, '{{ addslashes(get_class($_user)) }}', true)">
                 <img src="{{ isset($_user->profile) ? asset('storage/' . $_user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="" class="rounded-full h-10 w-10" />
                 <div class="ml-3">
                     <span class="block text-sm font-semibold">{{ $_user->name }}</span>
@@ -62,12 +62,42 @@
     </div>
 
     <!-- Center Column: Display Conversations -->
-    <div class="w-full bg-white p-4 border-r relative h-full" id="chat-window">
-        <h2 class="text-lg font-bold mb-4">Conversations</h2>
-        <div id="messages" class="space-y-4 bg-slate-50 overflow-y-auto p-4 rounded-lg border border-slate-200" style="height: 80%;">
-            <!-- Messages will be loaded here dynamically -->
+
+    <div class=" bg-white border-r relative" id="chat-window">
+    <div class="p-2 relative bg-white">
+            <input oninput="w3.filterHTML('#conversations', '.user', this.value)" type="text" placeholder="Search..." class="form-input rounded w-full pl-8 border border-slate-200">
+            <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 20px; transform: translateY(-50%)"></i>
         </div>
-        <form action="javascript:void(0)" method="POST" class="w-full absolute bottom-0 left-0 p-2 flex items-center gap-2 bg-white border-t border-slate-200">
+        <h2 class="text-lg font-bold p-2 pt-0 bg-white border-b text-slate-700">Chats</h2>
+        <div id="conversations" class=" bg-slate-50 overflow-y-auto" style="height: 430px;">
+            @if ($allConversations->isEmpty())
+                <div class="h-full w-full flex items-center justify-center text-sm text-slate-600">
+                    <span>No conversations yet.</span>
+                </div>
+            @else
+                @foreach ($allConversations as $conversation)
+                <div class="py-2 px-4 bg-white border-b hover:bg-gray-200 cursor-pointer flex items-center user" onclick="loadChat({{ $conversation->id }}, '{{ addslashes(get_class($conversation)) }}', true)">
+                    <img src="{{ isset($conversation->profile) ? asset('storage/' . $conversation->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="" class="rounded-full h-10 w-10" />
+                    <div class="ml-3">
+                        <span class="block text-sm font-semibold">{{ $conversation->name }}</span>
+                        <span class="block text-xs text-gray-500">{{ $conversation->role }}</span>
+                    </div>
+                </div>
+                @endforeach
+            @endif
+        </div>
+    </div>
+
+    <!-- chats messages -->
+    <div class=" bg-white p-4 relative" id="chat-window">
+        <h2 class="text-lg font-bold mb-4">Conversation</h2>
+        <div id="messages" class=" space-y-4 bg-slate-50 overflow-y-auto p-4 rounded-lg border border-slate-200" style="height: 400px;">
+            <!-- Messages will be loaded here dynamically -->
+             <div class="h-full w-full flex items-center justify-center text-sm text-slate-600">
+             Select a user to start a conversation!
+             </div>
+        </div>
+        <form action="javascript:void(0)" method="POST" class="w-full  p-2 flex items-center gap-2 bg-white border-t border-slate-200">
             @csrf
             <input name="message" id="message-input" class="form-input rounded w-full border border-slate-200 p-2" placeholder="Type a message...">
             <button onclick="sendMessage()" class="bg-blue-500 text-white rounded p-2"><i class="fas fa-paper-plane"></i></button>
@@ -80,13 +110,14 @@
     let selectedUserType;
     let onLoadMessage = false;
 
-    function loadChat(userId, userType) {
+    function loadChat(userId, userType, scroll = false) {
         selectedUserId = userId;
         selectedUserType = userType;
 
         $.getJSON(`/teacher/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
             const messagesDiv = $('#messages');
             messagesDiv.empty();
+
             if (data.length > 0) {
                 $.each(data, function(index, message) {
                     const profile = message.receiver_account?.profile;
@@ -108,6 +139,10 @@
             if(!onLoadMessage) {
                 messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
                 onLoadMessage = true;
+            }
+
+            if(scroll) {
+                messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
             }
         });
     }
