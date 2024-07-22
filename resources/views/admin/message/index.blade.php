@@ -4,16 +4,14 @@
 @section('content')
 
 <style>
-
-
-.msg {
+    .msg {
         display: flex;
         align-items: center;
         justify-content: start;
-}
+    }
 
-.msg div {
-        border-radius: 10px  10px 10px 0px;
+    .msg div {
+        border-radius: 10px 10px 10px 0px;
         background-color: #aaa;
         padding: 10px;
         color: #222;
@@ -24,15 +22,15 @@
         align-items: center;
         justify-content: end;
     }
+
     .msg_id_{{$user->id_number}} div {
-        border-radius: 10px  10px 0px 10px;
+        border-radius: 10px 10px 0px 10px;
         background-color: dodgerblue;
         padding: 10px;
         color: white;
     }
-
-
 </style>
+
 <div class="flex h-screen">
     <!-- Left Column: List of Users -->
     <div class="w-1/3 border-r">
@@ -85,13 +83,14 @@
                     const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div title="${message.time_ago}">${message.message}
                     <hr class="my-2">
                     <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
-                    </div>
-                    `);
+                    </div>`);
                     messagesDiv.append(messageElement);
                 });
             } else {
                 messagesDiv.html('<div class="h-full flex items-center justify-center"><span>No messages yet.</span></div>');
             }
+            // Auto-scroll to the bottom
+            messagesDiv.scrollTop(messagesDiv[0].scrollHeight);
         });
     }
 
@@ -120,5 +119,12 @@
             }
         });
     }
+
+    // Periodically update chat every 5 seconds
+    setInterval(function() {
+        if (selectedUserId && selectedUserType) {
+            loadChat(selectedUserId, selectedUserType);
+        }
+    }, 2000);
 </script>
 @endsection

@@ -36,7 +36,7 @@ class GuidanceConversationController extends Controller
     {
         $userId = $request->get('user_id');
         $userType = $request->get('user_type');
-        $user = Auth::guard('admin')->user();
+        $user = Auth::guard('guidance')->user();
 
         $messages = Message::where(function ($query) use ($userId, $userType, $user) {
             $query->where('sender_id', $user->id)
@@ -60,7 +60,7 @@ class GuidanceConversationController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $user = Auth::guard('admin')->user();
+        $user = Auth::guard('guidance')->user();
         
         $message = new Message();
         $message->sender_id = $user->id;
