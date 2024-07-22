@@ -22,6 +22,7 @@
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                         </div>
+
                         <div class="md:w-1/2 w-full">
                                 <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
                                 <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
@@ -33,6 +34,26 @@
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror
                         </div>
+                        <div class="md:w-1/2 w-full">
+                                <label for="extension_name" class="block text-gray-700 text-sm mb-1">Extension Name (optional)</label>
+                                <input type="text" id="extension_name" name="extension_name" class="form-input w-full rounded border-gray-300 @error('extension_name') border-red-500 @enderror" value="{{ old('extension_name') }}">
+                                @error('extension_name')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+
+                </div>
+
+                <div class="w-full">
+                        <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
+                        <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
+                                <option value="" disabled class="hidden" selected>-- Select one --</option>
+                                <option value="Male" {{ old('gender') == "Male" ? "selected" : ""  }}>Male</option>
+                                <option value="Female" {{ old('gender') == "Female" ? "selected" : ""  }}>Female</option>
+                        </select>
+                        @error('gender')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                        @enderror
                 </div>
 
                 <div class="block md:flex align-center justify-between my-2 gap-5">
