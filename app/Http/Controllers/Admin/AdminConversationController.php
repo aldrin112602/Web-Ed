@@ -16,6 +16,7 @@ class AdminConversationController extends Controller
     public function index()
     {
         $user = Auth::guard('admin')->user();
+        
         $teachers = TeacherAccount::all();
         $admins = AdminAccount::all();
         $students = StudentAccount::all();
@@ -35,16 +36,18 @@ class AdminConversationController extends Controller
     {
         $userId = $request->get('user_id');
         $userType = $request->get('user_type');
-        $messages = Message::where(function ($query) use ($userId, $userType) {
-            $query->where('sender_id', Auth::id())
-                ->where('sender_type', get_class(Auth::user()))
+        $user = Auth::guard('admin')->user();
+
+        $messages = Message::where(function ($query) use ($userId, $userType, $user) {
+            $query->where('sender_id', $user->id)
+                ->where('sender_type', get_class($user))
                 ->where('receiver_id', $userId)
                 ->where('receiver_type', $userType);
-        })->orWhere(function ($query) use ($userId, $userType) {
+        })->orWhere(function ($query) use ($userId, $userType, $user) {
             $query->where('sender_id', $userId)
                 ->where('sender_type', $userType)
-                ->where('receiver_id', Auth::id())
-                ->where('receiver_type', get_class(Auth::user()));
+                ->where('receiver_id', $user->id)
+                ->where('receiver_type', get_class($user));
         })->get();
 
         return response()->json($messages);
@@ -52,11 +55,12 @@ class AdminConversationController extends Controller
 
     public function sendMessage(Request $request)
     {
-        $message = new Message();
         $user = Auth::guard('admin')->user();
-        $message->sender_id = Auth::id();
+        
+        $message = new Message();
+        $message->sender_id = $user->id;
         $message->id_number = $user->id_number;
-        $message->sender_type = get_class(Auth::user());
+        $message->sender_type = get_class($user);
         $message->receiver_id = $request->get('receiver_id');
         $message->receiver_type = str_replace('\\\\', '\\', $request->get('receiver_type'));
         $message->message = $request->get('message');

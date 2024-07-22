@@ -42,12 +42,12 @@
         </div>
         <h2 class="text-lg font-bold p-2 pt-0 bg-white border-b text-slate-700">Chats</h2>
         <div class="overflow-y-auto h-full" id="user_list">
-            @foreach($allUsers as $user)
-            <div class="py-2 px-4 bg-white border-b shadow hover:bg-gray-200 cursor-pointer flex items-center user" onclick="loadChat({{ $user->id }}, '{{ addslashes(get_class($user)) }}')">
-                <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="" class="rounded-full h-10 w-10" />
+            @foreach($allUsers as $_user)
+            <div class="py-2 px-4 bg-white border-b shadow hover:bg-gray-200 cursor-pointer flex items-center user" onclick="loadChat({{ $_user->id }}, '{{ addslashes(get_class($_user)) }}')">
+                <img src="{{ isset($_user->profile) ? asset('storage/' . $_user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="" class="rounded-full h-10 w-10" />
                 <div class="ml-3">
-                    <span class="block text-sm font-semibold">{{ $user->name }}</span>
-                    <span class="block text-xs text-gray-500">{{ $user->role }}</span>
+                    <span class="block text-sm font-semibold">{{ $_user->name }}</span>
+                    <span class="block text-xs text-gray-500">{{ $_user->role }}</span>
                 </div>
             </div>
             @endforeach
