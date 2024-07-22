@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('teacher_accounts', function (Blueprint $table) {
+        Schema::create('guidance_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('id_number')->unique();
             $table->string('name');
+            $table->string('extension_name')->nullable();
             $table->string('gender');
-            $table->string('position');
-            $table->string('grade_handle');
             $table->string('username')->unique();
             $table->string('password');
             $table->string('email')->unique()->nullable();
-            $table->string('role')->default('Teacher')->nullable();
+            $table->string('role')->default('Guidance')->nullable();
             $table->text('profile')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -36,7 +35,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('teacher_accounts');
+        Schema::dropIfExists('guidance_accounts');
     }
 
     /**

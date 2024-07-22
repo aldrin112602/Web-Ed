@@ -11,15 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guidance_accounts', function (Blueprint $table) {
+        Schema::create('student_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('id_number')->unique();
             $table->string('name');
             $table->string('gender');
+            $table->string('extension_name')->nullable();
+            $table->string('strand');
+            $table->string('section')->nullable();
+            $table->integer('grade');
+            $table->string('parents_contact_number');
             $table->string('username')->unique();
             $table->string('password');
             $table->string('email')->unique()->nullable();
-            $table->string('role')->default('Guidance')->nullable();
+            $table->string('role')->default('Student')->nullable();
             $table->text('profile')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -34,7 +39,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('guidance_accounts');
+        Schema::dropIfExists('student_accounts');
     }
 
     /**

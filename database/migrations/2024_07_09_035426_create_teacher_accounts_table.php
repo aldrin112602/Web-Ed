@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin_accounts', function (Blueprint $table) {
+        Schema::create('teacher_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('id_number')->unique();
             $table->string('name');
             $table->string('gender');
+            $table->string('position');
+            $table->string('grade_handle');
             $table->string('username')->unique();
             $table->string('password');
+            $table->string('extension_name')->nullable();
             $table->string('email')->unique()->nullable();
-            $table->string('position')->nullable();
-            $table->string('role')->default('Admin')->nullable();
+            $table->string('role')->default('Teacher')->nullable();
             $table->text('profile')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -28,20 +30,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
     }
 
     /**
@@ -49,9 +37,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admin_accounts');
-        // Schema::dropIfExists('password_reset_tokens');
-        // Schema::dropIfExists('sessions');
+        Schema::dropIfExists('teacher_accounts');
     }
 
     /**
