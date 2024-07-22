@@ -53,6 +53,11 @@ class TeacherConversationController extends Controller
         // Add human-readable time format
         $messages->each(function ($message) {
             $message->time_ago = Carbon::parse($message->created_at)->diffForHumans();
+            // get user account of the receiver
+            $receiverModel = $message->receiver_type;
+            $senderModel = $message->sender_type;
+            $message->receiver_account = $receiverModel::find($message->receiver_id);
+            $message->sender_account = $senderModel::find($message->sender_id);
         });
 
         return response()->json($messages);

@@ -16,7 +16,7 @@
 
 .msg div {
         border-radius: 10px  10px 10px 0px;
-        background-color: #aaa;
+        background-color: #ccc;
         padding: 10px;
         color: #222;
     }
@@ -88,7 +88,6 @@
             const messagesDiv = $('#messages');
             messagesDiv.empty();
 
-            console.log(data)
             if (data.length > 0) {
                 $.each(data, function(index, message) {
                     const profile = message.receiver_account?.profile;

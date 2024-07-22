@@ -4,39 +4,34 @@
 @section('content')
 
 <style>
-    .msg {
+    
+.msg {
         display: flex;
-        align-items: center;
+        align-items: end;
         justify-content: start;
-    }
+        gap: 6px;
 
-    .msg div {
-        border-radius: 10px 10px 10px 0px;
-        background-color: #aaa;
+}
+
+.msg div {
+        border-radius: 10px  10px 10px 0px;
+        background-color: #ccc;
         padding: 10px;
         color: #222;
     }
 
-    .msg_id_ {
-            {
-            $user->id_number
-        }
-    }
-
-        {
+    .msg_id_{{$user->id_number}} {
         display: flex;
         align-items: center;
         justify-content: end;
+        gap: 0;
     }
 
-    .msg_id_ {
-            {
-            $user->id_number
-        }
+    .msg_id_{{$user->id_number}}  img {
+        display: none;
     }
-
-    div {
-        border-radius: 10px 10px 0px 10px;
+    .msg_id_{{$user->id_number}} div {
+        border-radius: 10px  10px 0px 10px;
         background-color: dodgerblue;
         padding: 10px;
         color: white;
@@ -91,10 +86,15 @@
             messagesDiv.empty();
             if (data.length > 0) {
                 $.each(data, function(index, message) {
-                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`<div title="${message.time_ago}">${message.message}
-                    <hr class="my-2">
-                    <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
-                    </div>
+                    const profile = message.receiver_account?.profile;
+                    const profileUrl = profile ? `/storage/${profile}` : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
+
+                    const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`
+                        <img src="${profileUrl}" style="width: 30px; height: 30px; object-fit: cover;">
+                        <div title="${message.time_ago}">${message.message}
+                        <hr class="my-2">
+                        <p style="font-size: 10px">Sent ✓ ${message.time_ago}</p>
+                        </div>
                     `);
                     messagesDiv.append(messageElement);
                 });
