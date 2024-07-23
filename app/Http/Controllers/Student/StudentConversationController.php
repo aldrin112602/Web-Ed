@@ -36,40 +36,40 @@ class StudentConversationController extends Controller
 
 
     public function getAllConversations()
-{
-    $user = Auth::user();
-    $userType = get_class($user);
-    $userId = $user->id;
+    {
+        $user = Auth::user();
+        $userType = get_class($user);
+        $userId = $user->id;
 
-    $conversations = collect();
+        $conversations = collect();
 
-    $getUserInstance = function ($type, $id) {
-        return app($type)::find($id);
-    };
+        $getUserInstance = function ($type, $id) {
+            return app($type)::find($id);
+        };
 
-    $messages = Message::where(function ($query) use ($userId, $userType) {
-        $query->where('sender_id', $userId)
-            ->where('sender_type', $userType)
-            ->orWhere('receiver_id', $userId)
-            ->where('receiver_type', $userType);
-    })->orderBy('created_at', 'desc')->get();
+        $messages = Message::where(function ($query) use ($userId, $userType) {
+            $query->where('sender_id', $userId)
+                ->where('sender_type', $userType)
+                ->orWhere('receiver_id', $userId)
+                ->where('receiver_type', $userType);
+        })->orderBy('created_at', 'desc')->get();
 
-    foreach ($messages as $message) {
-        if ($message->sender_id == $userId && $message->sender_type == $userType) {
-            $otherUser = $getUserInstance($message->receiver_type, $message->receiver_id);
-        } else {
-            $otherUser = $getUserInstance($message->sender_type, $message->sender_id);
+        foreach ($messages as $message) {
+            if ($message->sender_id == $userId && $message->sender_type == $userType) {
+                $otherUser = $getUserInstance($message->receiver_type, $message->receiver_id);
+            } else {
+                $otherUser = $getUserInstance($message->sender_type, $message->sender_id);
+            }
+
+            if ($otherUser && !$conversations->contains(function ($value) use ($otherUser) {
+                return $value->id == $otherUser->id && get_class($value) == get_class($otherUser);
+            })) {
+                $conversations->push($otherUser);
+            }
         }
 
-        if ($otherUser && !$conversations->contains(function ($value) use ($otherUser) {
-            return $value->id == $otherUser->id && get_class($value) == get_class($otherUser);
-        })) {
-            $conversations->push($otherUser);
-        }
+        return $conversations;
     }
-
-    return $conversations;
-}
 
 
     public function loadMessages(Request $request)

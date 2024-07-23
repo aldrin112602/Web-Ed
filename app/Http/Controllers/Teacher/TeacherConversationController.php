@@ -36,66 +36,34 @@ class TeacherConversationController extends Controller
 
     public function getAllConversations()
     {
-        $user = Auth::guard('teacher')->user();
+        $user = Auth::user();
+        $userType = get_class($user);
+        $userId = $user->id;
+
         $conversations = collect();
 
-        $sentMessages = Message::where('sender_id', $user->id)
-            ->where('sender_type', get_class($user))
-            ->get();
+        $getUserInstance = function ($type, $id) {
+            return app($type)::find($id);
+        };
 
-        $receivedMessages = Message::where('receiver_id', $user->id)
-            ->where('receiver_type', get_class($user))
-            ->get();
+        $messages = Message::where(function ($query) use ($userId, $userType) {
+            $query->where('sender_id', $userId)
+                ->where('sender_type', $userType)
+                ->orWhere('receiver_id', $userId)
+                ->where('receiver_type', $userType);
+        })->orderBy('created_at', 'desc')->get();
 
-        foreach ($sentMessages as $message) {
-            $receiverType = $message->receiver_type;
-            $receiverId = $message->receiver_id;
-
-            $receiver = null;
-
-            switch ($receiverType) {
-                case AdminAccount::class:
-                    $receiver = AdminAccount::find($receiverId);
-                    break;
-                case TeacherAccount::class:
-                    $receiver = TeacherAccount::find($receiverId);
-                    break;
-                case StudentAccount::class:
-                    $receiver = StudentAccount::find($receiverId);
-                    break;
-                case GuidanceAccount::class:
-                    $receiver = GuidanceAccount::find($receiverId);
-                    break;
+        foreach ($messages as $message) {
+            if ($message->sender_id == $userId && $message->sender_type == $userType) {
+                $otherUser = $getUserInstance($message->receiver_type, $message->receiver_id);
+            } else {
+                $otherUser = $getUserInstance($message->sender_type, $message->sender_id);
             }
 
-            if ($receiver && !$conversations->contains('id', $receiver->id)) {
-                $conversations->push($receiver);
-            }
-        }
-
-        foreach ($receivedMessages as $message) {
-            $senderType = $message->sender_type;
-            $senderId = $message->sender_id;
-
-            $sender = null;
-
-            switch ($senderType) {
-                case AdminAccount::class:
-                    $sender = AdminAccount::find($senderId);
-                    break;
-                case TeacherAccount::class:
-                    $sender = TeacherAccount::find($senderId);
-                    break;
-                case StudentAccount::class:
-                    $sender = StudentAccount::find($senderId);
-                    break;
-                case GuidanceAccount::class:
-                    $sender = GuidanceAccount::find($senderId);
-                    break;
-            }
-
-            if ($sender && !$conversations->contains('id', $sender->id)) {
-                $conversations->push($sender);
+            if ($otherUser && !$conversations->contains(function ($value) use ($otherUser) {
+                return $value->id == $otherUser->id && get_class($value) == get_class($otherUser);
+            })) {
+                $conversations->push($otherUser);
             }
         }
 
