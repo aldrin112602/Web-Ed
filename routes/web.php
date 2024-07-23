@@ -213,7 +213,7 @@ Route::prefix('student')->group(function () {
         Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');
 
         // chat conversation
-        Route::get('/chats', [StudentConversationController::class, 'index'])->name('chats.index')->name('student.chats.index');
+        Route::get('/chats', [StudentConversationController::class, 'index'])->name('student.chats.index');
         Route::get('/chats/messages', [StudentConversationController::class, 'loadMessages'])->name('student.chats.loadMessages');
         Route::post('/chats/send', [StudentConversationController::class, 'sendMessage']);
 

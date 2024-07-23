@@ -102,7 +102,6 @@ class GuidanceConversationController extends Controller
 
         return $conversations;
     }
-
     public function loadMessages(Request $request)
     {
         $userId = $request->get('user_id');
@@ -119,7 +118,7 @@ class GuidanceConversationController extends Controller
                 ->where('sender_type', $userType)
                 ->where('receiver_id', $user->id)
                 ->where('receiver_type', get_class($user));
-        })->get();
+        })->orderBy('created_at', 'asc')->get();
 
         // Add human-readable time format
         $messages->each(function ($message) {
@@ -134,10 +133,11 @@ class GuidanceConversationController extends Controller
         return response()->json($messages);
     }
 
+
     public function sendMessage(Request $request)
     {
         $user = Auth::guard('guidance')->user();
-        
+
         $message = new Message();
         $message->sender_id = $user->id;
         $message->id_number = $user->id_number;

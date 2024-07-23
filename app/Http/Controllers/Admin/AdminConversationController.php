@@ -120,7 +120,7 @@ class AdminConversationController extends Controller
                 ->where('sender_type', $userType)
                 ->where('receiver_id', $user->id)
                 ->where('receiver_type', get_class($user));
-        })->get();
+        })->orderBy('created_at', 'asc')->get();
 
         // Add human-readable time format
         $messages->each(function ($message) {
@@ -134,6 +134,7 @@ class AdminConversationController extends Controller
 
         return response()->json($messages);
     }
+
 
     public function sendMessage(Request $request)
     {

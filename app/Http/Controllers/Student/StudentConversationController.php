@@ -34,73 +34,43 @@ class StudentConversationController extends Controller
         );
     }
 
+
     public function getAllConversations()
-    {
-        $user = Auth::guard('student')->user();
-        $conversations = collect();
+{
+    $user = Auth::user();
+    $userType = get_class($user);
+    $userId = $user->id;
 
-        $sentMessages = Message::where('sender_id', $user->id)
-            ->where('sender_type', get_class($user))
-            ->get();
+    $conversations = collect();
 
-        $receivedMessages = Message::where('receiver_id', $user->id)
-            ->where('receiver_type', get_class($user))
-            ->get();
+    $getUserInstance = function ($type, $id) {
+        return app($type)::find($id);
+    };
 
-        foreach ($sentMessages as $message) {
-            $receiverType = $message->receiver_type;
-            $receiverId = $message->receiver_id;
+    $messages = Message::where(function ($query) use ($userId, $userType) {
+        $query->where('sender_id', $userId)
+            ->where('sender_type', $userType)
+            ->orWhere('receiver_id', $userId)
+            ->where('receiver_type', $userType);
+    })->orderBy('created_at', 'desc')->get();
 
-            $receiver = null;
-
-            switch ($receiverType) {
-                case AdminAccount::class:
-                    $receiver = AdminAccount::find($receiverId);
-                    break;
-                case TeacherAccount::class:
-                    $receiver = TeacherAccount::find($receiverId);
-                    break;
-                case StudentAccount::class:
-                    $receiver = StudentAccount::find($receiverId);
-                    break;
-                case GuidanceAccount::class:
-                    $receiver = GuidanceAccount::find($receiverId);
-                    break;
-            }
-
-            if ($receiver && !$conversations->contains('id', $receiver->id)) {
-                $conversations->push($receiver);
-            }
+    foreach ($messages as $message) {
+        if ($message->sender_id == $userId && $message->sender_type == $userType) {
+            $otherUser = $getUserInstance($message->receiver_type, $message->receiver_id);
+        } else {
+            $otherUser = $getUserInstance($message->sender_type, $message->sender_id);
         }
 
-        foreach ($receivedMessages as $message) {
-            $senderType = $message->sender_type;
-            $senderId = $message->sender_id;
-
-            $sender = null;
-
-            switch ($senderType) {
-                case AdminAccount::class:
-                    $sender = AdminAccount::find($senderId);
-                    break;
-                case TeacherAccount::class:
-                    $sender = TeacherAccount::find($senderId);
-                    break;
-                case StudentAccount::class:
-                    $sender = StudentAccount::find($senderId);
-                    break;
-                case GuidanceAccount::class:
-                    $sender = GuidanceAccount::find($senderId);
-                    break;
-            }
-
-            if ($sender && !$conversations->contains('id', $sender->id)) {
-                $conversations->push($sender);
-            }
+        if ($otherUser && !$conversations->contains(function ($value) use ($otherUser) {
+            return $value->id == $otherUser->id && get_class($value) == get_class($otherUser);
+        })) {
+            $conversations->push($otherUser);
         }
-
-        return $conversations;
     }
+
+    return $conversations;
+}
+
 
     public function loadMessages(Request $request)
     {
@@ -118,7 +88,7 @@ class StudentConversationController extends Controller
                 ->where('sender_type', $userType)
                 ->where('receiver_id', $user->id)
                 ->where('receiver_type', get_class($user));
-        })->get();
+        })->orderBy('created_at', 'asc')->get();
 
         // Add human-readable time format
         $messages->each(function ($message) {
@@ -133,10 +103,11 @@ class StudentConversationController extends Controller
         return response()->json($messages);
     }
 
+
     public function sendMessage(Request $request)
     {
         $user = Auth::guard('student')->user();
-        
+
         $message = new Message();
         $message->sender_id = $user->id;
         $message->id_number = $user->id_number;
