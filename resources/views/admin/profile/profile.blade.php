@@ -78,6 +78,20 @@
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
+
+
+                <div class="md:w-1/3 w-full">
+                    <label for="extension_name" class="block text-gray-700 text-sm mb-1 mt-2">Extension Name (Optional)</label>
+                    <input readonly type="text" id="extension_name" name="extension_name" class="form-input w-full rounded border-gray-300 @error('extension_name') border-red-500 @enderror" value="{{ old('extension_name') ?? $user->extension_name }}">
+                    @error('extension_name')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+
+
+                
+
+                
                 <div class="md:w-1/3 w-full">
                     <label for="id_number" class="block text-gray-700 text-sm mb-1 mt-2">ID No.</label>
                     <input readonly type="number" id="id_number" name="id_number" class="form-input w-full rounded border-gray-300 @error('id_number') border-red-500 @enderror" value="{{ old('id_number') ?? $user->id_number }}">
@@ -85,13 +99,7 @@
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="md:w-1/3 w-full">
-                    <label for="email" class="block text-gray-700 text-sm mb-1 mt-2">Email</label>
-                    <input readonly type="text" id="email" name="email" class="form-input w-full rounded border-gray-300 @error('email') border-red-500 @enderror" value="{{ old('email') ?? $user->email }}">
-                    @error('email')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                    @enderror
-                </div>
+                
             </div>
             <div class="block md:flex align-center justify-between my-2 gap-5">
                 <div class="md:w-1/3 w-full">
@@ -101,13 +109,18 @@
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
+
+
                 <div class="md:w-1/3 w-full">
-                    <label for="address" class="block text-gray-700 text-sm mb-1 mt-2">Address</label>
-                    <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $user->address }}">
-                    @error('address')
+                    <label for="email" class="block text-gray-700 text-sm mb-1 mt-2">Email</label>
+                    <input readonly type="text" id="email" name="email" class="form-input w-full rounded border-gray-300 @error('email') border-red-500 @enderror" value="{{ old('email') ?? $user->email }}">
+                    @error('email')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
+
+
+                
                 <div class="md:w-1/3 w-full">
                     <label for="gender" class="block text-gray-700 text-sm mb-1 mt-2">Gender</label>
                     <input readonly type="text" id="gender" name="gender" class="form-input w-full rounded border-gray-300 @error('gender') border-red-500 @enderror" value="{{ old('gender') ?? $user->gender }}">
@@ -116,6 +129,28 @@
                     @enderror
                 </div>
             </div>
+
+
+            <div class="block md:flex align-center justify-between my-2 gap-5">
+            <div class="md:w-1/2 w-full">
+                    <label for="username" class="block text-gray-700 text-sm mb-1 mt-2">Username</label>
+                    <input readonly type="text" id="username" name="username" class="form-input w-full rounded border-gray-300 @error('username') border-red-500 @enderror" value="{{ old('username') ?? $user->username }}">
+                    @error('username')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            <div class="md:w-1/2 w-full">
+                    <label for="address" class="block text-gray-700 text-sm mb-1 mt-2">Address</label>
+                    <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $user->address }}">
+                    @error('address')
+                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            
+
+
             <div class="flex my-2 items-center justify-start gap-3 mt-3">
                 <button type="button" id="editButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
                 <button type="submit" id="saveButton" class="hidden bg-slate-900 text-slate-50 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Save changes</button>

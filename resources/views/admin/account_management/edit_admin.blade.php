@@ -26,7 +26,7 @@
 
             <div class="md:w-1/2 w-full">
                 <label for="extension_name" class="block text-gray-700 text-sm mb-1">Extension name (Optional)</label>
-                <input type="text" id="extension_name" extension_name="extension_name" class="form-input w-full rounded border-gray-300 @error('extension_name') border-red-500 @enderror" value="{{ old('extension_name') ?? $admin->extension_name }}">
+                <input type="text" id="extension_name" name="extension_name" class="form-input w-full rounded border-gray-300 @error('extension_name') border-red-500 @enderror" value="{{ old('extension_name') ?? $admin->extension_name }}">
                 @error('extension_name')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
