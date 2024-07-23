@@ -22,7 +22,10 @@ class StudentConversationController extends Controller
         $students = StudentAccount::all();
         $guidances = GuidanceAccount::all();
 
-        $allUsers = [...$teachers, ...$admins, ...$students, ...$guidances];
+        $allUsers = collect([...$teachers, ...$admins, ...$students, ...$guidances])
+        ->filter(function ($account) use ($user) {
+            return !($account->id === $user->id && get_class($account) === get_class($user));
+        });
         $allConversations = $this->getAllConversations();
         return view(
             'student.message.index',

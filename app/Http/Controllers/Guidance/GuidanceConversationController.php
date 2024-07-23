@@ -16,14 +16,17 @@ class GuidanceConversationController extends Controller
 {
     public function index()
     {
-        $user = Auth::guard('guidance')->user();
+        $user = Auth::user();
         $teachers = TeacherAccount::all();
         $admins = AdminAccount::all();
         $students = StudentAccount::all();
         $guidances = GuidanceAccount::all();
         $allConversations = $this->getAllConversations();
 
-        $allUsers = [...$teachers, ...$admins, ...$students, ...$guidances];
+        $allUsers = collect([...$teachers, ...$admins, ...$students, ...$guidances])
+        ->filter(function ($account) use ($user) {
+            return !($account->id === $user->id && get_class($account) === get_class($user));
+        });
         return view(
             'guidance.message.index',
             [
