@@ -1,20 +1,17 @@
 <?php
-
 namespace App\Models\Student;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Message;
+use App\Models\StudentImage;
 
 class StudentAccount extends Authenticatable
 {
     use HasFactory, Notifiable;
- 
-    use HasFactory;
- 
+
     protected $fillable = [
         'id_number',
         'name',
@@ -31,10 +28,7 @@ class StudentAccount extends Authenticatable
         'phone_number',
         'address',
         'extension_name'
-
     ];
-    
-    
 
     public function setPasswordAttribute($value)
     {
@@ -49,5 +43,10 @@ class StudentAccount extends Authenticatable
     public function receivedMessages()
     {
         return $this->morphMany(Message::class, 'receiver');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(StudentImage::class, 'student_id');
     }
 }

@@ -175,53 +175,6 @@
             <!-- main content -->
         </div>
     </main>
-    <script>
-        try {
-            document.addEventListener('DOMContentLoaded', () => {
-                const dropzone = document.getElementById('dropzone');
-                const fileInput = document.getElementById('file-upload');
-                const preview = document.getElementById('preview');
-
-                const displayPreview = (file) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => {
-                        preview.src = reader.result;
-                        preview.classList.remove('hidden');
-                    };
-                };
-
-                dropzone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    dropzone.classList.add('border-indigo-600');
-                });
-
-                dropzone.addEventListener('dragleave', (e) => {
-                    e.preventDefault();
-                    dropzone.classList.remove('border-indigo-600');
-                });
-
-                dropzone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    dropzone.classList.remove('border-indigo-600');
-                    const file = e.dataTransfer.files[0];
-                    if (file) {
-                        displayPreview(file);
-                        fileInput.files = e.dataTransfer.files;
-                    }
-                });
-
-                fileInput.addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        displayPreview(file);
-                    }
-                });
-            });
-        } catch (err) {
-
-        }
-    </script>
 
     <script>
         try {

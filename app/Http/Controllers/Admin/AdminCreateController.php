@@ -10,6 +10,7 @@ use App\Models\Guidance\GuidanceAccount;
 use App\Models\Student\StudentAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Rules\TwoWords;
+use App\Models\StudentImage;
 
 class AdminCreateController extends Controller
 {
@@ -41,32 +42,72 @@ class AdminCreateController extends Controller
     }
 
     public function createStudent(Request $request)
-    {
-        $request->validate([
-            'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
-            'name' => ['required', 'string', 'max:255', new TwoWords],
-            'gender' => 'required|string|in:Male,Female',
-            'username' => 'required|string|unique:student_accounts,username',
-            'password' => 'required|string|min:6|max:255',
-            'strand' => 'required',
-            'grade' => 'required',
-            'parents_contact_number' => 'required|string|min:11|max:11',
-            'email' => 'required|email|unique:student_accounts,email',
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-            'phone_number' => 'required|string|min:11|max:11'
-        ]);
+{
+    $request->validate([
+        'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
+        'name' => ['required', 'string', 'max:255', new TwoWords],
+        'gender' => 'required|string|in:Male,Female',
+        'username' => 'required|string|unique:student_accounts,username',
+        'password' => 'required|string|min:6|max:255',
+        'strand' => 'required',
+        'grade' => 'required',
+        'parents_contact_number' => 'required|string|min:11|max:11',
+        'email' => 'required|email|unique:student_accounts,email',
+        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        'phone_number' => 'required|string|min:11|max:11',
+        'face_images' => 'required|array|min:3|max:3',
+        'face_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+    ]);
 
-        $account = new StudentAccount($request->all());
+    $account = new StudentAccount($request->all());
 
-        $profilePath = $request->file('profile')->store('profiles', 'public');
-        $account->profile = $profilePath;
+    $profilePath = $request->file('profile')->store('profiles', 'public');
+    $account->profile = $profilePath;
+    $account->save();
 
-
-        $account->save();
-        return redirect()
-            ->back()
-            ->with('success', 'Account added successfully!');
+    if ($request->hasFile('face_images')) {
+        foreach ($request->file('face_images') as $file) {
+            $imagePath = $file->store('face_images', 'public');
+            StudentImage::create([
+                'student_id' => $account->id,
+                'image_path' => $imagePath,
+            ]);
+        }
     }
+
+    return redirect()
+        ->back()
+        ->with('success', 'Account added successfully!');
+}
+
+
+    // public function createStudent(Request $request)
+    // {
+    //     $request->validate([
+    //         'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
+    //         'name' => ['required', 'string', 'max:255', new TwoWords],
+    //         'gender' => 'required|string|in:Male,Female',
+    //         'username' => 'required|string|unique:student_accounts,username',
+    //         'password' => 'required|string|min:6|max:255',
+    //         'strand' => 'required',
+    //         'grade' => 'required',
+    //         'parents_contact_number' => 'required|string|min:11|max:11',
+    //         'email' => 'required|email|unique:student_accounts,email',
+    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+    //         'phone_number' => 'required|string|min:11|max:11'
+    //     ]);
+
+    //     $account = new StudentAccount($request->all());
+
+    //     $profilePath = $request->file('profile')->store('profiles', 'public');
+    //     $account->profile = $profilePath;
+
+
+    //     $account->save();
+    //     return redirect()
+    //         ->back()
+    //         ->with('success', 'Account added successfully!');
+    // }
 
     public function createTeacher(Request $request)
     {
