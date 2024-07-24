@@ -37,6 +37,13 @@ class TeacherConversationController extends Controller
         );
     }
 
+
+    public function getMessageCounts() {
+        $allConversations = $this->getAllConversations();
+        $counts = count($allConversations);
+        return response()->json(['count' => $counts]);
+    }
+
     public function getAllConversations()
     {
         $user = Auth::user();

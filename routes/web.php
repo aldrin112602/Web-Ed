@@ -51,6 +51,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/chats', [AdminConversationController::class, 'index'])->name('admin.chats.index');
         Route::get('/chats/messages', [AdminConversationController::class, 'loadMessages'])->name('admin.chats.loadMessages');
         Route::post('/chats/send', [AdminConversationController::class, 'sendMessage']);
+        Route::get('chats/counts', [AdminConversationController::class, 'getMessageCounts'])->name('admin.get_message_count');
 
 
         // for attendace
@@ -175,6 +176,7 @@ Route::prefix('teacher')->group(function () {
         Route::get('/chats', [TeacherConversationController::class, 'index'])->name('teacher.chats.index');
         Route::get('/chats/messages', [TeacherConversationController::class, 'loadMessages'])->name('teacher.chats.loadMessages');
         Route::post('/chats/send', [TeacherConversationController::class, 'sendMessage']);
+        Route::get('chats/counts', [TeacherConversationController::class, 'getMessageCounts'])->name('teacher.get_message_count');
 
 
         // Teacher logout route
@@ -216,6 +218,7 @@ Route::prefix('student')->group(function () {
         Route::get('/chats', [StudentConversationController::class, 'index'])->name('student.chats.index');
         Route::get('/chats/messages', [StudentConversationController::class, 'loadMessages'])->name('student.chats.loadMessages');
         Route::post('/chats/send', [StudentConversationController::class, 'sendMessage']);
+        Route::get('chats/counts', [StudentConversationController::class, 'getMessageCounts'])->name('student.get_message_count');
 
 
         // Student logout route
@@ -262,6 +265,7 @@ Route::prefix('guidance')->group(function () {
         Route::get('/chats', [GuidanceConversationController::class, 'index'])->name('guidance.chats.index');
         Route::get('/chats/messages', [GuidanceConversationController::class, 'loadMessages'])->name('guidance.chats.loadMessages');
         Route::post('/chats/send', [GuidanceConversationController::class, 'sendMessage']);
+        Route::get('chats/counts', [GuidanceConversationController::class, 'getMessageCounts'])->name('guidance.get_message_count');
 
 
         // Guidance logout route

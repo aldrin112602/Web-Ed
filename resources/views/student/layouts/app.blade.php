@@ -127,6 +127,20 @@
                 <div class="py-2">
                     <hr>
                 </div>
+                <div class="p-3 {{ request()->is('student/chats') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('student.chats.index') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-regular fa-message"></i>Messages <span class="text-rose-600 font-semibold" id="messageCounts">0</span></a>
+                </div>
+                <script>
+                    $(() => {
+                        $.ajax({
+                            url: '{{ route('student.get_message_count') }}',
+                            method: 'GET',
+                            success: (response) => {
+                                $('#messageCounts').text(response.count);
+                            }
+                        });
+                    })
+                </script>
                 <div class="p-3 {{ request()->is('admin/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
                 </div>

@@ -11,6 +11,7 @@ use App\Models\Admin\AdminAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Calculation\Statistical\Counts;
 
 class AdminConversationController extends Controller
 {
@@ -36,6 +37,13 @@ class AdminConversationController extends Controller
                 'allConversations' => $allConversations
             ]
         );
+    }
+
+
+    public function getMessageCounts() {
+        $allConversations = $this->getAllConversations();
+        $counts = count($allConversations);
+        return response()->json(['count' => $counts]);
     }
 
 

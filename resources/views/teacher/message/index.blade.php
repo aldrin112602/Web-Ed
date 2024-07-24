@@ -48,7 +48,7 @@
             <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 20px; transform: translateY(-50%)"></i>
         </div>
         <h2 class="text-lg font-bold p-2 pt-0 bg-white border-b text-slate-700">All users</h2>
-        <div class="overflow-y-auto" id="user_list" style="height: 430px;">
+        <div class="overflow-y-auto" id="user_list" style="height: 100vh">
             @foreach($allUsers as $_user)
             <div class="py-2 px-4 bg-white border-b shadow hover:bg-gray-200 cursor-pointer flex items-center user" onclick="loadChat({{ $_user->id }}, '{{ addslashes(get_class($_user)) }}', true)">
                 <img src="{{ isset($_user->profile) ? asset('storage/' . $_user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="" class="rounded-full h-10 w-10" />
@@ -69,7 +69,7 @@
             <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 20px; transform: translateY(-50%)"></i>
         </div>
         <h2 class="text-lg font-bold p-2 pt-0 bg-white border-b text-slate-700">Chats</h2>
-        <div id="conversations" class=" bg-slate-50 overflow-y-auto" style="height: 430px;">
+        <div id="conversations" class=" bg-slate-50 overflow-y-auto" style="height: 100vh">
             @if ($allConversations->isEmpty())
                 <div class="h-full w-full flex items-center justify-center text-sm text-slate-600">
                     <span>No conversations yet.</span>
@@ -91,7 +91,7 @@
     <!-- chats messages -->
     <div class=" bg-white p-4 relative" id="chat-window">
         <h2 class="text-lg font-bold mb-4">Conversation</h2>
-        <div id="messages" class=" space-y-4 bg-slate-50 overflow-y-auto p-4 rounded-lg border border-slate-200" style="height: 400px;">
+        <div id="messages" class=" space-y-4 bg-slate-50 overflow-y-auto p-4 rounded-lg border border-slate-200" style="height: 100vh">
             <!-- Messages will be loaded here dynamically -->
              <div class="h-full w-full flex items-center justify-center text-sm text-slate-600">
              Select a user to start a conversation!
