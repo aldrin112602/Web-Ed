@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\SubjectModel;
 use App\Models\Teacher\TeacherAccount;
+use App\Models\Student\StudentAccount;
 
 class SubjectController extends Controller
 {
@@ -21,7 +22,47 @@ class SubjectController extends Controller
 
         return redirect()->route('admin.login');
     }
-    
+
+
+    public function viewStudentSubjects($id)
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            $student = StudentAccount::with('subjects.teacherAccount')->findOrFail($id);
+            $subjects = SubjectModel::with('teacherAccount')->get();
+
+            return view('admin.subject.view', [
+                'user' => $user,
+                'student' => $student,
+                'subjects' => $subjects
+            ]);
+        }
+
+        return redirect()->route('admin.login');
+    }
+
+
+
+
+    public function addSubject(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|exists:subject_models,id',
+            'student_id' => 'required|exists:student_accounts,id',
+        ]);
+
+        $student = StudentAccount::find($request->student_id);
+        $subject = SubjectModel::find($request->subject);
+
+        if ($student && $subject) {
+            $student->subjects()->attach($subject->id);
+            return redirect()->back()->with('success', 'Subject added successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Error adding subject.');
+    }
+
+
     public function subject_list(Request $request)
     {
         if (Auth::guard('admin')->check()) {

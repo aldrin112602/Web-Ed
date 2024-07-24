@@ -100,7 +100,7 @@
                         <td class="py-2 text-center border">{{ $list->grade }}</td>
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
                         <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                            <a href="{{ route('admin.view.subjects', $list->id) }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
                         </td>
                         <td class="py-2 text-center border">
                             <a href="{{ route('admin.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models\Student;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -7,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Message;
 use App\Models\StudentImage;
+use App\Models\Admin\SubjectModel;
 
 class StudentAccount extends Authenticatable
 {
@@ -48,5 +50,11 @@ class StudentAccount extends Authenticatable
     public function images()
     {
         return $this->hasMany(StudentImage::class, 'student_id');
+    }
+
+    // Define the subjects relationship
+    public function subjects()
+    {
+        return $this->belongsToMany(SubjectModel::class, 'student_subjects', 'student_id', 'subject_id');
     }
 }

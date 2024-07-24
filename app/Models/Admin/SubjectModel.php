@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Teacher\TeacherAccount;
+use App\Models\Student\StudentAccount;
 
 class SubjectModel extends Authenticatable
 {
     use HasFactory, Notifiable;
- 
+
     protected $fillable = [
         'subject',
         'teacher_id',
@@ -23,4 +24,9 @@ class SubjectModel extends Authenticatable
         return $this->belongsTo(TeacherAccount::class, 'teacher_id');
     }
 
+    // Define the students relationship
+    public function students()
+    {
+        return $this->belongsToMany(StudentAccount::class, 'student_subjects', 'subject_id', 'student_id');
+    }
 }

@@ -47,6 +47,10 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
+        // view student subjects route
+        Route::get('/student/subjects/{id}', [SubjectController::class, 'viewStudentSubjects'])->name('admin.view.subjects');
+        Route::post('/student/subjects/add', [SubjectController::class, 'addSubject'])->name('admin.add.subject');
+
         // chat conversation
         Route::get('/chats', [AdminConversationController::class, 'index'])->name('admin.chats.index');
         Route::get('/chats/messages', [AdminConversationController::class, 'loadMessages'])->name('admin.chats.loadMessages');
