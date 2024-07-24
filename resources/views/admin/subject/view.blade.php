@@ -4,19 +4,19 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Subject</div>
 <div class="min-w-full p-6" style="min-height: 560px">
-    <h2 class="text-2xl font-bold mb-4">Add Subject</h2>
-    <form id="add-subject-form" method="POST" action="{{ route('admin.add.subject') }}" class="flex items-center justify-start gap-2">
+    <h2 class="text-2xl font-bold mb-4 text-slate-600">Add Subject</h2>
+    <form id="add-subject-form" method="POST" action="{{ route('admin.add.subject') }}" class="block md:flex items-center justify-start gap-2">
                 @csrf
                 <input type="hidden" name="student_id" value="{{ $student->id }}">
                 <div>
                     <label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Subject</label>
-                    <select name="subject" id="subject" class="form-select rounded-lg">
+                    <select name="subject" id="subject" class="form-select rounded-lg w-full md:w-60">
                         @foreach($subjects as $subject)
                             <option value="{{ $subject->id }}">{{ $subject->subject }}/Teacher-{{ $subject->teacherAccount->name ?? 'N/A' }}/G-{{$subject->teacherAccount->grade_handle ?? 'N/A'}}</option>
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mt-7"><i class="fas fa-plus"></i> &nbsp;Subject</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mt-2 md:mt-7"><i class="fas fa-plus"></i> &nbsp;Subject</button>
             </form>
 
     <h2 class="text-xl mb-2 text-slate-700 font-semibold mt-6">Subject List of {{ $student->name }}</h2>
