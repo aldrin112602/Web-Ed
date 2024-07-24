@@ -163,6 +163,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
+                'extension_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
                 'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
             ]);
@@ -176,6 +177,7 @@ class AccountManagementController extends Controller
                 'gender' => $request->gender,
                 'strand' => $request->strand,
                 'grade' => $request->grade,
+                'extension_name' => $request->extension_name,
                 'parents_contact_number' => $request->parents_contact_number,
             ]);
 
@@ -251,6 +253,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
+                'extension_name' => 'nullable|string|max:255',
                 'grade_handle' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:teacher_accounts,email,' . $user->id,
                 'position' => 'required',
@@ -263,6 +266,7 @@ class AccountManagementController extends Controller
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
+                'extension_name' => $request->extension_name,
                 'gender' => $request->gender,
                 'grade_handle' => $request->grade_handle,
                 'position' => $request->position,
@@ -341,6 +345,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
+                'extension_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255|unique:guidance_accounts,email,' . $user->id,
             ]);
 
@@ -351,6 +356,7 @@ class AccountManagementController extends Controller
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
+                'extension_name' => $request->extension_name,
                 'gender' => $request->gender,
             ]);
 
@@ -429,6 +435,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
+                'extension_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
             ]);
 
@@ -439,6 +446,7 @@ class AccountManagementController extends Controller
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
+                'extension_name' => $request->extension_name,
                 'gender' => $request->gender,
             ]);
 

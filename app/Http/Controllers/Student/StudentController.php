@@ -103,6 +103,7 @@ class StudentController extends Controller
                 'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
                 'gender' => 'required|string|in:Male,Female',
                 'address' => 'required|string|max:255',
+                'extension_name' => 'required|string|max:255',
                 'phone_number' => 'required|string|min:11|max:11',
             ]);
 
@@ -113,6 +114,7 @@ class StudentController extends Controller
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
+                'extension_name' => $request->extension_name,
                 'gender' => $request->gender,
             ]);
 

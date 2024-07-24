@@ -64,7 +64,7 @@
         </script>
 
         <div class="py-3">
-            <hr>
+            <hr>    
         </div>
         <h1 class="font-bold text-gray-600">Personal info</h1>
         <form action="{{ route('teacher.updateAccount') }}" method="post" id="personal_info">
