@@ -50,6 +50,8 @@ Route::prefix('admin')->group(function () {
         // view student subjects route
         Route::get('/student/subjects/{id}', [SubjectController::class, 'viewStudentSubjects'])->name('admin.view.subjects');
         Route::post('/student/subjects/add', [SubjectController::class, 'addSubject'])->name('admin.add.subject');
+        Route::delete('/student/subjects/delete/{studentId}/{subjectId}', [SubjectController::class, 'deleteStudentSubject'])->name('admin.delete.studentSubject');
+
 
         // chat conversation
         Route::get('/chats', [AdminConversationController::class, 'index'])->name('admin.chats.index');

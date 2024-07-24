@@ -29,7 +29,7 @@ class SubjectController extends Controller
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
             $student = StudentAccount::with('subjects.teacherAccount')->findOrFail($id);
-            $subjects = SubjectModel::with('teacherAccount')->get();
+            $subjects = SubjectModel::with('teacherAccount')->paginate(10); // Paginate the subjects query
 
             return view('admin.subject.view', [
                 'user' => $user,
@@ -40,6 +40,21 @@ class SubjectController extends Controller
 
         return redirect()->route('admin.login');
     }
+
+
+
+    public function deleteStudentSubject($student_id, $subject_id)
+    {
+        if (Auth::guard('admin')->check()) {
+            $student = StudentAccount::findOrFail($student_id);
+            $student->subjects()->detach($subject_id);
+
+            return redirect()->route('admin.view.subjects', $student_id)->with('success', 'Subject deleted successfully');
+        }
+
+        return redirect()->route('admin.login');
+    }
+
 
 
 
