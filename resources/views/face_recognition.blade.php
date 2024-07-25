@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,22 +22,45 @@
         html {
             scroll-behavior: smooth;
         }
+
         body {
             background-color: #f8fafc;
         }
+
         canvas {
             position: absolute;
         }
+
+        .progress-container {
+            width: 100%;
+            background-color: #f3f4f6;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 24px;
+            background-color: #4caf50;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+        }
     </style>
 </head>
+
 <body class="flex items-center justify-center h-screen">
     <div class="w-full lg:w-3/4 xl:w-2/3 flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8 bg-white p-6 shadow-lg rounded-lg">
         <div class="text-center flex flex-col items-center">
             <p class="font-bold text-lg mb-2">LOOK AT THE CAMERA</p>
             <div class="relative w-full max-w-md">
-                <video id="video" class="w-full h-auto bg-blue-100 rounded-lg" autoplay muted></video>
+                <video id="video" class="w-full h-auto bg-blue-100 rounded-full" autoplay muted></video>
                 <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
-                <div id="instructions" class="absolute bottom-0 left-0 w-full text-center bg-gray-800 bg-opacity-75 text-white py-2">Please blink your eyes and move your head left and right</div>
+            </div>
+            <p class="mt-4 font-bold text-lg" id="blink-message">Please blink your eyes until the progress bar is full.</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
             </div>
             <button id="stopButton" class="mt-4 bg-black text-white py-2 px-6 rounded">Stop</button>
         </div>
@@ -69,12 +93,21 @@
             const guardianNo = $('#guardian-no');
             const stopButton = $('#stopButton');
             const overlay = $('#overlay')[0];
-            const instructions = $('#instructions');
+            const progressBar = $('#progress-bar');
+            const blinkMessage = $('#blink-message');
+
+            let blinkCount = 0;
+            const blinkGoal = 5; // Number of blinks required to mark as present
+            const EAR_THRESHOLD = 0.26; // EAR threshold for blink detection
+            const BLINK_FRAMES = 2;
+
+            let blinkFrameCounter = 0;
 
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
                 faceapi.nets.faceLandmark68Net.loadFromUri('{{ asset("face_api/models") }}'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}')
+                faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}'),
+                faceapi.nets.faceLandmark68TinyNet.loadFromUri('{{ asset("face_api/models") }}') // Load the tiny landmark model for faster processing
             ]).then(startVideo).catch(err => console.error('Error loading models:', err));
 
             function startVideo() {
@@ -105,7 +138,7 @@
                     overlay.getContext('2d').clearRect(0, 0, overlay.width, overlay.height);
 
                     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
-                    results.forEach(async (result, i) => {
+                    results.forEach((result, i) => {
                         const box = resizedDetections[i].detection.box;
                         const drawBox = new faceapi.draw.DrawBox(box, {
                             label: result.toString()
@@ -113,15 +146,27 @@
                         drawBox.draw(overlay);
 
                         if (result.label !== 'unknown') {
-                            if (await performLivenessChecks(resizedDetections[i])) {
-                                updateStudentInfo(result.label);
-                            } else {
-                                Swal.fire({
-                                    icon: 'warning',
-                                    title: 'Spoofing Attempt Detected',
-                                    text: 'Please ensure you are using a real face.'
-                                });
+                            updateStudentInfo(result.label);
+                        }
+
+                        // Anti-spoofing: Detect eye blinks
+                        const landmarks = resizedDetections[i].landmarks;
+                        const leftEye = landmarks.getLeftEye();
+                        const rightEye = landmarks.getRightEye();
+
+                        if (isBlinking(leftEye) || isBlinking(rightEye)) {
+                            blinkFrameCounter++;
+                            console.log("Blink detected. Frame counter:", blinkFrameCounter);
+                        } else {
+                            if (blinkFrameCounter >= BLINK_FRAMES) {
+                                blinkCount++;
+                                updateProgressBar(blinkCount, blinkGoal);
+                                console.log("Blink count:", blinkCount);
+                                if (blinkCount >= blinkGoal) {
+                                    markAsPresent(result.label);
+                                }
                             }
+                            blinkFrameCounter = 0;
                         }
                     });
 
@@ -163,18 +208,32 @@
                 );
             }
 
-            async function performLivenessChecks(detection) {
-                const landmarks = detection.landmarks.positions;
-                const leftEye = landmarks.slice(36, 42);
-                const rightEye = landmarks.slice(42, 48);
-                const nose = landmarks[30];
-                const chin = landmarks[8];
+            function isBlinking(eye) {
+                const EAR = calculateEAR(eye);
+                console.log("EAR for eye:", EAR);
+                return EAR < EAR_THRESHOLD;
+            }
 
-                const leftEyeOpen = faceapi.euclideanDistance(leftEye[0], leftEye[3]) < 0.2;
-                const rightEyeOpen = faceapi.euclideanDistance(rightEye[0], rightEye[3]) < 0.2;
-                const headMovement = faceapi.euclideanDistance(nose, chin) > 0.2;
+            function calculateEAR(eye) {
+                const A = Math.hypot(eye[1].x - eye[5].x, eye[1].y - eye[5].y);
+                const B = Math.hypot(eye[2].x - eye[4].x, eye[2].y - eye[4].y);
+                const C = Math.hypot(eye[0].x - eye[3].x, eye[0].y - eye[3].y);
+                return (A + B) / (2.0 * C);
+            }
 
-                return leftEyeOpen && rightEyeOpen && headMovement;
+            function updateProgressBar(blinkCount, blinkGoal) {
+                const progress = (blinkCount / blinkGoal) * 100;
+                if (progress <= 100) {
+                    progressBar.css('width', `${progress}%`);
+                    progressBar.text(`${Math.round(progress)}%`);
+                }
+            }
+
+            function markAsPresent(label) {
+                blinkMessage.text('You are marked as present.');
+                $.post(`/face_recognition/mark-present/${label}`).done(data => {
+                    console.log('User marked as present:', data);
+                }).fail(err => console.error('Error marking user as present:', err));
             }
 
             function updateStudentInfo(label) {
@@ -188,4 +247,5 @@
         });
     </script>
 </body>
+
 </html>
