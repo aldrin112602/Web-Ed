@@ -66,8 +66,8 @@ class AdminCreateController extends Controller
     $account->save();
 
     if ($request->hasFile('face_images')) {
-        foreach ($request->file('face_images') as $file) {
-            $imagePath = $file->store('face_images', 'public');
+        foreach ($request->file('face_images') as $index => $file) {
+            $imagePath = $file->storeAs('face_images/' . $account->name, "$index.jpg", 'public');
             StudentImage::create([
                 'student_id' => $account->id,
                 'image_path' => $imagePath,
@@ -80,34 +80,6 @@ class AdminCreateController extends Controller
         ->with('success', 'Account added successfully!');
 }
 
-
-    // public function createStudent(Request $request)
-    // {
-    //     $request->validate([
-    //         'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
-    //         'name' => ['required', 'string', 'max:255', new TwoWords],
-    //         'gender' => 'required|string|in:Male,Female',
-    //         'username' => 'required|string|unique:student_accounts,username',
-    //         'password' => 'required|string|min:6|max:255',
-    //         'strand' => 'required',
-    //         'grade' => 'required',
-    //         'parents_contact_number' => 'required|string|min:11|max:11',
-    //         'email' => 'required|email|unique:student_accounts,email',
-    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-    //         'phone_number' => 'required|string|min:11|max:11'
-    //     ]);
-
-    //     $account = new StudentAccount($request->all());
-
-    //     $profilePath = $request->file('profile')->store('profiles', 'public');
-    //     $account->profile = $profilePath;
-
-
-    //     $account->save();
-    //     return redirect()
-    //         ->back()
-    //         ->with('success', 'Account added successfully!');
-    // }
 
     public function createTeacher(Request $request)
     {

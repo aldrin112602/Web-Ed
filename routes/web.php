@@ -20,10 +20,16 @@ use App\Http\Controllers\Teacher\TeacherConversationController;
 use App\Http\Controllers\Admin\AdminConversationController;
 use App\Http\Controllers\Student\StudentConversationController;
 use App\Http\Controllers\Guidance\GuidanceConversationController;
+use App\Http\Controllers\FaceRecognitionController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/face_recognition', [FaceRecognitionController::class, 'showFaceRecognition'])->name('face.recognition');
+Route::get('/api/student-labels', [FaceRecognitionController::class, 'getStudentLabels'])->name('fetch_labels');
+
 
 Route::get('/login', [PublicController::class, 'login'])->name('login');
 

@@ -13,6 +13,10 @@ class PublicController extends Controller
         return redirect()->intended('/');
     }
 
+    public function faceRecognition() {
+        return view('face-recognition');
+    }
+
 
     public function createAdmin(Request $request)
     {
