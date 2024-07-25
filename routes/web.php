@@ -28,8 +28,8 @@ Route::get('/', function () {
 });
 
 Route::get('/face_recognition', [FaceRecognitionController::class, 'showFaceRecognition'])->name('face.recognition');
-Route::get('/api/student-labels', [FaceRecognitionController::class, 'getStudentLabels'])->name('fetch_labels');
-
+Route::get('/face_recognition/student-labels', [FaceRecognitionController::class, 'getStudentLabels'])->name('fetch_labels');
+Route::get('/face_recognition/student-info/{label}', [FaceRecognitionController::class, 'getStudentInfo']);
 
 Route::get('/login', [PublicController::class, 'login'])->name('login');
 
