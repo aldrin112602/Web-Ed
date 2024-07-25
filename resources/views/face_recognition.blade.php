@@ -36,6 +36,7 @@
             <div class="relative w-full max-w-md">
                 <video id="video" class="w-full h-auto bg-blue-100 rounded-lg" autoplay muted></video>
                 <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
+                <div id="instructions" class="absolute bottom-0 left-0 w-full text-center bg-gray-800 bg-opacity-75 text-white py-2">Please blink your eyes and move your head left and right</div>
             </div>
             <button id="stopButton" class="mt-4 bg-black text-white py-2 px-6 rounded">Stop</button>
         </div>
@@ -68,6 +69,7 @@
             const guardianNo = $('#guardian-no');
             const stopButton = $('#stopButton');
             const overlay = $('#overlay')[0];
+            const instructions = $('#instructions');
 
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
@@ -103,7 +105,7 @@
                     overlay.getContext('2d').clearRect(0, 0, overlay.width, overlay.height);
 
                     const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
-                    results.forEach((result, i) => {
+                    results.forEach(async (result, i) => {
                         const box = resizedDetections[i].detection.box;
                         const drawBox = new faceapi.draw.DrawBox(box, {
                             label: result.toString()
@@ -111,7 +113,15 @@
                         drawBox.draw(overlay);
 
                         if (result.label !== 'unknown') {
-                            updateStudentInfo(result.label);
+                            if (await performLivenessChecks(resizedDetections[i])) {
+                                updateStudentInfo(result.label);
+                            } else {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Spoofing Attempt Detected',
+                                    text: 'Please ensure you are using a real face.'
+                                });
+                            }
                         }
                     });
 
@@ -153,6 +163,20 @@
                 );
             }
 
+            async function performLivenessChecks(detection) {
+                const landmarks = detection.landmarks.positions;
+                const leftEye = landmarks.slice(36, 42);
+                const rightEye = landmarks.slice(42, 48);
+                const nose = landmarks[30];
+                const chin = landmarks[8];
+
+                const leftEyeOpen = faceapi.euclideanDistance(leftEye[0], leftEye[3]) < 0.2;
+                const rightEyeOpen = faceapi.euclideanDistance(rightEye[0], rightEye[3]) < 0.2;
+                const headMovement = faceapi.euclideanDistance(nose, chin) > 0.2;
+
+                return leftEyeOpen && rightEyeOpen && headMovement;
+            }
+
             function updateStudentInfo(label) {
                 $.get(`/face_recognition/student-info/${label}`, data => {
                     studentName.text(data.name);
@@ -164,5 +188,4 @@
         });
     </script>
 </body>
-
 </html>
