@@ -32,16 +32,16 @@
             </div>
         </div>
         <div class="w-full">
-                <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
-                <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
-                    <option value="" disabled class="hidden" selected>-- Select one --</option>
-                    <option value="Male" {{ old('gender') == "Male" ? "selected" : ""  }}>Male</option>
-                    <option value="Female" {{ old('gender') == "Female" ? "selected" : ""  }}>Female</option>
-                </select>
-                @error('gender')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
+            <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
+            <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
+                <option value="" disabled class="hidden" selected>-- Select one --</option>
+                <option value="Male" {{ old('gender') == "Male" ? "selected" : ""  }}>Male</option>
+                <option value="Female" {{ old('gender') == "Female" ? "selected" : ""  }}>Female</option>
+            </select>
+            @error('gender')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="email" class="block text-gray-700 text-sm mb-1">Email</label>
@@ -62,7 +62,40 @@
         <div class="py-6">
             <hr>
         </div>
-        <h1>User Account</h1>
+        <div class="flex items-center justify-start gap-3">
+            <h1>User Account</h1>
+            <button type="button" id="generate-btn" class="bg-slate-100 border px-2 rounded-lg hover:bg-slate-800 hover:text-slate-50 shadow text-sm py-1">Generate username & password</button>
+            <script>
+                $('#generate-btn').on('click', function() {
+                    const nameInput = $('#name').val().trim();
+                    const usernameInput = $('#username');
+                    const passwordInput = $('#password');
+
+                    const generateRandomString = (length) => {
+                        const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                        let result = '';
+                        for (let i = 0; i < length; i++) {
+                            result += chars.charAt(Math.floor(Math.random() * chars.length));
+                        }
+                        return result;
+                    };
+
+                    const generateUsername = (name) => {
+                        if (name) {
+                            return name.split(' ')[0].toLowerCase() + generateRandomString(Math.floor(Math.random() * 7) + 2);
+                        }
+                        return generateRandomString(8);
+                    };
+
+                    const generatePassword = () => {
+                        return generateRandomString(12);
+                    };
+
+                    usernameInput.val(generateUsername(nameInput));
+                    passwordInput.val(generatePassword());
+                });
+            </script>
+        </div>
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="username" class="block text-gray-700 text-sm mb-1">Username</label>

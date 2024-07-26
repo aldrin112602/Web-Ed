@@ -58,13 +58,13 @@
                 <video id="video" class="w-full h-auto bg-blue-100 rounded-full" autoplay muted></video>
                 <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
             </div>
-            <p class="mt-4 font-bold text-lg" id="blink-message">Please blink your eyes until the progress bar is full.</p>
+            <p class="mt-4 font-bold text-sm text-slate-800" id="blink-message">Please blink your eyes until the progress bar is full.</p>
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
             <button id="stopButton" class="mt-4 bg-black text-white py-2 px-6 rounded">Stop</button>
         </div>
-        <div class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 flex flex-col space-y-2 h-full">
+        <div class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 flex flex-col space-y-2 h-full mb-60">
             <div class="flex justify-between items-center">
                 <span class="font-bold">Student's Name:</span>
                 <span id="student-name" class="ml-2">N/A</span>
