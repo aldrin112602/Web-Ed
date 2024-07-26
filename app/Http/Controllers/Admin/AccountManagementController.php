@@ -11,6 +11,7 @@ use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Storage;
+use App\Models\History;
 
 class AccountManagementController extends Controller
 {
@@ -58,7 +59,7 @@ class AccountManagementController extends Controller
                 $query->where('gender', $request->gender);
             }
 
-           
+
 
             $account_list = $query->paginate(10);
             return view('admin.account_management.admin_list', ['user' => $user, 'account_list' => $account_list]);
@@ -109,7 +110,7 @@ class AccountManagementController extends Controller
                 $query->where('gender', $request->gender);
             }
 
-           
+
 
             $account_list = $query->paginate(10);
             return view('admin.account_management.guidance_list', ['user' => $user, 'account_list' => $account_list]);
@@ -131,6 +132,16 @@ class AccountManagementController extends Controller
         if (Auth::guard('admin')->check()) {
             $student = StudentAccount::findOrFail($id);
             $student->delete();
+
+            $user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $user->id,
+                    'position' => $user->role ?? 'Admin',
+                    'history' => "Deleted student account",
+                    'description' => 'ID Number: ' . $student->id_number . ', Name: ' . $student->name
+                ]
+            );
 
             return redirect()->route('admin.student_list')->with('success', 'Student deleted successfully');
         }
@@ -196,6 +207,16 @@ class AccountManagementController extends Controller
             }
 
             $user->save();
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Updated user account",
+                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+                ]
+            );
 
             return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
         }
@@ -313,8 +334,19 @@ class AccountManagementController extends Controller
             $guidance = GuidanceAccount::findOrFail($id);
             $guidance->delete();
 
+            $_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $_user->id,
+                    'position' => $_user->role ?? 'Admin',
+                    'history' => "Deleted guidance account",
+                    'description' => 'ID Number: ' . $guidance->id_number . ', Name: ' . $guidance->name
+                ]
+            );
+
             return redirect()->route('admin.guidance_list')->with('success', 'Guidance deleted successfully');
         }
+
 
         return redirect()->route('admin.login');
     }
@@ -377,6 +409,16 @@ class AccountManagementController extends Controller
 
             $user->save();
 
+            $_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $_user->id,
+                    'position' => $_user->role ?? 'Admin',
+                    'history' => "Updated guidance account",
+                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+                ]
+            );
+
             return redirect()->route('admin.guidance_list')->with('success', 'Guidance updated successfully');
         }
 
@@ -389,7 +431,7 @@ class AccountManagementController extends Controller
 
 
 
-    
+
     /***
      * 
      * //////////////////////////////////////////////////
@@ -402,6 +444,18 @@ class AccountManagementController extends Controller
         if (Auth::guard('admin')->check()) {
             $admin = AdminAccount::findOrFail($id);
             $admin->delete();
+
+
+
+            $user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $user->id,
+                    'position' => $user->role ?? 'Admin',
+                    'history' => "Deleted admin account",
+                    'description' => 'ID Number: ' . $admin->id_number . ', Name: ' . $admin->name
+                ]
+            );
 
             return redirect()->route('admin.admin_list')->with('success', 'Admin deleted successfully');
         }
@@ -467,6 +521,16 @@ class AccountManagementController extends Controller
 
             $user->save();
 
+            $user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $user->id,
+                    'position' => $user->role ?? 'Admin',
+                    'history' => "Updated admin account",
+                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+                ]
+            );
+
             return redirect()->route('admin.admin_list')->with('success', 'Admin updated successfully');
         }
 
@@ -474,5 +538,3 @@ class AccountManagementController extends Controller
     }
     /////////////////// END /////////////////////
 }
-
- 

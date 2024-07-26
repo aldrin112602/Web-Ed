@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->string('position')->nullable();
-            $table->string('role')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('history')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

@@ -12,7 +12,7 @@ class History extends Model
     protected $fillable = [
         'position',
         'history',
-        'role',
+        'description',
         'user_id'
     ];
 }

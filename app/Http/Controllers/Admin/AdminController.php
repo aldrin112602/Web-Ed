@@ -17,17 +17,31 @@ use App\Models\History;
 
 class AdminController extends Controller
 {
-    public function history()
+    public function history(Request $request)
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $allUsers = collect([...AdminAccount::all(), ...TeacherAccount::all(), ...GuidanceAccount::all()]);
-            $histories = History::orderBy('created_at', 'desc')->get();
-            return view('admin.history', ['user' => $user, 'allUsers' => $allUsers, 'histories' => $histories]);
+            $allUsers = collect([...AdminAccount::all(), ...TeacherAccount::all(), ...GuidanceAccount::all(), ...StudentAccount::all()]);
+
+            $query = History::orderBy('created_at', 'desc');
+
+            if ($request->has('filter') && $request->filter != '') {
+                $query->where('user_id', $request->filter);
+            }
+
+            $histories = $query->paginate(10);
+
+            return view('admin.history', [
+                'user' => $user,
+                'allUsers' => $allUsers,
+                'histories' => $histories,
+                'selectedFilter' => $request->filter
+            ]);
         }
         return redirect()->route('admin.login');
     }
-    
+
+
     public function login()
     {
         if (Auth::guard('admin')->check()) {
@@ -97,7 +111,7 @@ class AdminController extends Controller
     }
 
 
-    
+
 
 
     public function profile()
