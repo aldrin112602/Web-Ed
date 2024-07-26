@@ -103,7 +103,7 @@
                 </div>
                 <div class="flex items-center justify-start gap-3">
                         <h1>User Account</h1>
-                        <button type="button" id="generate-btn" class="bg-slate-100 border px-2 rounded-lg hover:bg-slate-800 hover:text-slate-50 shadow text-sm py-1">Generate username & password</button>
+                        <button type="button" id="generate-btn" class="bg-slate-100 border px-2 rounded-lg hover:bg-slate-800 hover:text-slate-50 shadow text-sm py-1">Generate</button>
                         <script>
                                 $('#generate-btn').on('click', function() {
                                         const nameInput = $('#name').val().trim();
