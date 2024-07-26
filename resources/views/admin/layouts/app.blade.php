@@ -62,6 +62,12 @@
             <h2 class="text-blue-900 font-semibold">WebEd</h2>
             <ul class="flex items-center justify-end gap-5">
                 <li>
+                    <a class="hover:text-blue-500" href="{{ route('admin.history') }}">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </a>
+                </li>
+
+                <li>
                     <a class="hover:text-blue-500" href="#!">
                         <i class="fa-regular fa-bell"></i>
                     </a>
@@ -133,7 +139,7 @@
                 <script>
                     $(() => {
                         $.ajax({
-                            url: '{{ route('admin.get_message_count') }}',
+                            url: `{{ route('admin.get_message_count') }}`,
                             method: 'GET',
                             success: (response) => {
                                 $('#messageCounts').text(response.count);
@@ -375,7 +381,6 @@
                 }
             });
         });
-
     </script>
     @livewireScripts
 </body>

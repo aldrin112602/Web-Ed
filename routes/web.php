@@ -53,6 +53,11 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
+
+
+        // history
+        Route::get('history', [Admin::class, 'history'])->name('admin.history');
+
         // view student subjects route
         Route::get('/student/subjects/{id}', [SubjectController::class, 'viewStudentSubjects'])->name('admin.view.subjects');
         Route::post('/student/subjects/add', [SubjectController::class, 'addSubject'])->name('admin.add.subject');

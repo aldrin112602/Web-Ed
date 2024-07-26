@@ -13,9 +13,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use App\Models\History;
 
 class AdminController extends Controller
 {
+    public function history()
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            $allUsers = collect([...AdminAccount::all(), ...TeacherAccount::all(), ...GuidanceAccount::all()]);
+            $histories = History::orderBy('created_at', 'desc')->get();
+            return view('admin.history', ['user' => $user, 'allUsers' => $allUsers, 'histories' => $histories]);
+        }
+        return redirect()->route('admin.login');
+    }
+    
     public function login()
     {
         if (Auth::guard('admin')->check()) {
@@ -85,15 +97,8 @@ class AdminController extends Controller
     }
 
 
-    public function home()
-    {
-        if (Auth::guard('admin')->check()) {
-            $user = Auth::guard('admin')->user();
-            return view('admin.home', ['user' => $user]);
-        }
+    
 
-        return redirect()->route('admin.login');
-    }
 
     public function profile()
     {
@@ -222,8 +227,4 @@ class AdminController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Failed to delete profile photo. Please try again.']);
     }
-
-
-
-    
 }
