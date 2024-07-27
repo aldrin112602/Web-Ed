@@ -11,6 +11,8 @@ use App\Models\Admin\AdminAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
 use App\Models\Admin\SubjectModel;
+use App\Models\History;
+use Illuminate\Support\Facades\Auth;
 
 class ExcelController extends Controller
 {
@@ -56,6 +58,16 @@ class ExcelController extends Controller
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
         $response->headers->set('Cache-Control', 'max-age=0');
+
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported admin list",
+                'description' => null
+            ]
+        );
 
         return $response;
     }
@@ -109,6 +121,16 @@ class ExcelController extends Controller
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
         $response->headers->set('Cache-Control', 'max-age=0');
 
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported student list",
+                'description' => null
+            ]
+        );
+
         return $response;
     }
 
@@ -154,7 +176,15 @@ class ExcelController extends Controller
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
         $response->headers->set('Cache-Control', 'max-age=0');
-
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported guindance list",
+                'description' => null
+            ]
+        );
         return $response;
     }
 
@@ -203,6 +233,17 @@ class ExcelController extends Controller
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
         $response->headers->set('Cache-Control', 'max-age=0');
 
+
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported teacher list",
+                'description' => null
+            ]
+        );
+
         return $response;
     }
 
@@ -241,6 +282,18 @@ class ExcelController extends Controller
         $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
         $response->headers->set('Cache-Control', 'max-age=0');
+
+
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported subject list",
+                'description' => null
+            ]
+        );
+
 
         return $response;
     }

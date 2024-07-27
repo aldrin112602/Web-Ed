@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\SubjectModel;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Student\StudentAccount;
+use App\Models\History;
 
 class SubjectController extends Controller
 {
@@ -47,6 +48,20 @@ class SubjectController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $student = StudentAccount::findOrFail($student_id);
+
+            // Retrieve the subject details
+            $subject = SubjectModel::findOrFail($subject_id);
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Deleted a subject `$subject->name` from `$student->name`'s account",
+                    'description' => "Subject deleted: " . $subject->name
+                ]
+            );
+
             $student->subjects()->detach($subject_id);
 
             return redirect()->route('admin.view.subjects', $student_id)->with('success', 'Subject deleted successfully');
@@ -71,6 +86,15 @@ class SubjectController extends Controller
 
         if ($student && $subject) {
             $student->subjects()->attach($subject->id);
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Added a subject `$subject->name` to `$student->name`'s account",
+                    'description' => null
+                ]
+            );
             return redirect()->back()->with('success', 'Subject added successfully!');
         }
 
@@ -119,8 +143,19 @@ class SubjectController extends Controller
             'teacher_id' => $request->assign_teacher,
             'time' => $time_start_12hr . ' - ' . $time_end_12hr
         ]);
-
         $subject->save();
+
+        $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Created a subject",
+                    'description' => "Subject created: " . $subject->name
+                ]
+            );
+
+        
         return redirect()->route('admin.subject_list')->with('success', 'Subject created successfully');
     }
 
@@ -160,10 +195,24 @@ class SubjectController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $subject = SubjectModel::findOrFail($id);
+    
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Deleted a subject `$subject->name`",
+                    'description' => "Subject deleted: " . $subject->name
+                ]
+            );
+
+
             $subject->delete();
 
             return redirect()->route('admin.subject_list')->with('success', 'Subject deleted successfully');
         }
+
+
 
         return redirect()->route('admin.login');
     }
@@ -184,7 +233,7 @@ class SubjectController extends Controller
     public function updateSubject(Request $request, $id)
     {
         if (Auth::guard('admin')->check()) {
-            $user = SubjectModel::findOrFail($id);
+            $subject = SubjectModel::findOrFail($id);
 
             $request->validate([
                 'subject' => 'required',
@@ -192,13 +241,24 @@ class SubjectController extends Controller
                 'time' => 'required'
             ]);
 
-            $user->update([
+            $subject->update([
                 'subject' => $request->subject,
                 'teacher' => $request->teacher,
                 'time' => $request->time,
             ]);
 
-            $user->save();
+            $subject->save();
+
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Updated a subject `$subject->name`",
+                    'description' => "Subject updated: " . $subject->name
+                ]
+            );
 
             return redirect()->route('admin.subject_list')->with('success', 'Subject updated successfully');
         }
