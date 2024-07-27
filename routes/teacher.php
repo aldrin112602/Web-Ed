@@ -38,6 +38,10 @@ Route::prefix('teacher')->group(function () {
         // Add teacher-specific routes here
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
 
+
+        // subject list
+        Route::get('subject_list', [Subject::class, 'subjectList'])->name('teacher.subject_list');
+
         // Subject
         Route::get('/my_subjects', [Subject::class, 'index'])->name('teacher.subjects');
 

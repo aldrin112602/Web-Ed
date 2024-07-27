@@ -22,6 +22,19 @@ class SubjectController extends Controller
     }
 
 
+    public function subjectList(Request $request) {
+        if (Auth::guard('teacher')->check()) {
+            $user = Auth::guard('teacher')->user();
+            $query = SubjectModel::where('teacher_id', $user->id);
+
+            $subject_list = $query->paginate(10);
+            return view('teacher.subject.subject_list', ['user' => $user,'subject_list' => $subject_list]);
+        }
+
+        return redirect()->route('teacher.login');
+    }
+
+
     public function countStudents() {
         $user = Auth::guard('teacher')->user();
         $subject = SubjectModel::where('teacher_id', $user->id)->first();
