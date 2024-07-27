@@ -326,7 +326,7 @@
         }
     </script>
 
-    <script>
+<script>
         let selectAll = document.getElementById('selectAll')
         if (selectAll) {
             selectAll.addEventListener('change', function() {
@@ -334,6 +334,76 @@
                 checkboxes.forEach(checkbox => checkbox.checked = this.checked);
             });
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // Individual checkbox change event
+            $('.highlight-checkbox').change(function() {
+                if ($(this).is(':checked')) {
+                    $(this).closest('tr').addClass('bg-blue-50 text-blue-700');
+                } else {
+                    $(this).closest('tr').removeClass('bg-blue-50 text-blue-700');
+                }
+            });
+
+            // Select all checkbox change event
+            $('#selectAll').change(function() {
+                if ($(this).is(':checked')) {
+                    $('.highlight-checkbox').each(function() {
+                        $(this).prop('checked', true);
+                        $(this).closest('tr').addClass('bg-blue-50 text-blue-700');
+                    });
+                } else {
+                    $('.highlight-checkbox').each(function() {
+                        $(this).prop('checked', false);
+                        $(this).closest('tr').removeClass('bg-blue-50 text-blue-700');
+                    });
+                }
+            });
+
+            // Uncheck #selectAll if any individual checkbox is unchecked
+            $('.highlight-checkbox').change(function() {
+                if (!$(this).is(':checked')) {
+                    $('#selectAll').prop('checked', false);
+                } else if ($('.highlight-checkbox:checked').length === $('.highlight-checkbox').length) {
+                    $('#selectAll').prop('checked', true);
+                }
+            });
+
+            // Delete selected rows
+            $('#deleteSelected').click(function() {
+                const selectedIds = $('.highlight-checkbox:checked').map(function() {
+                    return $(this).data('id');
+                }).get();
+
+                if (selectedIds.length > 0) {
+
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $('#selected_ids').val(selectedIds);
+                            $('#deleteSelectedForm').submit();
+                        }
+                    })
+                } else {
+                    // alert('No rows selected.');
+                    Swal.fire({
+                        title: 'No Rows Selected',
+                        text: "Please select at least one row to delete.",
+                        icon: 'info',
+                    });
+
+                }
+            });
+        });
     </script>
 
 </body>
