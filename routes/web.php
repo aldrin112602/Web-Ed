@@ -21,7 +21,7 @@ use App\Http\Controllers\Admin\AdminConversationController;
 use App\Http\Controllers\Student\StudentConversationController;
 use App\Http\Controllers\Guidance\GuidanceConversationController;
 use App\Http\Controllers\FaceRecognitionController;
-
+use App\Http\Controllers\Teacher\SubjectController as Subject;
 
 Route::get('/', function () {
     return view('welcome');
@@ -186,8 +186,8 @@ Route::prefix('teacher')->group(function () {
         // Add teacher-specific routes here
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
 
-
-
+        // Subject
+        Route::get('/my_subjects', [Subject::class, 'index'])->name('teacher.subjects');
 
         // chat conversation
         Route::get('/chats', [TeacherConversationController::class, 'index'])->name('teacher.chats.index');

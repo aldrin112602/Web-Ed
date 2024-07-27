@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="p-3 {{ request()->is('teacher/my_subjects') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-list"></i>My Subjects</a>
+                    <a href="{{ route('teacher.subjects') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-list"></i>My Subjects</a>
                 </div>
 
                 <div class="p-3 {{ request()->is('teacher/attendace_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
