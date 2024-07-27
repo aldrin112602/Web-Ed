@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Models\History;
 
+
 class AdminController extends Controller
 {
     public function history(Request $request)
@@ -156,6 +157,16 @@ class AdminController extends Controller
             // Re-authenticate the user with the new password
             Auth::guard('admin')->login($user);
 
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Update his/her account information",
+                    'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
+                ]
+            );
+
             return redirect()
                 ->back()
                 ->with('success', 'Profile updated successfully!');
@@ -189,6 +200,17 @@ class AdminController extends Controller
 
             // Re-authenticate the user with the new password
             Auth::guard('admin')->login($user);
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Update his/her password",
+                    'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
+                ]
+            );
+
             return redirect()->back()->with('success', 'Password updated successfully!');
         }
 
@@ -217,6 +239,16 @@ class AdminController extends Controller
                 $user->profile = $profilePhotoPath;
                 $user->save();
 
+                $auth_user = Auth::user();
+                History::create(
+                    [
+                        'user_id' => $auth_user->id,
+                        'position' => $auth_user->role,
+                        'history' => "Update his/her profile photo",
+                        'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
+                    ]
+                );
+
                 return redirect()->back()->with('success', 'Profile photo updated successfully!');
             }
         }
@@ -235,6 +267,16 @@ class AdminController extends Controller
             }
             $user->profile = null;
             $user->save();
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Deleted his/her profile photo",
+                    'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
+                ]
+            );
 
             return redirect()->back()->with('success', 'Profile photo deleted successfully!');
         }
