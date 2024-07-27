@@ -8,6 +8,7 @@ use App\Models\Admin\AdminOtpAccount;
 use App\Models\Admin\AdminAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\History;
 
 use Carbon\Carbon;
 
@@ -125,6 +126,15 @@ class AdminOtpController extends Controller
             // Clear session
             Session::forget('otp_email');
             Session::forget('otp');
+            
+            History::create(
+                [
+                    'user_id' => $user->id,
+                    'position' => $user->role,
+                    'history' => "Reset his/her password",
+                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+                ]
+            );
 
             return redirect()->route('admin.login')
                 ->with('success', 'Password reset successfully!');

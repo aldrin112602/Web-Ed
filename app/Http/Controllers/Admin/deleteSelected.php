@@ -10,6 +10,8 @@ use App\Models\Admin\AdminAccount as Admin;
 use App\Models\Teacher\TeacherAccount as Teacher;
 use App\Models\Guidance\GuidanceAccount as Guidance;
 use App\Models\Admin\SubjectModel as Subject;
+use App\Models\History;
+use Illuminate\Support\Facades\Auth;
 
 class deleteSelected extends Controller
 {
@@ -19,6 +21,15 @@ class deleteSelected extends Controller
         $idsArray = explode(',', $ids);
 
         Student::whereIn('id', $idsArray)->delete();
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted all selected students account",
+                'description' => "Deleted ids: $ids"
+            ]
+        );
 
         return redirect()->route('admin.student_list')->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
     }
@@ -30,6 +41,16 @@ class deleteSelected extends Controller
 
         Admin::whereIn('id', $idsArray)->delete();
 
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted all selected admins account",
+                'description' => "Deleted ids: $ids"
+            ]
+        );
+
         return redirect()->route('admin.admin_list')->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
     }
 
@@ -39,6 +60,16 @@ class deleteSelected extends Controller
         $idsArray = explode(',', $ids);
 
         Teacher::whereIn('id', $idsArray)->delete();
+
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted all selected teachers account",
+                'description' => "Deleted ids: $ids"
+            ]
+        );
 
         return redirect()->route('admin.teacher_list')->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
     }
@@ -50,6 +81,16 @@ class deleteSelected extends Controller
 
         Guidance::whereIn('id', $idsArray)->delete();
 
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted all selected guidances account",
+                'description' => "Deleted ids: $ids"
+            ]
+        );
+
         return redirect()->route('admin.guidance_list')->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
     }
 
@@ -60,6 +101,15 @@ class deleteSelected extends Controller
         $idsArray = explode(',', $ids);
 
         Subject::whereIn('id', $idsArray)->delete();
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted all selected subjects",
+                'description' => "Deleted ids: $ids"
+            ]
+        );
 
         return redirect()->route('admin.subject_list')->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
     }
