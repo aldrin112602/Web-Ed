@@ -42,6 +42,7 @@ class SubjectListTableSeeder extends Seeder
 
             Subject::create([
                 'subject' => $faker->randomElement($subjects),
+                'day' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
                 'teacher_id' => $teacher->id,
                 'time' => "$startTime - $endTime"
             ]);

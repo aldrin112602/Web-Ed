@@ -130,6 +130,7 @@ class SubjectController extends Controller
     {
         $request->validate([
             'subject' => 'required',
+            'day' => 'required',
             'assign_teacher' => 'required|exists:teacher_accounts,id',
             'time_start' => 'required',
             'time_end' => 'required',
@@ -140,6 +141,7 @@ class SubjectController extends Controller
 
         $subject = new SubjectModel([
             'subject' => $request->subject,
+            'day' => $request->day,
             'teacher_id' => $request->assign_teacher,
             'time' => $time_start_12hr . ' - ' . $time_end_12hr
         ]);

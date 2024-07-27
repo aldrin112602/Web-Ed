@@ -20,7 +20,7 @@ class AccountsTableSeeder extends Seeder
         $faker = Faker::create();
         $defaultPassword = 'password';
 
-        foreach (range(1, 60) as $index) {
+        foreach (range(1, 20) as $index) {
             Student::create([
                 'id_number' => $faker->unique()->numerify('##########'),
                 'name' => $faker->name,

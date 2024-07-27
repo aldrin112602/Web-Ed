@@ -29,6 +29,19 @@
         </div>
 
         <div class="w-full">
+            <label for="day" class="block text-gray-700 mt-2 text-sm mb-1">Day</label>
+            <select name="day" id="day" class="form-select w-full rounded border-gray-300 @error('day') border-red-500 @enderror" value="{{ old('day') }}">
+                <option value="" disabled class="hidden" selected> -- Select Day --</option>
+                @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as $day)
+                    <option value="{{ $day }}">{{ $day }}</option>
+                @endforeach
+            </select>
+            @error('day')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="w-full">
             <label for="time_start" class="block text-gray-700 mt-2 text-sm mb-1">From time:</label>
             <input type="time" id="time_start" name="time_start" class="form-input w-full rounded border-gray-300 @error('time_start') border-red-500 @enderror" value="{{ old('time_start') }}">
             @error('time_start')

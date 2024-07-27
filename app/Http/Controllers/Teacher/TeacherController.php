@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
+use App\Models\Admin\SubjectModel;
+
 class TeacherController extends Controller
 {
     public function login()
@@ -57,14 +59,20 @@ class TeacherController extends Controller
     }
 
     public function dashboard()
-    {
-        if (Auth::guard('teacher')->check()) {
-            $user = Auth::guard('teacher')->user();
-            return view('teacher.dashboard', ['user' => $user]);
-        }
-
-        return redirect()->route('teacher.login');
+{
+    if (Auth::guard('teacher')->check()) {
+        $user = Auth::guard('teacher')->user();
+        $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
+        return view('teacher.dashboard', 
+        [
+            'user' => $user,
+            'allSubjects' => $allSubjects
+        ]);
     }
+
+    return redirect()->route('teacher.login');
+}
+
 
 
     public function home()
