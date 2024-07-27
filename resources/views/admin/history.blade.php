@@ -27,7 +27,7 @@
             <tr>
                 <th class="py-3 px-2 text-center border">Position</th>
                 <th class="py-3 px-2 text-center border">History</th>
-                <th class="py-3 px-2 text-center border">Description</th>
+                <!-- <th class="py-3 px-2 text-center border">Description</th> -->
                 <th class="py-3 px-2 text-center border">Date</th>
                 <th class="py-3 px-2 text-center border">Action</th>
             </tr>
@@ -37,7 +37,7 @@
             <tr class="tbl_tr">
                 <td class="py-2 text-center border">{{ $history->position }}</td>
                 <td class="py-2 text-center border">{{ $history->history }}</td>
-                <td class="py-2 text-center border">{{ $history->description }}</td>
+                <!-- <td class="py-2 text-center border">{{ $history->description }}</td> -->
                 <td class="py-2 text-center border">{{ $history->created_at->format('M d, Y H:i') }}</td>
                 <td class="py-2 text-center border">
                     <a href="#" class="px-2 py-1 bg-blue-500 text-white rounded-md">View</a>
