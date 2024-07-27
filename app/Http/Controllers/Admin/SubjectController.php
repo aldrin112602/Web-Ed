@@ -57,7 +57,7 @@ class SubjectController extends Controller
                 [
                     'user_id' => $auth_user->id,
                     'position' => $auth_user->role,
-                    'history' => "Deleted a subject `$subject->name` from `$student->name`'s account",
+                    'history' => "Deleted a subject $subject->name from $student->name's account",
                     'description' => "Subject deleted: " . $subject->name
                 ]
             );
@@ -91,7 +91,7 @@ class SubjectController extends Controller
                 [
                     'user_id' => $auth_user->id,
                     'position' => $auth_user->role,
-                    'history' => "Added a subject `$subject->name` to `$student->name`'s account",
+                    'history' => "Added a subject $subject->name to $student->name's account",
                     'description' => null
                 ]
             );
@@ -201,7 +201,7 @@ class SubjectController extends Controller
                 [
                     'user_id' => $auth_user->id,
                     'position' => $auth_user->role,
-                    'history' => "Deleted a subject `$subject->name`",
+                    'history' => "Deleted a subject $subject->name",
                     'description' => "Subject deleted: " . $subject->name
                 ]
             );
@@ -255,7 +255,7 @@ class SubjectController extends Controller
                 [
                     'user_id' => $auth_user->id,
                     'position' => $auth_user->role,
-                    'history' => "Updated a subject `$subject->name`",
+                    'history' => "Updated a subject $subject->name",
                     'description' => "Subject updated: " . $subject->name
                 ]
             );
