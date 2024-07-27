@@ -59,21 +59,33 @@ class TeacherController extends Controller
     }
 
     public function dashboard()
-{
-    if (Auth::guard('teacher')->check()) {
-        $user = Auth::guard('teacher')->user();
-        $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
+    {
+        if (Auth::guard('teacher')->check()) {
+            $user = Auth::guard('teacher')->user();
+            $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
+            $allStudentsCount = $this->countStudents();
 
+            return view(
+                'teacher.dashboard',
+                [
+                    'user' => $user,
+                    'allSubjects' => $allSubjects,
+                    "allStudentsCount" => $allStudentsCount
+                ]
+            );
+        }
 
-        return view('teacher.dashboard', 
-        [
-            'user' => $user,
-            'allSubjects' => $allSubjects
-        ]);
+        return redirect()->route('teacher.login');
     }
 
-    return redirect()->route('teacher.login');
-}
+
+    public function countStudents()
+    {
+        $user = Auth::guard('teacher')->user();
+        $subject = SubjectModel::where('teacher_id', $user->id)->first();
+        $students = $subject->students()->count();
+        return $students;
+    }
 
 
 

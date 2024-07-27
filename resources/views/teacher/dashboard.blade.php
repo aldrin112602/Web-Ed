@@ -7,19 +7,19 @@
     <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-white shadow p-4 rounded">
-            <div class="text-2xl font-bold">52</div>
+            <div class="text-2xl font-bold">{{ $allStudentsCount }}</div>
             <div>Total number of students</div>
         </div>
         <div class="bg-white shadow p-4 rounded">
-            <div class="text-2xl font-bold">10</div>
+            <div class="text-2xl font-bold">0</div>
             <div>Late Arrival</div>
         </div>
         <div class="bg-white shadow p-4 rounded">
-            <div class="text-2xl font-bold">12</div>
+            <div class="text-2xl font-bold">0</div>
             <div>Absent</div>
         </div>
         <div class="bg-white shadow p-4 rounded">
-            <div class="text-2xl font-bold">30</div>
+            <div class="text-2xl font-bold">0</div>
             <div>Present</div>
         </div>
     </div>

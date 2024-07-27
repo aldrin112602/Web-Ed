@@ -9,14 +9,23 @@ use App\Models\Admin\SubjectModel;
 
 class SubjectController extends Controller
 {
-    public static function index()
+    public function index()
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
             $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
-            return view('teacher.subject.index', ['user' => $user, 'allSubjects' => $allSubjects]);
+            $allStudentsCount = $this->countStudents();
+            return view('teacher.subject.index', ['user' => $user, 'allSubjects' => $allSubjects, "allStudentsCount" => $allStudentsCount]);
         }
 
         return redirect()->route('teacher.login');
+    }
+
+
+    public function countStudents() {
+        $user = Auth::guard('teacher')->user();
+        $subject = SubjectModel::where('teacher_id', $user->id)->first();
+        $students = $subject->students()->count();
+        return $students;
     }
 }
