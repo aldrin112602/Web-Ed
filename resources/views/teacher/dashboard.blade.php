@@ -32,7 +32,7 @@
         @foreach ($allSubjects as $subject)
         <div class="bg-white shadow p-4 rounded">
             <div class="font-bold">{{ $subject->subject }}</div> 
-            <div>{{ $subject->time }}</div>
+            <div>{{ $subject->time }} {{ strtoupper($subject->day) }}</div>
         </div>
         @endforeach
     </div>

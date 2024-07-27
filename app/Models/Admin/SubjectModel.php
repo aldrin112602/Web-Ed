@@ -16,7 +16,8 @@ class SubjectModel extends Authenticatable
     protected $fillable = [
         'subject',
         'teacher_id',
-        'time'
+        'time',
+        'day'
     ];
 
     public function teacherAccount()

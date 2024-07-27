@@ -63,6 +63,8 @@ class TeacherController extends Controller
     if (Auth::guard('teacher')->check()) {
         $user = Auth::guard('teacher')->user();
         $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
+
+
         return view('teacher.dashboard', 
         [
             'user' => $user,
