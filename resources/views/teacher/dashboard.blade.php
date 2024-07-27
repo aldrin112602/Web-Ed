@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="container mx-auto p-4">
+<div class="container mx-auto p-4 text-slate-700">
     <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div class="bg-white shadow p-4 rounded">

@@ -89,12 +89,29 @@
                 <div class="p-3 {{ request()->is('teacher/dashboard') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('teacher.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
+
+                <div class="p-3 {{ request()->is('teacher/my_subjects') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-list"></i>My Subjects</a>
+                </div>
+
+                <div class="p-3 {{ request()->is('teacher/attendace_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clipboard-user"></i></i>Attendace Report</a>
+                </div>
+
+
+                <div class="p-3 {{ request()->is('teacher/attendace_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-sheet-plastic"></i>Attendace Sheet</a>
+                </div>
+
+                <div class="p-3 {{ request()->is('teacher/students_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Students Grade</a>
+                </div>
                 
                 <div class="py-2">
                     <hr>
                 </div>
                 <div class="p-3 {{ request()->is('teacher/chats') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('teacher.chats.index') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-regular fa-message"></i>Messages <span class="text-rose-600 font-semibold" id="messageCounts">0</span></a>
+                    <a href="{{ route('teacher.chats.index') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-message"></i>Messages <span class="text-rose-600 font-semibold" id="messageCounts">0</span></a>
                 </div>
                 <script>
                     $(() => {
