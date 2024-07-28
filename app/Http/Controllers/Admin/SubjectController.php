@@ -189,7 +189,7 @@ class SubjectController extends Controller
     /***
      * 
      * //////////////////////////////////////////////////
-     * ////// Subject account (Update, delete, view) ////
+     * ////// Subject (Update, delete, view) ////
      * //////////////////////////////////////////////////
      * 
      */
@@ -240,13 +240,15 @@ class SubjectController extends Controller
             $request->validate([
                 'subject' => 'required',
                 'teacher' => 'required',
-                'time' => 'required'
+                'time' => 'required',
+                'day' => 'required',
             ]);
 
             $subject->update([
                 'subject' => $request->subject,
                 'teacher' => $request->teacher,
                 'time' => $request->time,
+                'day' => $request->day,
             ]);
 
             $subject->save();

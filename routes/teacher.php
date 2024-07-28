@@ -45,6 +45,15 @@ Route::prefix('teacher')->group(function () {
 
         // Subject
         Route::get('/my_subjects', [Subject::class, 'index'])->name('teacher.subjects');
+        Route::prefix('subject')->group(function () {
+            Route::get('create', [Subject::class, 'viewCreateSubject'])->name('teacher.create.subject');
+            Route::post('create', [Subject::class, 'createSubject'])->name('teacher.handleCreate.subject');
+            Route::delete('{id}', [Subject::class, 'deleteSubject'])->name('teacher.delete.subject');
+            Route::get('{id}/edit', [Subject::class, 'viewEditSubject'])->name('teacher.edit.subject');
+            Route::put('{id}', [Subject::class, 'updateSubject'])->name('teacher.update.subject');
+        });
+
+        Route::delete('delete-selected-subjects', [Subject::class, 'deleteSelectedSubjects'])->name('delete.selected.subjects');
 
         // chat conversation
         Route::get('/chats', [TeacherConversationController::class, 'index'])->name('teacher.chats.index');
@@ -70,5 +79,7 @@ Route::prefix('teacher')->group(function () {
         Route::prefix('export')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportTeacherSubjectList'])->name('teacher.export.subject');
         });
+
+
     });
 });
