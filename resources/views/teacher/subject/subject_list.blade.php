@@ -51,6 +51,7 @@
                         <th class="py-3 px-2 text-center border">Subject</th>
                         <th class="py-3 px-2 text-center border">Teacher</th>
                         <th class="py-3 px-2 text-center border">Time</th>
+                        <th class="py-3 px-2 text-center border">Day</th>
                         <th class="py-3 px-2 text-center border">Action</th>
                     </tr>
                 </thead>
@@ -61,6 +62,7 @@
                         <td class="py-2 text-center border">{{ $list->subject }}</td>
                         <td class="py-2 text-center border">{{ $list->teacherAccount->name ?? 'N/A' }}</td>
                         <td class="py-2 text-center border">{{ $list->time }}</td>
+                        <td class="py-2 text-center border">{{ $list->day }}</td>
 
                         <td class="py-2 text-center border">
                             <a href="{{ route('teacher.edit.subject', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
