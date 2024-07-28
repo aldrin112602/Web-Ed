@@ -23,7 +23,7 @@ class SubjectController extends Controller
     }
 
 
-    public function subjectList(Request $request)
+    public function subjectList()
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
