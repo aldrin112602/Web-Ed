@@ -19,7 +19,6 @@ class TeacherAccount extends Authenticatable
         'gender',
         'role',
         'position',
-        'grade_handle',
         'username',
         'password',
         'email',

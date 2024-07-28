@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('gender');
             $table->string('position');
-            $table->string('grade_handle');
             $table->string('username')->unique();
             $table->string('password');
             $table->string('extension_name')->nullable();

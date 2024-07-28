@@ -33,7 +33,10 @@
             
         </div>
 
-        <div class="w-full">
+        
+
+        <div class="block md:flex align-center justify-between my-2 gap-5">
+        <div class="md:w-1/2 w-full">
                 <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
                 <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
                     <option value="" disabled class="hidden" selected>-- Select one --</option>
@@ -44,8 +47,6 @@
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
-
-        <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="position" class="block text-gray-700 text-sm mb-1">Position</label>
                 <select name="position" id="position" class="form-select w-full rounded border-gray-300 @error('position') border-red-500 @enderror">
@@ -58,29 +59,7 @@
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
-            <div class="md:w-1/2 w-full">
-                <label for="grade_handle" class="block text-gray-700 text-sm mb-1">Grade handle</label>
-                <select name="grade_handle" id="grade_handle" class="form-select w-full rounded border-gray-300 @error('grade_handle') border-red-500 @enderror">
-                    <option value="" disabled class="hidden" selected>-- Select one --</option>
-                    <optgroup label="G11">
-                        <option value="11 ABM" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 ABM" ? "selected" : "" }}>ABM</option>
-                        <option value="11 ICT" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 ICT" ? "selected" : "" }}>ICT</option>
-                        <option value="11 HUMSS" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HUMSS" ? "selected" : "" }}>HUMSS</option>
-                        <option value="11 HE" {{ (old('grade_handle') ?? $teacher->grade_handle) == "11 HE" ? "selected" : "" }}>HE</option>
-                    </optgroup>
-                    <optgroup label="G12">
-                        <option value="12 ABM" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 ABM" ? "selected" : "" }}>ABM</option>
-                        <option value="12 ICT" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 ICT" ? "selected" : "" }}>ICT</option>
-                        <option value="12 HUMSS" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 HUMSS" ? "selected" : "" }}>HUMSS</option>
-                        <option value="12 HE" {{ (old('grade_handle') ?? $teacher->grade_handle) == "12 HE" ? "selected" : "" }}>HE</option>
-                    </optgroup>
-                </select>
-
-                @error('grade_handle')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-        </div>
+            
 
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">

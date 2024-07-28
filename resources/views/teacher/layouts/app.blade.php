@@ -98,6 +98,10 @@
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-list"></i>My Students</a>
                 </div>
 
+                <div class="p-3 {{ request()->is('teacher/class_history') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clock-rotate-left"></i>Class History</a>
+                </div>
+
                 <div class="p-3 {{ request()->is('teacher/attendace_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clipboard-user"></i></i>Attendace Report</a>
                 </div>

@@ -65,7 +65,6 @@ class AccountsTableSeeder extends Seeder
                 'name' => $faker->name,
                 'gender' => $faker->randomElement(['Male', 'Female']),
                 'position' => $faker->randomElement(['Teacher 1', 'Teacher 2', 'Teacher 3']),
-                'grade_handle' => $faker->randomElement(['11 ABM', '11 ICT', '11 HUMSS', '11 HE', '12 ABM', '12 ICT', '12 HUMSS', '12 HE']),
                 'username' => $faker->userName,
                 'password' => $defaultPassword,
                 'email' => $faker->unique()->safeEmail,
