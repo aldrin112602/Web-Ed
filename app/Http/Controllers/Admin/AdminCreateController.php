@@ -112,7 +112,6 @@ class AdminCreateController extends Controller
             'position' => 'required|string|max:255',
             'username' => 'required|string|unique:teacher_accounts,username',
             'password' => 'required|string|min:6|max:255',
-            'grade_handle' => 'required|string',
             'email' => 'required|email|unique:teacher_accounts,email',
             'role' => 'nullable|string|max:255',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif',

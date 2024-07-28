@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('position')->nullable();
             $table->string('role')->default('Admin')->nullable();
             $table->text('profile')->nullable();
+            $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

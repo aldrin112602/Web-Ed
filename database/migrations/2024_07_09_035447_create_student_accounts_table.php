@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('role')->default('Student')->nullable();
             $table->text('profile')->nullable();
+            $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

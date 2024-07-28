@@ -275,7 +275,6 @@ class AccountManagementController extends Controller
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
                 'extension_name' => 'nullable|string|max:255',
-                'grade_handle' => 'required|string|max:255',
                 'email' => 'required|email|max:255|unique:teacher_accounts,email,' . $user->id,
                 'position' => 'required',
             ]);

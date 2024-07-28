@@ -11,15 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('admin_accounts', function (Blueprint $table) {
-            $table->string('address')->nullable()->after('phone_number');
-        });
-        Schema::table('student_accounts', function (Blueprint $table) {
-            $table->string('address')->nullable()->after('phone_number');
-        });
-        Schema::table('guidance_accounts', function (Blueprint $table) {
-            $table->string('address')->nullable()->after('phone_number');
-        });
+
         Schema::table('teacher_accounts', function (Blueprint $table) {
             $table->string('address')->nullable()->after('phone_number');
         });
