@@ -29,7 +29,7 @@ class SubjectController extends Controller
             $user = Auth::guard('teacher')->user();
             $query = SubjectModel::where('teacher_id', $user->id);
 
-            $subject_list = $query->paginate(10);
+            $subject_list = $query->paginate(5);
             return view('teacher.subject.subject_list', ['user' => $user, 'subject_list' => $subject_list]);
         }
 
