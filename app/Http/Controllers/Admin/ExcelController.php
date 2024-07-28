@@ -297,4 +297,58 @@ class ExcelController extends Controller
 
         return $response;
     }
+
+
+
+
+    public function exportTeacherSubjectList()
+    {
+        $auth_user = Auth::user();
+        $subjects = SubjectModel::where('teacher_id', $auth_user->id)->get();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set the header
+        $sheet->setCellValue('A1', 'Subject');
+        $sheet->setCellValue('B1', 'Teacher');
+        $sheet->setCellValue('C1', 'Time');
+        $sheet->setCellValue('D1', 'Day');
+        $sheet->setCellValue('E1', 'Created_at');
+
+        // Populate data
+        $row = 2;
+        foreach ($subjects as $subject) {
+            $sheet->setCellValue('A' . $row, $subject->subject);
+            $sheet->setCellValue('B' . $row, $auth_user->name);
+            $sheet->setCellValue('C' . $row, $subject->time);
+            $sheet->setCellValue('D' . $row, $subject->day);
+            $sheet->setCellValue('E' . $row, $subject->created_at);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'teacher_subject_list_' . uniqid() . '.xlsx';
+
+        $response = new StreamedResponse(function () use ($writer) {
+            $writer->save('php://output');
+        });
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+
+        
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported subject list",
+                'description' => null
+            ]
+        );
+
+
+        return $response;
+    }
 }

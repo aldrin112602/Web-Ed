@@ -5,6 +5,7 @@ use App\Http\Controllers\Teacher\TeacherController as Teacher;
 use App\Http\Controllers\Teacher\TeacherOtpController;
 use App\Http\Controllers\Teacher\TeacherConversationController;
 use App\Http\Controllers\Teacher\SubjectController as Subject;
+use App\Http\Controllers\Admin\ExcelController;
 
 
 /*
@@ -62,6 +63,12 @@ Route::prefix('teacher')->group(function () {
             Route::delete('deletePhoto', [Teacher::class, 'deleteProfilePhoto'])->name('teacher.deleteProfilePhoto');
             Route::put('updateAccount', [Teacher::class, 'updateAccount'])->name('teacher.updateAccount');
             Route::put('updatePassword', [Teacher::class, 'updatePassword'])->name('teacher.updatePassword');
+        });
+
+
+
+        Route::prefix('export')->group(function () {
+            Route::get('subject_list', [ExcelController::class, 'exportTeacherSubjectList'])->name('teacher.export.subject');
         });
     });
 });

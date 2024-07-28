@@ -27,7 +27,7 @@
                     <i class="fa-solid fa-trash"></i>
                     Delete</button>
                 <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
-                <a href="{{ route('admin.export.subject') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
+                <a href="{{ route('teacher.export.subject') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
             </div>
         </div>
 
@@ -37,7 +37,7 @@
             Showing {{ $subject_list->firstItem() }} - {{ $subject_list->lastItem() }} of {{ $subject_list->total() }} subjects
         </p>
 
-        <!-- Admin List Table -->
+        <!--  List Table -->
         <div class="overflow-x-auto" id="tablePreview">
             <script>
                 $(() => {
