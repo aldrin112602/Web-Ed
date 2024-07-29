@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\AdminOtpController;
 use App\Http\Controllers\Admin\deleteSelected;
 use App\Http\Controllers\Admin\attendanceController as Attendace;
 use App\Http\Controllers\Admin\AdminConversationController;
-
+use App\Http\Controllers\Admin\GradeHandleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,7 +124,7 @@ Route::prefix('admin')->group(function () {
             Route::get('grade_handle/{id}', [AccountManagement::class, 'viewGradeHandle'])->name('admin.view.grade_handle');
             Route::get('grade_handle/add/{id}', [AccountManagement::class, 'viewAddHandleGrade'])->name('admin.view.add_grade_handle');
             Route::post('grade_handle/add/{id}', [AccountManagement::class, 'submitAddHandleGrade'])->name('admin.submit.add_grade_handle');
-
+            Route::get('grade_handle/edit/{id}', [GradeHandleController::class, 'viewUpdateGradeHandle'])->name('admin.edit.grade_handle');
 
 
             Route::prefix('student')->group(function () {
