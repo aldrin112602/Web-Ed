@@ -118,6 +118,15 @@ Route::prefix('admin')->group(function () {
             Route::get('teacher_list', [AccountManagement::class, 'teacher_list'])->name('admin.teacher_list');
             Route::get('guidance_list', [AccountManagement::class, 'guidance_list'])->name('admin.guidance_list');
 
+
+            // grade handle
+            // Grade handle routes
+            Route::get('grade_handle/{id}', [AccountManagement::class, 'viewGradeHandle'])->name('admin.view.grade_handle');
+            Route::get('grade_handle/add/{id}', [AccountManagement::class, 'viewAddHandleGrade'])->name('admin.view.add_grade_handle');
+            Route::post('grade_handle/add/{id}', [AccountManagement::class, 'submitAddHandleGrade'])->name('admin.submit.add_grade_handle');
+
+
+
             Route::prefix('student')->group(function () {
                 Route::delete('{id}', [AccountManagement::class, 'deleteStudent'])->name('admin.delete.student');
                 Route::get('{id}/edit', [AccountManagement::class, 'editStudent'])->name('admin.edit.student');

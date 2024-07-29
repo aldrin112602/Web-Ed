@@ -9,8 +9,8 @@
 | contains the "web" middleware group. Now create something great!
 */
 
-require_once __DIR__ . '/admin.php';
-require_once __DIR__ . '/teacher.php';
-require_once __DIR__ . '/student.php';
-require_once __DIR__ . '/guidance.php';
-require_once __DIR__ . '/public.php';
+require_once __DIR__ . '/root/admin.php';
+require_once __DIR__ . '/root/teacher.php';
+require_once __DIR__ . '/root/student.php';
+require_once __DIR__ . '/root/guidance.php';
+require_once __DIR__ . '/root/public.php';

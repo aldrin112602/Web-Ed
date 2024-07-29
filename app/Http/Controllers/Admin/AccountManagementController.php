@@ -12,9 +12,89 @@ use App\Models\Guidance\GuidanceAccount;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\Storage;
 use App\Models\History;
+use App\Models\TeacherGradeHandle;
+use Illuminate\Support\Carbon;
 
 class AccountManagementController extends Controller
 {
+
+
+
+
+
+    public function submitAddHandleGrade(Request $request)
+    {
+        $teacher = TeacherAccount::find($request->id);
+        if (!$teacher) {
+            return redirect()->route('admin.teacher_list')->with('error', "User does not exist");
+        }
+
+        $validatedData = $request->validate(
+            [
+                'grade' => 'required|integer',
+                'section' => 'required|string|max:255',
+                'strand' => 'required|string|max:255'
+            ]
+        );
+
+        $teacherGradeHandle = new TeacherGradeHandle($validatedData);
+        $teacherGradeHandle->teacher_id = $request->teacher_id;
+        $teacherGradeHandle->save();
+
+        return redirect()->route('admin.view.grade_handle', $request->teacher_id)->with('success', "Grade handle added successfully");
+    }
+
+
+
+    public function viewAddHandleGrade($id)
+    {
+        $user = Auth::guard('admin')->user();
+
+        // if user does not exist
+        $teacher = TeacherAccount::find($id);
+        if (!$teacher) {
+            return redirect()->route('admin.teacher_list')->with('error', "User does not exist");
+        }
+
+        return view(
+            'admin.account_management.add_grade_handle',
+            [
+                'user' => $user,
+                'id' => $id
+            ]
+        );
+    }
+
+
+
+    public function viewGradeHandle($id)
+    {
+        // if user does not exist
+        $teacher = TeacherAccount::find($id);
+        if (!$teacher) {
+            return redirect()->route('admin.teacher_list')->with('error', "User does not exist");
+        }
+
+        $records = TeacherGradeHandle::where('teacher_id', $id)->paginate(10);
+        $user = Auth::guard('admin')->user();
+
+        $records->each(function ($list) {
+            $list->time_ago = Carbon::parse($list->created_at);
+        });
+
+
+        return view(
+            'admin.account_management.grade_handle',
+            [
+                'records' => $records,
+                'id' => $id,
+                'user' => $user,
+            ]
+        );
+    }
+
+
+
 
     public function student_list(Request $request)
     {

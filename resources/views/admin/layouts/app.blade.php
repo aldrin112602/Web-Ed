@@ -220,7 +220,7 @@
     </script>
     @endif
 
-    @if (session('ERROR'))
+    @if (session('error'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const Toast = Swal.mixin({
