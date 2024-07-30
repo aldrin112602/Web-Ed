@@ -4,9 +4,9 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Add Grade Handle</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form enctype="multipart/form-data" action="" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form action="{{ route('admin.update.grade_handle', $id) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
-        <input type="hidden" name="teacher_id" value="{{ $id }}">
+        @method('PUT')
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="grade" class="block text-gray-700 text-sm mb-1">Grade</label>
