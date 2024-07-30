@@ -42,18 +42,18 @@
         <div class="bg-white shadow p-4 rounded hover:bg-blue-700 hover:text-white flex items-center justify-between">
             <div class="w-full">
                 <div class="font-bold">Grade {{ $list->grade }} - {{ $list->strand }}</div>
-                <div class="mt-4">Section {{ $list->section }}</div>
+                <div class="mt-2">Section {{ $list->section }}</div>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex gap-3">
                 <a href="" title="Click to view">
-                    <i class="fas fa-eye"></i>
+                    <i class="text-sm fas fa-eye"></i>
                 </a>
                 <a href="{{ route('teacher.edit.grade_handle', $list->id) }}" title="Click to edit">
-                    <i class="fas fa-edit hover:text-green-400"></i>
+                    <i class="text-sm fas fa-edit hover:text-green-400"></i>
                 </a>
                 <button onclick="confirmDelete({{ $list->id }})" title="Click to edit">
-                    <i class="fas fa-trash hover:text-rose-400"></i>
+                    <i class="text-sm fas fa-trash hover:text-rose-400"></i>
                 </button>
                 <form id="delete-form-{{ $list->id }}" action="{{ route('teacher.delete.grade_handle') }}" method="POST" style="display: none;">
                     @csrf
