@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Add Grade Handle</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form action="" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form action="{{ route('teacher.submit.add_grade_handle') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">

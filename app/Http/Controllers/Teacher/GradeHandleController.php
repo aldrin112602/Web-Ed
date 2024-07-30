@@ -54,4 +54,38 @@ class GradeHandleController extends Controller
 
         return redirect()->route('teacher.dashboard')->with('success', 'Grade handle deleted successfully');
     }
+
+
+
+
+    public function submitAddHandleGrade(Request $request)
+    {
+        $validatedData = $request->validate(
+            [
+                'grade' => 'required|integer',
+                'section' => 'required|string|max:255',
+                'strand' => 'required|string|max:255'
+            ]
+        );
+
+
+        $user = Auth::user();
+
+        $teacherGradeHandle = new TeacherGradeHandle($validatedData);
+        $teacherGradeHandle->teacher_id = $user->id;
+        $teacherGradeHandle->save();
+
+        return redirect()->route('teacher.dashboard')->with('success', "Grade handle added successfully");
+    }
+
+
+
+    public function viewAddHandleGrade()
+    {
+        $user = Auth::user();
+        return view(
+            'teacher.grade_handle.add_grade_handle',
+            ['user' => $user]
+        );
+    }
 }

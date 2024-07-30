@@ -41,8 +41,8 @@ Route::prefix('teacher')->group(function () {
 
         // grade handle
         // Grade handle routes
-        // Route::get('grade_handle/add/{id}', [AccountManagement::class, 'viewAddHandleGrade'])->name('teacher.view.add_grade_handle');
-        // Route::post('grade_handle/add/{id}', [AccountManagement::class, 'submitAddHandleGrade'])->name('admin.submit.add_grade_handle');
+        Route::get('grade_handle/add', [GradeHandleController::class, 'viewAddHandleGrade'])->name('teacher.view.add_grade_handle');
+        Route::post('grade_handle/add', [GradeHandleController::class, 'submitAddHandleGrade'])->name('teacher.submit.add_grade_handle');
 
         Route::get('grade_handle/edit/{id}', [GradeHandleController::class, 'viewUpdateGradeHandle'])->name('teacher.edit.grade_handle');
 

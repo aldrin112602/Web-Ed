@@ -28,7 +28,7 @@
 
     <div class="flex align-center justify-between mb-4">
         <h1 class="font-bold">Grade handles</h1>
-        <a href="" class="px-3 py-1 text-sm bg-blue-900 text-white rounded-lg"><i class="fas fa-plus"></i> Add</a>
+        <a href="{{ route('teacher.view.add_grade_handle') }}" class="px-3 py-1 text-sm bg-blue-900 text-white rounded-lg"><i class="fas fa-plus"></i> Add</a>
     </div>
 
     @if($handleSubjects->isEmpty())
