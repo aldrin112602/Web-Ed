@@ -6,19 +6,19 @@
 <div class="container mx-auto p-4 text-slate-700">
     <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-white shadow p-4 rounded">
+        <div class="bg-white hover:bg-blue-900 hover:text-white shadow p-4 rounded">
             <div class="text-2xl font-bold">{{ $allStudentsCount }}</div>
             <div>Total number of students</div>
         </div>
-        <div class="bg-white shadow p-4 rounded">
+        <div class="bg-white hover:bg-blue-900 hover:text-white shadow p-4 rounded">
             <div class="text-2xl font-bold">0</div>
             <div>Late Arrival</div>
         </div>
-        <div class="bg-white shadow p-4 rounded">
+        <div class="bg-white hover:bg-blue-900 hover:text-white shadow p-4 rounded">
             <div class="text-2xl font-bold">0</div>
             <div>Absent</div>
         </div>
-        <div class="bg-white shadow p-4 rounded">
+        <div class="bg-white hover:bg-blue-900 hover:text-white shadow p-4 rounded">
             <div class="text-2xl font-bold">0</div>
             <div>Present</div>
         </div>
