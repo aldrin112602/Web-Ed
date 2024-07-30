@@ -39,14 +39,21 @@
     @else
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($handleSubjects as $list)
-        <a href="" class="bg-white shadow p-4 rounded hover:cursor-pointer hover:bg-blue-700 hover:text-white flex items-center justify-between">
-            <div class="w-full" title="Click to view subjects">
+        <div class="bg-white shadow p-4 rounded hover:cursor-pointer hover:bg-blue-700 hover:text-white flex items-center justify-between">
+            <div class="w-full">
                 <div class="font-bold">Grade {{ $list->grade }} - {{ $list->strand }}</div>
                 <div>Section {{ $list->section }}</div>
             </div>
 
-            <i class="fas fa-eye"></i>
-        </a>
+            <div class="flex gap-2">
+                <a href="" title="Click to view">
+                    <i class="fas fa-eye"></i>
+                </a>
+                <a href="" title="Click to edit">
+                    <i class="fas fa-edit"></i>
+                </a>
+            </div>
+        </div>
         @endforeach
     </div>
     @endif
