@@ -43,4 +43,17 @@ class GradeHandleController extends Controller
 
         return redirect()->route('admin.view.grade_handle', ['id' => $grade_handle->teacher_id])->with('success', "Grade handle updated successfully");
     }
+
+    public function deleteGradeHandle(Request $request)
+    {
+        $grade_handle = TeacherGradeHandle::find($request->id);
+        if (!$grade_handle) {
+            return redirect()->route('admin.teacher_list')->with('error', 'Error: Data not found.');
+        }
+
+        $teacher_id = $grade_handle->teacher_id;
+        $grade_handle->delete();
+
+        return redirect()->route('admin.view.grade_handle', ['id' => $teacher_id])->with('success', 'Grade handle deleted successfully');
+    }
 }
