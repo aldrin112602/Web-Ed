@@ -6,7 +6,7 @@ use App\Http\Controllers\Teacher\TeacherOtpController;
 use App\Http\Controllers\Teacher\TeacherConversationController;
 use App\Http\Controllers\Teacher\SubjectController as Subject;
 use App\Http\Controllers\Admin\ExcelController;
-
+use App\Http\Controllers\Teacher\GradeHandleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +38,17 @@ Route::prefix('teacher')->group(function () {
     Route::middleware('auth:teacher')->group(function () {
         // Add teacher-specific routes here
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
+
+        // grade handle
+        // Grade handle routes
+        // Route::get('grade_handle/add/{id}', [AccountManagement::class, 'viewAddHandleGrade'])->name('teacher.view.add_grade_handle');
+        // Route::post('grade_handle/add/{id}', [AccountManagement::class, 'submitAddHandleGrade'])->name('admin.submit.add_grade_handle');
+
+        Route::get('grade_handle/edit/{id}', [GradeHandleController::class, 'viewUpdateGradeHandle'])->name('teacher.edit.grade_handle');
+
+        Route::put('grade_handle/update/{id}', [GradeHandleController::class, 'updateGradeHandle'])->name('teacher.update.grade_handle');
+        
+        Route::delete('grade_handle/delete', [GradeHandleController::class, 'deleteGradeHandle'])->name('teacher.delete.grade_handle');
 
 
         // subject list
@@ -79,7 +90,5 @@ Route::prefix('teacher')->group(function () {
         Route::prefix('export')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportTeacherSubjectList'])->name('teacher.export.subject');
         });
-
-
     });
 });

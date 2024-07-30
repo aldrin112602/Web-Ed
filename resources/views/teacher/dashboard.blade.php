@@ -39,19 +39,27 @@
     @else
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($handleSubjects as $list)
-        <div class="bg-white shadow p-4 rounded hover:cursor-pointer hover:bg-blue-700 hover:text-white flex items-center justify-between">
+        <div class="bg-white shadow p-4 rounded hover:bg-blue-700 hover:text-white flex items-center justify-between">
             <div class="w-full">
                 <div class="font-bold">Grade {{ $list->grade }} - {{ $list->strand }}</div>
-                <div>Section {{ $list->section }}</div>
+                <div class="mt-4">Section {{ $list->section }}</div>
             </div>
 
             <div class="flex gap-2">
                 <a href="" title="Click to view">
                     <i class="fas fa-eye"></i>
                 </a>
-                <a href="" title="Click to edit">
-                    <i class="fas fa-edit"></i>
+                <a href="{{ route('teacher.edit.grade_handle', $list->id) }}" title="Click to edit">
+                    <i class="fas fa-edit hover:text-green-400"></i>
                 </a>
+                <button onclick="confirmDelete({{ $list->id }})" title="Click to edit">
+                    <i class="fas fa-trash hover:text-rose-400"></i>
+                </button>
+                <form id="delete-form-{{ $list->id }}" action="{{ route('teacher.delete.grade_handle') }}" method="POST" style="display: none;">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="id" value="{{ $list->id }}">
+                </form>
             </div>
         </div>
         @endforeach
