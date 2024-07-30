@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use App\Models\Admin\SubjectModel;
+use App\Models\TeacherGradeHandle;
 
 class TeacherController extends Controller
 {
@@ -62,14 +63,14 @@ class TeacherController extends Controller
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
-            $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
             $allStudentsCount = $this->countStudents();
 
             return view(
                 'teacher.dashboard',
                 [
                     'user' => $user,
-                    'allSubjects' => $allSubjects,
+                    'handleSubjects' => $handleSubjects,
                     "allStudentsCount" => $allStudentsCount
                 ]
             );

@@ -73,7 +73,7 @@
                 </li>
             </ul>
         </div>
-        <div class="block md:flex h-screen items-start justify-start">
+        <div class="block md:flex min-h-screen items-start justify-start">
             <!-- sidebar -->
             <div class="hidden md:block  p-4 bg-white shadow border-r" style="height: 100%; min-width: 280px">
                 <div class="p-3 flex items-center justify-start gap-3">

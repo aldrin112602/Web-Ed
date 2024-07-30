@@ -24,18 +24,27 @@
         </div>
     </div>
 
-    <div class="bg-blue-500 text-white p-4 rounded my-4">
-        Grade {{$user->grade_handle}}
+    <hr class="my-6">
+
+    <div class="flex align-center justify-between mb-4">
+        <h1 class="font-bold">Grade handles</h1>
+        <a href="" class="px-3 py-1 text-sm bg-blue-900 text-white rounded-lg"><i class="fas fa-plus"></i> Add</a>
     </div>
 
+    @if($handleSubjects->isEmpty())
+    <div class="bg-white shadow p-4 rounded text-center">
+        <div class="text-xl font-bold">No Grade Handles Found</div>
+        <div>There are no grade handles to display at this time.</div>
+    </div>
+    @else
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        @foreach ($allSubjects as $subject)
-        <div class="bg-white shadow p-4 rounded">
-            <div class="font-bold">{{ $subject->subject }}</div> 
-            <div>{{ $subject->time }} {{ strtoupper($subject->day) }}</div>
+        @foreach ($handleSubjects as $list)
+        <div class="bg-white shadow p-4 rounded hover:cursor-pointer hover:bg-blue-700 hover:text-white">
+            <div class="font-bold">Grade {{ $list->grade }} - {{ $list->strand }}</div>
+            <div>Section {{ $list->section }}</div>
         </div>
         @endforeach
     </div>
-
+    @endif
 </div>
 @endsection
