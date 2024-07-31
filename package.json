@@ -4,7 +4,10 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "push": "push.bat"
+        "push": "push.bat",
+        "serve": "php artisan serve",
+        "seed": "php artisan db:seed",
+        "migrate": "php artisan migrate"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",

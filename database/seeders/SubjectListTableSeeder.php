@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\Admin\SubjectModel as Subject;
 use App\Models\Teacher\TeacherAccount as Teacher;
+use App\Models\TeacherGradeHandle as ModelsTeacherGradeHandle;
+
 
 class SubjectListTableSeeder extends Seeder
 {
@@ -25,6 +27,7 @@ class SubjectListTableSeeder extends Seeder
 
         foreach (range(1, 20) as $index) {
             $teacher = Teacher::inRandomOrder()->first();
+            $gradeHandle = ModelsTeacherGradeHandle::inRandomOrder()->first();
             $startHour = $faker->numberBetween(7, 15); 
             $startMinutes = $faker->randomElement(['00', '30']);
             $endHour = $startHour + $faker->numberBetween(1, 3);
@@ -44,6 +47,7 @@ class SubjectListTableSeeder extends Seeder
                 'subject' => $faker->randomElement($subjects),
                 'day' => $faker->randomElement(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']),
                 'teacher_id' => $teacher->id,
+                'grade_handle_id' => $gradeHandle->id,
                 'time' => "$startTime - $endTime"
             ]);
         }

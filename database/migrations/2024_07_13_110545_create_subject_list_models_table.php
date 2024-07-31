@@ -15,13 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('subject')->nullable();
             $table->string('day')->nullable();
+            $table->unsignedBigInteger('grade_handle_id')->nullable();
             $table->unsignedBigInteger('teacher_id')->nullable();
             $table->string('time')->nullable();
             $table->timestamps();
-
-
-            // Add the foreign key constraint
-            $table->foreign('teacher_id')->references('id')->on('teacher_accounts')->onDelete('set null');
         });
     }
 
