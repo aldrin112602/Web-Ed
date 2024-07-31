@@ -90,8 +90,26 @@
                     <a href="{{ route('teacher.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
 
-                <div class="p-3 {{ request()->is('teacher/my_subjects') || request()->is('teacher/subject_list') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('teacher.subjects') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-list"></i>My Subjects</a>
+                <div class="p-3 {{ (request()->is('admin/create/admin') || request()->is('admin/create/teacher') || request()->is('admin/create/guidance') || request()->is('admin/create/student') || request()->is('admin/account_management/admin_list') || request()->is('admin/account_management/student_list') || request()->is('admin/account_management/guidance_list') || request()->is('admin/account_management/teacher_list')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <div class="relative inline-block text-left w-full">
+                        <div class="w-full">
+                            <button type="button" class="text-sm flex items-center justify-start gap-3 w-full" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                <i class="fa-solid fa-list"></i>
+                                My Subjects
+                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                            <div role="none">
+                                @foreach ($handleSubjects as $gradeHandle)
+                                <a href="{{ route('teacher.subject_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="hover:bg-blue-50 hover:text-blue-500 text-gray-700 block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="p-3 {{ request()->is('teacher/my_students') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">

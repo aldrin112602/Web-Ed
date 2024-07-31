@@ -13,10 +13,12 @@ class GradeHandleController extends Controller
     {
         $user = Auth::user();
         $grade_handle = TeacherGradeHandle::where('id', $id)->first();
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
         return view('teacher.grade_handle.edit_grade_handle', [
             'grade_handle' => $grade_handle,
             'user' => $user,
-            'id' => $id
+            'id' => $id,
+            'handleSubjects' => $handleSubjects
         ]);
     }
 
@@ -83,9 +85,10 @@ class GradeHandleController extends Controller
     public function viewAddHandleGrade()
     {
         $user = Auth::user();
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
         return view(
             'teacher.grade_handle.add_grade_handle',
-            ['user' => $user]
+            ['user' => $user, 'handleSubjects' => $handleSubjects]
         );
     }
 }

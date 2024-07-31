@@ -17,7 +17,8 @@ class SubjectController extends Controller
             $user = Auth::guard('teacher')->user();
             $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
             // $allStudentsCount = $this->countStudents();
-            return view('teacher.subject.index', ['user' => $user, 'allSubjects' => $allSubjects, "allStudentsCount" => 0]);
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+            return view('teacher.subject.index', ['user' => $user, 'allSubjects' => $allSubjects, "allStudentsCount" => 0, "handleSubjects" => $handleSubjects]);
         }
 
         return redirect()->route('teacher.login');
@@ -34,17 +35,17 @@ class SubjectController extends Controller
                 return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
             }
 
-            $subject_list = SubjectModel::where('teacher_id', $user->id)
-                ->where('grade_handle_id', $id)
-                ->paginate(10);
+            $subject_list = SubjectModel::where('teacher_id', $user->id)->where('grade_handle_id', $id)->paginate(10);
 
             $grade_handle = TeacherGradeHandle::find($id);
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
 
             return view('teacher.subject.subject_list', [
                 'user' => $user,
                 'subject_list' => $subject_list,
                 'id' => $id,
-                'grade_handle' => $grade_handle
+                'grade_handle' => $grade_handle,
+                'handleSubjects' => $handleSubjects
             ]);
         }
 
@@ -73,7 +74,9 @@ class SubjectController extends Controller
                 return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
             }
 
-            return view('teacher.subject.create', ['user' => $user, 'id' => $id]);
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+
+            return view('teacher.subject.create', ['user' => $user, 'id' => $id, 'handleSubjects' => $handleSubjects]);
         }
 
         return redirect()->route('teacher.login');

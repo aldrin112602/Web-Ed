@@ -89,22 +89,12 @@ class TeacherController extends Controller
     }
 
 
-
-    public function home()
-    {
-        if (Auth::guard('teacher')->check()) {
-            $user = Auth::guard('teacher')->user();
-            return view('teacher.home', ['user' => $user]);
-        }
-
-        return redirect()->route('teacher.login');
-    }
-
     public function profile()
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
-            return view('teacher.profile.profile', ['user' => $user]);
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+            return view('teacher.profile.profile', ['user' => $user, 'handleSubjects' => $handleSubjects]);
         }
 
         return redirect()->route('teacher.login');
