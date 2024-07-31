@@ -90,7 +90,7 @@
                     <a href="{{ route('teacher.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
 
-                <div class="p-3 {{ request()->is('teacher/my_subjects') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                <div class="p-3 {{ request()->is('teacher/my_subjects') || request()->is('teacher/subject_list') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('teacher.subjects') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-list"></i>My Subjects</a>
                 </div>
 
