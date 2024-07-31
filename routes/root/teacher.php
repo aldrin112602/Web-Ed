@@ -52,7 +52,8 @@ Route::prefix('teacher')->group(function () {
 
 
         // subject list
-        Route::get('subject_list', [Subject::class, 'subjectList'])->name('teacher.subject_list');
+        Route::get('/subject_list', [Subject::class, 'subjectList'])->name('teacher.subject_list');
+
 
         // Subject
         Route::get('/my_subjects', [Subject::class, 'index'])->name('teacher.subjects');

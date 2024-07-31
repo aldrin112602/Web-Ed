@@ -64,14 +64,14 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
             $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
-            $allStudentsCount = $this->countStudents();
+            // $allStudentsCount = $this->countStudents() ?? 0;
 
             return view(
                 'teacher.dashboard',
                 [
                     'user' => $user,
                     'handleSubjects' => $handleSubjects,
-                    "allStudentsCount" => $allStudentsCount
+                    "allStudentsCount" => 0
                 ]
             );
         }

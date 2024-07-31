@@ -46,9 +46,11 @@
             </div>
 
             <div class="flex gap-3">
-                <a href="" title="Click to view">
+                <a href="{{ route('teacher.subject_list', ['id' => $list->id])}}" title="Click to view">
                     <i class="text-sm fas fa-eye"></i>
                 </a>
+
+
                 <a href="{{ route('teacher.edit.grade_handle', $list->id) }}" title="Click to edit">
                     <i class="text-sm fas fa-edit hover:text-green-400"></i>
                 </a>

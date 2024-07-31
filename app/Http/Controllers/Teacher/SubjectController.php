@@ -15,8 +15,8 @@ class SubjectController extends Controller
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
             $allSubjects = SubjectModel::where('teacher_id', $user->id)->get();
-            $allStudentsCount = $this->countStudents();
-            return view('teacher.subject.index', ['user' => $user, 'allSubjects' => $allSubjects, "allStudentsCount" => $allStudentsCount]);
+            // $allStudentsCount = $this->countStudents();
+            return view('teacher.subject.index', ['user' => $user, 'allSubjects' => $allSubjects, "allStudentsCount" => 0]);
         }
 
         return redirect()->route('teacher.login');
@@ -27,14 +27,28 @@ class SubjectController extends Controller
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
-            $query = SubjectModel::where('teacher_id', $user->id);
-
-            $subject_list = $query->paginate(5);
-            return view('teacher.subject.subject_list', ['user' => $user, 'subject_list' => $subject_list]);
+    
+            $query = request()->query('id');
+    
+            if (!$query) {
+                return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
+            }
+            $query = SubjectModel::where('teacher_id', $user->id)
+                                 ->where('grade_handle_id', $query);
+    
+            $subject_list = $query->paginate(10);
+    
+            return view('teacher.subject.subject_list', [
+                'user' => $user,
+                'subject_list' => $subject_list
+            ]);
         }
-
+    
         return redirect()->route('teacher.login');
     }
+    
+
+
 
 
     public function countStudents()
@@ -178,7 +192,7 @@ class SubjectController extends Controller
 
             $request->validate([
                 'subject' => 'required',
-                'time' => 'required', 
+                'time' => 'required',
                 'day' => 'required'
             ]);
 
