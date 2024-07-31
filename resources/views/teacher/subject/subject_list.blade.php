@@ -89,11 +89,7 @@
             <div class="text-xl font-bold">No Subjects Found</div>
             <div>There are no subjects to display at this time.</div>
         </div>
-        <div style="min-height: 380px;" class="bg-white flex items-start justify-center">
-            <a href="{{ route('teacher.create.subject', ['id' => $id]) }}">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM1zuIzhqqgnFPMdrXCxhCy0WXhr_YunLdAw&s" alt="" class="mx-auto opacity-20 hover:opacity-100" width="100px">
-            </a>
-        </div>
+        
         @endif
     </div>
     <form id="deleteSelectedForm" action="{{ route('delete.selected.subjects') }}" method="POST" style="display: none;">
