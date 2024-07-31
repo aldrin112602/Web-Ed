@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('teacher.layouts.app')
 
 @section('title', 'Add Grade Handle')
 @section('content')

@@ -4,7 +4,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "push": "git pull && git add . && git commit -m Updated && git push",
+        "push": "git add . && git commit -m Updated && git push",
         "serve": "php artisan serve",
         "seed": "php artisan db:seed",
         "migrate": "php artisan migrate"
