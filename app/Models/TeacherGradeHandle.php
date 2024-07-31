@@ -9,6 +9,11 @@ class TeacherGradeHandle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['teacher_id', 'grade', 'strand', 'section'];
+    protected $fillable = [
+        'teacher_id', 
+        'grade', 
+        'strand', 
+        'section'
+    ];
 
 }

@@ -32,10 +32,16 @@
     </div>
 
     @if($handleSubjects->isEmpty())
-    <div class="bg-white shadow p-4 rounded text-center">
+    <div class="bg-white p-4 rounded text-center">
         <div class="text-xl font-bold">No Grade Handles Found</div>
         <div>There are no grade handles to display at this time.</div>
     </div>
+
+    <div style="min-height: 330px;" class="bg-white flex items-start justify-center">
+            <a href="{{ route('teacher.view.add_grade_handle') }}">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM1zuIzhqqgnFPMdrXCxhCy0WXhr_YunLdAw&s" alt="" class="mx-auto opacity-20 hover:opacity-100" width="100px">
+            </a>
+        </div>
     @else
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($handleSubjects as $list)

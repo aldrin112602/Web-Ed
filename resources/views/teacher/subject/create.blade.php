@@ -4,9 +4,10 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Subject</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form enctype="multipart/form-data" action="{{ route('teacher.create.subject') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form action="{{ route('teacher.create.subject') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
 
+        <input type="hidden" value="{{ $id }}" name="_id">
         <div class="w-full">
             <label for="subject" class="block text-gray-700 mt-2 text-sm mb-1">Subject</label>
             <input type="text" id="subject" name="subject" class="form-input w-full rounded border-gray-300 @error('subject') border-red-500 @enderror" value="{{ old('subject') }}">

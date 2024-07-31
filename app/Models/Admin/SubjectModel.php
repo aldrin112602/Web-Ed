@@ -17,7 +17,8 @@ class SubjectModel extends Authenticatable
         'subject',
         'teacher_id',
         'time',
-        'day'
+        'day',
+        'grade_handle_id'
     ];
 
     public function teacherAccount()

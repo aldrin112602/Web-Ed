@@ -67,7 +67,13 @@ class SubjectController extends Controller
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
-            return view('teacher.subject.create', ['user' => $user]);
+            $id = request()->query('id');
+
+            if (!$id || !TeacherGradeHandle::find($id)) {
+                return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
+            }
+
+            return view('teacher.subject.create', ['user' => $user, 'id' => $id]);
         }
 
         return redirect()->route('teacher.login');
@@ -84,15 +90,18 @@ class SubjectController extends Controller
             'time_end' => 'required',
         ]);
 
+
         $auth_user = Auth::user();
 
         $time_start_12hr = $this->convertTo12HourFormat($request->time_start);
         $time_end_12hr = $this->convertTo12HourFormat($request->time_end);
 
+
         $subject = new SubjectModel([
             'subject' => $request->subject,
             'day' => $request->day,
             'teacher_id' => $auth_user->id,
+            'grade_handle_id' => $request->_id,
             'time' => $time_start_12hr . ' - ' . $time_end_12hr
         ]);
         $subject->save();
@@ -108,7 +117,7 @@ class SubjectController extends Controller
         );
 
 
-        return redirect()->route('teacher.subject_list')->with('success', 'Subject created successfully');
+        return redirect()->route('teacher.subject_list', ['id' => $request->_id])->with('success', 'Subject created successfully');
     }
 
     // Helper function
