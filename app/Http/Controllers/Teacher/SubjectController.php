@@ -135,7 +135,7 @@ class SubjectController extends Controller
 
 
 
-    public function deleteSubject($id)
+    public function deleteSubject(Request $request, $id)
     {
         if (Auth::guard('teacher')->check()) {
             $subject = SubjectModel::findOrFail($id);
@@ -153,7 +153,7 @@ class SubjectController extends Controller
 
             $subject->delete();
 
-            return redirect()->route('teacher.subject_list')->with('success', 'Subject deleted successfully');
+            return redirect()->route('teacher.subject_list', ['id' => $request->id])->with('success', 'Subject deleted successfully');
         }
 
 
@@ -179,7 +179,7 @@ class SubjectController extends Controller
             ]
         );
 
-        return redirect()->route('teacher.subject_list')->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
+        return redirect()->route('teacher.subject_list', ['id' => $request->id])->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
     }
 
 

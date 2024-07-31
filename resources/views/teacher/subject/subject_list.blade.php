@@ -72,6 +72,7 @@
                             <form id="delete-form-{{ $list->id }}" action="{{ route('teacher.delete.subject', $list->id) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
+                                <input name="id" type="hidden" value="{{ $id }}">
                             </form>
                         </td>
                     </tr>
@@ -99,6 +100,7 @@
         @csrf
         @method('DELETE')
         <input type="hidden" name="selected_ids" id="selected_ids">
+        <input name="id" type="hidden" value="{{ $id }}">
     </form>
 </div>
 @endsection
