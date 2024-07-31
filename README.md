@@ -65,7 +65,7 @@ php artisan storage:link
 
 1. Start PHP server (first terminal):
    ```bash
-   php artisan serve
+   npm run serve
    ```
 
 2. Compile assets with Node.js (second terminal):
@@ -81,7 +81,7 @@ Ensure Apache and MySQL are running in XAMPP.
 
 Run migrations to set up your database:
 ```bash
-php artisan migrate
+npm run migrate
 ```
 
 ### Run the Seeder
@@ -89,5 +89,5 @@ php artisan migrate
 Run the seeder to populate the database with the new data:
 
 ```bash
-php artisan db:seed
+npm run seed
 ```
