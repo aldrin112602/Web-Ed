@@ -15,13 +15,15 @@
                     </div>
                 </form>
             </div>
-            <a href="{{ route('teacher.create.subject') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Subject</a>
+            <a href="{{ route('teacher.create.subject', ['id' => $id]) }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Subject</a>
         </div>
 
         <hr class="my-3">
 
         <div class="flex items-center justify-between">
-            <h1 class="font-semibold text-slate-600">SUBJECT LIST</h1>
+            <h1 class="font-semibold text-slate-600">
+                Grade {{ $grade_handle->grade }} / {{ $grade_handle->strand }} / Section {{ $grade_handle->section }}
+            </h1>
             <div class="flex gap-2">
                 <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-trash"></i>
@@ -82,7 +84,15 @@
             {{ $subject_list->appends(request()->query())->links() }}
         </div>
         @else
-        <p>No records found.</p>
+        <div class="bg-white shadow p-4 rounded text-center">
+            <div class="text-xl font-bold">No Subjects Found</div>
+            <div>There are no subjects to display at this time.</div>
+        </div>
+        <div style="min-height: 400px;" class="bg-white flex items-start justify-center">
+            <a href="{{ route('teacher.create.subject', ['id' => $id]) }}">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM1zuIzhqqgnFPMdrXCxhCy0WXhr_YunLdAw&s" alt="" class="mx-auto opacity-20 hover:opacity-100" width="100px">
+            </a>
+        </div>
         @endif
     </div>
     <form id="deleteSelectedForm" action="{{ route('delete.selected.subjects') }}" method="POST" style="display: none;">

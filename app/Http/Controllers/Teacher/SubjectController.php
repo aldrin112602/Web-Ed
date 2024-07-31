@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\SubjectModel;
 use App\Models\History;
+use App\Models\TeacherGradeHandle;
 
 class SubjectController extends Controller
 {
@@ -27,26 +28,28 @@ class SubjectController extends Controller
     {
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
-    
-            $query = request()->query('id');
-    
-            if (!$query) {
+            $id = request()->query('id');
+
+            if (!$id || !TeacherGradeHandle::find($id)) {
                 return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
             }
-            $query = SubjectModel::where('teacher_id', $user->id)
-                                 ->where('grade_handle_id', $query);
-    
-            $subject_list = $query->paginate(10);
-    
+
+            $subject_list = SubjectModel::where('teacher_id', $user->id)
+                ->where('grade_handle_id', $id)
+                ->paginate(10);
+
+            $grade_handle = TeacherGradeHandle::find($id);
+
             return view('teacher.subject.subject_list', [
                 'user' => $user,
-                'subject_list' => $subject_list
+                'subject_list' => $subject_list,
+                'id' => $id,
+                'grade_handle' => $grade_handle
             ]);
         }
-    
+
         return redirect()->route('teacher.login');
     }
-    
 
 
 
