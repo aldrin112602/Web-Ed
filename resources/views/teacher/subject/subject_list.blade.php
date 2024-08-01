@@ -15,7 +15,10 @@
                     </div>
                 </form>
             </div>
+            <div class="flex gap-2">
+            <a href="{{ route('teacher.student_list', ['id' => $grade_handle->id])}}" class="px-4 py-2 bg-blue-900 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-list"></i> Student list</a>  
             <a href="{{ route('teacher.create.subject', ['id' => $id]) }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fas fa-plus"></i> Add Subject</a>
+            </div>
         </div>
 
         <hr class="my-3">
