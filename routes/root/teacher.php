@@ -7,6 +7,7 @@ use App\Http\Controllers\Teacher\TeacherConversationController;
 use App\Http\Controllers\Teacher\SubjectController as Subject;
 use App\Http\Controllers\Admin\ExcelController;
 use App\Http\Controllers\Teacher\GradeHandleController;
+use App\Http\Controllers\Teacher\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,8 @@ Route::prefix('teacher')->group(function () {
     Route::middleware('auth:teacher')->group(function () {
         // Add teacher-specific routes here
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
+
+        Route::get('/student_list', [StudentController::class, 'index'])->name('teacher.student_list');
 
         // grade handle
         // Grade handle routes

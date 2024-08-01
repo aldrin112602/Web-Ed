@@ -105,7 +105,7 @@
                         <td class="py-2 text-center border">
                             <a href="{{ route('admin.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                            <form id="delete-form-{{ $list->id }}" action="{{ route('teacher.delete.student', $list->id) }}" method="POST" style="display: none;">
+                            <form id="delete-form-{{ $list->id }}" action="" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
@@ -123,7 +123,7 @@
         <p>No records found.</p>
         @endif
     </div>
-    <form id="deleteSelectedForm" action="{{ route('teacher.delete.selected.students') }}" method="POST" style="display: none;">
+    <form id="deleteSelectedForm" action="" method="POST" style="display: none;">
         @csrf
         @method('DELETE')
         <input type="hidden" name="selected_ids" id="selected_ids">
