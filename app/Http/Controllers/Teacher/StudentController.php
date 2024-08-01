@@ -7,6 +7,7 @@ use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TeacherGradeHandle;
+use App\Models\Student\StudentAccount;
 
 class StudentController extends Controller
 {
@@ -16,13 +17,36 @@ class StudentController extends Controller
         $user = Auth::user();
         $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
 
-        $id = request()->query('id');
+        $id = $request->query('id');
+        \Log::info('Grade Handle ID:', ['id' => $id]);
 
         if (!$id || !TeacherGradeHandle::find($id)) {
             return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
         }
 
-        $account_list = StudentSubject::where('teacher_id', $user->id)->where('grade_handle_id', $id)->get();
+        $query = StudentAccount::query();
+
+        // Apply gender filter
+        if ($request->has('gender') && $request->gender != '' && $request->gender != 'All') {
+            $query->where('gender', $request->gender);
+        }
+
+        // Apply strand filter
+        if ($request->has('strand') && $request->strand != '' && $request->strand != 'All') {
+            $query->where('strand', $request->strand);
+        }
+
+        // Apply grade filter
+        if ($request->has('grade') && $request->grade != '' && $request->grade != 'All') {
+            $query->where('grade', $request->grade);
+        }
+
+        // Only get students taught by the teacher with the specified grade handle
+        $account_list = $query->whereHas('studentSubjects', function ($q) use ($user, $id) {
+            $q->where('teacher_id', $user->id)
+                ->where('grade_handle_id', $id);
+        })->paginate(10);
+
         $grade_handle = TeacherGradeHandle::find($id);
 
         return view('teacher.students.index', [
