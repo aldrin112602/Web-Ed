@@ -43,8 +43,8 @@
 
         <hr class="my-3">
 
-        <div class="flex items-center justify-between">
-            <h1 class="font-semibold text-slate-600">STUDENT LIST</h1>
+        <div class="block md:flex items-center justify-between">
+            <h1 class="font-semibold text-slate-600">GRADE {{ $grade_handle->grade }} - {{ $grade_handle->strand }} / SECTION {{ $grade_handle->section }} / STUDENT LIST</h1>
             <div class="flex gap-2">
                 <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-trash"></i>
@@ -120,7 +120,10 @@
             {{ $account_list->appends(request()->query())->links() }}
         </div>
         @else
-        <p>No records found.</p>
+        <div class="bg-white p-4 rounded text-center">
+            <div class="text-xl font-bold">No Students Found!</div>
+            <div>There are no students to display at this time.</div>
+        </div>  
         @endif
     </div>
     <form id="deleteSelectedForm" action="" method="POST" style="display: none;">

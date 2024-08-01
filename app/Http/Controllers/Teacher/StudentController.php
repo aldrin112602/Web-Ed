@@ -23,12 +23,14 @@ class StudentController extends Controller
         }
 
         $account_list = StudentSubject::where('teacher_id', $user->id)->where('grade_handle_id', $id)->get();
+        $grade_handle = TeacherGradeHandle::find($id);
 
         return view('teacher.students.index', [
             'user' => $user,
             'id' => $id,
             'handleSubjects' => $handleSubjects,
-            'account_list' => $account_list
+            'account_list' => $account_list,
+            'grade_handle' => $grade_handle
         ]);
     }
 }
