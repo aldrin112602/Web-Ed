@@ -19,18 +19,6 @@
                         <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
                         <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                     </select>
-                    <select name="strand" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
-                        <option value="All" {{ request()->get('strand') == 'All' ? 'selected' : '' }}>All</option>
-                        <option value="ABM" {{ request()->get('strand') == 'ABM' ? 'selected' : '' }}>ABM</option>
-                        <option value="ICT" {{ request()->get('strand') == 'ICT' ? 'selected' : '' }}>ICT</option>
-                        <option value="HUMSS" {{ request()->get('strand') == 'HUMSS' ? 'selected' : '' }}>HUMSS</option>
-                        <option value="HE" {{ request()->get('strand') == 'HE' ? 'selected' : '' }}>HE</option>
-                    </select>
-                    <select name="grade" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
-                        <option value="All" {{ request()->get('grade') == 'All' ? 'selected' : '' }}>All</option>
-                        <option value="11" {{ request()->get('grade') == '11' ? 'selected' : '' }}>Grade 11</option>
-                        <option value="12" {{ request()->get('grade') == '12' ? 'selected' : '' }}>Grade 12</option>
-                    </select>
                 </form>
 
             </div>

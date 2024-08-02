@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Message;
 use App\Models\StudentImage;
 use App\Models\Admin\SubjectModel;
+use App\Models\StudentHandle;
 use App\Models\StudentSubject;
 
 class StudentAccount extends Authenticatable
@@ -59,8 +60,8 @@ class StudentAccount extends Authenticatable
         return $this->belongsToMany(SubjectModel::class, 'student_subjects', 'student_id', 'subject_id');
     }
 
-    public function studentSubjects()
+    public function studentHandles()
     {
-        return $this->hasMany(StudentSubject::class, 'student_id');
+        return $this->hasMany(StudentHandle::class, 'student_id');
     }
 }

@@ -31,18 +31,9 @@ class StudentController extends Controller
             $query->where('gender', $request->gender);
         }
 
-        // Apply strand filter
-        if ($request->has('strand') && $request->strand != '' && $request->strand != 'All') {
-            $query->where('strand', $request->strand);
-        }
-
-        // Apply grade filter
-        if ($request->has('grade') && $request->grade != '' && $request->grade != 'All') {
-            $query->where('grade', $request->grade);
-        }
 
         // Only get students taught by the teacher with the specified grade handle
-        $account_list = $query->whereHas('studentSubjects', function ($q) use ($user, $id) {
+        $account_list = $query->whereHas('studentHandles', function ($q) use ($user, $id) {
             $q->where('teacher_id', $user->id)
                 ->where('grade_handle_id', $id);
         })->paginate(10);
