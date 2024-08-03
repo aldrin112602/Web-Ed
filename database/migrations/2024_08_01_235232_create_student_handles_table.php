@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('teacher_id');
             $table->unsignedBigInteger('grade_handle_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
 
             $table->foreign('student_id')->references('id')->on('student_accounts')->onDelete('cascade');
             $table->foreign('grade_handle_id')->references('id')->on('teacher_grade_handles')->onDelete('cascade');

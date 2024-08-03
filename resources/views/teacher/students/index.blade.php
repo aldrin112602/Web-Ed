@@ -22,9 +22,10 @@
                 </form>
 
             </div>
-            <a href="{{ route('admin.create.student') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
+            <button id="addStudentButton" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
                 <i class="fas fa-plus"></i>
-                Add Student</a>
+                Add Student
+            </button>
         </div>
 
         <hr class="my-3">
@@ -109,7 +110,7 @@
         <div class="bg-white p-4 rounded text-center">
             <div class="text-xl font-bold">No Students Found!</div>
             <div>There are no students to display at this time.</div>
-        </div>  
+        </div>
         @endif
     </div>
     <form id="deleteSelectedForm" action="" method="POST" style="display: none;">
@@ -117,6 +118,6 @@
         @method('DELETE')
         <input type="hidden" name="selected_ids" id="selected_ids">
     </form>
-
 </div>
+
 @endsection

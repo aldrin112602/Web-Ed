@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TeacherGradeHandle;
@@ -32,13 +31,21 @@ class StudentController extends Controller
         }
 
 
+        $grade_handle = TeacherGradeHandle::find($id);
+
+        $query->where('grade', $grade_handle->grade);
+        $query->where('strand', $grade_handle->strand);
+        $query->where('section', $grade_handle->section);
+
+
         // Only get students taught by the teacher with the specified grade handle
         $account_list = $query->whereHas('studentHandles', function ($q) use ($user, $id) {
-            $q->where('teacher_id', $user->id)
-                ->where('grade_handle_id', $id);
+            $q
+            ->where('teacher_id', $user->id)
+            ->where('grade_handle_id', $id);
         })->paginate(10);
 
-        $grade_handle = TeacherGradeHandle::find($id);
+        
 
         return view('teacher.students.index', [
             'user' => $user,
