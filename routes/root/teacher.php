@@ -42,6 +42,8 @@ Route::prefix('teacher')->group(function () {
 
         Route::get('/add_student', [Account::class, 'viewAddStudent'])->name('teacher.add.student');
 
+        Route::post('/add_student', [Account::class, 'submitAddStudent'])->name('teacher.submit.student');
+
 
 
 

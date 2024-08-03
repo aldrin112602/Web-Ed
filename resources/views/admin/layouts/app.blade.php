@@ -175,12 +175,12 @@
             </div>
             <!-- sidebar -->
             <!-- main content -->
-            <div class="h-full w-full" style="overflow-y: auto;">
+            <div class="h-screen w-full" style="overflow-y: auto;">
                 @yield('content')
             </div>
             <!-- main content -->
-        </div>
-    </main>
+                </div>
+            </main>
 
     <script>
         try {
