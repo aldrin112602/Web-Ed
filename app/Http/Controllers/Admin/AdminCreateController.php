@@ -173,6 +173,7 @@ class AdminCreateController extends Controller
             ->back()
             ->with('success', 'Account added successfully!');
     }
+    
 
     // View creates
     public function viewCreateAdmin()

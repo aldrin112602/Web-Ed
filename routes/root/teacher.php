@@ -8,6 +8,7 @@ use App\Http\Controllers\Teacher\SubjectController as Subject;
 use App\Http\Controllers\Admin\ExcelController;
 use App\Http\Controllers\Teacher\GradeHandleController;
 use App\Http\Controllers\Teacher\StudentController;
+use App\Http\Controllers\Teacher\Account;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,14 @@ Route::prefix('teacher')->group(function () {
 
 
     Route::middleware('auth:teacher')->group(function () {
+
+
+        Route::get('/add_student', [Account::class, 'viewAddStudent'])->name('teacher.add.student');
+
+
+
+
+
         // Add teacher-specific routes here
         Route::get('dashboard', [Teacher::class, 'dashboard'])->name('teacher.dashboard');
 

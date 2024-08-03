@@ -22,10 +22,10 @@
                 </form>
 
             </div>
-            <button id="addStudentButton" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
+            <a href="{{ route('teacher.add.student') }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
                 <i class="fas fa-plus"></i>
                 Add Student
-            </button>
+            </a>
         </div>
 
         <hr class="my-3">
