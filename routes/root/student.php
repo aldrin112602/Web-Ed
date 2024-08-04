@@ -6,16 +6,6 @@ use App\Http\Controllers\Student\StudentOtpController;
 use App\Http\Controllers\Student\StudentConversationController;
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-*/
-
-
 // Student routes
 Route::prefix('student')->group(function () {
     Route::get('login', [Student::class, 'login'])->name('student.login');
@@ -34,6 +24,10 @@ Route::prefix('student')->group(function () {
 
 
     Route::middleware('auth:student')->group(function () {
+        // attendance history
+        Route::get('attendance_history', [Student::class, 'attendanceHistory'])->name('student.attendance_history');
+
+
         // Add Student-specific routes here
         Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');
 

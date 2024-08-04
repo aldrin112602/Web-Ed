@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
+    public function attendanceHistory() {
+        $user = Auth::user();
+        return view('student.attendance_history', ['user' => $user]);
+    }
+    
     public function login()
     {
         if (Auth::guard('student')->check()) {
