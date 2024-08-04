@@ -27,17 +27,14 @@
                     <i class="fa-solid fa-check"></i>
                     Present
                 </a>
-                <a href="{{ route('teacher.add.student', ['id' => $id]) }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fas fa-plus"></i>
-                    Add Student
-                </a>
+                
             </div>
         </div>
 
         <hr class="my-3">
 
         <div class="block md:flex items-center justify-between">
-            <h1 class="font-semibold text-slate-600">GRADE {{ $grade_handle->grade }} - {{ $grade_handle->strand }} / SECTION {{ $grade_handle->section }} / STUDENT LIST</h1>
+            <h1 class="font-semibold text-slate-600">GRADE {{ $grade_handle->grade }} - {{ $grade_handle->strand }} / SECTION {{ $grade_handle->section }} / ABSENT LIST</h1>
             <div class="flex gap-2">
                 <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-trash"></i>
