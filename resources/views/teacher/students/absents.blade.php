@@ -23,7 +23,7 @@
 
             </div>
             <div class="flex items-center justify-end gap-3">
-                <a href="{{ route('teacher.add.student', ['id' => $id]) }}" class="px-4 py-2 bg-purple-800 text-white rounded-md flex items-center justify-center gap-3">
+                <a href="{{ route('teacher.attendance.presents', ['id' => $id]) }}" class="px-4 py-2 bg-purple-800 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-check"></i>
                     Present
                 </a>
