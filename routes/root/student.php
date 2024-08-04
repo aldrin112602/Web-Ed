@@ -27,6 +27,9 @@ Route::prefix('student')->group(function () {
         // attendance history
         Route::get('attendance_history', [Student::class, 'attendanceHistory'])->name('student.attendance_history');
 
+        // enrolled subjects
+        Route::get('enrolled_subjects', [Student::class, 'enrolledSubjects'])->name('student.enrolled_subjects');
+
 
         // Add Student-specific routes here
         Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');

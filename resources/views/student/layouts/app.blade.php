@@ -97,7 +97,7 @@
 
 
                 <div class="p-3 {{ request()->is('student/enrolled_subjects') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-file-circle-check"></i>Enrolled Subjects</a>
+                    <a href="{{ route('student.enrolled_subjects') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-file-circle-check"></i>Enrolled Subjects</a>
                 </div>
 
 

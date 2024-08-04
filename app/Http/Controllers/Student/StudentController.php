@@ -17,6 +17,11 @@ class StudentController extends Controller
         $user = Auth::user();
         return view('student.attendance_history', ['user' => $user]);
     }
+
+    public function enrolledSubjects() {
+        $user = Auth::user();
+        return view('student.enrolled_subjects', ['user' => $user]);
+    }
     
     public function login()
     {
