@@ -1,6 +1,6 @@
 @extends('teacher.layouts.app')
 
-@section('title', 'Student List')
+@section('title', 'Absents List')
 @section('content')
 <div>
     <div class="container mx-auto p-4 bg-white">
@@ -23,13 +23,9 @@
 
             </div>
             <div class="flex items-center justify-end gap-3">
-                <a href="{{ route('teacher.attendance.presents', ['id' => $id]) }}" class="px-4 py-2 bg-purple-800 text-white rounded-md flex items-center justify-center gap-3">
+                <a href="{{ route('teacher.add.student', ['id' => $id]) }}" class="px-4 py-2 bg-purple-800 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-check"></i>
                     Present
-                </a>
-                <a href="{{ route('teacher.attendance.absents', ['id' => $id]) }}" class="px-4 py-2 bg-rose-500 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-xmark"></i>
-                    Absent
                 </a>
                 <a href="{{ route('teacher.add.student', ['id' => $id]) }}" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fas fa-plus"></i>
