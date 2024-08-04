@@ -12,6 +12,8 @@ use App\Models\Guidance\GuidanceAccount as Guidance;
 use App\Models\Admin\SubjectModel as Subject;
 use App\Models\History;
 use Illuminate\Support\Facades\Auth;
+use App\Models\StudentHandle;
+use App\Models\StudentImage;
 
 class deleteSelected extends Controller
 {
@@ -21,6 +23,9 @@ class deleteSelected extends Controller
         $idsArray = explode(',', $ids);
 
         Student::whereIn('id', $idsArray)->delete();
+        StudentHandle::whereIn('student_id', $idsArray)->delete();
+        StudentImage::whereIn('student_id', $idsArray)->delete();
+        
         $auth_user = Auth::user();
         History::create(
             [

@@ -10,10 +10,81 @@ use App\Models\StudentImage;
 use App\Rules\TwoWords;
 use App\Models\Student\StudentAccount;
 use App\Models\History;
+use App\Models\StudentHandle;
 
 
 class Account extends Controller
 {
+    public function deleteStudentAccount(Request $request)
+    {
+        $id = request()->query('id');
+        
+        if (!$id || !TeacherGradeHandle::find($id)) {
+            return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
+        }
+
+        $auth_user = Auth::user();
+
+        // delete student account and student handle
+        StudentAccount::where('id', $request->id)->delete();
+        StudentHandle::where('student_id', $request->id)->delete();
+        StudentImage::where('student_id', $request->id)->delete();
+
+        // create history
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted student account",
+                'description' => "Deleted id: $request->id"
+            ]
+        );
+
+        return redirect()->route(
+            'teacher.student_list',
+            [
+                'id' => $id
+            ]
+        )->with('success', 'Account deleted successfully');
+    }
+    
+    public function deleteSelectedStudents(Request $request)
+    {
+        $id = request()->query('id');
+        if (!$id || !TeacherGradeHandle::find($id)) {
+            return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
+        }
+
+
+        $ids = $request->input('selected_ids');
+        $idsArray = explode(',', $ids);
+        $auth_user = Auth::user();
+
+        // delete student account and student handle
+        StudentAccount::whereIn('id', $idsArray)->delete();
+        StudentHandle::whereIn('student_id', $idsArray)->delete();
+        StudentImage::whereIn('student_id', $idsArray)->delete();
+
+        // create history
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Deleted all selected students account",
+                'description' => "Deleted ids: $ids"
+            ]
+        );
+
+        return redirect()->route(
+            'teacher.student_list',
+            [
+                'id' => $id
+            ]
+        )->with('success', 'Selected row' . (count($idsArray) == 1 ? '' : 's') . ' have been deleted!');
+    }
+
+
+
     public function viewAddStudent()
     {
         $user = Auth::user();
@@ -47,6 +118,13 @@ class Account extends Controller
             'face_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
 
+
+        $id = request()->query('id');
+        if (!$id || !TeacherGradeHandle::find($id)) {
+            return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
+        }
+        $grade_handle = TeacherGradeHandle::find($id);
+
         $account = new StudentAccount($request->all());
 
         $profilePath = $request->file('profile')->store('profiles', 'public');
@@ -74,8 +152,14 @@ class Account extends Controller
             ]
         );
 
+        StudentHandle::create([
+            'student_id' => $account->id,
+            'teacher_id' => $auth_user->id,
+            'grade_handle_id' => $grade_handle->id
+        ]);
+
         return redirect()
-            ->back()
+            ->route('teacher.student_list', ['id' => $grade_handle->id])
             ->with('success', 'Account added successfully!');
     }
 

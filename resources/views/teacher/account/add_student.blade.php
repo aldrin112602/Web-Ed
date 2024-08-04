@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Grade {{$grade_handle->grade}} / {{$grade_handle->strand}} / Create Student Account</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-        <form enctype="multipart/form-data" action="{{ route('teacher.submit.student') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+        <form enctype="multipart/form-data" action="{{ route('teacher.submit.student', ['id' => request()->query('id')]) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
                 @csrf
                 <input type="hidden" name="grade" value="{{$grade_handle->grade}}">
                 <input type="hidden" name="section" value="{{$grade_handle->section}}">
