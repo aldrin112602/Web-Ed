@@ -95,7 +95,7 @@
 
 
                 <div class="p-3 {{ request()->is('guidance/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-cube"></i>Attendace Report</a>
+                    <a href="{{ route('guidance.attendance_report') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-cube"></i>Attendace Report</a>
                 </div>
 
                 <div class="p-3 {{ request()->is('guidance/chats') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">

@@ -5,6 +5,7 @@ use App\Http\Controllers\Guidance\GuidanceController as Guidance;
 use App\Http\Controllers\Guidance\GuidanceOtpController;
 use App\Http\Controllers\Guidance\GuidanceConversationController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +34,11 @@ Route::prefix('guidance')->group(function () {
 
 
     Route::middleware('auth:guidance')->group(function () {
+
+        // attendance report
+        Route::get('attendance_report', [Guidance::class, 'attendanceReport'])->name('guidance.attendance_report');
+
+
         // Add Guidance-specific routes here
         Route::get('dashboard', [Guidance::class, 'dashboard'])->name('guidance.dashboard');
 

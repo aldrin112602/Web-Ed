@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\deleteSelected;
 use App\Http\Controllers\Admin\attendanceController as Attendace;
 use App\Http\Controllers\Admin\AdminConversationController;
 use App\Http\Controllers\Admin\GradeHandleController;
+use App\Http\Controllers\Guidance\GuidanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::prefix('admin')->group(function () {
     Route::post('verify-otp', [AdminOtpController::class, 'verifyOtp'])->name('admin.verify.otp');
 
     Route::middleware('auth:admin')->group(function () {
+        
+
+
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
 

@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 class GuidanceController extends Controller
 {
+    
+    
+    public function attendanceReport() {
+        $user = Auth::guard('guidance')->user();
+        return view('guidance.attendance_report', ['user' => $user]);
+    }
+    
     public function login()
     {
         if (Auth::guard('guidance')->check()) {
