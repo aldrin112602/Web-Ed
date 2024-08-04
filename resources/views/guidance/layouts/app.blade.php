@@ -88,9 +88,16 @@
                 <div class="p-3 {{ request()->is('guidance/dashboard') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('guidance.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
-                <div class="py-2">
-                    <hr>
+
+                <div class="p-3 {{ request()->is('guidance/profile') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-user"></i>My Profile</a>
                 </div>
+
+
+                <div class="p-3 {{ request()->is('guidance/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-cube"></i>Attendace Report</a>
+                </div>
+
                 <div class="p-3 {{ request()->is('guidance/chats') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('guidance.chats.index') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-regular fa-message"></i>Messages <span class="text-rose-600 font-semibold" id="messageCounts">0</span></a>
                 </div>
@@ -109,6 +116,11 @@
                 <div class="p-3 {{ request()->is('guidance/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
                 </div>
+
+                <div class="py-12">
+                    <hr>
+                </div>
+                
                 <div class="p-3 {{ (request()->is('guidance/settings') || request()->is('guidance/profile')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('guidance.profile') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>
                 </div>
@@ -133,7 +145,7 @@
             </div>
             <!-- sidebar -->
             <!-- main content -->
-            <div class="h-full w-full" style="overflow-y: auto;">
+            <div class="h-screen w-full" style="overflow-y: auto;">
                 @yield('content')
             </div>
             <!-- main content -->
