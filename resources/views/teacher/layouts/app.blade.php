@@ -118,7 +118,7 @@
                     </div>
                 </div>
 
-                <div class="p-3 {{ request()->is('teacher/student_list') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                <div class="p-3 {{ request()->is('teacher/student_list') || request()->is('teacher/presents') || request()->is('teacher/absents') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <div class="relative inline-block text-left w-full">
                         <div class="w-full">
                             <button type="button" class="text-sm flex items-center justify-start gap-3 w-full" id="menu-button-2" aria-expanded="true" aria-haspopup="true">
@@ -138,7 +138,7 @@
                                     
                                 @else
                                     @foreach ($handleSubjects as $gradeHandle)
-                                           <a href="{{ route('teacher.student_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && request()->is('teacher/student_list')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
+                                           <a href="{{ route('teacher.student_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && (request()->is('teacher/student_list') || request()->is('teacher/absents') || request()->is('teacher/presents'))) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
                                     @endforeach
                                 @endif
                             </div>

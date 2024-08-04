@@ -23,9 +23,35 @@ class StudentController extends Controller
             return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
         }
 
-        account_list
 
-        
+        $grade_handle = TeacherGradeHandle::find($id);
+        $query = StudentAccount::query();
+
+        // Apply gender filter
+        if ($request->has('gender') && $request->gender != '' && $request->gender != 'All') {
+            $query->where('gender', $request->gender);
+        }
+
+
+        $grade_handle = TeacherGradeHandle::find($id);
+
+        $query->where('grade', $grade_handle->grade);
+        $query->where('strand', $grade_handle->strand);
+        $query->where('section', $grade_handle->section);
+
+
+        // Only get students taught by the teacher with the specified grade handle
+        $account_list = $query->whereHas('studentHandles', function ($q) use ($user, $id) {
+            $q
+            ->where('teacher_id', $user->id)
+            ->where('grade_handle_id', $id);
+        })->paginate(10);
+
+
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+
+
+
 
         return view('teacher.students.index', [
             'user' => $user,
