@@ -27,7 +27,7 @@
                     <i class="fa-solid fa-check"></i>
                     Present
                 </a>
-                
+
             </div>
         </div>
 

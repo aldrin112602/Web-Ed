@@ -23,12 +23,12 @@
 
             </div>
             <div class="flex items-center justify-end gap-3">
-                
+
                 <a href="{{ route('teacher.attendance.absents', ['id' => $id]) }}" class="px-4 py-2 bg-rose-500 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-xmark"></i>
                     Absent
                 </a>
-                
+
             </div>
         </div>
 
