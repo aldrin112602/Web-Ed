@@ -17,6 +17,12 @@ class GuidanceController extends Controller
         $user = Auth::guard('guidance')->user();
         return view('guidance.attendance_report', ['user' => $user]);
     }
+
+
+    public function attendanceHistory() {
+        $user = Auth::guard('guidance')->user();
+        return view('guidance.attendance_history', ['user' => $user]);
+    }
     
     public function login()
     {
