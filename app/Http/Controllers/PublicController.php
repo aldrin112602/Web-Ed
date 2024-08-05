@@ -1,19 +1,59 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Admin\AdminAccount;
+use App\Models\FaceScan;
 use App\Rules\TwoWords;
-
+use Illuminate\Support\Carbon;
 
 // For testing use only
 
 class PublicController extends Controller
 {
-    public function login() {
+
+    public function faceScanAttendance(Request $request)
+    {
+        $request->validate([
+            'student_id' => 'required|exists:student_accounts,id'
+        ]);
+
+        $today = Carbon::today();
+
+        // Check if there's already an attendance record for the student for today
+        $existingAttendance = FaceScan::where('student_id', $request->student_id)
+            ->whereDate('created_at', $today)
+            ->exists();
+
+        if ($existingAttendance) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Attendance already recorded for today',
+            ]);
+        }
+
+        FaceScan::create([
+            'student_id' => $request->student_id,
+            'time' => Carbon::now()->format('H:i:s'),
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'student_id' => $request->student_id,
+        ]);
+    }
+
+
+
+
+    public function login()
+    {
         return redirect()->intended('/');
     }
 
-    public function faceRecognition() {
+    public function faceRecognition()
+    {
         return view('face-recognition');
     }
 

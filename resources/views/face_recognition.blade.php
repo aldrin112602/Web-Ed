@@ -58,7 +58,6 @@
                 <video id="video" class="w-full h-auto bg-blue-100 rounded-full" autoplay muted></video>
                 <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
             </div>
-            <p class="mt-4 font-bold text-sm text-slate-800" id="blink-message">Please blink your eyes until the progress bar is full.</p>
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
@@ -86,6 +85,7 @@
 
     <script>
         $(document).ready(function() {
+            let hasSubmitted = false;
             const video = $('#video')[0];
             const studentName = $('#student-name');
             const studentStrand = $('#student-strand');
@@ -94,14 +94,6 @@
             const stopButton = $('#stopButton');
             const overlay = $('#overlay')[0];
             const progressBar = $('#progress-bar');
-            const blinkMessage = $('#blink-message');
-
-            let blinkCount = 0;
-            const blinkGoal = 5; // Number of blinks required to mark as present
-            const EAR_THRESHOLD = 0.26; // EAR threshold for blink detection
-            const BLINK_FRAMES = 2;
-
-            let blinkFrameCounter = 0;
 
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
@@ -148,26 +140,6 @@
                         if (result.label !== 'unknown') {
                             updateStudentInfo(result.label);
                         }
-
-                        // Anti-spoofing: Detect eye blinks
-                        const landmarks = resizedDetections[i].landmarks;
-                        const leftEye = landmarks.getLeftEye();
-                        const rightEye = landmarks.getRightEye();
-
-                        if (isBlinking(leftEye) || isBlinking(rightEye)) {
-                            blinkFrameCounter++;
-                            console.log("Blink detected. Frame counter:", blinkFrameCounter);
-                        } else {
-                            if (blinkFrameCounter >= BLINK_FRAMES) {
-                                blinkCount++;
-                                updateProgressBar(blinkCount, blinkGoal);
-                                console.log("Blink count:", blinkCount);
-                                if (blinkCount >= blinkGoal) {
-                                    markAsPresent(result.label);
-                                }
-                            }
-                            blinkFrameCounter = 0;
-                        }
                     });
 
                     if (!stopButton.hasClass('stopped')) {
@@ -208,42 +180,29 @@
                 );
             }
 
-            function isBlinking(eye) {
-                const EAR = calculateEAR(eye);
-                console.log("EAR for eye:", EAR);
-                return EAR < EAR_THRESHOLD;
-            }
-
-            function calculateEAR(eye) {
-                const A = Math.hypot(eye[1].x - eye[5].x, eye[1].y - eye[5].y);
-                const B = Math.hypot(eye[2].x - eye[4].x, eye[2].y - eye[4].y);
-                const C = Math.hypot(eye[0].x - eye[3].x, eye[0].y - eye[3].y);
-                return (A + B) / (2.0 * C);
-            }
-
-            function updateProgressBar(blinkCount, blinkGoal) {
-                const progress = (blinkCount / blinkGoal) * 100;
-                if (progress <= 100) {
-                    progressBar.css('width', `${progress}%`);
-                    progressBar.text(`${Math.round(progress)}%`);
-                }
-            }
-
-            function markAsPresent(label) {
-                blinkMessage.text('You are marked as present.');
-                $.post(`/face_recognition/mark-present/${label}`).done(data => {
-                    console.log('User marked as present:', data);
-                }).fail(err => console.error('Error marking user as present:', err));
-            }
-
             function updateStudentInfo(label) {
-                $.get(`/face_recognition/student-info/${label}`, data => {
-                    studentName.text(data.name);
-                    studentStrand.text(data.strand);
-                    studentId.text(data.id_number);
-                    guardianNo.text(data.parents_contact_number);
-                }).fail(err => console.error('Error fetching student info:', err));
+        $.get(`/face_recognition/student-info/${label}`, data => {
+            const { name, strand, id_number, parents_contact_number } = data;
+            studentName.text(name);
+            studentStrand.text(strand);
+            studentId.text(id_number);
+            guardianNo.text(parents_contact_number);
+
+            // Submit the id_number once only
+            if (!hasSubmitted) {
+                $.post('{{ route("face.attendance") }}', { student_id: id_number }, function(response) {
+                    if (response.success) {
+                        hasSubmitted = true;
+                        
+                        console.log('Attendance submitted successfully');
+                        console.log(response)
+                    } else {
+                        console.error('Failed to submit attendance:', response.message);
+                    }
+                }).fail(err => console.error('Error submitting attendance:', err));
             }
+        }).fail(err => console.error('Error fetching student info:', err));
+    }
         });
     </script>
 </body>
