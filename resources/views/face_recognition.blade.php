@@ -181,28 +181,48 @@
             }
 
             function updateStudentInfo(label) {
-        $.get(`/face_recognition/student-info/${label}`, data => {
-            const { name, strand, id_number, parents_contact_number } = data;
-            studentName.text(name);
-            studentStrand.text(strand);
-            studentId.text(id_number);
-            guardianNo.text(parents_contact_number);
+                $.get(`/face_recognition/student-info/${label}`, data => {
+                    const {
+                        name,
+                        strand,
+                        id_number,
+                        parents_contact_number
+                    } = data;
 
-            // Submit the id_number once only
-            if (!hasSubmitted) {
-                $.post('{{ route("face.attendance") }}', { student_id: id_number }, function(response) {
-                    if (response.success) {
-                        hasSubmitted = true;
-                        
-                        console.log('Attendance submitted successfully');
-                        console.log(response)
-                    } else {
-                        console.error('Failed to submit attendance:', response.message);
+                    studentName.text(name);
+                    studentStrand.text(strand);
+                    studentId.text(id_number);
+                    guardianNo.text(parents_contact_number);
+
+                    // Submit the id_number once only
+                    if (!hasSubmitted) {
+                        $.ajax({
+                            url: '{{ route("face.attendance") }}',
+                            type: 'POST',
+                            data: {
+                                student_id: id_number,
+                            },
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    hasSubmitted = true;
+
+                                    console.log('Attendance submitted successfully');
+                                    console.log(response);
+                                } else {
+                                    console.error('Failed to submit attendance:', response.message);
+                                }
+                            },
+                            error: function(err) {
+                                console.error('Error submitting attendance:', err);
+                            }
+                        });
                     }
-                }).fail(err => console.error('Error submitting attendance:', err));
+                }).fail(err => console.error('Error fetching student info:', err));
             }
-        }).fail(err => console.error('Error fetching student info:', err));
-    }
+
         });
     </script>
 </body>
