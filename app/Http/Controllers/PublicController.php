@@ -18,10 +18,7 @@ class PublicController extends Controller
         $request->validate([
             'student_id' => 'required|exists:student_accounts,id'
         ]);
-
         $today = Carbon::today();
-
-        // Check if there's already an attendance record for the student for today
         $existingAttendance = FaceScan::where('student_id', $request->student_id)
             ->whereDate('created_at', $today)
             ->exists();

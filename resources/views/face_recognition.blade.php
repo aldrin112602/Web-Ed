@@ -183,6 +183,7 @@
             function updateStudentInfo(label) {
                 $.get(`/face_recognition/student-info/${label}`, data => {
                     const {
+                        id,
                         name,
                         strand,
                         id_number,
@@ -200,7 +201,7 @@
                             url: '{{ route("face.attendance") }}',
                             type: 'POST',
                             data: {
-                                student_id: id_number,
+                                student_id: id,
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -208,9 +209,10 @@
                             success: function(response) {
                                 if (response.success) {
                                     hasSubmitted = true;
-
-                                    console.log('Attendance submitted successfully');
-                                    console.log(response);
+                                    Swal.fire({
+                                        title: 'Attendance submitted successfully',
+                                        icon: 'success'
+                                    });
                                 } else {
                                     console.error('Failed to submit attendance:', response.message);
                                 }

@@ -28,6 +28,7 @@ class FaceRecognitionController extends Controller
 
         if ($student) {
             return response()->json([
+                'id' => $student->id,
                 'name' => $student->name,
                 'strand' => $student->strand,
                 'id_number' => $student->id_number,

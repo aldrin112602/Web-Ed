@@ -11,7 +11,5 @@ class FaceScan extends Model
     protected $fillable = [
         'student_id',
         'time',
-        'created_at',
-        'updated_at'
     ];
 }
