@@ -208,11 +208,8 @@
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    hasSubmitted = true;
-                                    Swal.fire({
-                                        title: 'Attendance submitted successfully',
-                                        icon: 'success'
-                                    });
+                                    // hasSubmitted = true;
+                                    Swal.fire({ title: 'Attendance submitted successfully',icon: 'success'});
                                 } else {
                                     console.error('Failed to submit attendance:', response.message);
                                 }
