@@ -13,26 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @vite('resources/css/app.css')
-
-    <style>
-        html::-webkit-scrollbar {
-            display: none;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: #f8fafc;
-        }
-
-        canvas {
-            position: absolute;
-        }
-
-        
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/face-scan.css') }}">
 </head>
 
 <body class="flex items-center justify-center h-screen">
@@ -127,6 +108,7 @@
                         }
                     });
 
+                    requestAnimationFrame(onPlay);
                 }
 
                 onPlay();
@@ -134,6 +116,15 @@
 
             resetButton.on('click', () => {
                 hasSubmitted = false;
+                studentName.text('N/A');
+                studentStrand.text('N/A');
+                studentId.text('N/A');
+                guardianNo.text('N/A');
+
+                Swal.fire({
+                    title: 'Face Scan Reset successfully',
+                    icon: 'success'
+                });
             });
 
             async function loadLabeledImages() {
@@ -172,7 +163,6 @@
                     studentId.text(id_number);
                     guardianNo.text(parents_contact_number);
 
-                    // Submit the id_number once only
                     if (!hasSubmitted) {
                         $.ajax({
                             url: '{{ route("face.attendance") }}',
@@ -185,22 +175,17 @@
                             },
                             success: function(response) {
                                 if (response.success) {
-                                    // hasSubmitted = true;
-                                    Swal.fire({ 
+                                    Swal.fire({
                                         title: 'Face Successfully Scanned!',
                                         text: 'Your attendance has been recorded. Please proceed to your respective room',
                                         icon: 'success'
                                     });
                                 } else {
-                                   
-                                    Swal.fire({ 
+                                    hasSubmitted = true;
+                                    Swal.fire({
                                         title: 'Your attendance has been recorded for today!',
                                         icon: 'info'
                                     });
-
-                                    hasSubmitted = true;
-
-
                                     console.error('Failed to submit attendance:', response.message);
                                 }
                             },
@@ -211,7 +196,6 @@
                     }
                 }).fail(err => console.error('Error fetching student info:', err));
             }
-
         });
     </script>
 </body>
