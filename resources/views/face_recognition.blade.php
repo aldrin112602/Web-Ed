@@ -31,22 +31,7 @@
             position: absolute;
         }
 
-        .progress-container {
-            width: 100%;
-            background-color: #f3f4f6;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 24px;
-            background-color: #4caf50;
-            text-align: center;
-            line-height: 24px;
-            color: white;
-        }
+        
     </style>
 </head>
 
@@ -61,7 +46,7 @@
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
-            <button id="stopButton" class="mt-4 bg-black text-white py-2 px-6 rounded">Stop</button>
+            <button id="resetButton" class="mt-4 bg-black text-white py-2 px-6 rounded cursor-pointer">Reset</button>
         </div>
         <div class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 flex flex-col space-y-2 h-full mb-60">
             <div class="flex justify-between items-center">
@@ -91,7 +76,7 @@
             const studentStrand = $('#student-strand');
             const studentId = $('#student-id');
             const guardianNo = $('#guardian-no');
-            const stopButton = $('#stopButton');
+            const resetButton = $('#resetButton');
             const overlay = $('#overlay')[0];
             const progressBar = $('#progress-bar');
 
@@ -142,21 +127,13 @@
                         }
                     });
 
-                    if (!stopButton.hasClass('stopped')) {
-                        setTimeout(onPlay, 200);
-                    }
                 }
 
                 onPlay();
             });
 
-            stopButton.on('click', () => {
-                const stream = video.srcObject;
-                const tracks = stream.getTracks();
-
-                tracks.forEach(track => track.stop());
-                video.srcObject = null;
-                stopButton.addClass('stopped');
+            resetButton.on('click', () => {
+                hasSubmitted = false;
             });
 
             async function loadLabeledImages() {
@@ -209,8 +186,21 @@
                             success: function(response) {
                                 if (response.success) {
                                     // hasSubmitted = true;
-                                    Swal.fire({ title: 'Attendance submitted successfully',icon: 'success'});
+                                    Swal.fire({ 
+                                        title: 'Face Successfully Scanned!',
+                                        text: 'Your attendance has been recorded. Please proceed to your respective room',
+                                        icon: 'success'
+                                    });
                                 } else {
+                                   
+                                    Swal.fire({ 
+                                        title: 'Your attendance has been recorded for today!',
+                                        icon: 'info'
+                                    });
+
+                                    hasSubmitted = true;
+
+
                                     console.error('Failed to submit attendance:', response.message);
                                 }
                             },
