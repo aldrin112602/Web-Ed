@@ -33,18 +33,11 @@ class QRCodeController extends Controller
             'expiration' => $expiration,
         ]);
 
-        // Sign the data with a secret key (optional, depending on API usage)
-        // $secretKey = config('app.key');
-        // $signature = hash_hmac('sha256', $data, $secretKey);
-        // $dataWithSignature = json_encode([
-        //     'data' => $data,
-        //     'signature' => $signature,
-        // ]);
-
+        // URL-encode the data for inclusion in the query string
         $encodedData = urlencode($data);
 
-        // Build the QR code API URL
-        $qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data={$encodedData}";
+        // Build the QR code API URL using quickchart.io
+        $qrCodeUrl = "https://quickchart.io/qr?text={$encodedData}&size=400";
 
         // Download and save the QR code image
         $response = Http::get($qrCodeUrl);

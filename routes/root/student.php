@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController as Student;
 use App\Http\Controllers\Student\StudentOtpController;
 use App\Http\Controllers\Student\StudentConversationController;
+use App\Http\Controllers\Student\QRCodeScanController;
 
 
 // Student routes
@@ -24,6 +25,11 @@ Route::prefix('student')->group(function () {
 
 
     Route::middleware('auth:student')->group(function () {
+        // scan qr
+        Route::post('/qr/scan', [QRCodeScanController::class, 'scanQRCode'])->name('qr.scan');
+        Route::get('/qr/scan', [QRCodeScanController::class, 'scanQRCodeGet'])->name('qr.scan.get');
+
+
         // attendance history
         Route::get('attendance_history', [Student::class, 'attendanceHistory'])->name('student.attendance_history');
 
