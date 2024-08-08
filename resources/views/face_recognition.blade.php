@@ -21,7 +21,7 @@
         <div class="text-center flex flex-col items-center">
             <p class="font-bold text-lg mb-2">LOOK AT THE CAMERA</p>
             <div class="relative w-full max-w-md">
-                <video id="video" class="w-full h-auto bg-blue-100 rounded-full" autoplay muted></video>
+                <video id="video" class="w-full h-auto bg-blue-100" autoplay muted></video>
                 <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
             </div>
             <div class="progress-container">
