@@ -10,6 +10,7 @@ use App\Http\Controllers\Teacher\GradeHandleController;
 use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Teacher\Account;
 use App\Http\Controllers\Teacher\Attendance;
+use App\Http\Controllers\Teacher\QRCodeController;
 
 // Teacher routes
 Route::prefix('teacher')->group(function () {
@@ -30,6 +31,10 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+
+        // generate qr code
+        Route::get('/generate-qr-code/{subjectId}/{teacherId}', [QRCodeController::class, 'generateQRCode'])->name('generateQR');
+
 
 
         // present and absent
