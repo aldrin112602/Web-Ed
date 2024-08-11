@@ -1,4 +1,4 @@
-## WebEd: Step-by-Step Setup Guide
+# WebEd: Step-by-Step Setup Guide
 
 ### Prerequisites
 
