@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('section')->nullable();
             $table->integer('grade');
             $table->string('parents_contact_number');
+            $table->string('parents_email')->nullable();
             $table->string('username')->unique();
             $table->string('password');
             $table->string('email')->unique()->nullable();

@@ -30,11 +30,11 @@
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
-            
+
         </div>
 
-
-        <div class="w-full">
+        <div class="block md:flex align-center justify-between my-2 gap-5">
+            <div class="md:w-1/2 w-full">
                 <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
                 <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
                     <option value="" disabled class="hidden" selected>-- Select one --</option>
@@ -45,6 +45,18 @@
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
+
+            <div class="md:w-1/2 w-full">
+                <label for="parents_email" class="block text-gray-700 text-sm mb-1">Parents email</label>
+                <input type="email" id="parents_email" name="parents_email" class="form-input w-full rounded border-gray-300 @error('parents_email') border-red-500 @enderror" value="{{ old('parents_email') ?? $student->parents_email }}">
+                @error('parents_email')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+
+
+        </div>
+
 
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
@@ -133,7 +145,7 @@
             </div>
         </div>
 
-        <label for="file-upload" class="block text-gray-700 text-sm mb-1">Upload New Profile</label>
+        <label for="file-upload" class="block text-gray-700 text-sm mb-1">Upload profile</label>
         <div class="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-6 cursor-pointer @error('profile') border-red-500 @enderror" id="dropzone">
             <input id="file-upload" name="profile" type="file" class="absolute inset-0 w-full h-full opacity-0 z-50" accept="image/*" />
             <div class="text-center">
@@ -154,6 +166,123 @@
         @error('profile')
         <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
         @enderror
+
+        <div class="mt-6">
+            <label for="face_images" class="block text-gray-700 text-sm mb-1">Upload Face Images (3 images)</label>
+            <div class="w-full relative border-2 border-gray-300 border-dashed rounded-lg p-6 cursor-pointer @error('face_images') border-red-500 @enderror" id="dropzone-multiple">
+                <input id="face_images" name="face_images[]" type="file" class="absolute inset-0 w-full h-full opacity-0 z-50" accept="image/*" multiple />
+                <div class="text-center">
+                    <img class="mx-auto h-12 w-12" src="https://www.svgrepo.com/show/357902/image-upload.svg" alt="">
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">
+                        <label for="face_images" class="relative cursor-pointer">
+                            <span>Drag and drop</span>
+                            <span class="text-indigo-600"> or browse</span>
+                            <span>to upload</span>
+                        </label>
+                    </h3>
+                    <p class="mt-1 text-xs text-gray-500">
+                        PNG, JPG, GIF up to 10MB each, 3 images
+                    </p>
+                </div>
+                <div id="preview-multiple" class="flex mt-4 space-x-4"></div>
+            </div>
+            @error('face_images')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+            @error('face_images.*')
+            <span class="text-red-500 text-sm">{{ $message }}</span>
+            @enderror
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Profile image preview
+                const profileDropzone = document.getElementById('dropzone');
+                const profileFileInput = document.getElementById('file-upload');
+                const profilePreview = document.getElementById('preview');
+
+                const displayProfilePreview = (file) => {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => {
+                        profilePreview.src = reader.result;
+                        profilePreview.classList.remove('hidden');
+                    };
+                };
+
+                profileDropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    profileDropzone.classList.add('border-indigo-600');
+                });
+
+                profileDropzone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    profileDropzone.classList.remove('border-indigo-600');
+                });
+
+                profileDropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    profileDropzone.classList.remove('border-indigo-600');
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        displayProfilePreview(file);
+                        profileFileInput.files = e.dataTransfer.files;
+                    }
+                });
+
+                profileFileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        displayProfilePreview(file);
+                    }
+                });
+
+                // Multiple face images preview
+                const multipleDropzone = document.getElementById('dropzone-multiple');
+                const multipleFileInput = document.getElementById('face_images');
+                const multiplePreviewContainer = document.getElementById('preview-multiple');
+
+                const displayMultiplePreviews = (files) => {
+                    multiplePreviewContainer.innerHTML = '';
+                    Array.from(files).forEach(file => {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = reader.result;
+                            imgElement.classList.add('max-h-40', 'mr-4');
+                            multiplePreviewContainer.appendChild(imgElement);
+                        };
+                    });
+                };
+
+                multipleDropzone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    multipleDropzone.classList.add('border-indigo-600');
+                });
+
+                multipleDropzone.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    multipleDropzone.classList.remove('border-indigo-600');
+                });
+
+                multipleDropzone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    multipleDropzone.classList.remove('border-indigo-600');
+                    const files = e.dataTransfer.files;
+                    if (files.length) {
+                        displayMultiplePreviews(files);
+                        multipleFileInput.files = files;
+                    }
+                });
+
+                multipleFileInput.addEventListener('change', (e) => {
+                    const files = e.target.files;
+                    if (files.length) {
+                        displayMultiplePreviews(files);
+                    }
+                });
+            });
+        </script>
 
 
 

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\History;
 use App\Models\TeacherGradeHandle;
 use Illuminate\Support\Carbon;
+use App\Models\StudentImage;
 
 class AccountManagementController extends Controller
 {
@@ -254,6 +255,7 @@ class AccountManagementController extends Controller
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
+                'parents_email' => 'required',
                 'extension_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
                 'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
@@ -267,6 +269,7 @@ class AccountManagementController extends Controller
                 'address' => $request->address,
                 'gender' => $request->gender,
                 'strand' => $request->strand,
+                'parents_email' => $request->parents_email,
                 'grade' => $request->grade,
                 'extension_name' => $request->extension_name,
                 'parents_contact_number' => $request->parents_contact_number,
@@ -283,8 +286,23 @@ class AccountManagementController extends Controller
 
                 $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
                 $user->profile = $profilePhotoPath;
-                $user->profile = $profilePhotoPath;
             }
+
+
+            if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
+                StudentImage::where('student_id', $user->id)->delete();
+
+                foreach ($request->file('face_images') as $index => $file) {
+                    $imagePath = $file->storeAs('face_images/' . $user->name, "$index.jpg", 'public');
+
+                    StudentImage::create([
+                        'student_id' => $user->id,
+                        'image_path' => $imagePath,
+                    ]);
+                }
+            }
+
+
 
             $user->save();
 
