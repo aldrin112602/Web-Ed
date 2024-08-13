@@ -12,6 +12,8 @@ use App\Models\Teacher\TeacherAccount;
 use App\Rules\TwoWords;
 use App\Models\StudentImage;
 use App\Models\History;
+use App\Models\StudentHandle;
+use App\Models\TeacherGradeHandle;
 
 class AdminCreateController extends Controller
 {
@@ -61,6 +63,7 @@ class AdminCreateController extends Controller
             'username' => 'required|string|unique:student_accounts,username',
             'password' => 'required|string|min:6|max:255',
             'strand' => 'required',
+            'add_to' => 'required',
             'grade' => 'required',
             'parents_contact_number' => 'required|string|min:11|max:11',
             'email' => 'required|email|unique:student_accounts,email',
@@ -71,10 +74,20 @@ class AdminCreateController extends Controller
         ]);
 
         $account = new StudentAccount($request->all());
+        $grade_handle = TeacherGradeHandle::where('id', $request->add_to)->first();
 
         $profilePath = $request->file('profile')->store('profiles', 'public');
         $account->profile = $profilePath;
         $account->save();
+
+
+        if ($grade_handle) {
+            StudentHandle::create([
+                'student_id' => $account->id,
+                'teacher_id' => $grade_handle->teacher->id,
+                'grade_handle_id' => $request->add_to
+            ]);
+        }
 
         if ($request->hasFile('face_images')) {
             foreach ($request->file('face_images') as $index => $file) {
@@ -173,7 +186,7 @@ class AdminCreateController extends Controller
             ->back()
             ->with('success', 'Account added successfully!');
     }
-    
+
 
     // View creates
     public function viewCreateAdmin()
@@ -193,7 +206,8 @@ class AdminCreateController extends Controller
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
             $id_number = $this->getRandomNumbers();
-            return view('admin.create.student', ['user' => $user, 'id_number' => $id_number]);
+            $grade_handles = TeacherGradeHandle::orderBy('grade', 'asc')->orderBy('section', 'asc')->orderBy('strand', 'asc')->get();
+            return view('admin.create.student', ['user' => $user, 'id_number' => $id_number, 'grade_handles' => $grade_handles]);
         }
 
         return redirect()->route('admin.login');

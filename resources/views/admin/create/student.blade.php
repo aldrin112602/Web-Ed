@@ -73,13 +73,35 @@
                         </div>
 
                 </div>
-                <div class="w-full  my-2">
-                        <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
-                        <input type="number" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
-                        @error('parents_contact_number')
-                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                <div class="block md:flex align-center justify-between my-2 gap-5">
+                        <div class="md:w-1/2 w-full">
+                                <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
+                                <input type="number" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
+                                @error('parents_contact_number')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+                        
+                        
+                        <div class="md:w-1/2 w-full">
+                                <label for="add_to" class="block text-gray-700 text-sm mb-1">Add to:</label>
+                                <select id="add_to" name="add_to" class="form-select w-full rounded border-gray-300 @error('add_to') border-red-500 @enderror">
+                                        <option value="" selected disabled class="hidden">-- Select one --</option>
+                                        @foreach($grade_handles as $gradeHandle)
+                                        <option value="{{ $gradeHandle->id }}">
+                                                Grade: {{ $gradeHandle->grade }}, Strand: {{ $gradeHandle->strand }}, Section: {{ $gradeHandle->section }},
+                                                Teacher: {{ $gradeHandle->teacher->name }}
+
+                                        </option>
+                                        @endforeach
+                                </select>
+                                @error('add_to')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+
                 </div>
+
 
                 <div class="block md:flex align-center justify-between my-2 gap-5">
                         <div class="md:w-1/2 w-full">
