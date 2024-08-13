@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\SubjectModel;
 use App\Models\History;
 use App\Models\TeacherGradeHandle;
+use App\Models\Student\StudentAccount;
 
 class SubjectController extends Controller
 {
@@ -24,6 +25,27 @@ class SubjectController extends Controller
         return redirect()->route('teacher.login');
     }
 
+
+
+
+    public function viewStudentSubjects($id)
+    {
+        if (Auth::guard('teacher')->check()) {
+            $user = Auth::guard('teacher')->user();
+            $student = StudentAccount::with('subjects.teacherAccount')->findOrFail($id);
+            $subjects = SubjectModel::with('teacherAccount')->paginate(10);
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $id)->get();
+
+            return view('teacher.students.subject.view', [
+                'user' => $user,
+                'student' => $student,
+                'subjects' => $subjects,
+                'handleSubjects' => $handleSubjects
+            ]);
+        }
+
+        return redirect()->route('teacher.login');
+    }
 
     public function subjectList()
     {

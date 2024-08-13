@@ -97,10 +97,10 @@
                         <td class="py-2 text-center border">{{ $list->grade }}</td>
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
                         <td class="py-2 text-center border">
-                            <a href="{{ route('admin.view.subjects', $list->id) }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
+                            <a href="{{ route('teacher.view.subjects', $list->id) }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
                         </td>
                         <td class="py-2 text-center border">
-                            <a href="{{ route('admin.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
+                            <a href="{{ route('teacher.edit.student', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
                             <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
                             <form id="delete-form-{{ $list->id }}" action="{{ route('teacher.delete.student', ['id' => $id]) }}" method="POST" style="display: none;">
                                 @csrf

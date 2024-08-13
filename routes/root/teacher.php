@@ -32,6 +32,17 @@ Route::prefix('teacher')->group(function () {
      */
     Route::middleware('auth:teacher')->group(function () {
 
+
+        Route::prefix('student')->group(function () {
+            // view student subjects
+            Route::get('subjects/{id}', [Subject::class, 'viewStudentSubjects'])->name('teacher.view.subjects');
+
+            // Update, delete student account
+            Route::delete('{id}', [StudentController::class, 'deleteStudent'])->name('teacher.delete.student');
+            Route::get('{id}/edit', [StudentController::class, 'editStudent'])->name('teacher.edit.student');
+            Route::put('{id}', [StudentController::class, 'updateStudent'])->name('teacher.update.student');
+        });
+
         // generate qr code
         Route::get('/generate-qr-code/{subjectId}/{teacherId}', [QRCodeController::class, 'generateQRCode'])->name('generateQR');
 
@@ -82,7 +93,7 @@ Route::prefix('teacher')->group(function () {
             Route::get('{id}/edit', [Subject::class, 'viewEditSubject'])->name('teacher.edit.subject');
             Route::put('{id}', [Subject::class, 'updateSubject'])->name('teacher.update.subject');
         });
-        
+
         // delete selected subjects
         Route::delete('delete-selected-subjects', [Subject::class, 'deleteSelectedSubjects'])->name('delete.selected.subjects');
 
