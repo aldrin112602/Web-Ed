@@ -36,16 +36,28 @@
 
                 </div>
 
-                <div class="w-full">
-                        <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
-                        <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
-                                <option value="" disabled class="hidden" selected>-- Select one --</option>
-                                <option value="Male" {{ old('gender') == "Male" ? "selected" : ""  }}>Male</option>
-                                <option value="Female" {{ old('gender') == "Female" ? "selected" : ""  }}>Female</option>
-                        </select>
-                        @error('gender')
-                        <span class="text-red-500 text-sm">{{ $message }}</span>
-                        @enderror
+                <div class="block md:flex align-center justify-between my-2 gap-5">
+                        <div class="md:w-1/2 w-full">
+                                <label for="gender" class="block text-gray-700 text-sm mb-1">Gender</label>
+                                <select name="gender" id="gender" class="form-select w-full rounded border-gray-300 @error('gender') border-red-500 @enderror">
+                                        <option value="" disabled class="hidden" selected>-- Select one --</option>
+                                        <option value="Male" {{ old('gender') == "Male" ? "selected" : ""  }}>Male</option>
+                                        <option value="Female" {{ old('gender') == "Female" ? "selected" : ""  }}>Female</option>
+                                </select>
+                                @error('gender')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+
+                        <div class="md:w-1/2 w-full">
+                                <label for="parents_email" class="block text-gray-700 text-sm mb-1">Parents email</label>
+                                <input type="email" id="parents_email" name="parents_email" class="form-input w-full rounded border-gray-300 @error('parents_email') border-red-500 @enderror" value="{{ old('parents_email') }}">
+                                @error('parents_email')
+                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                @enderror
+                        </div>
+
+                        
                 </div>
 
                 

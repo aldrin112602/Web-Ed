@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Update Student Account</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form enctype="multipart/form-data" action="{{ route('teacher.update.student', $student->id) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form enctype="multipart/form-data" action="{{ route('teacher.update.student', $student->id) }}{{request(?id=)->query('id')}}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
         @method('PUT')
         <div class="w-full">
@@ -58,7 +58,7 @@
         </div>
 
 
-        <div class="block md:flex align-center justify-between my-2 gap-5">
+        <!-- <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="strand" class="block text-gray-700 text-sm mb-1">Strand</label>
                 <select name="strand" id="strand" class="form-select w-full rounded border-gray-300 @error('strand') border-red-500 @enderror">
@@ -85,7 +85,7 @@
                 @enderror
             </div>
 
-        </div>
+        </div> -->
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>

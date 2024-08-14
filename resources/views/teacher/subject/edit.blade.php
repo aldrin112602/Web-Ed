@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Edit Subject</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form action="{{ route('teacher.update.subject', $subject->id) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form action="{{ route('teacher.update.subject', $subject->id) }}?id={{request()->query('id')}}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
         @method('PUT')
         <div class="w-full">

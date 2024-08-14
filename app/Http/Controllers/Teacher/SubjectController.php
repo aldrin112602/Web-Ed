@@ -214,8 +214,9 @@ class SubjectController extends Controller
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
             $subject = SubjectModel::findOrFail($id);
+            $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
 
-            return view('teacher.subject.edit', ['user' => $user, 'subject' => $subject]);
+            return view('teacher.subject.edit', ['user' => $user, 'subject' => $subject, 'handleSubjects' => $handleSubjects]);
         }
 
         return redirect()->route('teacher.login');
@@ -252,7 +253,7 @@ class SubjectController extends Controller
                 ]
             );
 
-            return redirect()->route('teacher.subject_list')->with('success', 'Subject updated successfully');
+            return redirect()->route('teacher.subject_list', ['id' => request()->query('id')])->with('success', 'Subject updated successfully');
         }
 
         return redirect()->route('teacher.login');

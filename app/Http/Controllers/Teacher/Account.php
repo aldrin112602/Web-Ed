@@ -110,6 +110,7 @@ class Account extends Controller
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:student_accounts,username',
             'password' => 'required|string|min:6|max:255',
+            'parents_email' => 'required',
             'parents_contact_number' => 'required|string|min:11|max:11',
             'email' => 'required|email|unique:student_accounts,email',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',

@@ -114,15 +114,19 @@ class StudentController extends Controller
                 'phone_number' => $request->phone_number,
                 'address' => $request->address,
                 'gender' => $request->gender,
-                'strand' => $request->strand,
+                // 'strand' => $request->strand,
                 'parents_email' => $request->parents_email,
-                'grade' => $request->grade,
+                // 'grade' => $request->grade,
                 'extension_name' => $request->extension_name,
                 'parents_contact_number' => $request->parents_contact_number,
             ]);
 
             if ($request->filled('new_password')) {
                 $user->password = $request->new_password;
+            }
+
+            if ($request->filled('username')) {
+                $user->username = $request->username;
             }
 
             if ($request->hasFile('profile')) {
@@ -161,8 +165,11 @@ class StudentController extends Controller
                     'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
                 ]
             );
+            $id = request()->query('id');
 
-            return redirect()->route('teacher.student_list')->with('success', 'Student updated successfully');
+            
+
+            return redirect()->route('teacher.student_list', ['id' => $id])->with('success', 'Student updated successfully');
         }
 
         return redirect()->route('teacher.login');

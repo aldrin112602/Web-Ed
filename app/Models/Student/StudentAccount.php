@@ -24,6 +24,7 @@ class StudentAccount extends Authenticatable
         'section',
         'grade',
         'parents_contact_number',
+        'parents_email',
         'username',
         'password',
         'email',

@@ -11,6 +11,7 @@ use App\Models\Admin\AdminAccount;
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Guidance\GuidanceAccount;
 use Illuminate\Support\Carbon;
+use App\Models\TeacherGradeHandle;
 
 class TeacherConversationController extends Controller
 {
@@ -27,12 +28,15 @@ class TeacherConversationController extends Controller
             return !($account->id === $user->id && get_class($account) === get_class($user));
         });
         $allConversations = $this->getAllConversations();
+
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
         return view(
             'teacher.message.index',
             [
                 'user' => $user,
                 'allUsers' => $allUsers,
-                'allConversations' => $allConversations
+                'allConversations' => $allConversations,
+                'handleSubjects' => $handleSubjects
             ]
         );
     }
