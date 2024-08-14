@@ -11,6 +11,7 @@ use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Teacher\Account;
 use App\Http\Controllers\Teacher\Attendance;
 use App\Http\Controllers\Teacher\QRCodeController;
+use App\Http\Controllers\Teacher\Announcement;
 
 // Teacher routes
 Route::prefix('teacher')->group(function () {
@@ -31,6 +32,8 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+        // for announcement
+        Route::post('announcement', [Announcement::class, 'makeAnnouncement'])->name('teacher.make_announcement');
 
 
         Route::prefix('student')->group(function () {
