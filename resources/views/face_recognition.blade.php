@@ -43,8 +43,8 @@
                 <span id="student-id" class="ml-2">N/A</span>
             </div>
             <div class="flex justify-between items-center">
-                <span class="font-bold">Guardian No.:</span>
-                <span id="guardian-no" class="ml-2">N/A</span>
+                <span class="font-bold">Time In:</span>
+                <span id="time-in" class="ml-2">N/A</span>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
             const studentName = $('#student-name');
             const studentStrand = $('#student-strand');
             const studentId = $('#student-id');
-            const guardianNo = $('#guardian-no');
+            const timeIn = $('#time-in');
             const resetButton = $('#resetButton');
             const overlay = $('#overlay')[0];
             const progressBar = $('#progress-bar');
@@ -119,7 +119,7 @@
                 studentName.text('N/A');
                 studentStrand.text('N/A');
                 studentId.text('N/A');
-                guardianNo.text('N/A');
+                timeIn.text('N/A');
 
                 Swal.fire({
                     title: 'Face Scan Reset successfully',
@@ -148,6 +148,21 @@
                 );
             }
 
+            function getTimeIn() {
+                const date = new Date();
+                const hours = date.getHours() > 12? date.getHours() - 12 : date.getHours();
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                return `${hours}:${minutes}${date.getHours() > 12? ' PM' : ' AM'}`;
+            }
+
+            function getDate() {
+                const date = new Date();
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                return `${day}-${month}-${year}`;
+            }
+
             function updateStudentInfo(label) {
                 $.get(`/face_recognition/student-info/${label}`, data => {
                     const {
@@ -155,13 +170,12 @@
                         name,
                         strand,
                         id_number,
-                        parents_contact_number
                     } = data;
 
                     studentName.text(name);
                     studentStrand.text(strand);
                     studentId.text(id_number);
-                    guardianNo.text(parents_contact_number);
+                    timeIn.text(getDate() + ' ' + getTimeIn());
 
                     if (!hasSubmitted) {
                         $.ajax({
