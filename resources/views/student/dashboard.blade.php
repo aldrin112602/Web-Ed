@@ -16,7 +16,16 @@
             @else
             <div class="grid grid-cols-1 gap-4">
                 @foreach ($subjects_today as $subject)
-                <div class="text-center p-4 shadow rounded bg-white">{{$subject->subject}}</div>
+                <div class="p-4 shadow rounded bg-white">{{$subject->subject}}
+                    <hr>
+                <div class="flex items-center justify-between mt-3">
+                <span class="text-sm text-gray-500">
+                {{ $TeacherModel::where('id', $subject->teacher_id)->first()->name }} <br>
+                {{$subject->day}} | {{$subject->time}}
+                </span>
+                <a href="{{ route('qr.scan.get', [ 'subject_id' => $subject->id, 'teacher_id' => $subject->teacher_id ]) }}" style="font-size: 13px;" class="bg-blue-500 hover:bg-blue-700 p-2 py-1 rounded text-white">Scan QR</a>
+                </div>
+                </div>
                 @endforeach
             </div>
             @endif

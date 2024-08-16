@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\StudentSubject;
+use App\Models\Teacher\TeacherAccount;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 
 
@@ -21,7 +20,23 @@ class StudentController extends Controller
     public function enrolledSubjects()
     {
         $user = Auth::user();
-        return view('student.enrolled_subjects', ['user' => $user]);
+        if (Auth::guard('student')->check()) {
+            $user = Auth::guard('student')->user();
+            $enrolled_subjects = $user->subjects()->paginate(8);
+
+            return view('student.enrolled_subjects', [
+                'user' => $user,
+                'enrolled_subjects' => $enrolled_subjects,
+                'TeacherModel' => TeacherAccount::class
+            ]);
+
+        }
+
+
+
+        return redirect()->route('student.login');
+
+        
     }
 
     public function login()
@@ -79,23 +94,14 @@ class StudentController extends Controller
             return view('student.dashboard', [
                 'user' => $user,
                 'enrolled_subjects' => $enrolled_subjects,
-                'subjects_today' => $subjects_today
+                'subjects_today' => $subjects_today,
+                'TeacherModel' => TeacherAccount::class
             ]);
         }
 
         return redirect()->route('student.login');
     }
 
-
-    // public function home()
-    // {
-    //     if (Auth::guard('student')->check()) {
-    //         $user = Auth::guard('student')->user();
-    //         return view('student.home', ['user' => $user]);
-    //     }
-
-    //     return redirect()->route('student.login');
-    // }
 
     public function profile()
     {
