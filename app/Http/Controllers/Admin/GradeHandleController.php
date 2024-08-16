@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\{Http\Request, Support\Facades\Auth};
 use App\Models\TeacherGradeHandle;
-use Illuminate\Support\Facades\Auth;
 
 class GradeHandleController extends Controller
 {

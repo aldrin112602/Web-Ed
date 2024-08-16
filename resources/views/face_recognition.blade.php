@@ -152,7 +152,7 @@
                 const date = new Date();
                 const hours = date.getHours() > 12? date.getHours() - 12 : date.getHours();
                 const minutes = String(date.getMinutes()).padStart(2, '0');
-                return `${hours}:${minutes}${date.getHours() > 12? ' PM' : ' AM'}`;
+                return `${hours}:${minutes}${date.getHours() >= 12? ' PM' : ' AM'}`;
             }
 
             function getDate() {

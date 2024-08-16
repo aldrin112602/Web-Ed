@@ -2,15 +2,15 @@
 
 namespace App\Models\Student;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Message;
-use App\Models\StudentImage;
-use App\Models\Admin\SubjectModel;
-use App\Models\StudentHandle;
-use App\Models\StudentSubject;
+use Illuminate\{
+    Database\Eloquent\Factories\HasFactory,
+    Foundation\Auth\User as Authenticatable,
+    Notifications\Notifiable,
+    Support\Facades\Hash
+};
+
+use App\Models\{Message, StudentImage, Admin\SubjectModel, StudentHandle};
+
 
 class StudentAccount extends Authenticatable
 {

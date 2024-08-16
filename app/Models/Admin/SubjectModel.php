@@ -3,11 +3,16 @@
 namespace App\Models\Admin;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use App\Models\Teacher\TeacherAccount;
-use App\Models\Student\StudentAccount;
+use Illuminate\{
+    Database\Eloquent\Factories\HasFactory,
+    Foundation\Auth\User as Authenticatable,
+    Notifications\Notifiable
+};
+
+use App\Models\{
+    Teacher\TeacherAccount,
+    Student\StudentAccount
+};
 
 class SubjectModel extends Authenticatable
 {

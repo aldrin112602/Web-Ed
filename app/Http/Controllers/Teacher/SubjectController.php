@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Admin\SubjectModel;
-use App\Models\History;
-use App\Models\TeacherGradeHandle;
-use App\Models\Student\StudentAccount;
+use Illuminate\{Http\Request, Support\Facades\Auth};
+use App\Models\{Admin\SubjectModel, History, TeacherGradeHandle, Student\StudentAccount, StudentSubject};
 
 class SubjectController extends Controller
 {
@@ -49,6 +45,7 @@ class SubjectController extends Controller
 
     public function subjectList()
     {
+
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
             $id = request()->query('id');
@@ -106,6 +103,78 @@ class SubjectController extends Controller
 
 
 
+
+    public function deleteStudentSubject($student_id, $subject_id)
+    {
+        if (Auth::guard('teacher')->check()) {
+            $student = StudentAccount::findOrFail($student_id);
+
+            // Retrieve the subject details
+            $subject = SubjectModel::findOrFail($subject_id);
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Deleted a subject $subject->name from $student->name's account",
+                    'description' => "Subject deleted: " . $subject->name
+                ]
+            );
+
+            $student->subjects()->detach($subject_id);
+
+            return redirect()->route('teacher.view.subjects', $student_id)->with('success', 'Subject deleted successfully');
+        }
+
+        return redirect()->route('teacher.login');
+    }
+
+
+
+
+
+    public function addSubject(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|exists:subject_models,id',
+            'student_id' => 'required|exists:student_accounts,id',
+        ]);
+
+        $student = StudentAccount::find($request->student_id);
+        $subject = SubjectModel::find($request->subject);
+
+        if ($student && $subject) {
+            if (!StudentSubject::where('student_id', $student->id)
+                ->where('subject_id', $subject->id)->exists()) {
+                $auth_user = Auth::user();
+                $newStudentSubject = new StudentSubject([
+                    'student_id' => $student->id,
+                    'subject_id' => $subject->id,
+                    'teacher_id' => $auth_user->id,
+                    'grade_handle_id' => $request->query('id')
+                ]);
+                $newStudentSubject->save();
+
+                History::create([
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Added the subject $subject->name to $student->name's account",
+                    'description' => null
+                ]);
+            } else {
+                return redirect()->back()->with('error', 'Subject already added to the student.');
+            }
+
+            return redirect()->back()->with('success', 'Subject added successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Error adding subject.');
+    }
+
+
+
+
     public function createSubject(Request $request)
     {
         $request->validate([
@@ -130,6 +199,19 @@ class SubjectController extends Controller
             'time' => $time_start_12hr . ' - ' . $time_end_12hr
         ]);
         $subject->save();
+
+
+        // check if the student_id is set
+        if (request()->query('student_id')) {
+            $newStudentSubject = new StudentSubject([
+                'student_id' => request()->query('student_id'),
+                'subject_id' => $subject->id,
+                'teacher_id' => $auth_user->id,
+                'grade_handle_id' => $request->_id
+            ]);
+            $newStudentSubject->save();
+            return redirect()->route('teacher.view.subjects', ['id' => request()->query('student_id')]);
+        }
 
 
         History::create(

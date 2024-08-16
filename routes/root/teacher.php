@@ -1,19 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Teacher\TeacherController as Teacher;
-use App\Http\Controllers\Teacher\TeacherOtpController;
-use App\Http\Controllers\Teacher\TeacherConversationController;
-use App\Http\Controllers\Teacher\SubjectController as Subject;
 use App\Http\Controllers\Admin\ExcelController;
-use App\Http\Controllers\Teacher\GradeHandleController;
-use App\Http\Controllers\Teacher\StudentController;
-use App\Http\Controllers\Teacher\Account;
-use App\Http\Controllers\Teacher\Attendance;
-use App\Http\Controllers\Teacher\QRCodeController;
-use App\Http\Controllers\Teacher\Announcement;
+use App\Http\Controllers\Teacher\{
+    Announcement,
+    GradeHandleController,
+    StudentController,
+    Account,
+    Attendance,
+    QRCodeController,
+    TeacherController as Teacher,
+    TeacherOtpController,
+    TeacherConversationController,
+    SubjectController as Subject
+};
 
-// Teacher routes
+// Teacher routes   
 Route::prefix('teacher')->group(function () {
     // login handle
     Route::get('login', [Teacher::class, 'login'])->name('teacher.login');
@@ -39,6 +41,8 @@ Route::prefix('teacher')->group(function () {
         Route::prefix('student')->group(function () {
             // view student subjects
             Route::get('subjects/{id}', [Subject::class, 'viewStudentSubjects'])->name('teacher.view.subjects');
+            Route::post('subjects/add', [Subject::class, 'addSubject'])->name('teacher.add.subject');
+            Route::delete('subjects/delete/{studentId}/{subjectId}', [Subject::class, 'deleteStudentSubject'])->name('teacher.delete.studentSubject');
 
             // Update, delete student account
             Route::delete('{id}', [StudentController::class, 'deleteStudent'])->name('teacher.delete.student');

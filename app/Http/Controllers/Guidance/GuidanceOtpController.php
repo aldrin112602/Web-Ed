@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Guidance;
 
 use App\Http\Controllers\Controller;
 use App\Services\PHPMailerService;
-use App\Models\Guidance\GuidanceOtpAccount;
-use App\Models\Guidance\GuidanceAccount;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-
+use App\Models\Guidance\{GuidanceOtpAccount, GuidanceAccount};
+use Illuminate\{Http\Request, Support\Facades\Session};
 use Carbon\Carbon;
 
 class GuidanceOtpController extends Controller

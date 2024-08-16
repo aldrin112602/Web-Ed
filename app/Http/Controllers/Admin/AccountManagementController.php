@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Student\StudentAccount;
-use App\Models\Admin\AdminAccount;
-use App\Models\Teacher\TeacherAccount;
-use App\Models\Guidance\GuidanceAccount;
 use App\Rules\TwoWords;
-use Illuminate\Support\Facades\Storage;
-use App\Models\History;
-use App\Models\TeacherGradeHandle;
-use Illuminate\Support\Carbon;
-use App\Models\StudentImage;
+
+use Illuminate\{
+    Http\Request,
+    Support\Facades\Auth,
+    Support\Facades\Storage,
+    Support\Carbon
+};
+
+use App\Models\{
+    Student\StudentAccount,
+    Admin\AdminAccount,
+    Teacher\TeacherAccount,
+    Guidance\GuidanceAccount,
+    History,
+    TeacherGradeHandle,
+    StudentImage
+};
 
 class AccountManagementController extends Controller
 {

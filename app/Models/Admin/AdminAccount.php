@@ -1,12 +1,14 @@
 <?php
 namespace App\Models\Admin;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Auth\Passwords\CanResetPassword as ResetPasswordTrait;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\{
+    Database\Eloquent\Factories\HasFactory,
+    Foundation\Auth\User as Authenticatable,
+    Notifications\Notifiable,
+    Contracts\Auth\CanResetPassword,
+    Auth\Passwords\CanResetPassword as ResetPasswordTrait,
+    Support\Facades\Hash
+};
 use App\Models\Message;
 
 class AdminAccount extends Authenticatable implements CanResetPassword

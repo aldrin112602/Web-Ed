@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Admin\SubjectModel;
-use App\Models\Teacher\TeacherAccount;
-use App\Models\Student\StudentAccount;
-use App\Models\History;
+use Illuminate\{Http\Request, Support\Facades\Auth};
+use App\Models\{Admin\SubjectModel, Teacher\TeacherAccount, Student\StudentAccount, History};
 
 class SubjectController extends Controller
 {
@@ -148,16 +144,16 @@ class SubjectController extends Controller
         $subject->save();
 
         $auth_user = Auth::user();
-            History::create(
-                [
-                    'user_id' => $auth_user->id,
-                    'position' => $auth_user->role,
-                    'history' => "Created a subject",
-                    'description' => "Subject created: " . $subject->name
-                ]
-            );
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Created a subject",
+                'description' => "Subject created: " . $subject->name
+            ]
+        );
 
-        
+
         return redirect()->route('admin.subject_list')->with('success', 'Subject created successfully');
     }
 
@@ -197,7 +193,7 @@ class SubjectController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $subject = SubjectModel::findOrFail($id);
-    
+
             $auth_user = Auth::user();
             History::create(
                 [

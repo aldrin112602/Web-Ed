@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Services\PHPMailerService;
-use App\Models\Student\StudentOtpAccount;
-use App\Models\Student\StudentAccount;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-
 use Carbon\Carbon;
+use App\Models\Student\{StudentOtpAccount, StudentAccount};
+use Illuminate\{Http\Request, Support\Facades\Session};
+
 
 class StudentOtpController extends Controller
 {

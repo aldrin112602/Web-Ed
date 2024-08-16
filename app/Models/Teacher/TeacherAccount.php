@@ -3,16 +3,19 @@
 namespace App\Models\Teacher;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\{
+    Database\Eloquent\Factories\HasFactory,
+    Foundation\Auth\User as Authenticatable,
+    Notifications\Notifiable,
+    Support\Facades\Hash
+};
+
 use App\Models\Message;
 
 class TeacherAccount extends Authenticatable
 {
     use HasFactory, Notifiable;
- 
+
     protected $fillable = [
         'id_number',
         'name',

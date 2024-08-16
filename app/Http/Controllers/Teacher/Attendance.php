@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\TeacherGradeHandle;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Student\StudentAccount;
+use Illuminate\{Http\Request, Support\Facades\Auth};
+use App\Models\{TeacherGradeHandle, Student\StudentAccount};
 
 class Attendance extends Controller
 {
-   
+
     public function absents(Request $request)
     {
         $id = request()->query('id');
         $user = Auth::user();
-        
+
 
         if (!$id || !TeacherGradeHandle::find($id)) {
             return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
@@ -40,8 +38,8 @@ class Attendance extends Controller
         // Only get students taught by the teacher with the specified grade handle
         $account_list = $query->whereHas('studentHandles', function ($q) use ($user, $id) {
             $q
-            ->where('teacher_id', $user->id)
-            ->where('grade_handle_id', $id);
+                ->where('teacher_id', $user->id)
+                ->where('grade_handle_id', $id);
         })->paginate(10);
 
 
@@ -66,7 +64,7 @@ class Attendance extends Controller
     {
         $id = request()->query('id');
         $user = Auth::user();
-        
+
 
         if (!$id || !TeacherGradeHandle::find($id)) {
             return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
@@ -91,8 +89,8 @@ class Attendance extends Controller
         // Only get students taught by the teacher with the specified grade handle
         $account_list = $query->whereHas('studentHandles', function ($q) use ($user, $id) {
             $q
-            ->where('teacher_id', $user->id)
-            ->where('grade_handle_id', $id);
+                ->where('teacher_id', $user->id)
+                ->where('grade_handle_id', $id);
         })->paginate(10);
 
 

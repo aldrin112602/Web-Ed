@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Guidance;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Message;
-use App\Models\Student\StudentAccount;
-use App\Models\Admin\AdminAccount;
-use App\Models\Teacher\TeacherAccount;
-use App\Models\Guidance\GuidanceAccount;
-use Illuminate\Support\Carbon;
+use Illuminate\{Http\Request, Support\Facades\Auth, Support\Carbon};
+use App\Models\{
+    Message,
+    Student\StudentAccount,
+    Admin\AdminAccount,
+    Teacher\TeacherAccount,
+    Guidance\GuidanceAccount
+};
 
 class GuidanceConversationController extends Controller
 {
@@ -24,9 +24,9 @@ class GuidanceConversationController extends Controller
         $allConversations = $this->getAllConversations();
 
         $allUsers = collect([...$teachers, ...$admins, ...$students, ...$guidances])
-        ->filter(function ($account) use ($user) {
-            return !($account->id === $user->id && get_class($account) === get_class($user));
-        });
+            ->filter(function ($account) use ($user) {
+                return !($account->id === $user->id && get_class($account) === get_class($user));
+            });
         return view(
             'guidance.message.index',
             [
@@ -37,7 +37,8 @@ class GuidanceConversationController extends Controller
         );
     }
 
-    public function getMessageCounts() {
+    public function getMessageCounts()
+    {
         $allConversations = $this->getAllConversations();
         $counts = count($allConversations);
         return response()->json(['count' => $counts]);

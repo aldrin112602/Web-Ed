@@ -5,24 +5,23 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 
 
 class StudentController extends Controller
 {
-    public function attendanceHistory() {
+    public function attendanceHistory()
+    {
         $user = Auth::user();
         return view('student.attendance_history', ['user' => $user]);
     }
 
-    public function enrolledSubjects() {
+    public function enrolledSubjects()
+    {
         $user = Auth::user();
         return view('student.enrolled_subjects', ['user' => $user]);
     }
-    
+
     public function login()
     {
         if (Auth::guard('student')->check()) {
@@ -79,15 +78,15 @@ class StudentController extends Controller
     }
 
 
-    public function home()
-    {
-        if (Auth::guard('student')->check()) {
-            $user = Auth::guard('student')->user();
-            return view('student.home', ['user' => $user]);
-        }
+    // public function home()
+    // {
+    //     if (Auth::guard('student')->check()) {
+    //         $user = Auth::guard('student')->user();
+    //         return view('student.home', ['user' => $user]);
+    //     }
 
-        return redirect()->route('student.login');
-    }
+    //     return redirect()->route('student.login');
+    // }
 
     public function profile()
     {
@@ -216,8 +215,4 @@ class StudentController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'Failed to delete profile photo. Please try again.']);
     }
-
-
-
-    
 }

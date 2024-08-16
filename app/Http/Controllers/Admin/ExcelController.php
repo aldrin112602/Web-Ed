@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use App\Models\Student\StudentAccount;
-use App\Models\Admin\AdminAccount;
-use App\Models\Teacher\TeacherAccount;
-use App\Models\Guidance\GuidanceAccount;
-use App\Models\Admin\SubjectModel;
-use App\Models\History;
+
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use PhpOffice\PhpSpreadsheet\{Spreadsheet, Writer\Xlsx};
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use App\Models\{
+    Student\StudentAccount,
+    Admin\AdminAccount,
+    Teacher\TeacherAccount,
+    Guidance\GuidanceAccount,
+    Admin\SubjectModel,
+    History
+};
 
 class ExcelController extends Controller
 {
@@ -338,7 +340,7 @@ class ExcelController extends Controller
         $response->headers->set('Cache-Control', 'max-age=0');
 
 
-        
+
         History::create(
             [
                 'user_id' => $auth_user->id,

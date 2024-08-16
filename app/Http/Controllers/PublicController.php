@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Admin\AdminAccount;
-use App\Models\FaceScan;
+use Illuminate\{Http\Request, Support\Carbon};
+use App\Models\{Admin\AdminAccount, FaceScan};
 use App\Rules\TwoWords;
-use Illuminate\Support\Carbon;
+
 
 // For testing use only
 
@@ -28,17 +27,17 @@ class PublicController extends Controller
                 'success' => false,
                 'message' => 'Attendance already recorded for today',
             ]);
+        } else {
+            FaceScan::create([
+                'student_id' => $request->student_id,
+                'time' => Carbon::now()->format('H:i:s'),
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'student_id' => $request->student_id,
+            ]);
         }
-
-        FaceScan::create([
-            'student_id' => $request->student_id,
-            'time' => Carbon::now()->format('H:i:s'),
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'student_id' => $request->student_id,
-        ]);
     }
 
 

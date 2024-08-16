@@ -1,26 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminController as Admin;
-use App\Http\Controllers\Admin\AdminCreateController as AdminCreate;
-use App\Http\Controllers\Admin\AccountManagementController as AccountManagement;
-use App\Http\Controllers\Admin\ExcelController;
-use App\Http\Controllers\Admin\SubjectController;
-use App\Http\Controllers\Admin\AdminOtpController;
-use App\Http\Controllers\Admin\deleteSelected;
-use App\Http\Controllers\Admin\attendanceController as Attendace;
-use App\Http\Controllers\Admin\AdminConversationController;
-use App\Http\Controllers\Admin\GradeHandleController;
-use App\Http\Controllers\Guidance\GuidanceController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-*/
+use App\Http\Controllers\Admin\{
+    GradeHandleController,
+    AdminController as Admin,
+    AdminCreateController as AdminCreate,
+    AccountManagementController as AccountManagement,
+    ExcelController,
+    SubjectController,
+    AdminOtpController,
+    deleteSelected,
+    attendanceController as Attendace,
+    AdminConversationController
+};
 
 
 // Admin routes
@@ -28,25 +20,22 @@ Route::prefix('admin')->group(function () {
     Route::get('login', [Admin::class, 'login'])->name('admin.login');
     Route::post('login', [Admin::class, 'handleLogin'])->name('admin.handleLogin');
 
-
-
     // for reset password
     Route::get('forgot-password', [AdminOtpController::class, 'request'])->name('admin.password.request');
     Route::post('forgot-password', [AdminOtpController::class, 'sendOtp'])->name('admin.password.otp');
     Route::get('reset-password', [AdminOtpController::class, 'reset'])->name('admin.password.reset');
     Route::post('reset-password', [AdminOtpController::class, 'update'])->name('admin.password.update');
-
     Route::get('verify-otp', [AdminOtpController::class, 'verifyFormOtp'])->name('admin.verify-form.otp');
-
     Route::post('verify-otp', [AdminOtpController::class, 'verifyOtp'])->name('admin.verify.otp');
 
+
+    /***
+     * ///////////////////////////
+     * /// MIDDLEWARE: TEACHER ///
+     * ///////////////////////////
+     */
     Route::middleware('auth:admin')->group(function () {
-        
-
-
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
-
-
 
         // history
         Route::get('history', [Admin::class, 'history'])->name('admin.history');

@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\PHPMailerService;
-use App\Models\Admin\AdminOtpAccount;
-use App\Models\Admin\AdminAccount;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use App\Models\Admin\{AdminOtpAccount, AdminAccount};
+use Illuminate\{Http\Request, Support\Facades\Session};
 use App\Models\History;
 
 use Carbon\Carbon;
@@ -126,7 +124,7 @@ class AdminOtpController extends Controller
             // Clear session
             Session::forget('otp_email');
             Session::forget('otp');
-            
+
             History::create(
                 [
                     'user_id' => $user->id,

@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Models\Admin\AdminAccount;
-use App\Models\Guidance\GuidanceAccount;
-use App\Models\Student\StudentAccount;
-use App\Models\Teacher\TeacherAccount;
+use Illuminate\{Support\Facades\Auth, Http\Request};
 use App\Rules\TwoWords;
-use App\Models\StudentImage;
-use App\Models\History;
-use App\Models\StudentHandle;
-use App\Models\TeacherGradeHandle;
+use App\Models\{
+    Admin\AdminAccount,
+    Guidance\GuidanceAccount,
+    Student\StudentAccount,
+    Teacher\TeacherAccount,
+    StudentImage,
+    History,
+    StudentHandle,
+    TeacherGradeHandle
+};
 
 class AdminCreateController extends Controller
 {

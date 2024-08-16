@@ -5,25 +5,25 @@ namespace App\Http\Controllers\Guidance;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
+
 class GuidanceController extends Controller
 {
-    
-    
-    public function attendanceReport() {
+
+
+    public function attendanceReport()
+    {
         $user = Auth::guard('guidance')->user();
         return view('guidance.attendance_report', ['user' => $user]);
     }
 
 
-    public function attendanceHistory() {
+    public function attendanceHistory()
+    {
         $user = Auth::guard('guidance')->user();
         return view('guidance.attendance_history', ['user' => $user]);
     }
-    
+
     public function login()
     {
         if (Auth::guard('guidance')->check()) {

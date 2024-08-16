@@ -3,14 +3,9 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\TeacherGradeHandle;
-use App\Models\StudentImage;
 use App\Rules\TwoWords;
-use App\Models\Student\StudentAccount;
-use App\Models\History;
-use App\Models\StudentHandle;
+use Illuminate\{Http\Request, Support\Facades\Auth};
+use App\Models\{StudentHandle, Student\StudentAccount, History, StudentImage, TeacherGradeHandle};
 
 
 class Account extends Controller
@@ -18,7 +13,7 @@ class Account extends Controller
     public function deleteStudentAccount(Request $request)
     {
         $id = request()->query('id');
-        
+
         if (!$id || !TeacherGradeHandle::find($id)) {
             return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
         }
@@ -47,7 +42,7 @@ class Account extends Controller
             ]
         )->with('success', 'Account deleted successfully');
     }
-    
+
     public function deleteSelectedStudents(Request $request)
     {
         $id = request()->query('id');

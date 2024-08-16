@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Session;
-use App\Models\Admin\SubjectModel;
-use App\Models\TeacherGradeHandle;
+use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
+use App\Models\{Admin\SubjectModel, TeacherGradeHandle, StudentHandle};
+
+
+
+
 
 class TeacherController extends Controller
 {
@@ -64,14 +64,14 @@ class TeacherController extends Controller
         if (Auth::guard('teacher')->check()) {
             $user = Auth::guard('teacher')->user();
             $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
-            // $allStudentsCount = $this->countStudents() ?? 0;
+            $allStudentsCount = count(StudentHandle::where('teacher_id', $user->id)->get());
 
             return view(
                 'teacher.dashboard',
                 [
                     'user' => $user,
                     'handleSubjects' => $handleSubjects,
-                    "allStudentsCount" => 0
+                    "allStudentsCount" => $allStudentsCount
                 ]
             );
         }

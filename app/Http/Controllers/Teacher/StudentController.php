@@ -4,15 +4,9 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\TeacherGradeHandle;
-use App\Models\Student\StudentAccount;
-use Illuminate\Support\Facades\Storage;
-use App\Models\StudentImage;
-use App\Models\History;
 use App\Rules\TwoWords;
-
-
+use Illuminate\Support\Facades\{Auth, Storage};
+use App\Models\{TeacherGradeHandle, Student\StudentAccount, StudentImage, History};
 
 
 
@@ -23,14 +17,10 @@ class StudentController extends Controller
     {
         $user = Auth::user();
         $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
-
         $id = $request->query('id');
-        \Log::info('Grade Handle ID:', ['id' => $id]);
-
         if (!$id || !TeacherGradeHandle::find($id)) {
             return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
         }
-
 
         $grade_handle = TeacherGradeHandle::find($id);
         $query = StudentAccount::query();
@@ -51,8 +41,8 @@ class StudentController extends Controller
         // Only get students taught by the teacher with the specified grade handle
         $account_list = $query->whereHas('studentHandles', function ($q) use ($user, $id) {
             $q
-            ->where('teacher_id', $user->id)
-            ->where('grade_handle_id', $id);
+                ->where('teacher_id', $user->id)
+                ->where('grade_handle_id', $id);
         })->paginate(10);
 
 
@@ -167,7 +157,7 @@ class StudentController extends Controller
             );
             $id = request()->query('id');
 
-            
+
 
             return redirect()->route('teacher.student_list', ['id' => $id])->with('success', 'Student updated successfully');
         }

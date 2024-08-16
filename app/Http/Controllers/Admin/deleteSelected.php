@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Student\StudentAccount as Student;
-use App\Models\Admin\AdminAccount as Admin;
-use App\Models\Teacher\TeacherAccount as Teacher;
-use App\Models\Guidance\GuidanceAccount as Guidance;
-use App\Models\Admin\SubjectModel as Subject;
-use App\Models\History;
-use Illuminate\Support\Facades\Auth;
-use App\Models\StudentHandle;
-use App\Models\StudentImage;
+use Illuminate\{Http\Request, Support\Facades\Auth};
+use App\Models\{
+    Student\StudentAccount as Student,
+    Admin\AdminAccount as Admin,
+    Teacher\TeacherAccount as Teacher,
+    Guidance\GuidanceAccount as Guidance,
+    Admin\SubjectModel as Subject,
+    History,
+    StudentHandle,
+    StudentImage
+};
 
 class deleteSelected extends Controller
 {
@@ -25,7 +26,7 @@ class deleteSelected extends Controller
         Student::whereIn('id', $idsArray)->delete();
         StudentHandle::whereIn('student_id', $idsArray)->delete();
         StudentImage::whereIn('student_id', $idsArray)->delete();
-        
+
         $auth_user = Auth::user();
         History::create(
             [

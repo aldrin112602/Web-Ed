@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Models\Guidance;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Factories\HasFactory, Model};
 
 class GuidanceOtpAccount extends Model
 {
@@ -12,4 +12,3 @@ class GuidanceOtpAccount extends Model
 
     public $timestamps = false;
 }
-

@@ -1,8 +1,8 @@
 <?php
+
 namespace App\Models\Teacher;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Factories\HasFactory, Model};
 
 class TeacherOtpAccount extends Model
 {
@@ -12,4 +12,3 @@ class TeacherOtpAccount extends Model
 
     public $timestamps = false;
 }
-

@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Services\PHPMailerService;
-use App\Models\Teacher\TeacherOtpAccount;
-use App\Models\Teacher\TeacherAccount;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-
+use App\Models\Teacher\{TeacherOtpAccount, TeacherAccount};
+use Illuminate\{Http\Request, Support\Facades\Session};
 use Carbon\Carbon;
 
 class TeacherOtpController extends Controller

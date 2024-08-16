@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\QrGenerate;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\{Http\Request, Support\Facades\Auth};
 
 class QRCodeScanController extends Controller
 {

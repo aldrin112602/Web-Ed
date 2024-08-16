@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Subject</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form action="{{ route('teacher.create.subject') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form action="{{ route('teacher.create.subject') }}?user_id={{request()->query('student_id')}}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
 
         <input type="hidden" value="{{ $id }}" name="_id">

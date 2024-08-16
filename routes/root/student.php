@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Student\StudentController as Student;
-use App\Http\Controllers\Student\StudentOtpController;
-use App\Http\Controllers\Student\StudentConversationController;
-use App\Http\Controllers\Student\QRCodeScanController;
+use App\Http\Controllers\Student\{
+    QRCodeScanController,
+    StudentController as Student,
+    StudentOtpController,
+    StudentConversationController
+};
 
 
 // Student routes
@@ -60,6 +62,3 @@ Route::prefix('student')->group(function () {
         });
     });
 });
-
-
-
