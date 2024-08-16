@@ -19,13 +19,16 @@ Route::prefix('student')->group(function () {
     Route::post('forgot-password', [StudentOtpController::class, 'sendOtp'])->name('student.password.otp');
     Route::get('reset-password', [StudentOtpController::class, 'reset'])->name('student.password.reset');
     Route::post('reset-password', [StudentOtpController::class, 'update'])->name('student.password.update');
-
     Route::get('verify-otp', [StudentOtpController::class, 'verifyFormOtp'])->name('student.verify-form.otp');
-
     Route::post('verify-otp', [StudentOtpController::class, 'verifyOtp'])->name('student.verify.otp');
 
 
-
+    /***
+     * ///////////////////////////
+     * /// MIDDLEWARE: TEACHER ///
+     * ///////////////////////////
+     */
+    
     Route::middleware('auth:student')->group(function () {
         // scan qr
         Route::post('/qr/scan', [QRCodeScanController::class, 'scanQRCode'])->name('qr.scan');

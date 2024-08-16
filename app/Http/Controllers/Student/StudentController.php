@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 
 
@@ -71,7 +73,14 @@ class StudentController extends Controller
     {
         if (Auth::guard('student')->check()) {
             $user = Auth::guard('student')->user();
-            return view('student.dashboard', ['user' => $user]);
+            $enrolled_subjects = $user->subjects()->paginate(6);
+            $subjects_today = $user->subjects()->where('day', date('l'))->get();
+
+            return view('student.dashboard', [
+                'user' => $user,
+                'enrolled_subjects' => $enrolled_subjects,
+                'subjects_today' => $subjects_today
+            ]);
         }
 
         return redirect()->route('student.login');
