@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\QrGenerate;
-use Illuminate\Support\Facades\{Http, Storage};
+use App\Models\{QrGenerate, TeacherGradeHandle, StudentHandle};
+use Illuminate\Support\Facades\Auth;
 
 class QRCodeController extends Controller
 {
@@ -12,7 +12,11 @@ class QRCodeController extends Controller
     {
 
         $attendanceId = uniqid();
+        $user = Auth::guard('teacher')->user();
         $expiration = now()->addMinutes(15)->timestamp;
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+        $grade_handle = TeacherGradeHandle::where('id', $user->id)->first();
+        $allStudentsCount = count(StudentHandle::where('teacher_id', $user->id)->get());
 
         QrGenerate::create([
             'subject_id' => $subjectId,
@@ -27,14 +31,12 @@ class QRCodeController extends Controller
             'expiration' => $expiration,
         ]);
 
-        $encodedData = urlencode($data);
-        $qrCodeUrl = "https://quickchart.io/qr?text={$encodedData}&size=400";
-
-        $response = Http::get($qrCodeUrl);
-        $imageContents = $response->body();
-        $imagePath = storage_path("app/public/qrcode_{$attendanceId}.png");
-        Storage::put("public/qrcode_{$attendanceId}.png", $imageContents);
-
-        return response()->file($imagePath, ['Content-Type' => 'image/png']);
+        return view('teacher.subject.qr_generate', [
+            'data' => $data,
+            'handleSubjects' => $handleSubjects,
+            'grade_handle' => $grade_handle,
+            'user' => $user,
+            'allStudentsCount' => $allStudentsCount,
+        ]);
     }
 }
