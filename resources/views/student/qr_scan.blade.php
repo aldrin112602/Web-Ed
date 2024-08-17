@@ -14,8 +14,6 @@
 
     <script>
         function onScanSuccess(qrCodeMessage) {
-            console.log(qrCodeMessage)
-            
             fetch('{{ route('qr.scan') }}', {
                 method: 'POST',
                 headers: {

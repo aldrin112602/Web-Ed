@@ -111,7 +111,7 @@
 
                 <!-- this should be a dropdown -->
                 <div class="p-3 {{ request()->is('student/grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Grades</a>
+                    <a href="{{ route('student.grades') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Grades</a>
                 </div>
                 
                 <div class="py-2">

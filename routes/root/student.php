@@ -5,7 +5,8 @@ use App\Http\Controllers\Student\{
     QRCodeScanController,
     StudentController as Student,
     StudentOtpController,
-    StudentConversationController
+    StudentConversationController,
+    GradeController
 };
 
 
@@ -30,6 +31,11 @@ Route::prefix('student')->group(function () {
      */
     
     Route::middleware('auth:student')->group(function () {
+        // grades
+        Route::get('grades', [GradeController::class, 'grades'])->name('student.grades');
+        Route::get('viewGrades', [GradeController::class, 'viewGrades'])->name('student.viewGrades');
+
+
         // scan qr
         Route::post('/qr/scan', [QRCodeScanController::class, 'scanQRCode'])->name('qr.scan');
         Route::get('/qr/scan', [QRCodeScanController::class, 'scanQRCodeGet'])->name('qr.scan.get');
