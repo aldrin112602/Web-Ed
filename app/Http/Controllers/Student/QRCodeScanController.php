@@ -68,7 +68,7 @@ class QRCodeScanController extends Controller
 
         $newAttendance->save();
 
-        return response()->json(['success' => 'Attendance marked successfully.'], 200);
+        return response()->json(['success' => 'Attendance recorded successfully.'], 200);
     }
 
     public function scanQRCodeGet()
