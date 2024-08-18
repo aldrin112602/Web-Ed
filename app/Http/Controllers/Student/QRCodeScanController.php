@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\QrGenerate;
-use Illuminate\{Http\Request, Support\Facades\Auth};
+use App\Models\{Present, QrGenerate};
+use Illuminate\{Http\Request, Support\Carbon, Support\Facades\Auth};
 
 class QRCodeScanController extends Controller
 {
@@ -13,40 +13,69 @@ class QRCodeScanController extends Controller
         // Authenticate student
         $studentId = Auth::id();
 
-        // Retrieve QR code details from request
-        $data = $request->input('qr_code_data');
-        $decodedData = json_decode($data, true);
+        // Destructure JSON data
+        [
+            'attendance_id' => $attendanceId,
+            'subject_id' => $subjectId,
+            'teacher_id' => $teacherId,
+            'grade_handle_id' => $gradeHandleId,
+            'expiration' => $expiration,
+            'client_teacher_id' => $clientTeacherId,
+            'client_subject_id' => $clientSubjectId,
+        ] = $request->json()->all();
 
-        // Debug: Log the decoded data
-        \Log::info("Decoded data: " . print_r($decodedData, true));
-
-        if (!$decodedData) {
-            return response()->json(['error' => 'Invalid QR code data.'], 400);
+        if (!$attendanceId) {
+            return response()->json(['error' => 'Attendance ID missing from QR code data.'], 400);
         }
 
-        $attendanceId = $decodedData['attendance_id'];
+        // Check if the attendance record exists with matching subject and teacher IDs
+        $qrRecord = QrGenerate::where('qr_code_id', $attendanceId)
+            ->where('subject_id', $subjectId)
+            ->where('teacher_id', $teacherId)
+            ->where('subject_id', $clientSubjectId)
+            ->where('teacher_id', $clientTeacherId)
+            ->first();
 
-        // Check if attendance record exists
-        $attendance = QrGenerate::where('qr_code_id', $attendanceId)->first();
-
-        if (!$attendance) {
+        if (!$qrRecord) {
             return response()->json(['error' => 'Invalid QR code data.'], 400);
         }
-
-        $decodedData = json_decode($data, true);
 
         // Check expiration
-        if (now()->timestamp > $decodedData['expiration']) {
+        if (now()->timestamp > $expiration) {
             return response()->json(['error' => 'QR code has expired.'], 400);
         }
 
+        // Check if the student has already recorded attendance today
+        $today = Carbon::today();
+        $existingAttendance = Present::where('student_id', $studentId)
+            ->where('subject_id', $subjectId)
+            ->where('teacher_id', $teacherId)
+            ->where('grade_handle_id', $gradeHandleId)
+            ->whereDate('created_at', $today)
+            ->exists();
+
+        if ($existingAttendance) {
+            return response()->json(['error' => 'Attendance already recorded for today.'], 400);
+        }
+
+        // Record attendance
+        $newAttendance = new Present([
+            'student_id' => $studentId,
+            'subject_id' => $subjectId,
+            'teacher_id' => $teacherId,
+            'grade_handle_id' => $gradeHandleId,
+        ]);
+
+        $newAttendance->save();
 
         return response()->json(['success' => 'Attendance marked successfully.'], 200);
     }
 
-
     public function scanQRCodeGet()
     {
-        return view('student.qr_scan');
+        $user = Auth::user();
+        return view('student.qr_scan', [
+            'user' => $user
+        ]);
     }
 }
