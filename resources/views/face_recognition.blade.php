@@ -211,6 +211,15 @@
                 }).fail(err => console.error('Error fetching student info:', err));
             }
         });
+
+
+    window.addEventListener('beforeunload', function (e) {
+        var confirmationMessage = 'Are you sure to reload this page? this may takes some times to load all models once you reload the page.';
+
+        (e || window.event).returnValue = confirmationMessage;
+        return confirmationMessage;
+    });
+
     </script>
 </body>
 

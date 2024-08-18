@@ -16,7 +16,6 @@
     let firstRequest = true;
 
     function onScanSuccess(qrCodeMessage) {
-        // Combine the QR code data with the additional data
         qrCodeMessage = JSON.stringify({
             ...JSON.parse(qrCodeMessage),
             client_teacher_id,

@@ -69,5 +69,13 @@
             icon: 'success',
         });
     });
+    
+
+    window.addEventListener('beforeunload', function (e) {
+        var confirmationMessage = 'Are you sure to leave this page?';
+
+        (e || window.event).returnValue = confirmationMessage;
+        return confirmationMessage;
+    });
 </script>
 @endsection
