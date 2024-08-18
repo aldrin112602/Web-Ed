@@ -99,6 +99,26 @@
                 }).catch(err => {
                     console.error(err);
                 });
+
+
+
+                fetch('{{ route("getAbsentCount") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        teacher_id,
+                        grade_handle_id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    $('#absent').text(data.count);
+                }).catch(err => {
+                    console.error(err);
+                });
         }, 3000)
 
         // Countdown Timer

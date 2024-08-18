@@ -54,6 +54,7 @@ Route::prefix('teacher')->group(function () {
         // generate qr code
         Route::get('/generate-qr-code/{subjectId}/{teacherId}', [QRCodeController::class, 'generateQRCode'])->name('generateQR');
         Route::post('/getPresentCount', [Present::class, 'presentCount'])->name('getPresentCount');
+        Route::post('/getAbsentCount', [Present::class, 'absentCount'])->name('getAbsentCount');
 
 
 
