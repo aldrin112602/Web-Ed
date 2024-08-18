@@ -31,7 +31,7 @@
                                 Total Present:
                             </td>
                             <td class="px-2 py-1 border">
-                                0
+                                <span id="present">0</span>
                             </td>
                         </tr>
 
@@ -40,7 +40,7 @@
                                 Total Absent:
                             </td>
                             <td class="p-3 border">
-                                9
+                            <span id="absent">0</span>
                             </td>
                         </tr>
                     </tbody>
@@ -61,18 +61,84 @@
         });
 
         const qrData = @json($data);
-        qrcode.makeCode(qrData);
+        const parsedData = JSON.parse(qrData);
+        const {
+            subject_id,
+            teacher_id,
+            grade_handle_id
+        } = parsedData;
+        const expirationTime = parsedData.expiration
 
+        // Generate QR code
+        qrcode.makeCode(JSON.stringify(qrData));
+
+        // Show success message
         Swal.fire({
             title: 'Success',
             text: 'QR Code generated successfully!',
             icon: 'success',
         });
-    });
-    
 
-    window.addEventListener('beforeunload', function (e) {
-        var confirmationMessage = 'Are you sure to leave this page?';
+        // get present count
+        setInterval(() => {
+            fetch('{{ route("getPresentCount") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        subject_id,
+                        teacher_id,
+                        grade_handle_id
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    $('#present').text(data.count);
+                }).catch(err => {
+                    console.error(err);
+                });
+        }, 3000)
+
+        // Countdown Timer
+        const countdownElement = document.createElement('div');
+        countdownElement.classList.add('text-green-600');
+        countdownElement.classList.add('p-2');
+        countdownElement.classList.add('text-center');
+        document.querySelector('#qr_generate').appendChild(countdownElement);
+
+        function updateCountdown() {
+            const now = Math.floor(Date.now() / 1000);
+            const timeLeft = expirationTime - now;
+
+            if (timeLeft <= 0) {
+                countdownElement.textContent = 'QR Code has expired!';
+                countdownElement.classList.remove('text-green-600');
+                countdownElement.classList.add('text-rose-600');
+                countdownElement.classList.add('p-2');
+                Swal.fire({
+                    title: 'Expired',
+                    text: 'The QR code has expired.',
+                    icon: 'error',
+                });
+                clearInterval(interval);
+                return;
+            }
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            countdownElement.textContent = `Expires in: ${minutes} minute/s and ${seconds < 10 ? '0' : ''}${seconds} second/s`;
+        }
+
+        updateCountdown();
+        let interval = setInterval(updateCountdown, 1000);
+    });
+
+    // Prevent page refresh without confirmation
+    window.addEventListener('beforeunload', function(e) {
+        var confirmationMessage = 'Are you sure you want to leave this page?';
 
         (e || window.event).returnValue = confirmationMessage;
         return confirmationMessage;
