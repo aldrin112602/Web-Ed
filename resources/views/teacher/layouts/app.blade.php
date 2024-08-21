@@ -85,7 +85,7 @@
                         <img src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
                     </div>
                 </div>
-                
+
                 <div class="p-3 {{ request()->is('teacher/dashboard') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('teacher.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
@@ -105,13 +105,15 @@
                         <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div role="none">
                                 @if ($handleSubjects->isEmpty())
-                                    
-                                        <div class="p-4 text-gray-600 text-sm"><p class="text-rose-600">No subjects found. </p><a href="{{ route('teacher.view.add_grade_handle') }}" class="text-sm underline"><i class="fas fa-plus"></i> Add</a></div>
-                                    
+
+                                <div class="p-4 text-gray-600 text-sm">
+                                    <p class="text-rose-600">No subjects found. </p><a href="{{ route('teacher.view.add_grade_handle') }}" class="text-sm underline"><i class="fas fa-plus"></i> Add</a>
+                                </div>
+
                                 @else
-                                    @foreach ($handleSubjects as $gradeHandle)
-                                           <a href="{{ route('teacher.subject_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && request()->is('teacher/subject_list')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
-                                    @endforeach
+                                @foreach ($handleSubjects as $gradeHandle)
+                                <a href="{{ route('teacher.subject_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && request()->is('teacher/subject_list')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
+                                @endforeach
                                 @endif
                             </div>
                         </div>
@@ -133,13 +135,15 @@
                         <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu-2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button-2" tabindex="-1">
                             <div role="none">
                                 @if ($handleSubjects->isEmpty())
-                                    
-                                        <div class="p-4 text-gray-600 text-sm"><p class="text-rose-600">No students found.</p></div>
-                                    
+
+                                <div class="p-4 text-gray-600 text-sm">
+                                    <p class="text-rose-600">No students found.</p>
+                                </div>
+
                                 @else
-                                    @foreach ($handleSubjects as $gradeHandle)
-                                           <a href="{{ route('teacher.student_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && (request()->is('teacher/student_list') || request()->is('teacher/absents') || request()->is('teacher/presents'))) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
-                                    @endforeach
+                                @foreach ($handleSubjects as $gradeHandle)
+                                <a href="{{ route('teacher.student_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && (request()->is('teacher/student_list') || request()->is('teacher/absents') || request()->is('teacher/presents'))) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
+                                @endforeach
                                 @endif
                             </div>
                         </div>
@@ -159,10 +163,43 @@
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-sheet-plastic"></i>Attendace Sheet</a>
                 </div>
 
-                <div class="p-3 {{ request()->is('teacher/students_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Students Grade</a>
+
+
+
+                <div class="p-3 {{ request()->is('teacher/grading') || request()->is('teacher/custom_grade') || request()->is('teacher/grading_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <div class="relative inline-block text-left w-full">
+                        <div class="w-full">
+                            <button type="button" class="text-sm flex items-center justify-start gap-3 w-full" id="menu-button-3" aria-expanded="true" aria-haspopup="true">
+                                <i class="fa-solid fa-graduation-cap"></i> Students Grade
+                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu-3" role="menu" aria-orientation="vertical" aria-labelledby="menu-button-2" tabindex="-1">
+                            <div role="none">
+                                <a href="{{ route('teacher.grading') }}" class="{{ 
+                                           request()->is('teacher/grading') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Grading
+                                </a>
+
+                                <a href="{{ route('teacher.custom_grade') }}" class="{{ 
+                                           request()->is('teacher/custom_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Custom Grade
+                                </a>
+
+
+                                <a href="{{ route('teacher.grading_sheet') }}" class="{{ 
+                                           request()->is('teacher/grading_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Grading Sheet
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
+
                 <div class="py-2">
                     <hr>
                 </div>
@@ -172,7 +209,7 @@
                 <script>
                     $(() => {
                         $.ajax({
-                            url: '{{ route('teacher.get_message_count') }}',
+                            url: '{{ route("teacher.get_message_count") }}',
                             method: 'GET',
                             success: (response) => {
                                 $('#messageCounts').text(response.count);
@@ -215,8 +252,9 @@
     </main>
     <script>
         try {
-            document.addEventListener('DOMContentLoaded', () => {
-                const dropzone = document.getElementById('dropzone');
+            const dropzone = document.getElementById('dropzone');
+            if(dropzone) {
+                document.addEventListener('DOMContentLoaded', () => {
                 const fileInput = document.getElementById('file-upload');
                 const preview = document.getElementById('preview');
 
@@ -256,6 +294,7 @@
                     }
                 });
             });
+            }
         } catch (err) {
 
         }
@@ -375,6 +414,20 @@
                     $('#menu-button-2').attr('aria-expanded', 'false');
                 }
             });
+
+
+            $('#menu-button-3').on('click', function() {
+                const expanded = $(this).attr('aria-expanded') === 'true';
+                $(this).attr('aria-expanded', !expanded);
+                $('#dropdown-menu-3').toggleClass('hidden');
+            });
+
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#menu-button-3, #dropdown-menu-3').length) {
+                    $('#dropdown-menu-3').addClass('hidden');
+                    $('#menu-button-3').attr('aria-expanded', 'false');
+                }
+            });
         });
     </script>
 
@@ -396,7 +449,7 @@
         }
     </script>
 
-<script>
+    <script>
         let selectAll = document.getElementById('selectAll')
         if (selectAll) {
             selectAll.addEventListener('change', function() {
@@ -475,7 +528,7 @@
             });
         });
     </script>
-@yield('scripts')
+    @yield('scripts')
 </body>
 
 </html>

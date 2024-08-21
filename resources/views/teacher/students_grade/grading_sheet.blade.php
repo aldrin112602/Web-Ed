@@ -19,7 +19,6 @@
                 <span>School Year: </span>
                 <select class="ml-2 border border-gray-300 p-1 rounded">
                     <option>2023-2024</option>
-                    <!-- Add other school years if needed -->
                 </select>
             </div>
         </div>

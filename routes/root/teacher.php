@@ -13,7 +13,8 @@ use App\Http\Controllers\Teacher\{
     TeacherOtpController,
     TeacherConversationController,
     SubjectController as Subject,
-    Present
+    Present,
+    StudentsGradeController
 };
 
 // Teacher routes   
@@ -35,6 +36,13 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+
+        // students grade
+        Route::get('grading', [StudentsGradeController::class, 'grading'])->name('teacher.grading');
+        Route::get('custom_grade', [StudentsGradeController::class, 'custom_grade'])->name('teacher.custom_grade');
+        Route::get('grading_sheet', [StudentsGradeController::class, 'grading_sheet'])->name('teacher.grading_sheet');
+
+
         // for announcement
         Route::post('announcement', [Announcement::class, 'makeAnnouncement'])->name('teacher.make_announcement');
 

@@ -167,8 +167,11 @@
     </main>
     <script>
         try {
-            document.addEventListener('DOMContentLoaded', () => {
-                const dropzone = document.getElementById('dropzone');
+            const dropzone = document.getElementById('dropzone');
+
+            if(dropzone) {
+                document.addEventListener('DOMContentLoaded', () => {
+                
                 const fileInput = document.getElementById('file-upload');
                 const preview = document.getElementById('preview');
 
@@ -208,6 +211,7 @@
                     }
                 });
             });
+            }
         } catch (err) {
 
         }
