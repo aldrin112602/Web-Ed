@@ -10,6 +10,7 @@ use Illuminate\{
 };
 
 use App\Models\{Message, StudentImage, Admin\SubjectModel, StudentHandle};
+use App\Models\Student\AttendanceHistory;
 
 
 class StudentAccount extends Authenticatable
@@ -60,6 +61,14 @@ class StudentAccount extends Authenticatable
     {
         return $this->belongsToMany(SubjectModel::class, 'student_subjects', 'student_id', 'subject_id');
     }
+
+
+
+    public function attendaceHistories()
+    {
+        return $this->hasMany(AttendanceHistory::class, 'student_id');
+    }
+
 
     public function studentHandles()
     {

@@ -14,7 +14,11 @@ class StudentController extends Controller
     public function attendanceHistory()
     {
         $user = Auth::user();
-        return view('student.attendance_history', ['user' => $user]);
+        $attendace_histories = $user->attendaceHistories()->paginate(10);
+        return view('student.attendance_history', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+        ]);
     }
 
     public function enrolledSubjects()
