@@ -3,72 +3,301 @@
 @section('title', 'Grading')
 
 @section('content')
-<div class="p-8">
-    <!-- Header Section -->
-    <div class="grid grid-cols-3 gap-4 text-sm mb-4">
-        <div class="flex flex-col">
-            <span>Region: <span class="font-semibold">IV - A</span></span>
-            <span>Division: <span class="font-semibold">2nd</span></span>
+<div class="p-4">
+    <div class="flex gap-3 items-center justify-start">
+        <div class="flex items-center justify-start gap-2">
+            <span>Region: </span>
+            <p class="border p-1 bg-white border-slate-500">
+                IV - A
+            </p>
         </div>
-        <div class="flex flex-col">
-            <span>School Name: <span class="font-semibold">Ark Technological Institute Education System Inc.</span></span>
-        </div>
-        <div class="flex flex-col">
-            <span>School ID: <span class="font-semibold">405210</span></span>
-            <span>School Year: <span class="font-semibold">2023-2024</span></span>
-        </div>
-    </div>
-
-    <!-- Table Section -->
-    <div class="border border-gray-300">
-        <div class="flex bg-gray-200 p-2">
-            <div class="flex-1 text-center">First Quarter</div>
-            <div class="flex-1 text-center">Grade & Section:</div>
-            <div class="flex items-center p-2">
-                <label class="mr-2">Semester:</label>
-                <select class="border border-gray-300 p-1 rounded">
-                    <option>1st</option>
-                    <option>2nd</option>
-                </select>
-            </div>
-            <div class="flex flex-col items-center justify-center p-2">
-                <label>Track:</label>
-                <select class="border border-gray-300 p-1 rounded">
-                    <option>Core Subject(All Tracks)</option>
-                    <option>Academic Track (except Immersion)</option>
-                    <option>Work Immersion/Culminating Activities (for Academic Track)</option>
-                    <option>TVL/Sports/Arts and Design Track</option>
-                    <option>Custom</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Learner's Names Section -->
-        <div class="grid grid-cols-3 divide-x">
-            <div class="col-span-1 bg-gray-200 p-2 text-center">
-                <span>Learner's Names</span>
-            </div>
-            <div class="col-span-2">
-                <div class="grid grid-cols-2 divide-x">
-                    <div class="text-center p-2 bg-gray-300">Male</div>
-                    <div class="text-center p-2 bg-gray-300">Female</div>
-                </div>
-                <div class="grid grid-cols-2 divide-x divide-y">
-                    <div class="p-2">James Reyes</div>
-                    <div class="p-2">Katherine Inson</div>
-                    <div class="p-2">Aldrin Santos</div>
-                    <div class="p-2">Jem Perez</div>
-                    <div class="p-2"></div>
-                    <div class="p-2">Christine Par</div>
-                    <div class="p-2"></div>
-                    <div class="p-2">Saira Vergara</div>
-                    <div class="p-2"></div>
-                    <div class="p-2">Kim Villaruel</div>
-                    <div class="p-2"></div>
-                    <div class="p-2">Cielo Sucio</div>
-                </div>
+        <div>
+            <div class="flex items-center justify-start gap-2">
+                <span>Division: </span>
+                <p class="border p-1 bg-white border-slate-500">
+                    2nd
+                </p>
             </div>
         </div>
     </div>
+
+    <div class="flex gap-3 items-center justify-between mt-2">
+        <div class="flex items-center justify-start gap-2">
+            <span>School name: </span>
+            <p class="border p-1 bg-white border-slate-500">
+                Ark Technological Institute Education System Inc
+            </p>
+        </div>
+        <div class="flex items-center justify-start gap-2">
+            <span>School ID: </span>
+            <p class="border p-1 bg-white border-slate-500">
+                405210
+            </p>
+        </div>
+
+        <div class="flex items-center justify-start gap-2">
+            <span>School Year: </span>
+            <select name="school_year p-1" id="school_year">
+                <option value="2023-2024">2023-2024</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- table -->
+    <table class="w-full bg-white mt-4">
+        <tr class="border">
+            <td class="border p-2" rowspan="3">
+                <select name="quarter" id="quarter" class="border-0 p-0 px-10">
+                    <option value="First Quarter">First Quarter</option>
+                    <option value="Second Quarter">Second Quarter</option>
+                </select>
+            </td>
+            <td class="border p-2" colspan="13">
+                Grade & Section:
+            </td>
+            <td class="border p-2" colspan="13">
+                Teacher:
+            </td>
+            <td class="border p-2" colspan="3" rowspan="3">
+                Quarterly Assessment
+            </td>
+            <td class="border p-2" rowspan="4">
+                Initial Grade
+            </td>
+            <td class="border p-2" rowspan="4">
+                Quarterly Grade
+            </td>
+        </tr>
+
+        <tr class="border">
+            <td class="border p-2" colspan="13">WRITTEN WORK</td>
+            <td class="border p-2" colspan="13">PERFORMANCE TASK</td>
+        </tr>
+
+        <tr class="border">
+            <td class="border p-2" colspan="26"></td>
+        </tr>
+
+        <tr class="border">
+            <td class="border p-2">Learner's Name</td>
+            @for ($i = 1; $i <= 10; $i++)
+                <td class="border p-2">{{ $i }}</td>
+                @endfor
+                <td class="border p-2">Total</td>
+                <td class="border p-2">PS</td>
+                <td class="border p-2">WS</td>
+
+                @for ($i = 1; $i <= 10; $i++)
+                    <td class="border p-2">{{ $i }}</td>
+                    @endfor
+                    <td class="border p-2">Total</td>
+                    <td class="border p-2">PS</td>
+                    <td class="border p-2">WS</td>
+                    <td class="border p-2">1</td>
+                    <td class="border p-2">PS</td>
+                    <td class="border p-2">WS</td>
+        </tr>
+
+        <tr class="border">
+            <td class="border p-2 bg-slate-50 text-sm">Highest Possible Score</td>
+            @for ($i = 1; $i <= 10; $i++)
+                <td class="border p-1 cursor-pointer" contenteditable="true">
+                </td>
+                @endfor
+                <td class="border p-2"></td>
+                <td class="border p-1 cursor-pointer" contenteditable="true">100.00</td>
+                <td class="border p-1 cursor-pointer" contenteditable="true">25%</td>
+
+                @for ($i = 1; $i <= 10; $i++)
+                    <td class="border p-1 cursor-pointer" contenteditable="true">
+                    </td>
+                    @endfor
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-1 cursor-pointer" contenteditable="true">
+                    </td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+        </tr>
+
+
+        <tr class="border">
+            <td class="border p-2 bg-slate-100">Male</td>
+            @for ($j=0; $j < 31; $j++)
+                <td class="border p-2 py-4">
+                </td>
+                @endfor
+        </tr>
+        @foreach ($allMaleStudents as $student)
+        <tr>
+            <td class="border p-2">
+                {{ $student->account->name }}
+            </td>
+
+            @for ($i = 1; $i <= 10; $i++)
+                <td data-for="written_work" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                </td>
+                @endfor
+
+                <td class="border p-2" data-for="written_work_total"></td>
+                <td class="border p-2" data-for="written_work_ps"></td>
+                <td class="border p-2" data-for="written_work_ws"></td>
+
+
+                @for ($i = 1; $i <= 10; $i++)
+
+
+                    <td data-for="performance_task" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                    </td>
+                    @endfor
+
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+
+                    <td class="border p-1 cursor-pointer" contenteditable="true">
+                    </td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+                    <td class="border p-2"></td>
+        </tr>
+        @endforeach
+        <!-- per row -->
+        @for ($i = 0; $i < 3; $i++)
+            <!-- per cell -->
+            <tr>
+                @for ($j=0; $j < 32; $j++)
+                    <td class="border p-2 py-4">
+                    </td>
+                    @endfor
+            </tr>
+            @endfor
+
+
+
+
+            <!-- female -->
+            <tr class="border">
+                <td class="border p-2 bg-slate-100">Female</td>
+                @for ($j=0; $j < 31; $j++)
+                    <td class="border p-2 py-4">
+                    </td>
+                    @endfor
+            </tr>
+            @foreach ($allFemaleStudents as $student)
+            <tr>
+                <td class="border p-2">
+                    {{ $student->account->name }}
+                </td>
+
+                @for ($i = 1; $i <= 10; $i++)
+                    <td data-for="written_work" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                    </td>
+                    @endfor
+
+                    <td class="border p-2" data-for="written_work_total"></td>
+                    <td class="border p-2" data-for="written_work_ps"></td>
+                    <td class="border p-2" data-for="written_work_ws"></td>
+                    @for ($i = 1; $i <= 10; $i++)
+
+
+                        <td data-for="performance_task" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                        </td>
+                        @endfor
+
+                        <td class="border p-2"></td>
+                        <td class="border p-2"></td>
+                        <td class="border p-2"></td>
+
+                        <td class="border p-1 cursor-pointer" contenteditable="true">
+                        </td>
+                        <td class="border p-2"></td>
+                        <td class="border p-2"></td>
+                        <td class="border p-2"></td>
+                        <td class="border p-2"></td>
+            </tr>
+            @endforeach
+            <!-- per row -->
+            @for ($i = 0; $i < 3; $i++)
+                <!-- per cell -->
+                <tr>
+                    @for ($j=0; $j < 32; $j++)
+                        <td class="border p-2 py-4">
+                        </td>
+                        @endfor
+                </tr>
+                @endfor
+
+    </table>
+    <!-- table -->
 </div>
+
+
+<script>
+    $(() => {
+        // Select all contenteditable cells and store them in an array
+        let inputCells = [];
+        $('td[contenteditable="true"]').each((i, td) => {
+            if (td.hasAttribute('data-user-id')) inputCells.push(td);
+        });
+
+        // Add input event listeners to each cell to detect changes
+        inputCells.forEach(td => {
+            td.addEventListener('input', function(e) {
+                calculateTotalsAndScores(this);
+            });
+        });
+
+        // Function to calculate totals and scores
+        function calculateTotalsAndScores(cell) {
+            const userId = cell.getAttribute('data-user-id');
+            const scoreType = cell.getAttribute('data-for');
+
+            let total = 0;
+            let highestScore = 0;
+
+            // Calculate total score for the user and score type
+            $(`td[data-user-id="${userId}"][data-for="${scoreType}"]`).each((i, td) => {
+                const cellValue = parseInt(td.textContent) || 0;
+                total += cellValue;
+            });
+
+            // Update the total cell
+            const totalCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_total"]`);
+            totalCell.text(total);
+
+            // Fetch highest possible score from the row with "Highest Possible Score"
+            const highestScoreCell = $(`tr:contains('Highest Possible Score') td[data-for="${scoreType}"]`).eq(0);
+            highestScore = parseInt(highestScoreCell.text()) || 0;
+
+            // Initialize PS and WS
+            let percentageScore = "";
+            let weightedScore = "";
+
+            // Calculate PS only if total and highestScore are valid
+            if (total !== 0 && highestScore !== 0) {
+                percentageScore = (total / highestScore * 100).toFixed(2); // Equivalent to ROUND in Excel
+
+                // WS is 25% of PS
+                weightedScore = (percentageScore * 0.25).toFixed(2);
+            }
+
+            // Update PS and WS cells
+            const psCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_ps"]`);
+            psCell.text(percentageScore);
+
+            const wsCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_ws"]`);
+            wsCell.text(weightedScore);
+
+            console.log('Total:', total, 'PS:', percentageScore, 'WS:', weightedScore);
+        }
+    });
+</script>
+
+
+
 @endsection

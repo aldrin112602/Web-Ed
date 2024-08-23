@@ -18,4 +18,9 @@ class StudentHandle extends Model
     {
         return $this->belongsTo(StudentAccount::class, 'id');
     }
+
+    public function account()
+    {
+        return $this->hasOne(StudentAccount::class, 'id', 'student_id');
+    }
 }
