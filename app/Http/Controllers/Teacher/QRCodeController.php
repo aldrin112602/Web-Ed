@@ -32,6 +32,8 @@ class QRCodeController extends Controller
             'grade_handle_id' => $grade_handle->id,
         ]);
 
+
+
         return view('teacher.subject.qr_generate', [
             'data' => $data,
             'handleSubjects' => $handleSubjects,

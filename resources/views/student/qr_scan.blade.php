@@ -17,10 +17,11 @@
 
     function onScanSuccess(qrCodeMessage) {
         qrCodeMessage = JSON.stringify({
-            ...JSON.parse(qrCodeMessage),
+            ...JSON.parse(window.atob(qrCodeMessage)),
             client_teacher_id,
             client_subject_id
         });
+
 
         setTimeout(() => {
             fetch('{{ route('qr.scan') }}', {
@@ -33,6 +34,7 @@
                     })
                 .then(response => response.json())
                 .then(data => {
+                    
                     firstRequest = false;
                     if (data?.error) {
                         Swal.fire({

@@ -70,7 +70,7 @@
         const expirationTime = parsedData.expiration
 
         // Generate QR code
-        qrcode.makeCode(JSON.stringify(qrData));
+        qrcode.makeCode(window.btoa(qrData));
 
         // Show success message
         Swal.fire({
