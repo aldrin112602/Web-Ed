@@ -36,6 +36,7 @@ class GuidanceController extends Controller
             'TeacherGradeHandle' => TeacherGradeHandle::class,
             'SubjectModel' => SubjectModel::class,
             'TeacherAccount' => TeacherAccount::class,
+            'account_list' => StudentAccount::paginate(10) 
         ]);
     }
 
