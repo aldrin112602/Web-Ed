@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
+use App\Models\Student\StudentAccount;
 
 class GuidanceController extends Controller
 {
@@ -73,22 +74,18 @@ class GuidanceController extends Controller
     {
         if (Auth::guard('guidance')->check()) {
             $user = Auth::guard('guidance')->user();
-            return view('guidance.dashboard', ['user' => $user]);
+            $total_number_of_students = StudentAccount::all()->count();
+            return view('guidance.dashboard', [
+                'user' => $user,
+                'total_number_of_students' => $total_number_of_students
+            ]);
         }
 
         return redirect()->route('guidance.login');
     }
 
 
-    public function home()
-    {
-        if (Auth::guard('guidance')->check()) {
-            $user = Auth::guard('guidance')->user();
-            return view('guidance.home', ['user' => $user]);
-        }
 
-        return redirect()->route('guidance.login');
-    }
 
     public function profile()
     {
