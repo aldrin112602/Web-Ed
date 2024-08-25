@@ -18,92 +18,54 @@
         </div>
     </div>
 
+    <!-- Attendance Table -->
     <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
-            <thead>
-                <tr class="bg-gray-100 border-b">
-                    <th class="px-4 py-2 text-left">Date</th>
-                    <th class="px-4 py-2 text-left">Day</th>
-                    <th class="px-4 py-2 text-left">Subject</th>
-                    <th class="px-4 py-2 text-left">Teacher</th>
-                    <th class="px-4 py-2 text-left">Time in</th>
-                    <th class="px-4 py-2 text-left">Status</th>
+        @if ($attendace_histories->isEmpty())
+        <div class="text-center p-10 bg-white">
+            <p>
+                No history found, nothing to display at the moment.
+            </p>
+        </div>
+        @else
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                <tr>
+                    <th class="py-3 px-6 text-left">Date</th>
+                    <th class="py-3 px-6 text-left">Day</th>
+                    <th class="py-3 px-6 text-left">Subject</th>
+                    <th class="py-3 px-6 text-left">Teacher</th>
+                    <th class="py-3 px-6 text-left">Time in</th>
+                    <th class="py-3 px-6 text-left">Status</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">8:30 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-blue-500 text-white px-4 py-1 rounded-lg">Present</span>
+            <tbody class="text-gray-600 text-sm font-light">
+
+                @foreach ($attendace_histories as $history)
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                        {{ $history->date }}
                     </td>
-                </tr>
-                <!-- Repeat similar rows as needed -->
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">8:40 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-blue-500 text-white px-4 py-1 rounded-lg">Present</span>
+                    <td class="py-3 px-6 text-left">
+                        {{ $SubjectModel::where('id', $history->subject_model_id)->first()->day }}
                     </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">8:50 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-blue-500 text-white px-4 py-1 rounded-lg">Present</span>
+                    <td class="py-3 px-6 text-left flex items-center gap-2">
+                        <i class="fa-regular fa-note-sticky"></i>
+                        {{ $SubjectModel::where('id', $history->subject_model_id)->first()->subject }}
                     </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">9:00 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-blue-500 text-white px-4 py-1 rounded-lg">Present</span>
+                    <td class="py-3 px-6 text-left">
+                        {{ $TeacherAccount::where('id', $history->teacher_id)->first()->name }}
                     </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">9:18 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-blue-500 text-white px-4 py-1 rounded-lg">Present</span>
+                    <td class="py-3 px-6 text-left">
+                        {{ $SubjectModel::where('id', $history->subject_model_id)->first()->time }}
                     </td>
+                    <td class="py-3 px-6 text-left">{{ $history->status }}</td>
                 </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">9:15 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-red-500 text-white px-4 py-1 rounded-lg">Absent</span>
-                    </td>
-                </tr>
-                <tr class="border-b">
-                    <td class="px-4 py-2">2024-11-21</td>
-                    <td class="px-4 py-2">Monday</td>
-                    <td class="px-4 py-2">Graphic Design</td>
-                    <td class="px-4 py-2">Ms. Sarah Ignacio</td>
-                    <td class="px-4 py-2">8:50 AM</td>
-                    <td class="px-4 py-2">
-                        <span class="bg-red-500 text-white px-4 py-1 rounded-lg">Absent</span>
-                    </td>
-                </tr>
+                @endforeach
+
             </tbody>
         </table>
+        @endif
     </div>
+
 </div>
 @endsection

@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 use App\Models\Student\StudentAccount;
+use App\Models\Student\AttendanceHistory;
+use App\Models\TeacherGradeHandle;
+use App\Models\Admin\SubjectModel;
+use App\Models\Teacher\TeacherAccount;
+
+
+
 
 class GuidanceController extends Controller
 {
@@ -22,7 +29,14 @@ class GuidanceController extends Controller
     public function attendanceHistory()
     {
         $user = Auth::guard('guidance')->user();
-        return view('guidance.attendance_history', ['user' => $user]);
+        $attendace_histories = AttendanceHistory::all();
+        return view('guidance.attendance_history', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+            'TeacherGradeHandle' => TeacherGradeHandle::class,
+            'SubjectModel' => SubjectModel::class,
+            'TeacherAccount' => TeacherAccount::class,
+        ]);
     }
 
     public function login()
