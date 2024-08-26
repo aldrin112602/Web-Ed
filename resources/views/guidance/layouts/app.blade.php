@@ -11,48 +11,7 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
-
-    <style>
-        html::-webkit-scrollbar {
-            display: none;
-        }
-
-        * {
-            scroll-behavior: smooth;
-        }
-
-        @media print {
-            #tablePreview {
-                position: fixed;
-                top: 0;
-                left: 0;
-                background: white;
-                z-index: 100;
-                width: 100vw;
-                height: 100vh;
-            }
-
-            #tablePreview ._header {
-                display: block !important;
-            }
-
-            #tablePreview h2 {
-                display: block !important;
-            }
-
-            #tablePreview table tr td:first-child,
-            #tablePreview table tr th:first-child,
-            #tablePreview table tr td:last-child,
-            #tablePreview table tr th:last-child {
-                display: none !important;
-            }
-
-            #tablePreview table tr input[type="checkbox"]:not(:checked)+.ellipsis-text {
-                display: none !important;
-            }
-
-        }
-    </style>
+    @yield('custom_css')
 </head>
 
 <body class="bg-gray-100">

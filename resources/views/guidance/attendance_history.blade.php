@@ -47,7 +47,7 @@
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
                         
                         <td class="py-2 text-center border">
-                            <a href="" class="py-1 rounded px-3 bg-blue-900 text-white">
+                            <a href="{{ route('guidance.view_attendance_history', $list->id) }}" class="py-1 rounded px-3 bg-blue-900 text-white">
                             <i class="fa-solid fa-clock-rotate-left"></i>
                             Attendance history
                             </a>

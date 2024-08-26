@@ -33,7 +33,7 @@ Route::prefix('guidance')->group(function () {
 
         // attendance history
         Route::get('attendance_history', [Guidance::class, 'attendanceHistory'])->name('guidance.attendance_history');
-
+        Route::get('view_attendance_history/{id}', [Guidance::class, 'viewAttendanceHistory'])->name('guidance.view_attendance_history');
 
         // Add Guidance-specific routes here
         Route::get('dashboard', [Guidance::class, 'dashboard'])->name('guidance.dashboard');

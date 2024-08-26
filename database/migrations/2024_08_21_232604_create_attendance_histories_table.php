@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_id');
             $table->unsignedBigInteger('student_id');
             $table->string('status');
+            $table->string('time_in')->default('N/A')->nullable();
             $table->date('date');
             $table->timestamps();
 

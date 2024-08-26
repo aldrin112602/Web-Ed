@@ -33,10 +33,22 @@ class GuidanceController extends Controller
         return view('guidance.attendance_history', [
             'user' => $user,
             'attendace_histories' => $attendace_histories,
+            'account_list' => StudentAccount::paginate(10) 
+        ]);
+    }
+
+
+    public function viewAttendanceHistory($id)
+    {
+        $user = Auth::guard('guidance')->user();
+        $attendace_histories = AttendanceHistory::where('student_id', $id)->get();
+        return view('guidance.view_attendance_history', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
             'TeacherGradeHandle' => TeacherGradeHandle::class,
             'SubjectModel' => SubjectModel::class,
             'TeacherAccount' => TeacherAccount::class,
-            'account_list' => StudentAccount::paginate(10) 
+            'student' => StudentAccount::where('id', $id)->first()
         ]);
     }
 

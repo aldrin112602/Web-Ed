@@ -15,7 +15,8 @@ class AttendanceHistory extends Model
         'teacher_id',
         'grade_handle_id',
         'status',
-        'date'
+        'date',
+        'time_in'
     ];
 
 }
