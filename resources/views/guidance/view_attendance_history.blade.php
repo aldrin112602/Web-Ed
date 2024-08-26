@@ -14,13 +14,6 @@
             height: 100vh;
         }
 
-        /* #tablePreview table tr td:first-child,
-        #tablePreview table tr th:first-child,
-        #tablePreview table tr td:last-child,
-        #tablePreview table tr th:last-child {
-            display: none !important;
-        } */
-
     }
 </style>
 @endsection
@@ -33,8 +26,9 @@
             <button onclick="window.print()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-400">Print</button>
             <button class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</button>
         </div>
-        <div>
-            <input type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div class="relative">
+            <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-search absolute top-3 right-3 text-slate-500"></i>
         </div>
     </div>
 
@@ -57,7 +51,7 @@
             </p>
         </div>
         @else
-        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <table id="tbl_list" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
             <thead class="bg-gray-600 text-white uppercase text-sm leading-normal">
                 <tr>
                     <th class="py-3 px-6 text-left">Date</th>
@@ -72,7 +66,7 @@
             <tbody class="text-sm font-light">
 
                 @foreach ($attendace_histories as $history)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <tr class="border-b border-gray-200 hover:bg-gray-100 tbl_tr">
                     <td class="py-3 px-6 text-left whitespace-nowrap">
                         {{ $history->date }}
                     </td>
