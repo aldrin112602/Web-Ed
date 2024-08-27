@@ -24,7 +24,7 @@
 
         <div>
             <button onclick="window.print()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-400">Print</button>
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</button>
+            <a href="{{ route('guidance.export_attendance_history', $user->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</a>
         </div>
         <div class="relative">
             <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -41,7 +41,7 @@
     <!-- Attendance Table -->
     <div class="overflow-x-auto" id="tablePreview">
         <h2 class="text-2xl font-bold text-gray-700 my-4">
-            {{ $user->name }} Attendance History
+            {{ $student->name }} Attendance History
         </h2>
         
         @if ($attendace_histories->isEmpty())

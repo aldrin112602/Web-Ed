@@ -6,7 +6,7 @@ use App\Http\Controllers\Guidance\{
     GuidanceController as Guidance,
     GuidanceOtpController
 };
-
+use App\Http\Controllers\Student\ExportController;
 
 // Guidance routes
 Route::prefix('guidance')->group(function () {
@@ -26,6 +26,9 @@ Route::prefix('guidance')->group(function () {
 
 
     Route::middleware('auth:guidance')->group(function () {
+
+        // guidance exports
+        Route::get('/export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('guidance.export_attendance_history');
 
         // attendance report
         Route::get('attendance_report', [Guidance::class, 'attendanceReport'])->name('guidance.attendance_report');

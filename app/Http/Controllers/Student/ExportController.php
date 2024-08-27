@@ -6,15 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\{Spreadsheet, Writer\Xlsx};
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use App\Models\Student\AttendanceHistory;
+use App\Models\Student\{AttendanceHistory, StudentAccount};
 use App\Models\Teacher\TeacherAccount;
 use App\Models\Admin\SubjectModel;
-use App\Models\Student\StudentAccount;
 
 
 class ExportController extends Controller
 {
     public function exportAttendanceHistory($id) {
+        
         $attendanceList = AttendanceHistory::where('student_id', $id)->get();
 
 
@@ -34,7 +34,7 @@ class ExportController extends Controller
         $row = 2;
 
         foreach ($attendanceList as $attendance) {
-            $subject = SubjectModel::where('student_id', $id)->first();
+            $subject = SubjectModel::where('id', $attendance->subject_model_id)->first();
             $teacher = TeacherAccount::where('id', $attendance->teacher_id)->first();
 
             $sheet->setCellValue('A' . $row, $attendance->date);
