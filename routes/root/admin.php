@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\{
     attendanceController as Attendace,
     AdminConversationController
 };
+use App\Http\Controllers\Student\ExportController;
 
 
 // Admin routes
@@ -58,6 +59,12 @@ Route::prefix('admin')->group(function () {
             Route::get('report', [Attendace::class, 'attendaceReport'])->name('admin.attendance.report');
             Route::get('absent', [Attendace::class, 'attendaceAbsent'])->name('admin.attendance.absent');
             Route::get('present', [Attendace::class, 'attendacePresent'])->name('admin.attendance.present');
+
+        Route::get('view_attendance_history/{id}', [Attendace::class, 'viewAttendanceHistory'])->name('admin.view_attendance_history');
+
+        // export attendance
+        Route::get('export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('admin.export_attendance_history');
+
         });
 
 
