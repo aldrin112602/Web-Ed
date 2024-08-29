@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Student\AttendanceHistory;
 use App\Models\TeacherGradeHandle;
 use App\Models\Admin\SubjectModel;
+use App\Models\FaceScan;
 use App\Models\Teacher\TeacherAccount;
 
 
@@ -73,6 +74,10 @@ class attendanceController extends Controller
     public function attendacePresent()
     {
         $user = Auth::guard('admin')->user();
-        return view('admin.attendance.present', ['user' => $user]);
+        return view('admin.attendance.present', [
+            'user' => $user,
+            'presents' => FaceScan::paginate(10),
+            'StudentAccount' => StudentAccount::class
+        ]);
     }
 }
