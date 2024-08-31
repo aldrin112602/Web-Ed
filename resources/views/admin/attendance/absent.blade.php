@@ -66,7 +66,10 @@
 
         <hr class="my-3">
 
-        <p class="text-sm text-slate-500 mb-3">Showing 1 - 10 of 1,700 students</p>
+        @if ($studentsWithoutFaceScan->count())
+        <p class="text-sm text-slate-500 mb-3">
+            Showing {{ $studentsWithoutFaceScan->firstItem() }} - {{ $studentsWithoutFaceScan->lastItem() }} of {{ $studentsWithoutFaceScan->total() }} students
+        </p>
 
         <!-- Student List Table -->
         <div class="overflow-x-auto" id="tablePreview">
@@ -91,20 +94,37 @@
                 </thead>
                 <tbody>
 
+                    @foreach ($studentsWithoutFaceScan as $account)
                     <tr>
-                        
-                        <td class="py-2 text-center border">2938476509</td>
-                        <td class="py-2 text-center border">Aldrin</td>
-                        <td class="py-2 text-center border">Caballero</td>
-                        <td class="py-2 text-center border">Male</td>
-                        <td class="py-2 text-center border">ICT</td>
+
+                        <td class="py-2 text-center border">{{ $account->id_number }}</td>
+                        <td class="py-2 text-center border">
+                            {{explode(" ", $account->name)[0]}}
+                        </td>
+                        <td class="py-2 text-center border">
+                            {{explode(" ", $account->name)[count(explode(" ", $account->name)) - 1]}}
+                        </td>
+                        <td class="py-2 text-center border">{{
+                            $account->gender
+                        }}</td>
+                        <td class="py-2 text-center border">{{ $account->strand }}</td>
                         <td class="py-2 text-center border">
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                            
+
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
+
+            <!-- Display pagination links -->
+            <div class="w-full mb-4 mt-4">
+                {{ $studentsWithoutFaceScan->appends(request()->query())->links() }}
+            </div>
+            @else
+            <p>No records found.</p>
+            @endif
+
         </div>
 
     </div>

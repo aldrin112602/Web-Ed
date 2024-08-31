@@ -65,10 +65,35 @@ class attendanceController extends Controller
 
 
 
-    public function attendaceAbsent()
+    public function attendaceAbsent(Request $request)
     {
         $user = Auth::guard('admin')->user();
-        return view('admin.attendance.absent', ['user' => $user]);
+        $scannedStudentIds = FaceScan::pluck('student_id')->toArray();
+
+        $query = StudentAccount::query()->whereNotIn('id', $scannedStudentIds);
+
+
+        // Apply gender filter
+        if ($request->has('gender') && $request->gender != ''  && $request->gender != 'All') {
+            $query->where('gender', $request->gender);
+        }
+
+        // Apply strand filter
+        if ($request->has('strand') && $request->strand != ''  && $request->strand != 'All') {
+            $query->where('strand', $request->strand);
+        }
+
+        // Apply grade filter
+        if ($request->has('grade') && $request->grade != ''  && $request->grade != 'All') {
+            $query->where('grade', $request->grade);
+        }
+
+
+        $studentsWithoutFaceScan = $query->paginate(10);
+        return view('admin.attendance.absent', [
+            'user' => $user,
+            'studentsWithoutFaceScan' => $studentsWithoutFaceScan
+        ]);
     }
 
     public function attendacePresent()
