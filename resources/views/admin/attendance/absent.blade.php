@@ -42,9 +42,9 @@
                     </select>
                 </form>
             </div>
-            <a href="#!" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
+            <!-- <a href="#!" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
                 <i class="fas fa-plus"></i>
-                Add Student</a>
+                Add Student</a> -->
         </div>
 
         <hr class="my-3">
@@ -78,9 +78,9 @@
             <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="py-2 px-1 text-center border">
+                        <!-- <th class="py-2 px-1 text-center border">
                             <input type="checkbox" id="selectAll">
-                        </th>
+                        </th> -->
                         <th class="py-3 px-2 text-center border">ID No.</th>
                         <th class="py-3 px-2 text-center border">First Name</th>
                         <th class="py-3 px-2 text-center border">Last Name</th>
@@ -92,9 +92,7 @@
                 <tbody>
 
                     <tr>
-                        <td class="py-2 text-center border">
-                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="1">
-                        </td>
+                        
                         <td class="py-2 text-center border">2938476509</td>
                         <td class="py-2 text-center border">Aldrin</td>
                         <td class="py-2 text-center border">Caballero</td>
@@ -102,63 +100,7 @@
                         <td class="py-2 text-center border">ICT</td>
                         <td class="py-2 text-center border">
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 text-center border">
-                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="2">
-                        </td>
-                        <td class="py-2 text-center border">2938476510</td>
-                        <td class="py-2 text-center border">John</td>
-                        <td class="py-2 text-center border">Doe</td>
-                        <td class="py-2 text-center border">Male</td>
-                        <td class="py-2 text-center border">ABM</td>
-                        <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 text-center border">
-                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="3">
-                        </td>
-                        <td class="py-2 text-center border">2938476511</td>
-                        <td class="py-2 text-center border">Jane</td>
-                        <td class="py-2 text-center border">Smith</td>
-                        <td class="py-2 text-center border">Female</td>
-                        <td class="py-2 text-center border">HUMSS</td>
-                        <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 text-center border">
-                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="4">
-                        </td>
-                        <td class="py-2 text-center border">2938476512</td>
-                        <td class="py-2 text-center border">Michael</td>
-                        <td class="py-2 text-center border">Brown</td>
-                        <td class="py-2 text-center border">Male</td>
-                        <td class="py-2 text-center border">HE</td>
-                        <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 text-center border">
-                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="5">
-                        </td>
-                        <td class="py-2 text-center border">2938476513</td>
-                        <td class="py-2 text-center border">Emily</td>
-                        <td class="py-2 text-center border">Clark</td>
-                        <td class="py-2 text-center border">Female</td>
-                        <td class="py-2 text-center border">ICT</td>
-                        <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
-                            <button class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            
                         </td>
                     </tr>
                 </tbody>

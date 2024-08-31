@@ -41,9 +41,9 @@
                     </select>
                 </form>
             </div>
-            <a href="#!" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
+            <!-- <a href="#!" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
                 <i class="fas fa-plus"></i>
-                Add Student</a>
+                Add Student</a> -->
         </div>
 
         <hr class="my-3">
