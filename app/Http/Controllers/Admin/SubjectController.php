@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\{Http\Request, Support\Facades\Auth};
 use App\Models\{Admin\SubjectModel, Teacher\TeacherAccount, Student\StudentAccount, History};
+use App\Models\TeacherGradeHandle;
+
 
 class SubjectController extends Controller
 {
@@ -13,8 +15,13 @@ class SubjectController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
+            $gradeHandle = TeacherGradeHandle::query();
 
-            return view('admin.subject.subject', ['user' => $user]);
+            return view('admin.subject.subject', [
+                'user' => $user,
+                'gradeHandle' => $gradeHandle->paginate(10),
+                'TeacherAccount' => TeacherAccount::class
+            ]);
         }
 
         return redirect()->route('admin.login');
