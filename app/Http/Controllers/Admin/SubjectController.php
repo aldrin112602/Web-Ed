@@ -11,6 +11,25 @@ use App\Models\TeacherGradeHandle;
 class SubjectController extends Controller
 {
 
+
+    public function teacherSubjectList(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            $grade_handle = TeacherGradeHandle::where('id', request()->query('grade_handle_id'))->first();
+            $subject_list = SubjectModel::where('teacher_id', request()->query('teacher_id'))->where('grade_handle_id', request()->query('grade_handle_id'))->paginate(10);
+
+            return view('admin.subject.teacher_subject_list', [
+                'user' => $user,
+                'TeacherAccount' => TeacherAccount::class,
+                'grade_handle' => $grade_handle,
+                'subject_list' => $subject_list,
+                'id' => request()->query('teacher_id')
+            ]);
+        }
+
+        return redirect()->route('admin.login');
+    }
     public function subject()
     {
         if (Auth::guard('admin')->check()) {
@@ -114,7 +133,7 @@ class SubjectController extends Controller
 
 
             // Apply subject filter
-            if ($request->has('subject') && $request->subject != ''  && $request->subject != 'All') {
+            if ($request->has('subject') && $request->subject != '' && $request->subject != 'All') {
                 $query->where('subject', $request->subject);
             }
 
@@ -190,11 +209,11 @@ class SubjectController extends Controller
     }
 
     /***
-     * 
+     *
      * //////////////////////////////////////////////////
      * ////// Subject (Update, delete, view) ////
      * //////////////////////////////////////////////////
-     * 
+     *
      */
     public function deleteSubject($id)
     {

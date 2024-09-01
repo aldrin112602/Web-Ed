@@ -64,7 +64,7 @@
                         <td class="py-2 text-center border">{{ $handle->section }}</td>
                         <td class="py-2 text-center border">{{ $TeacherAccount::where('id', $handle->teacher_id)->first()->name }}</td>
                         <td class="py-2 text-center border">
-                            <a href="{{route('admin.view_attendance_history', $handle->id) }}" class="px-2 py-1 bg-blue-900 text-white rounded-md">View Subjects</a>
+                            <a href="{{route('admin.teacher.subject_list', ['grade_handle_id' => $handle->id, 'teacher_id' => $handle->teacher_id]) }}" class="px-2 py-1 bg-blue-900 text-white rounded-md">View Subjects</a>
 
                         </td>
                     </tr>

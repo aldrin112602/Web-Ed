@@ -36,6 +36,11 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+
+        // subject list
+        Route::get('/teacher/subject_list', [SubjectController::class, 'teacherSubjectList'])->name('admin.teacher.subject_list');
+
+
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
         // history
