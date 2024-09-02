@@ -153,7 +153,6 @@ class SubjectController extends Controller
         $request->validate([
             'subject' => 'required',
             'day' => 'required',
-            'assign_teacher' => 'required|exists:teacher_accounts,id',
             'time_start' => 'required',
             'time_end' => 'required',
         ]);
@@ -164,7 +163,8 @@ class SubjectController extends Controller
         $subject = new SubjectModel([
             'subject' => $request->subject,
             'day' => $request->day,
-            'teacher_id' => $request->assign_teacher,
+            'teacher_id' => request()->query('teacher_id'),
+            'grade_handle_id' => request()->query('grade_handle_id'),
             'time' => $time_start_12hr . ' - ' . $time_end_12hr
         ]);
         $subject->save();
@@ -180,7 +180,10 @@ class SubjectController extends Controller
         );
 
 
-        return redirect()->route('admin.subject_list')->with('success', 'Subject created successfully');
+        return redirect()->route('admin.teacher.subject_list', [
+            'teacher_id' => request()->query('teacher_id'),
+            'grade_handle_id' => request()->query('grade_handle_id')
+        ])->with('success', 'Subject created successfully');
     }
 
     // Helper function

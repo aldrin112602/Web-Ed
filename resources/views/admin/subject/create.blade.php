@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Subject</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form enctype="multipart/form-data" action="{{ route('admin.create.subject', ['teacher_id' => request()->query('id'), 'grade_handle_id' => request()->query('grade_handle_id')]) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form action="{{ route('admin.handleCreate.subject', ['teacher_id' => request()->query('teacher_id'), 'grade_handle_id' => request()->query('grade_handle_id')]) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
 
         <div class="w-full">
