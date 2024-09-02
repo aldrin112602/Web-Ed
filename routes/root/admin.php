@@ -32,20 +32,26 @@ Route::prefix('admin')->group(function () {
 
     /***
      * ///////////////////////////
-     * /// MIDDLEWARE: TEACHER ///
+     * /// MIDDLEWARE: ADMIN ///
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
 
-        // subject list
-        Route::get('/teacher/subject_list', [SubjectController::class, 'teacherSubjectList'])->name('admin.teacher.subject_list');
-        Route::prefix('subject')->group(function () {
-            Route::get('create', [SubjectController::class, 'viewCreateSubject'])->name('admin.teacher.create.subject');
-            Route::post('create', [SubjectController::class, 'createSubject'])->name('admin.teacher.handleCreate.subject');
-            Route::delete('{id}', [SubjectController::class, 'deleteSubject'])->name('admin.teacher.delete.subject');
-            Route::get('{id}/edit', [SubjectController::class, 'viewEditSubject'])->name('admin.teacher.edit.subject');
-            Route::put('{id}', [SubjectController::class, 'updateSubject'])->name('admin.teacher.update.subject');
+        Route::prefix('/teacher')->group(function () {
+            // subject list
+            Route::get('/subject_list', [SubjectController::class, 'teacherSubjectList'])->name('admin.teacher.subject_list');
+
+            Route::get('/create', [SubjectController::class, 'viewCreateSubject'])->name('admin.teacher.create.subject');
+            Route::post('/create', [SubjectController::class, 'createSubject'])->name('admin.teacher.handleCreate.subject');
+            Route::delete('/{id}', [SubjectController::class, 'deleteSubject'])->name('admin.teacher.delete.subject');
+            Route::get('/{id}/edit', [SubjectController::class, 'viewEditSubject'])->name('admin.teacher.edit.subject');
+            Route::put('/{id}', [SubjectController::class, 'updateSubject'])->name('admin.teacher.update.subject');
+
         });
+
+
+
+
 
         // dashboard
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
