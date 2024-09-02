@@ -15,13 +15,6 @@
             @enderror
         </div>
 
-        <div class="w-full">
-            <label for="teacher" class="block text-gray-700 mt-2 text-sm mb-1">Assign Teacher</label>
-            <input type="text" id="teacher" name="teacher" class="form-input w-full rounded border-gray-300 @error('teacher') border-red-500 @enderror" value="{{ old('teacher') ?? $subject->teacher }}">
-            @error('teacher')
-            <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
 
         <div class="w-full">
             <label for="time" class="block text-gray-700 mt-2 text-sm mb-1">Time</label>

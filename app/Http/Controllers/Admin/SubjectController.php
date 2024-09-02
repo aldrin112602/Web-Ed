@@ -234,9 +234,17 @@ class SubjectController extends Controller
             );
 
 
+            
+            $teacher_id = $subject->teacher_id;
+            $grade_handle_id = $subject->grade_handle_id;
+
             $subject->delete();
 
-            return redirect()->route('admin.subject_list')->with('success', 'Subject deleted successfully');
+
+            return redirect()->route('admin.teacher.subject_list', [
+                'teacher_id' => $teacher_id,
+                'grade_handle_id' => $grade_handle_id
+            ])->with('success', 'Subject deleted successfully');
         }
 
 
@@ -264,14 +272,12 @@ class SubjectController extends Controller
 
             $request->validate([
                 'subject' => 'required',
-                'teacher' => 'required',
                 'time' => 'required',
                 'day' => 'required',
             ]);
 
             $subject->update([
                 'subject' => $request->subject,
-                'teacher' => $request->teacher,
                 'time' => $request->time,
                 'day' => $request->day,
             ]);
@@ -289,7 +295,10 @@ class SubjectController extends Controller
                 ]
             );
 
-            return redirect()->route('admin.subject_list')->with('success', 'Subject updated successfully');
+            return redirect()->route('admin.teacher.subject_list', [
+                'teacher_id' => $subject->teacher_id,
+                'grade_handle_id' => $subject->grade_handle_id
+            ])->with('success', 'Subject updated successfully');
         }
 
         return redirect()->route('admin.login');
