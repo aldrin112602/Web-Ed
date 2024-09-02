@@ -4,7 +4,7 @@
 @section('content')
 <div class="text-slate-100 p-2 bg-blue-400">Create Subject</div>
 <div class="min-w-full flex items-center justify-center p-6" style="min-height: 560px">
-    <form enctype="multipart/form-data" action="{{ route('admin.create.subject') }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
+    <form enctype="multipart/form-data" action="{{ route('admin.create.subject', ['teacher_id' => request()->query('id'), 'grade_handle_id' => request()->query('grade_handle_id')]) }}" method="post" class="w-full max-w-3xl bg-white rounded-lg p-8 shadow">
         @csrf
 
         <div class="w-full">
@@ -15,18 +15,6 @@
             @enderror
         </div>
 
-        <div class="w-full">
-            <label for="assign_teacher" class="block text-gray-700 mt-2 text-sm mb-1">Assign Teacher</label>
-            <select name="assign_teacher" id="assign_teacher" class="form-select w-full rounded border-gray-300 @error('assign_teacher') border-red-500 @enderror" value="{{ old('assign_teacher') }}">
-                <option value="" disabled class="hidden" selected> -- Assign Teacher --</option>
-                @foreach ($teachersAccount as $teacher)
-                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                @endforeach
-            </select>
-            @error('assign_teacher')
-            <span class="text-red-500 text-sm">{{ $message }}</span>
-            @enderror
-        </div>
 
         <div class="w-full">
             <label for="day" class="block text-gray-700 mt-2 text-sm mb-1">Day</label>
