@@ -11,6 +11,23 @@ use App\Models\TeacherGradeHandle;
 class SubjectController extends Controller
 {
 
+
+    public function displayTeacherSubjects(Request $request) {
+        if (Auth::guard('admin')->check()) {
+            $user = Auth::guard('admin')->user();
+            $gradeHandle = TeacherGradeHandle::query();
+
+            return view('admin.subject.display_teacher_subject', [
+                'user' => $user,
+                'gradeHandle' => $gradeHandle->paginate(10),
+                'TeacherAccount' => TeacherAccount::class
+            ]);
+        }
+
+        return redirect()->route('admin.login');
+    }
+    
+    
     public function subject()
     {
         if (Auth::guard('admin')->check()) {

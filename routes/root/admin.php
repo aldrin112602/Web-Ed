@@ -36,6 +36,10 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+        // subject list
+        Route::get('/subject_list/{}', [SubjectController::class, 'displayTeacherSubjects'])->name('admin.teacher.subject_list');
+
+
         Route::get('dashboard', [Admin::class, 'dashboard'])->name('admin.dashboard');
 
         // history
@@ -60,11 +64,10 @@ Route::prefix('admin')->group(function () {
             Route::get('absent', [Attendace::class, 'attendaceAbsent'])->name('admin.attendance.absent');
             Route::get('present', [Attendace::class, 'attendacePresent'])->name('admin.attendance.present');
 
-        Route::get('view_attendance_history/{id}', [Attendace::class, 'viewAttendanceHistory'])->name('admin.view_attendance_history');
+            Route::get('view_attendance_history/{id}', [Attendace::class, 'viewAttendanceHistory'])->name('admin.view_attendance_history');
 
-        // export attendance
-        Route::get('export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('admin.export_attendance_history');
-
+            // export attendance
+            Route::get('export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('admin.export_attendance_history');
         });
 
 
