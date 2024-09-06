@@ -13,7 +13,17 @@ return new class extends Migration
     {
         Schema::create('student_notifications', function (Blueprint $table) {
             $table->id();
+            $table->string('type')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->string('title')->nullable();
+            $table->text('message');
+            $table->boolean('is_seen')->default(false);
+            $table->string('url')->nullable();
+            $table->string('icon')->nullable();
+            $table->enum('priority', ['low', 'medium', 'high'])->default('low');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('student_accounts')->onDelete('cascade');
         });
     }
 
