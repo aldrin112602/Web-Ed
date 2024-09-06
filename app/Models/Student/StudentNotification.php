@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models\Student;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Notification extends Model
+class StudentNotification extends Model
 {
     use HasFactory;
 }
