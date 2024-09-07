@@ -26,7 +26,7 @@ class StudentNotificationFactory extends Factory
             'title' => $this->faker->sentence(5),
             'message' => $this->faker->paragraph(),
             'url' => $this->faker->optional()->url(),
-            'icon' => $this->faker->optional()->randomElement(['bell', 'envelope', 'info-circle']),
+            'icon' => $this->faker->randomElement(['bell', 'envelope', 'info-circle']),
             'priority' => $this->faker->randomElement(['low', 'medium', 'high']),
             'created_at' => now(),
             'updated_at' => now(),

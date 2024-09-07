@@ -39,6 +39,8 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         // Notification route
         Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notification');
+        Route::post('notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+
 
         Route::prefix('/teacher')->group(function () {
             // subject list

@@ -68,4 +68,16 @@ class AdminNotificationController extends Controller
 
         return response()->json($notifications);
     }
+
+    // Mark all notifications as read
+    public function markAllAsRead() {
+        $user = Auth::guard('admin')->user();
+        AdminNotification::where('user_id', $user->id)
+            ->update(['is_seen' => true]);
+
+        return redirect()->route('admin.notification')
+            ->with('success', 'All notifications marked as read.');
+    }
+
+
 }

@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            // AccountsTableSeeder::class,
-            // TeacherGradeHandle::class,
-            // SubjectListTableSeeder::class,
+            AccountsTableSeeder::class,
+            TeacherGradeHandle::class,
+            SubjectListTableSeeder::class,
             AdminNotificationSeeder::class,
             TeacherNotificationSeeder::class,
             GuidanceNotificationSeeder::class,

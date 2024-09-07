@@ -3,9 +3,19 @@
 @section('title', 'Notifications')
 
 @section('content')
-<div class="text-slate-100 p-2 bg-blue-400 flex items-center justify-start gap-4">
-    <i class="fas fa-bell"></i>
-    Notifications
+<div class="text-slate-100 p-2 bg-blue-400 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-4">
+        <i class="fas fa-bell"></i>
+        Notifications
+    </div>
+    
+    <!-- Mark All as Read Button -->
+    <form action="{{ route('admin.notifications.markAllAsRead') }}" method="POST">
+        @csrf
+        <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white py-1 px-4 rounded">
+            Mark All as Read
+        </button>
+    </form>
 </div>
 
 <div class="p-4">
