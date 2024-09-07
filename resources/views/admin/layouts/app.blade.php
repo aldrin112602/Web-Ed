@@ -68,7 +68,7 @@
                 </li>
 
                 <li>
-                    <a class="hover:text-blue-500" href="#!">
+                    <a class="hover:text-blue-500" href="{{ route('admin.notification') }}">
                         <i class="fa-regular fa-bell"></i>
                     </a>
                 </li>

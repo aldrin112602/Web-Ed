@@ -20,7 +20,7 @@
             <h2 class="text-blue-900 font-semibold">WebEd</h2>
             <ul class="flex items-center justify-end gap-5">
                 <li>
-                    <a class="hover:text-blue-500" href="#!">
+                    <a class="hover:text-blue-500" href="{{ route('guidance.notification') }}">
                         <i class="fa-regular fa-bell"></i>
                     </a>
                 </li>
