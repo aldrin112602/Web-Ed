@@ -6,7 +6,8 @@ use App\Http\Controllers\Student\{
     StudentController as Student,
     StudentOtpController,
     StudentConversationController,
-    GradeController
+    GradeController,
+    StudentNotificationController
 };
 
 
@@ -29,8 +30,13 @@ Route::prefix('student')->group(function () {
      * /// MIDDLEWARE: TEACHER ///
      * ///////////////////////////
      */
-    
+
     Route::middleware('auth:student')->group(function () {
+        // Notification route
+        Route::get('/notifications', [StudentNotificationController::class, 'index'])->name('student.notification');
+        Route::post('notifications/mark-all-as-read', [StudentNotificationController::class, 'markAllAsRead'])->name('student.notifications.markAllAsRead');
+
+
         // grades
         Route::get('grades', [GradeController::class, 'grades'])->name('student.grades');
         Route::get('viewGrades', [GradeController::class, 'viewGrades'])->name('student.viewGrades');

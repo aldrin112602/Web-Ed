@@ -4,11 +4,22 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Teacher\TeacherNotification;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Teacher\TeacherNotification;
+use App\Models\TeacherGradeHandle;
 
 class TeacherNotificationController extends Controller
 {
+    public function index() {
+        $user = Auth::guard('teacher')->user();
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+        return view('teacher.notification.notification', [
+            'user' => $user,
+            'handleSubjects' => $handleSubjects,
+            'notifications' => TeacherNotification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
     public function createNotification(Request $request)
     {
         $userId = Auth::id();
@@ -35,7 +46,6 @@ class TeacherNotificationController extends Controller
         return response()->json(['message' => 'Notification created successfully.']);
     }
 
-
     public function markAsSeen($notificationId)
     {
         $notification = TeacherNotification::findOrFail($notificationId);
@@ -60,5 +70,14 @@ class TeacherNotificationController extends Controller
             ->get();
 
         return response()->json($notifications);
+    }
+
+    public function markAllAsRead() {
+        $user = Auth::guard('teacher')->user();
+        TeacherNotification::where('user_id', $user->id)
+            ->update(['is_seen' => true]);
+
+        return redirect()->route('teacher.notification')
+            ->with('success', 'All notifications marked as read.');
     }
 }

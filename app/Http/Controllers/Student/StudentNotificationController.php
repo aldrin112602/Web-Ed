@@ -9,6 +9,14 @@ use App\Models\Student\StudentNotification;
 
 class StudentNotificationController extends Controller
 {
+    public function index() {
+        $user = Auth::guard('student')->user();
+        return view('student.notification.notification', [
+            'user' => $user,
+            'notifications' => StudentNotification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
     public function createNotification(Request $request)
     {
         $userId = Auth::id();
@@ -59,5 +67,14 @@ class StudentNotificationController extends Controller
             ->get();
 
         return response()->json($notifications);
+    }
+
+    public function markAllAsRead() {
+        $user = Auth::guard('student')->user();
+        StudentNotification::where('user_id', $user->id)
+            ->update(['is_seen' => true]);
+
+        return redirect()->route('student.notification')
+            ->with('success', 'All notifications marked as read.');
     }
 }

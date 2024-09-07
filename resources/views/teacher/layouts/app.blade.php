@@ -179,18 +179,18 @@
 
                         <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu-3" role="menu" aria-orientation="vertical" aria-labelledby="menu-button-2" tabindex="-1">
                             <div role="none">
-                                <a href="{{ route('teacher.grading') }}" class="{{ 
+                                <a href="{{ route('teacher.grading') }}" class="{{
                                            request()->is('teacher/grading') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
                                     Grading
                                 </a>
 
-                                <a href="{{ route('teacher.custom_grade') }}" class="{{ 
+                                <a href="{{ route('teacher.custom_grade') }}" class="{{
                                            request()->is('teacher/custom_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
                                     Custom Grade
                                 </a>
 
 
-                                <a href="{{ route('teacher.grading_sheet') }}" class="{{ 
+                                <a href="{{ route('teacher.grading_sheet') }}" class="{{
                                            request()->is('teacher/grading_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
                                     Grading Sheet
                                 </a>
@@ -217,8 +217,8 @@
                         });
                     })
                 </script>
-                <div class="p-3 {{ request()->is('admin/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
+                <div class="p-3 {{ request()->is('teacher/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('teacher.notification') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
                 </div>
                 <div class="p-3 {{ (request()->is('teacher/settings') || request()->is('teacher/profile')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('teacher.profile') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>

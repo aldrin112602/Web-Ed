@@ -4,11 +4,19 @@ namespace App\Http\Controllers\Guidance;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Guidance\GuidanceNotification;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Guidance\GuidanceNotification;
 
 class GuidanceNotificationController extends Controller
 {
+    public function index() {
+        $user = Auth::guard('guidance')->user();
+        return view('guidance.notification.notification', [
+            'user' => $user,
+            'notifications' => GuidanceNotification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+
     public function createNotification(Request $request)
     {
         $userId = Auth::id();
@@ -59,5 +67,14 @@ class GuidanceNotificationController extends Controller
             ->get();
 
         return response()->json($notifications);
+    }
+
+    public function markAllAsRead() {
+        $user = Auth::guard('guidance')->user();
+        GuidanceNotification::where('user_id', $user->id)
+            ->update(['is_seen' => true]);
+
+        return redirect()->route('guidance.notification')
+            ->with('success', 'All notifications marked as read.');
     }
 }

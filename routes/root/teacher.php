@@ -14,10 +14,11 @@ use App\Http\Controllers\Teacher\{
     TeacherConversationController,
     SubjectController as Subject,
     Present,
-    StudentsGradeController
+    StudentsGradeController,
+    TeacherNotificationController
 };
 
-// Teacher routes   
+// Teacher routes
 Route::prefix('teacher')->group(function () {
     // login handle
     Route::get('login', [Teacher::class, 'login'])->name('teacher.login');
@@ -36,6 +37,9 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+        // Notification route
+        Route::get('/notifications', [TeacherNotificationController::class, 'index'])->name('teacher.notification');
+        Route::post('notifications/mark-all-as-read', [TeacherNotificationController::class, 'markAllAsRead'])->name('teacher.notifications.markAllAsRead');
 
         // students grade
         Route::get('grading', [StudentsGradeController::class, 'grading'])->name('teacher.grading');

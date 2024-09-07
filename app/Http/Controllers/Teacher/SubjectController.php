@@ -58,6 +58,7 @@ class SubjectController extends Controller
 
             $grade_handle = TeacherGradeHandle::find($id);
             $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+            
 
             return view('teacher.subject.subject_list', [
                 'user' => $user,

@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Guidance\{
     GuidanceConversationController,
     GuidanceController as Guidance,
-    GuidanceOtpController
+    GuidanceOtpController,
+    GuidanceNotificationController
 };
 use App\Http\Controllers\Student\ExportController;
 
@@ -26,6 +27,10 @@ Route::prefix('guidance')->group(function () {
 
 
     Route::middleware('auth:guidance')->group(function () {
+
+        // Notification route
+        Route::get('/notifications', [GuidanceNotificationController::class, 'index'])->name('guidance.notification');
+        Route::post('notifications/mark-all-as-read', [GuidanceNotificationController::class, 'markAllAsRead'])->name('guidance.notifications.markAllAsRead');
 
         // guidance exports
         Route::get('/export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('guidance.export_attendance_history');

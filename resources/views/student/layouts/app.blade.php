@@ -86,7 +86,7 @@
                         <img src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
                     </div>
                 </div>
-                
+
                 <div class="p-3 {{ request()->is('student/dashboard') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('student.dashboard') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
                 </div>
@@ -114,7 +114,7 @@
                 <div class="p-3 {{ request()->is('student/grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('student.grades') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Grades</a>
                 </div>
-                
+
                 <div class="py-2">
                     <hr>
                 </div>
@@ -132,8 +132,8 @@
                         });
                     })
                 </script>
-                <div class="p-3 {{ request()->is('admin/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
+                <div class="p-3 {{ request()->is('student/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('student.notification') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bell"></i>Notifications</a>
                 </div>
                 <div class="p-3 {{ (request()->is('student/settings') || request()->is('student/profile')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('student.profile') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-gear"></i>Settings</a>
@@ -171,7 +171,7 @@
 
             if(dropzone) {
                 document.addEventListener('DOMContentLoaded', () => {
-                
+
                 const fileInput = document.getElementById('file-upload');
                 const preview = document.getElementById('preview');
 
