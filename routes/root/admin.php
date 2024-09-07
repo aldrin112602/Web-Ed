@@ -11,7 +11,8 @@ use App\Http\Controllers\Admin\{
     AdminOtpController,
     deleteSelected,
     attendanceController as Attendace,
-    AdminConversationController
+    AdminConversationController,
+    AdminNotificationController
 };
 use App\Http\Controllers\Student\ExportController;
 
@@ -36,6 +37,8 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+        // Notification route
+        Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notification');
 
         Route::prefix('/teacher')->group(function () {
             // subject list

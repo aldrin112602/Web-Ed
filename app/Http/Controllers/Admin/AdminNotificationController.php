@@ -9,6 +9,14 @@ use App\Models\Admin\AdminNotification;
 
 class AdminNotificationController extends Controller
 {
+    public function index() {
+        $user = Auth::guard('admin')->user();
+        return view('admin.notification.notification', [
+            'user' => $user,
+            'notifications' => AdminNotification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get(),
+        ]);
+    }
+    
     public function createNotification(Request $request)
     {
         $userId = Auth::id();
