@@ -12,7 +12,11 @@
     <!-- Mark All as Read Button -->
     <form action="{{ route('admin.notifications.markAllAsRead') }}" method="POST">
         @csrf
-        <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white py-1 px-4 rounded">
+        <button 
+        @if($notifications->isEmpty())
+            disabled
+        @endif
+        type="submit" class="bg-gray-900 hover:bg-gray-700 text-white py-1 px-4 rounded">
             Mark All as Read
         </button>
     </form>
@@ -24,7 +28,7 @@
     @else
         <div class="space-y-4">
             @foreach ($notifications as $notification)
-                <div class="p-4 bg-white rounded shadow-md flex items-start justify-between">
+                <div class="p-4 {{ $notification->is_seen ? 'bg-whiite' : 'bg-blue-100' }} rounded shadow-md flex items-start justify-between">
                     <div class="flex items-start gap-3">
                         <!-- Notification Icon -->
                         @if($notification->icon)
