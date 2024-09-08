@@ -65,10 +65,10 @@
                         @endif
 
                         <!-- Delete Button for individual notification -->
-                        <form id="delete-notification-form-{{ $notification->id }}" action="{{ route('admin.notifications.delete', $notification->id) }}" method="POST">
+                        <form class="delete-notification-form" action="{{ route('admin.notifications.delete', $notification->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="button" onclick="confirmDelete('{{ $notification->id }}')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded">
+                            <button type="button" class="delete-notification-btn bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded">
                                 Delete
                             </button>
                         </form>
@@ -79,53 +79,57 @@
     @endif
 </div>
 
+
 <script>
-    // SweetAlert for individual delete
-    function confirmDelete(notificationId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You won\'t be able to revert this!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('delete-notification-form-' + notificationId).submit();
-            }
-        });
-    }
-
-    // SweetAlert for deleting selected notifications
-    document.getElementById('delete-selected-btn').addEventListener('click', function(event) {
-        event.preventDefault();
-
-        // Check if any checkboxes are selected
-        let selectedCheckboxes = document.querySelectorAll('.notification-checkbox:checked');
-
-        if (selectedCheckboxes.length === 0) {
-            Swal.fire({
-                title: 'No notifications selected',
-                text: 'Please select at least one notification to delete.',
-                icon: 'info',
-                confirmButtonText: 'OK'
-            });
-        } else {
+    $(document).ready(function() {
+        // SweetAlert for individual delete
+        $('.delete-notification-btn').on('click', function() {
+            let form = $(this).closest('.delete-notification-form');
             Swal.fire({
                 title: 'Are you sure?',
-                text: 'Selected notifications will be deleted!',
+                text: 'You won\'t be able to revert this!',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, delete them!',
+                confirmButtonText: 'Yes, delete it!',
                 cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('delete-selected-form').submit();
+                    form.submit();
                 }
             });
-        }
+        });
+
+        // SweetAlert for deleting selected notifications
+        $('#delete-selected-btn').on('click', function(event) {
+            event.preventDefault();
+
+            // Check if any checkboxes are selected
+            let selectedCheckboxes = $('.notification-checkbox:checked');
+
+            if (selectedCheckboxes.length === 0) {
+                Swal.fire({
+                    title: 'No notifications selected',
+                    text: 'Please select at least one notification to delete.',
+                    icon: 'info',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'Selected notifications will be deleted!',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, delete them!',
+                    cancelButtonText: 'No, cancel!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#delete-selected-form').submit();
+                    }
+                });
+            }
+        });
     });
 </script>
 @endsection

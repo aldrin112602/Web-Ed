@@ -40,7 +40,9 @@ Route::prefix('admin')->group(function () {
         // Notification route
         Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notification');
         Route::post('notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+
         Route::delete('/notifications/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
+
         Route::delete('notifications/delete-selected', [AdminNotificationController::class, 'deleteSelected'])->name('admin.notifications.deleteSelected');
 
 

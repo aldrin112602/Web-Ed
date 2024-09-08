@@ -94,7 +94,6 @@ class AdminNotificationController extends Controller
     public function deleteSelected(Request $request)
     {
         $selectedNotifications = $request->input('selected_notifications', []);
-
         if (!empty($selectedNotifications)) {
             AdminNotification::whereIn('id', $selectedNotifications)->delete();
 
