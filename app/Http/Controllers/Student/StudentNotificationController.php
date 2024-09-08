@@ -77,4 +77,29 @@ class StudentNotificationController extends Controller
         return redirect()->route('student.notification')
             ->with('success', 'All notifications marked as read.');
     }
+
+    // Delete individual notification
+    public function delete($id)
+    {
+        $notification = StudentNotification::findOrFail($id);
+        $notification->delete();
+
+        return redirect()->back()->with('success', 'Notification deleted successfully.');
+    }
+
+    // Delete selected notifications
+    public function deleteSelected(Request $request)
+    {
+        $selectedNotifications = $request->input('selected_notifications', []);
+        if (!empty($selectedNotifications)) {
+            StudentNotification::whereIn('id', $selectedNotifications)->delete();
+
+            return redirect()->back()->with('success', 'Selected notifications deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'No notifications selected for deletion.');
+    }
+
+
+
 }

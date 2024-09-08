@@ -33,8 +33,12 @@ Route::prefix('student')->group(function () {
 
     Route::middleware('auth:student')->group(function () {
         // Notification route
-        Route::get('/notifications', [StudentNotificationController::class, 'index'])->name('student.notification');
-        Route::post('notifications/mark-all-as-read', [StudentNotificationController::class, 'markAllAsRead'])->name('student.notifications.markAllAsRead');
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', [StudentNotificationController::class, 'index'])->name('student.notification');
+            Route::post('/mark-all-as-read', [StudentNotificationController::class, 'markAllAsRead'])->name('student.notifications.markAllAsRead');
+            Route::delete('/{id}', [StudentNotificationController::class, 'delete'])->name('student.notifications.delete');
+            Route::delete('/', [StudentNotificationController::class, 'deleteSelected'])->name('student.deleteSelected.notifications');
+        });
 
 
         // grades

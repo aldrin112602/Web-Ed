@@ -29,8 +29,12 @@ Route::prefix('guidance')->group(function () {
     Route::middleware('auth:guidance')->group(function () {
 
         // Notification route
-        Route::get('/notifications', [GuidanceNotificationController::class, 'index'])->name('guidance.notification');
-        Route::post('notifications/mark-all-as-read', [GuidanceNotificationController::class, 'markAllAsRead'])->name('guidance.notifications.markAllAsRead');
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', [GuidanceNotificationController::class, 'index'])->name('guidance.notification');
+            Route::post('/mark-all-as-read', [GuidanceNotificationController::class, 'markAllAsRead'])->name('guidance.notifications.markAllAsRead');
+            Route::delete('/{id}', [GuidanceNotificationController::class, 'delete'])->name('guidance.notifications.delete');
+            Route::delete('/', [GuidanceNotificationController::class, 'deleteSelected'])->name('guidance.deleteSelected.notifications');
+        });
 
         // guidance exports
         Route::get('/export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('guidance.export_attendance_history');

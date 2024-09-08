@@ -38,8 +38,12 @@ Route::prefix('teacher')->group(function () {
      */
     Route::middleware('auth:teacher')->group(function () {
         // Notification route
-        Route::get('/notifications', [TeacherNotificationController::class, 'index'])->name('teacher.notification');
-        Route::post('notifications/mark-all-as-read', [TeacherNotificationController::class, 'markAllAsRead'])->name('teacher.notifications.markAllAsRead');
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', [TeacherNotificationController::class, 'index'])->name('teacher.notification');
+            Route::post('/mark-all-as-read', [TeacherNotificationController::class, 'markAllAsRead'])->name('teacher.notifications.markAllAsRead');
+            Route::delete('/{id}', [TeacherNotificationController::class, 'delete'])->name('teacher.notifications.delete');
+            Route::delete('/', [TeacherNotificationController::class, 'deleteSelected'])->name('teacher.deleteSelected.notifications');
+        });
 
         // students grade
         Route::get('grading', [StudentsGradeController::class, 'grading'])->name('teacher.grading');

@@ -77,4 +77,30 @@ class GuidanceNotificationController extends Controller
         return redirect()->route('guidance.notification')
             ->with('success', 'All notifications marked as read.');
     }
+
+
+    // Delete individual notification
+    public function delete($id)
+    {
+        $notification = GuidanceNotification::findOrFail($id);
+        $notification->delete();
+
+        return redirect()->back()->with('success', 'Notification deleted successfully.');
+    }
+
+    // Delete selected notifications
+    public function deleteSelected(Request $request)
+    {
+        $selectedNotifications = $request->input('selected_notifications', []);
+        if (!empty($selectedNotifications)) {
+            GuidanceNotification::whereIn('id', $selectedNotifications)->delete();
+
+            return redirect()->back()->with('success', 'Selected notifications deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'No notifications selected for deletion.');
+    }
+
+
+
 }

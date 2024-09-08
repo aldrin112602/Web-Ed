@@ -44,7 +44,6 @@ Route::prefix('admin')->group(function () {
             Route::post('/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
             Route::delete('/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
             Route::delete('/', [AdminNotificationController::class, 'deleteSelected'])->name('admin.deleteSelected.notifications');
-
         });
 
 
