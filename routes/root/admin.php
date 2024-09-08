@@ -37,13 +37,15 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+
         // Notification route
-        Route::get('/notifications', [AdminNotificationController::class, 'index'])->name('admin.notification');
-        Route::post('notifications/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+        Route::prefix('notifications')->group(function () {
+            Route::get('/', [AdminNotificationController::class, 'index'])->name('admin.notification');
+            Route::post('/mark-all-as-read', [AdminNotificationController::class, 'markAllAsRead'])->name('admin.notifications.markAllAsRead');
+            Route::delete('/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
+            Route::delete('/', [AdminNotificationController::class, 'deleteSelected'])->name('admin.deleteSelected.notifications');
 
-        Route::delete('/notifications/{id}', [AdminNotificationController::class, 'delete'])->name('admin.notifications.delete');
-
-        Route::delete('notifications/delete-selected', [AdminNotificationController::class, 'deleteSelected'])->name('admin.notifications.deleteSelected');
+        });
 
 
         Route::prefix('/teacher')->group(function () {

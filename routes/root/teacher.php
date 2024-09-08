@@ -80,7 +80,7 @@ Route::prefix('teacher')->group(function () {
         Route::delete('/delete-selected-students', [Account::class, 'deleteSelectedStudents'])->name('teacher.delete.selected.students');
 
         // delete student single account
-        Route::delete('delete_student', [Account::class, 'deleteStudentAccount'])->name('teacher.delete.student');
+        // Route::delete('delete_student', [Account::class, 'deleteStudentAccount'])->name('teacher.delete.student');
 
         // adding student
         Route::get('/add_student', [Account::class, 'viewAddStudent'])->name('teacher.add.student');

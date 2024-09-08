@@ -17,9 +17,9 @@ class DatabaseSeeder extends Seeder
             // TeacherGradeHandle::class,
             // SubjectListTableSeeder::class,
             AdminNotificationSeeder::class,
-            TeacherNotificationSeeder::class,
-            GuidanceNotificationSeeder::class,
-            StudentNotificationSeeder::class
+            // TeacherNotificationSeeder::class,
+            // GuidanceNotificationSeeder::class,
+            // StudentNotificationSeeder::class
         ]);
     }
 }
