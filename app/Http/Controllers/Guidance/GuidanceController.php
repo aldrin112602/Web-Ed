@@ -22,7 +22,12 @@ class GuidanceController extends Controller
     public function attendanceReport()
     {
         $user = Auth::guard('guidance')->user();
-        return view('guidance.attendance_report', ['user' => $user]);
+        $attendace_histories = AttendanceHistory::all();
+        return view('guidance.attendance_report', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+            'account_list' => StudentAccount::paginate(10) 
+        ]);
     }
 
 
