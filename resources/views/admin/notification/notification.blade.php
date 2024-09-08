@@ -8,11 +8,11 @@
         <i class="fas fa-bell"></i>
         Notifications
     </div>
-    
+
     <!-- Mark All as Read Button -->
     <form action="{{ route('admin.notifications.markAllAsRead') }}" method="POST">
         @csrf
-        <button 
+        <button
         @if($notifications->isEmpty())
             disabled
         @endif
@@ -26,32 +26,106 @@
     @if($notifications->isEmpty())
         <p class="text-gray-500">No notifications available.</p>
     @else
-        <div class="space-y-4">
-            @foreach ($notifications as $notification)
-                <div class="p-4 {{ $notification->is_seen ? 'bg-whiite' : 'bg-blue-100' }} rounded shadow-md flex items-start justify-between">
-                    <div class="flex items-start gap-3">
-                        <!-- Notification Icon -->
-                        @if($notification->icon)
-                            <i class="fas fa-{{ $notification->icon }} text-xl"></i>
-                        @else
-                            <i class="fas fa-info-circle text-xl"></i>
-                        @endif
-                        
-                        <!-- Notification Content -->
-                        <div>
-                            <h3 class="font-semibold text-lg">{{ $notification->title }}</h3>
-                            <p class="text-sm text-gray-600">{{ $notification->message }}</p>
-                            <p class="text-xs text-gray-400 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
-                        </div>
-                    </div>
+        <!-- Form to delete selected notifications -->
+        <form id="delete-selected-form" action="{{ route('admin.notifications.deleteSelected') }}" method="POST">
+            @csrf
+            @method('DELETE')
 
-                    <!-- Optional URL for the notification -->
-                    @if($notification->url)
-                        <a href="{{ $notification->url }}" class="text-blue-500 hover:text-blue-700">View</a>
-                    @endif
-                </div>
-            @endforeach
-        </div>
+            <div class="flex justify-end mb-4">
+                <button type="button" id="delete-selected-btn" class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded">
+                    Delete Selected
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                @foreach ($notifications as $notification)
+                    <div class="p-4 {{ $notification->is_seen ? 'bg-white' : 'bg-blue-100' }} rounded shadow-md flex items-start justify-between">
+                        <div class="flex items-start gap-3">
+                            <!-- Checkbox for deleting selected notifications -->
+                            <input type="checkbox" name="selected_notifications[]" value="{{ $notification->id }}" class="mt-1 notification-checkbox">
+
+                            <!-- Notification Icon -->
+                            @if($notification->icon)
+                                <i class="fas fa-{{ $notification->icon }} text-xl"></i>
+                            @else
+                                <i class="fas fa-info-circle text-xl"></i>
+                            @endif
+
+                            <!-- Notification Content -->
+                            <div>
+                                <h3 class="font-semibold text-lg">{{ $notification->title }}</h3>
+                                <p class="text-sm text-gray-600">{{ $notification->message }}</p>
+                                <p class="text-xs text-gray-400 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+
+                        <!-- Optional URL for the notification -->
+                        @if($notification->url)
+                            <a href="{{ $notification->url }}" class="text-blue-500 hover:text-blue-700">View</a>
+                        @endif
+
+                        <!-- Delete Button for individual notification -->
+                        <form id="delete-notification-form-{{ $notification->id }}" action="{{ route('admin.notifications.delete', $notification->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" onclick="confirmDelete('{{ $notification->id }}')" class="bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        </form>
     @endif
 </div>
+
+<script>
+    // SweetAlert for individual delete
+    function confirmDelete(notificationId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-notification-form-' + notificationId).submit();
+            }
+        });
+    }
+
+    // SweetAlert for deleting selected notifications
+    document.getElementById('delete-selected-btn').addEventListener('click', function(event) {
+        event.preventDefault();
+
+        // Check if any checkboxes are selected
+        let selectedCheckboxes = document.querySelectorAll('.notification-checkbox:checked');
+
+        if (selectedCheckboxes.length === 0) {
+            Swal.fire({
+                title: 'No notifications selected',
+                text: 'Please select at least one notification to delete.',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Selected notifications will be deleted!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete them!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-selected-form').submit();
+                }
+            });
+        }
+    });
+</script>
 @endsection

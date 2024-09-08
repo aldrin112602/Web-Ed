@@ -16,7 +16,7 @@ class AdminNotificationController extends Controller
             'notifications' => AdminNotification::where('user_id', $user->id)->orderBy('created_at', 'desc')->get(),
         ]);
     }
-    
+
     public function createNotification(Request $request)
     {
         $userId = Auth::id();
@@ -78,6 +78,32 @@ class AdminNotificationController extends Controller
         return redirect()->route('admin.notification')
             ->with('success', 'All notifications marked as read.');
     }
+
+
+
+    // Delete individual notification
+    public function delete($id)
+    {
+        $notification = AdminNotification::findOrFail($id);
+        $notification->delete();
+
+        return redirect()->back()->with('success', 'Notification deleted successfully.');
+    }
+
+    // Delete selected notifications
+    public function deleteSelected(Request $request)
+    {
+        $selectedNotifications = $request->input('selected_notifications', []);
+
+        if (!empty($selectedNotifications)) {
+            AdminNotification::whereIn('id', $selectedNotifications)->delete();
+
+            return redirect()->back()->with('success', 'Selected notifications deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'No notifications selected for deletion.');
+    }
+
 
 
 }
