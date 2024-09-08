@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 use App\Models\{Admin\SubjectModel, TeacherGradeHandle, StudentHandle};
-
-
+use App\Models\Student\AttendanceHistory;
+use App\Models\Student\StudentAccount;
 
 
 
@@ -24,6 +24,21 @@ class TeacherController extends Controller
         Session::forget('otp');
 
         return view('teacher.auth.login');
+    }
+
+
+    public function attendanceReport()
+    {
+        $user = Auth::guard('teacher')->user();
+        $attendace_histories = AttendanceHistory::all();
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+
+        return view('teacher.attendance_report', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+            'account_list' => StudentAccount::paginate(10),
+            'handleSubjects' => $handleSubjects
+        ]);
     }
 
 

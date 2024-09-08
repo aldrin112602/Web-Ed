@@ -18,6 +18,9 @@ use App\Http\Controllers\Teacher\{
     TeacherNotificationController
 };
 
+
+use App\Http\Controllers\Student\ExportController;
+
 // Teacher routes
 Route::prefix('teacher')->group(function () {
     // login handle
@@ -37,6 +40,19 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+        // guidance exports
+        Route::get('/export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('teacher.export_attendance_history');
+
+        // attendance report
+        Route::get('attendance_report', [Teacher::class, 'attendanceReport'])->name('teacher.attendance_report');
+
+
+        // attendance history
+        Route::get('attendance_history', [Teacher::class, 'attendanceHistory'])->name('teacher.attendance_history');
+        Route::get('view_attendance_history/{id}', [Teacher::class, 'viewAttendanceHistory'])->name('teacher.view_attendance_history');
+
+
+
         // Notification route
         Route::prefix('notifications')->group(function () {
             Route::get('/', [TeacherNotificationController::class, 'index'])->name('teacher.notification');
