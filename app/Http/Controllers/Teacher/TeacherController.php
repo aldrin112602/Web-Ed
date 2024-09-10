@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 use App\Models\{Admin\SubjectModel, TeacherGradeHandle, StudentHandle};
 use App\Models\Student\AttendanceHistory;
 use App\Models\Student\StudentAccount;
-
-
+use App\Models\Teacher\TeacherAccount;
 
 class TeacherController extends Controller
 {
@@ -37,6 +36,22 @@ class TeacherController extends Controller
             'user' => $user,
             'attendace_histories' => $attendace_histories,
             'account_list' => StudentAccount::paginate(10),
+            'handleSubjects' => $handleSubjects
+        ]);
+    }
+
+    public function viewAttendanceHistory($id)
+    {
+        $user = Auth::guard('teacher')->user();
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+        $attendace_histories = AttendanceHistory::where('student_id', $id)->get();
+        return view('teacher.view_attendance_history', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+            'TeacherGradeHandle' => TeacherGradeHandle::class,
+            'SubjectModel' => SubjectModel::class,
+            'TeacherAccount' => TeacherAccount::class,
+            'student' => StudentAccount::where('id', $id)->first(),
             'handleSubjects' => $handleSubjects
         ]);
     }
