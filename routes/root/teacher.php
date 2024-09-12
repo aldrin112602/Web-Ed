@@ -15,8 +15,13 @@ use App\Http\Controllers\Teacher\{
     SubjectController as Subject,
     Present,
     StudentsGradeController,
-    TeacherNotificationController
+    TeacherNotificationController,
+    attendanceController
 };
+
+use App\Http\Controllers\Student\ExportController;
+
+
 
 // Teacher routes
 Route::prefix('teacher')->group(function () {
@@ -37,6 +42,20 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+
+        // for attendace
+        Route::prefix('attendance')->group(function () {
+            Route::get('report', [attendanceController::class, 'attendaceReport'])->name('teacher.attendance.report');
+            Route::get('absent', [attendanceController::class, 'attendaceAbsent'])->name('teacher.attendance.absent');
+            Route::get('present', [attendanceController::class, 'attendacePresent'])->name('teacher.attendance.present');
+
+            Route::get('view_attendance_history/{id}', [attendanceController::class, 'viewAttendanceHistory'])->name('teacher.view_attendance_history');
+
+            // export attendance
+            Route::get('export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('teacher.export_attendance_history');
+        });
+
+
         // Notification route
         Route::prefix('notifications')->group(function () {
             Route::get('/', [TeacherNotificationController::class, 'index'])->name('teacher.notification');

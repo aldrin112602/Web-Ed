@@ -7,13 +7,49 @@ use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 use App\Models\{Admin\SubjectModel, TeacherGradeHandle, StudentHandle};
-
-
-
+use App\Models\Student\StudentAccount;
+use App\Models\Student\AttendanceHistory;
+use App\Models\Teacher\TeacherAccount;
 
 
 class TeacherController extends Controller
 {
+
+    public function attendanceReport()
+    {
+        $user = Auth::guard('teacher')->user();
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+        return view('teacher.attendance_report', ['user' => $user, 'handleSubjects' => $handleSubjects]);
+    }
+
+
+    public function attendanceHistory()
+    {
+        $user = Auth::guard('teacher')->user();
+        $attendace_histories = AttendanceHistory::all();
+        return view('teacher.attendance_history', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+            'account_list' => StudentAccount::paginate(10)
+        ]);
+    }
+
+
+    public function viewAttendanceHistory($id)
+    {
+        $user = Auth::guard('teacher')->user();
+        $attendace_histories = AttendanceHistory::where('student_id', $id)->get();
+        return view('teacher.view_attendance_history', [
+            'user' => $user,
+            'attendace_histories' => $attendace_histories,
+            'TeacherGradeHandle' => TeacherGradeHandle::class,
+            'SubjectModel' => SubjectModel::class,
+            'TeacherAccount' => TeacherAccount::class,
+            'student' => StudentAccount::where('id', $id)->first()
+        ]);
+    }
+
+
     public function login()
     {
         if (Auth::guard('teacher')->check()) {
