@@ -154,8 +154,8 @@
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clock-rotate-left"></i>Class History</a>
                 </div>
 
-                <div class="p-3 {{ request()->is('teacher/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('teacher.attendance_report') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clipboard-user"></i></i>Attendace Report</a>
+                <div class="p-3 {{ (request()->is('teacher/attendance/report') || request()->is('teacher/attendance/view_attendance_history/')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <a href="{{ route('teacher.attendance.report') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clipboard-user"></i></i>Attendace Report</a>
                 </div>
 
 
