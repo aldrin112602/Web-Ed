@@ -82,7 +82,7 @@
                         <th class="py-3 px-2 text-center border">Gender</th>
                         <th class="py-3 px-2 text-center border">Grade</th>
                         <th class="py-3 px-2 text-center border">Strand</th>
-                        <th class="py-3 px-2 text-center border">History</th>
+                        <th class="py-3 px-2 text-center border">Date and Time-In</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,10 +97,7 @@
                         <td class="py-2 text-center border">{{ $list->gender }}</td>
                         <td class="py-2 text-center border">{{ $list->grade }}</td>
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
-                        <td class="py-2 text-center border">
-                            <a href="{{route('teacher.view_attendance_history', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">View</a>
-
-                        </td>
+                        <td class="py-2 text-center border">{{ $list->scan_created_at }}</td>
                     </tr>
                     @endforeach
                 </tbody>
