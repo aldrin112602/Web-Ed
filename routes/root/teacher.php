@@ -16,7 +16,8 @@ use App\Http\Controllers\Teacher\{
     Present,
     StudentsGradeController,
     TeacherNotificationController,
-    attendanceController
+    attendanceController,
+    FaceScanController
 };
 
 use App\Http\Controllers\Student\ExportController;
@@ -42,6 +43,9 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+
+        // face scan
+        Route::get('/facescan', [FaceScanController::class, 'index'])->name('teacher.facescan');
 
         // for attendace
         Route::prefix('attendance')->group(function () {
