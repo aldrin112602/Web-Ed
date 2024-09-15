@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             // AdminNotificationSeeder::class,
             // TeacherNotificationSeeder::class,
             // GuidanceNotificationSeeder::class,
-            StudentNotificationSeeder::class
+            // StudentNotificationSeeder::class
+            AttendanceHistorySeeder::class
         ]);
     }
 }
