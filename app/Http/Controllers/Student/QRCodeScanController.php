@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\{Present, QrGenerate};
+use App\Models\Student\AttendanceHistory;
 use Illuminate\{Http\Request, Support\Carbon, Support\Facades\Auth};
+
+
 
 class QRCodeScanController extends Controller
 {
@@ -65,6 +68,22 @@ class QRCodeScanController extends Controller
             'teacher_id' => $teacherId,
             'grade_handle_id' => $gradeHandleId,
         ]);
+
+
+        // subject_model_id	grade_handle_id	teacher_id	student_id	status	time_in	date
+        AttendanceHistory::create([
+            'subject_model_id' => $subjectId,
+            'grade_handle_id' => $gradeHandleId,
+            'teacher_id' => $teacherId,
+            'student_id' => $studentId,
+            'status' => 'Present' ,
+            'date' => date('Y-m-d'),
+            'time_in' => date('H:i:s'),
+        ]);
+
+
+
+
 
         $newAttendance->save();
 
