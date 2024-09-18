@@ -15,11 +15,14 @@ use App\Http\Controllers\Teacher\{
     SubjectController as Subject,
     Present,
     StudentsGradeController,
-    TeacherNotificationController
+    TeacherNotificationController,
+    attendanceController,
+    FaceScanController
 };
 
-
 use App\Http\Controllers\Student\ExportController;
+
+
 
 // Teacher routes
 Route::prefix('teacher')->group(function () {
@@ -40,17 +43,21 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
-        // guidance exports
-        Route::get('/export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('teacher.export_attendance_history');
 
-        // attendance report
-        Route::get('attendance_report', [Teacher::class, 'attendanceReport'])->name('teacher.attendance_report');
+        // face scan
+        Route::get('/facescan', [FaceScanController::class, 'index'])->name('teacher.facescan');
 
+        // for attendace
+        Route::prefix('attendance')->group(function () {
+            Route::get('report', [attendanceController::class, 'attendaceReport'])->name('teacher.attendance.report');
+            Route::get('absent', [attendanceController::class, 'attendaceAbsent'])->name('teacher.attendance.absent');
+            Route::get('present', [attendanceController::class, 'attendacePresent'])->name('teacher.attendance.present');
 
-        // attendance history
-        Route::get('attendance_history', [Teacher::class, 'attendanceHistory'])->name('teacher.attendance_history');
-        Route::get('view_attendance_history/{id}', [Teacher::class, 'viewAttendanceHistory'])->name('teacher.view_attendance_history');
+            Route::get('view_attendance_history/{id}', [attendanceController::class, 'viewAttendanceHistory'])->name('teacher.view_attendance_history');
 
+            // export attendance
+            Route::get('export_attendance_history/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('teacher.export_attendance_history');
+        });
 
 
         // Notification route

@@ -154,10 +154,6 @@
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clock-rotate-left"></i>Class History</a>
                 </div>
 
-                <div class="p-3 {{ request()->is('teacher/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('teacher.attendance_report') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clipboard-user"></i></i>Attendace Report</a>
-                </div>
-
 
                 <div class="p-3 {{ request()->is('teacher/attendace_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-sheet-plastic"></i>Attendace Sheet</a>
@@ -194,6 +190,37 @@
                                            request()->is('teacher/grading_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
                                     Grading Sheet
                                 </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="p-3 {{ (request()->is('teacher/attendance/report') || request()->is('teacher/attendance/view_attendance_history/')  || request()->is('teacher/facescan')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <div class="relative inline-block text-left w-full">
+                        <div class="w-full">
+                            <button type="button" class="text-sm flex items-center justify-start gap-3 w-full" id="menu-button-4" aria-expanded="true" aria-haspopup="true">
+                                <i class="fa-solid fa-graduation-cap"></i> Attendance List
+                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu-4" role="menu" aria-orientation="vertical" aria-labelledby="menu-button-2" tabindex="-1">
+                            <div role="none">
+                                <a href="{{ route('teacher.attendance.report') }}" class="{{
+                                           (request()->is('teacher/attendance/report') || request()->is('teacher/attendance/view_attendance_history/')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Attendance Report
+                                </a>
+
+                                <a href="{{ route('teacher.facescan') }}" class="{{
+                                           request()->is('teacher/facescan') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Face Scan
+                                </a>
+
 
                             </div>
                         </div>
@@ -426,6 +453,20 @@
                 if (!$(event.target).closest('#menu-button-3, #dropdown-menu-3').length) {
                     $('#dropdown-menu-3').addClass('hidden');
                     $('#menu-button-3').attr('aria-expanded', 'false');
+                }
+            });
+
+
+            $('#menu-button-4').on('click', function() {
+                const expanded = $(this).attr('aria-expanded') === 'true';
+                $(this).attr('aria-expanded', !expanded);
+                $('#dropdown-menu-4').toggleClass('hidden');
+            });
+
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#menu-button-4, #dropdown-menu-4').length) {
+                    $('#dropdown-menu-4').addClass('hidden');
+                    $('#menu-button-4').attr('aria-expanded', 'false');
                 }
             });
         });
