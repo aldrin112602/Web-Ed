@@ -15,7 +15,7 @@ class QRCodeController extends Controller
         $user = Auth::guard('teacher')->user();
         $expiration = now()->addMinutes(15)->timestamp;
         $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
-        $grade_handle = TeacherGradeHandle::where('id', $user->id)->first();
+        $grade_handle = TeacherGradeHandle::where('teacher_id', $user->id)->first();
         $allStudentsCount = count(StudentHandle::where('teacher_id', $user->id)->get());
 
         QrGenerate::create([
