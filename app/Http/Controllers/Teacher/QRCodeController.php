@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\{QrGenerate, TeacherGradeHandle, StudentHandle};
 use Illuminate\Support\Facades\Auth;
+use App\Models\Admin\SubjectModel;
+
 
 class QRCodeController extends Controller
 {
@@ -33,6 +35,11 @@ class QRCodeController extends Controller
         ]);
 
 
+        $subject = SubjectModel::where('id', $subjectId)
+        ->where('teacher_id', $teacherId)
+        ->first();
+
+
 
         return view('teacher.subject.qr_generate', [
             'data' => $data,
@@ -40,6 +47,7 @@ class QRCodeController extends Controller
             'grade_handle' => $grade_handle,
             'user' => $user,
             'allStudentsCount' => $allStudentsCount,
+            'subject' => $subject
         ]);
     }
 }

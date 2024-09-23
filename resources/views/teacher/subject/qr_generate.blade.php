@@ -9,6 +9,9 @@
                 Generate new QR code
             </button>
             <div class="w-full">
+                <h2 class="border-b-2 border-yellow-600 py-2">
+                    {{ $subject->subject }} - {{ $subject->time }}
+                </h2>
                 <table class="w-full">
                     <thead>
                         <tr>
@@ -119,7 +122,7 @@
                 }).catch(err => {
                     console.error(err);
                 });
-        }, 3000)
+        }, 5000)
 
         // Countdown Timer
         const countdownElement = document.createElement('div');
