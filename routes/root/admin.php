@@ -12,7 +12,8 @@ use App\Http\Controllers\Admin\{
     deleteSelected,
     attendanceController as Attendace,
     AdminConversationController,
-    AdminNotificationController
+    AdminNotificationController,
+    FaceScanController
 };
 use App\Http\Controllers\Student\ExportController;
 
@@ -37,6 +38,10 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+
+        // face scan
+        Route::get('/facescan', [FaceScanController::class, 'index'])->name('admin.facescan');
+
 
         // Notification route
         Route::prefix('notifications')->group(function () {
