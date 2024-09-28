@@ -49,7 +49,8 @@
 
         <p class="text-gray-500 text-sm mt-4 flex align-items-center justify-between">
             <span>
-                📅 Posted on {{ $announcement->created_at->format('M d, Y') }}
+            📅 Posted on {{ $announcement->created_at->format('M d, Y') }} at {{ $announcement->created_at->format('h:i A') }}
+
             </span>
 
             <span class="text-gray-500 italic text-sm">
