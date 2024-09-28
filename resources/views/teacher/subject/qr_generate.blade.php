@@ -29,11 +29,11 @@
                             </tr>
                             <tr>
                                 <td class="px-2 py-1 border">Total Present:</td>
-                                <td class="px-2 py-1 border">{{ $presentCount }}</td>
+                                <td class="px-2 py-1 border" id="present">{{ $presentCount }}</td>
                             </tr>
                             <tr>
                                 <td class="px-2 py-1 border">Total Absent:</td>
-                                <td class="px-2 py-1 border">{{ $absentCount }}</td>
+                                <td class="px-2 py-1 border" id="absent">{{ $absentCount }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -75,7 +75,6 @@
                         </td>
                         <td class="px-4 py-2 border">
                             @if($student->status == 'Absent')
-                            <!-- Show action button to manually set attendance -->
                             <button
                                 class="px-4 py-2 bg-blue-500 text-white rounded mark-present-btn"
                                 data-student-id="{{ $student->id }}"
@@ -103,7 +102,6 @@
             height: 400,
         });
 
-        // Retrieve the QR code data from the server or from localStorage if it exists
         let qrData = localStorage.getItem('qrData');
 
         const createNewQr = () => {
@@ -118,7 +116,7 @@
             });
         }
 
-        $('#generateNewQrCode').click(() => {
+        const qrcodeConfirmation = () => {
             Swal.fire({
                 title: 'Generate new QR Code',
                 text: 'Are you sure to continue?',
@@ -130,14 +128,21 @@
             }).then((result) => {
                 if (result.isConfirmed) createNewQr();
             });
+        }
+
+        $('#generateNewQrCode').click(() => {
+            qrcodeConfirmation()
         });
 
         if (!qrData) {
-            // If no QR data is stored, get it from the server
+            
             createNewQr();
         } else {
             // If QR data exists in localStorage, parse it
             console.log('QR data loaded from localStorage');
+
+            
+        
         }
 
         const parsedData = JSON.parse(qrData);
@@ -153,6 +158,7 @@
 
         // Update present and absent count
         setInterval(function() {
+            
             $.ajax({
                 url: '{{ route("getPresentCount") }}',
                 method: 'POST',
@@ -166,7 +172,7 @@
                     grade_handle_id
                 }),
                 success: function(data) {
-                    $('#present').text(data.count);
+                    // $('#present').text(data.count);
                 },
                 error: function(err) {
                     console.error(err);
@@ -185,7 +191,7 @@
                     grade_handle_id
                 }),
                 success: function(data) {
-                    $('#absent').text(data.count);
+                    // $('#absent').text(data.count);
                 },
                 error: function(err) {
                     console.error(err);
@@ -208,11 +214,16 @@
                     title: 'Expired',
                     text: 'The QR code has expired.',
                     icon: 'error',
+                }).then(() => {
+                    qrcodeConfirmation();
                 });
                 clearInterval(interval);
                 localStorage.removeItem('qrData');
                 return;
-            }
+            } 
+
+
+            
 
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
@@ -265,5 +276,6 @@
             });
         });
     });
+
 </script>
 @endsection
