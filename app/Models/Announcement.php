@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model};
+use App\Models\Teacher\TeacherAccount;
 
 class Announcement extends Model
 {
@@ -16,4 +17,11 @@ class Announcement extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function teacher()
+    {
+        return $this->belongsTo(TeacherAccount::class, 'teacher_id');
+    }
+
+
 }
