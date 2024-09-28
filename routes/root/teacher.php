@@ -47,6 +47,10 @@ Route::prefix('teacher')->group(function () {
         // face scan
         Route::get('/facescan', [FaceScanController::class, 'index'])->name('teacher.facescan');
 
+
+        // mark attendance manually
+        Route::post('/mark-attendance', [QRCodeController::class, 'markAttendanceManually'])->name('markAttendanceManually');
+
         // for attendace
         Route::prefix('attendance')->group(function () {
             Route::get('report', [attendanceController::class, 'attendaceReport'])->name('teacher.attendance.report');
