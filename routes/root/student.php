@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\{
+    AnnouncementControler,
     QRCodeScanController,
     StudentController as Student,
     StudentOtpController,
@@ -32,6 +33,10 @@ Route::prefix('student')->group(function () {
      */
 
     Route::middleware('auth:student')->group(function () {
+
+        // announcement
+        Route::get('/announcement', [AnnouncementControler::class, 'announcements'])->name('student.announcement');
+
         // Notification route
         Route::prefix('notifications')->group(function () {
             Route::get('/', [StudentNotificationController::class, 'index'])->name('student.notification');

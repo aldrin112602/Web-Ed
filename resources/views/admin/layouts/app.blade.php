@@ -120,8 +120,35 @@
                 <div class="p-3 {{ (request()->is('admin/subject/list') || request()->is('admin/subject') || request()->is('admin/subject/create') || request()->is('admin/subject/{id}/edit')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('admin.subject') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bullhorn"></i></i>Subjects</a>
                 </div>
-                <div class="p-3 {{ (request()->is('admin/attendance/report') || request()->is('admin/attendance/absent') || request()->is('admin/attendance/present')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('admin.attendance.report') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bullhorn"></i></i>Attendance Report</a>
+
+
+                <div class="p-3 {{ ((request()->is('admin/attendance/report') || request()->is('admin/attendance/absent') || request()->is('admin/attendance/present'))  || request()->is('admin/facescan')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                    <div class="relative inline-block text-left w-full">
+                        <div class="w-full">
+                            <button type="button" class="text-sm flex items-center justify-start gap-3 w-full" id="menu-button-2" aria-expanded="true" aria-haspopup="true">
+                                <i class="fa-solid fa-graduation-cap"></i> Attendance List
+                                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" id="dropdown-menu-2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button-2" tabindex="-1">
+                            <div role="none">
+                                <a href="{{ route('admin.attendance.report') }}" class="{{
+                                           (request()->is('admin/attendance/report') || request()->is('admin/attendance/absent') || request()->is('admin/attendance/present')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Attendance Report
+                                </a>
+
+                                <a href="{{ route('admin.facescan') }}" class="{{
+                                           request()->is('admin/facescan') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
+                                    Face Scan
+                                </a>
+
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="p-3 {{ request()->is('admin/attendance_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-sheet-plastic"></i>Attendance Sheet</a>
@@ -280,6 +307,21 @@
                 if (!$(event.target).closest('#menu-button, #dropdown-menu').length) {
                     $('#dropdown-menu').addClass('hidden');
                     $('#menu-button').attr('aria-expanded', 'false');
+                }
+            });
+
+
+
+            $('#menu-button-2').on('click', function() {
+                const expanded = $(this).attr('aria-expanded') === 'true';
+                $(this).attr('aria-expanded', !expanded);
+                $('#dropdown-menu-2').toggleClass('hidden');
+            });
+
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#menu-button-2, #dropdown-menu-2').length) {
+                    $('#dropdown-menu-2').addClass('hidden');
+                    $('#menu-button-2').attr('aria-expanded', 'false');
                 }
             });
         });

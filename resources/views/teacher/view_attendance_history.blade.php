@@ -24,15 +24,13 @@
 
         <div>
             <button onclick="window.print()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-400">Print</button>
-            <a href="{{ route('teacher.export_attendance_history', $student->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</a>
+            <a href="{{ route('guidance.export_attendance_history', $user->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</a>
         </div>
         <div class="relative">
             <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
             <i class="fas fa-search absolute top-3 right-3 text-slate-500"></i>
         </div>
     </div>
-
-    {{-- lagay ko name mo sa github haha --}}
 
 
 
@@ -45,7 +43,7 @@
         <h2 class="text-2xl font-bold text-gray-700 my-4">
             {{ $student->name }} Attendance History
         </h2>
-
+        
         @if ($attendace_histories->isEmpty())
         <div class="text-center p-10 bg-white">
             <p>

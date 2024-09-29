@@ -16,7 +16,8 @@ use App\Http\Controllers\Teacher\{
     Present,
     StudentsGradeController,
     TeacherNotificationController,
-    attendanceController
+    attendanceController,
+    FaceScanController
 };
 
 use App\Http\Controllers\Student\ExportController;
@@ -42,6 +43,13 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+
+        // face scan
+        Route::get('/facescan', [FaceScanController::class, 'index'])->name('teacher.facescan');
+
+
+        // mark attendance manually
+        Route::post('/mark-attendance', [QRCodeController::class, 'markAttendanceManually'])->name('markAttendanceManually');
 
         // for attendace
         Route::prefix('attendance')->group(function () {
@@ -88,6 +96,8 @@ Route::prefix('teacher')->group(function () {
 
         // generate qr code
         Route::get('/generate-qr-code/{subjectId}/{teacherId}', [QRCodeController::class, 'generateQRCode'])->name('generateQR');
+
+
         Route::post('/getPresentCount', [Present::class, 'presentCount'])->name('getPresentCount');
         Route::post('/getAbsentCount', [Present::class, 'absentCount'])->name('getAbsentCount');
 

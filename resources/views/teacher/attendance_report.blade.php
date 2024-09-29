@@ -1,4 +1,4 @@
-@extends('guidance.layouts.app')
+@extends('teacher.layouts.app')
 
 @section('title', 'Attendance Report')
 
@@ -48,12 +48,12 @@
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
                         
                         <td class="py-2 text-center border flex items-center justify-center gap-2">
-                        <a href="{{ route('guidance.export_attendance_history', $list->id) }}" class="py-1 rounded px-3 bg-green-600 text-white">
+                        <a href="{{ route('teacher.export_attendance_history', $list->id) }}" class="py-1 rounded px-3 bg-green-600 text-white">
                             <i class="fa-solid fa-clock-rotate-left"></i>
                             Generate Report
                             </a>
 
-                            <a href="{{ route('guidance.view_attendance_history', $list->id) }}" class="py-1 rounded px-3 bg-blue-600 text-white">
+                            <a href="{{ route('teacher.view_attendance_history', $list->id) }}" class="py-1 rounded px-3 bg-blue-600 text-white">
                             <i class="fa-solid fa-eye"></i>
                             View
                             </a>
