@@ -44,6 +44,16 @@ Route::prefix('teacher')->group(function () {
      */
     Route::middleware('auth:teacher')->group(function () {
 
+        // Announcement routes
+        Route::prefix('announcements')->group(function () {
+            Route::get('/', [Announcement::class, 'announcements'])->name('teacher.announcements');
+            Route::post('/create', [Announcement::class, 'makeAnnouncement'])->name('teacher.make_announcement');
+            Route::get('/edit/{id}', [Announcement::class, 'editAnnouncement'])->name('teacher.edit_announcement');
+            Route::put('/update/{id}', [Announcement::class, 'updateAnnouncement'])->name('teacher.update_announcement');
+            Route::delete('/delete/{id}', [Announcement::class, 'deleteAnnouncement'])->name('teacher.delete_announcement');
+        });
+
+
         // face scan
         Route::get('/facescan', [FaceScanController::class, 'index'])->name('teacher.facescan');
 

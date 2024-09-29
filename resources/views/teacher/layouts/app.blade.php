@@ -60,7 +60,12 @@
     <main class="min-h-screen">
         <div class="w-full flex items-center justify-between bg-white px-8 py-3 shadow border-b">
             <h2 class="text-blue-900 font-semibold">WebEd</h2>
-            <ul class="flex items-center justify-end gap-5">
+            <ul class="flex items-center justify-end gap-8">
+                <li>
+                    <a class="hover:text-blue-500" href="{{ route('teacher.announcements') }}">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </a>
+                </li>
                 <li>
                     <a class="hover:text-blue-500" href="{{ route('teacher.notification') }}">
                         <i class="fa-regular fa-bell"></i>
