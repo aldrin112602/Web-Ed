@@ -51,7 +51,11 @@ class Announcement extends Controller
     public function editAnnouncement($id)
     {
         $announcement = AnnouncementModel::findOrFail($id);
-        return view('teacher.edit_announcement', compact('announcement'));
+        $user = Auth::user();
+        $teacher_id = $user->id;
+        $handleSubjects = TeacherGradeHandle::where('teacher_id', $teacher_id)->get();
+
+        return view('teacher.edit_announcement', compact('announcement', 'handleSubjects', 'user'));
     }
 
     // Update an Announcement
