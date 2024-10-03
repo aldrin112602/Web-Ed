@@ -3,7 +3,7 @@
 @section('title', 'Grading')
 
 @section('content')
-<div class="p-4">
+<div class="p-4 overflow-x-auto">
     <div class="flex gap-3 items-center justify-start">
         <div class="flex items-center justify-start gap-2">
             <span>Region: </span>
@@ -101,8 +101,8 @@
         <tr class="border">
             <td class="border p-2 bg-slate-50 text-sm">Highest Possible Score</td>
             @for ($i = 1; $i <= 10; $i++)
-                <td class="border p-1 cursor-pointer" contenteditable="true">
-                </td>
+                <!-- Min: 5, highest: 10 -->
+                <td id="highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
                 @endfor
                 <td class="border p-2"></td>
                 <td class="border p-1 cursor-pointer" contenteditable="true">100.00</td>
@@ -236,23 +236,60 @@
     <!-- table -->
 </div>
 
+<div class="flex items-center justify-end p-5 gap-3">
+    <button type="button" class="px-5 py-3 bg-slate-200 text-black rounded border">Cancel</button>
+
+    <button type="submit" class="px-5 py-3 bg-fuchsia-800 text-white rounded">Save changes</button>
+</div>
+
+
 
 <script>
     $(() => {
-        // Select all contenteditable cells and store them in an array
+        // Select all contenteditable cells for highest possible score
+        let highestScoreCells = $('td#highest_possible_score');
+
+        // Add input event listeners to each cell for validation
+        highestScoreCells.each(function() {
+            $(this).on('blur', function(e) {
+                validateHighestScore(this);
+            });
+        });
+
+        // Validate input for highest possible score (Min: 5, Max: 10)
+        function validateHighestScore(cell) {
+            let inputValue = $(cell).text().trim();
+            let value = parseInt(inputValue);
+
+
+            if (!inputValue) return;
+
+
+
+            // Check if the value is a valid number between 5 and 10
+            if (isNaN(value) || value < 5 || value > 10) {
+                alert('The highest possible score must be between 5 and 10.');
+                $(cell).text('').addClass('border border-red-500').focus()
+            } else {
+                // Remove the border if the input is valid
+                $(cell).removeClass('border-red-500');
+            }
+
+
+        }
+
+        // The rest of your code for handling calculations
         let inputCells = [];
         $('td[contenteditable="true"]').each((i, td) => {
             if (td.hasAttribute('data-user-id')) inputCells.push(td);
         });
 
-        // Add input event listeners to each cell to detect changes
         inputCells.forEach(td => {
             td.addEventListener('input', function(e) {
                 calculateTotalsAndScores(this);
             });
         });
 
-        // Function to calculate totals and scores
         function calculateTotalsAndScores(cell) {
             const userId = cell.getAttribute('data-user-id');
             const scoreType = cell.getAttribute('data-for');
@@ -260,43 +297,43 @@
             let total = 0;
             let highestScore = 0;
 
-            // Calculate total score for the user and score type
             $(`td[data-user-id="${userId}"][data-for="${scoreType}"]`).each((i, td) => {
                 const cellValue = parseInt(td.textContent) || 0;
                 total += cellValue;
             });
 
-            // Update the total cell
             const totalCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_total"]`);
             totalCell.text(total);
 
-            // Fetch highest possible score from the row with "Highest Possible Score"
             const highestScoreCell = $(`tr:contains('Highest Possible Score') td[data-for="${scoreType}"]`).eq(0);
             highestScore = parseInt(highestScoreCell.text()) || 0;
 
-            // Initialize PS and WS
             let percentageScore = "";
             let weightedScore = "";
 
-            // Calculate PS only if total and highestScore are valid
             if (total !== 0 && highestScore !== 0) {
-                percentageScore = (total / highestScore * 100).toFixed(2); // Equivalent to ROUND in Excel
-
-                // WS is 25% of PS
+                percentageScore = (total / highestScore * 100).toFixed(2);
                 weightedScore = (percentageScore * 0.25).toFixed(2);
             }
 
-            // Update PS and WS cells
             const psCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_ps"]`);
             psCell.text(percentageScore);
 
             const wsCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_ws"]`);
             wsCell.text(weightedScore);
-
-            console.log('Total:', total, 'PS:', percentageScore, 'WS:', weightedScore);
         }
+
+
+
+        window.addEventListener('beforeunload', function(event) {
+            // Display a confirmation dialog
+            event.preventDefault(); 
+            event.returnValue = 'Are you sure to leave the page?';
+        });
+
     });
 </script>
+
 
 
 
