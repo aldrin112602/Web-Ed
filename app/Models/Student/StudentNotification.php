@@ -16,14 +16,14 @@ class StudentNotification extends Model
      * @var array
      */
     protected $fillable = [
-        'type',
-        'user_id',
-        'title',
-        'message',
-        'is_seen',
-        'url',
-        'icon',
-        'priority',
+            'type',
+            'user_id',
+            'title',
+            'message',
+            'is_seen',
+            'url',
+            'icon',
+            'priority',
     ];
 
     /**

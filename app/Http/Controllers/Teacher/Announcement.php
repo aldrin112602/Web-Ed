@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Announcement as AnnouncementModel;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TeacherGradeHandle;
+use App\Models\Student\StudentNotification;
+use App\Models\StudentHandle;
 
 class Announcement extends Controller
 {
@@ -23,29 +25,62 @@ class Announcement extends Controller
 
     // Store a new Announcement
     public function makeAnnouncement(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'announcement' => 'required|string',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
-        ]);
+{
+    $user = Auth::guard('teacher')->user();
+    
+    // Validate the request data
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'announcement' => 'required|string',
+        'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+    ]);
 
-        $newAnnouncement = new AnnouncementModel([
-            'title' => $request->title,
-            'announcement' => $request->announcement,
-            'grade_handle_id' => $request->query('id'),
-            'teacher_id' => Auth::guard('teacher')->user()->id,
-        ]);
+    // Create new announcement
+    $newAnnouncement = new AnnouncementModel([
+        'title' => $request->title,
+        'announcement' => $request->announcement,
+        'grade_handle_id' => $request->query('id'),
+        'teacher_id' => $user->id,
+    ]);
 
-        if ($request->hasFile('attachment')) {
+    // Handle file upload if present
+    if ($request->hasFile('attachment')) {
+        try {
             $filePath = $request->file('attachment')->store('attachments', 'public');
             $newAnnouncement->file_path = $filePath;
+        } catch (\Exception $e) {
+            return back()->withErrors('Failed to upload attachment. Please try again.');
         }
-
-        $newAnnouncement->save();
-
-        return redirect()->route('teacher.announcements')->with('success', 'Announcement made successfully!');
     }
+
+    $newAnnouncement->save();
+
+    // Get students under grade handle ID for notification
+    $handleStudents = StudentHandle::where('teacher_id', $user->id)
+        ->where('grade_handle_id', $newAnnouncement->grade_handle_id)
+        ->get();
+
+    // Prepare notifications for students
+    $notifications = [];
+    foreach ($handleStudents as $student_handle) {
+        $notifications[] = [
+            'type' => 'alert',
+            'user_id' => $student_handle->student_id,
+            'title' => 'Announcement',
+            'message' => $newAnnouncement->announcement ?? null,
+            'icon' => 'bell',
+            'priority' => 'medium',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+    }
+
+    // Batch insert notifications
+    StudentNotification::insert($notifications);
+
+    return redirect()->route('teacher.announcements')->with('success', 'Announcement made successfully!');
+}
+
 
     // Edit an Announcement
     public function editAnnouncement($id)
