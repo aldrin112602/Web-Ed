@@ -23,5 +23,8 @@ class Announcement extends Model
         return $this->belongsTo(TeacherAccount::class, 'teacher_id');
     }
 
-
+    public function seenAnnouncements()
+    {
+        return $this->hasMany(SeenAnnouncement::class, 'announcement_id');
+    }
 }

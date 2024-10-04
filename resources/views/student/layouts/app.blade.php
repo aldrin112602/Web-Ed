@@ -69,6 +69,7 @@
                 <li>
                     <a class="hover:text-blue-500" href="{{ route('student.announcement') }}">
                         <i class="fa-solid fa-bullhorn"></i>
+                        <sup id="announcement_count" class="text-white bg-rose-600 rounded-full px-1" style="margin-left: -10px; margin-top: -10px;">0</sup>
                     </a>
                 </li>
                 <li>
@@ -148,8 +149,8 @@
                     class="p-3 {{ request()->is('student/chats') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('student.chats.index') }}"
                         class="text-sm flex items-center justify-start gap-3"><i
-                            class="fa-regular fa-message"></i>Messages <span class="text-rose-600 font-semibold"
-                            id="messageCounts">0</span></a>
+                            class="fa-regular fa-message"></i>Messages <sup class="text-rose-600 font-semibold"
+                            id="messageCounts">0</sup></a>
                 </div>
                 <script>
                     $(() => {
@@ -166,7 +167,9 @@
                     class="p-3 {{ request()->is('student/notifications') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('student.notification') }}"
                         class="text-sm flex items-center justify-start gap-3"><i
-                            class="fa-solid fa-bell"></i>Notifications</a>
+                            class="fa-solid fa-bell"></i>Notifications 
+                            
+                        </a>
                 </div>
                 <div
                     class="p-3 {{ request()->is('student/settings') || request()->is('student/profile') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
@@ -386,16 +389,22 @@
 
     <script>
         $(() => {
-            const getNotifUnseen = () => {
+            const getUnseen = () => {
                 fetch('{{ route("student.getUnseenNotifications") }}')
                     .then(res => res.json())
                     .then(data => {
                         $('#notif_count').text(data.length)
                     });
+
+                    fetch('{{ route("student.getUnseenAnnouncements") }}')
+                    .then(res => res.json())
+                    .then(data => {
+                        $('#announcement_count').text(data.length)
+                    });
             }
-            getNotifUnseen();
+            getUnseen();
             setInterval(() => {
-                getNotifUnseen();
+                getUnseen();
             }, 5000);
         })
     </script>

@@ -37,6 +37,8 @@ Route::prefix('student')->group(function () {
         // announcement
         Route::get('/announcement', [AnnouncementControler::class, 'announcements'])->name('student.announcement');
 
+        Route::get('/unseenAnnouncements',[AnnouncementControler::class, 'getUnseenAnnouncements'])->name('student.getUnseenAnnouncements');
+
         // Notification route
         Route::prefix('notifications')->group(function () {
             Route::get('/', [StudentNotificationController::class, 'index'])->name('student.notification');
@@ -49,7 +51,7 @@ Route::prefix('student')->group(function () {
 
 
             Route::get('/unseenNotif',[StudentNotificationController::class, 'getUnseenNotifications'])->name('student.getUnseenNotifications');
-            
+
         });
 
 

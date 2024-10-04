@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('receiver_type');
             $table->string('id_number');
             $table->text('message');
+            $table->boolean('is_seen')->default(false);
             $table->timestamps();
 
             $table->index(['sender_id', 'sender_type']);
