@@ -65,7 +65,7 @@
     <main class="min-h-screen">
         <div class="w-full flex items-center justify-between bg-white px-8 py-3 shadow border-b">
             <h2 class="text-blue-900 font-semibold">WebEd</h2>
-            <ul class="flex items-center justify-end gap-5">
+            <ul class="flex items-center justify-end gap-10">
                 <li>
                     <a class="hover:text-blue-500" href="{{ route('student.announcement') }}">
                         <i class="fa-solid fa-bullhorn"></i>
@@ -74,6 +74,7 @@
                 <li>
                     <a class="hover:text-blue-500" href="{{ route('student.notification') }}">
                         <i class="fa-regular fa-bell"></i>
+                        <sup id="notif_count" class="text-white bg-rose-600 rounded-full px-1" style="margin-left: -10px; margin-top: -10px;">0</sup>
                     </a>
                 </li>
                 <li>
@@ -153,7 +154,7 @@
                 <script>
                     $(() => {
                         $.ajax({
-                            url: '{{ route('student.get_message_count') }}',
+                            url: '{{ route("student.get_message_count") }}',
                             method: 'GET',
                             success: (response) => {
                                 $('#messageCounts').text(response.count);
@@ -267,51 +268,51 @@
         }
     </script>
     @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-
-                Toast.fire({
-                    icon: 'success',
-                    title: "{{ session('success') }}"
-                });
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
             });
-        </script>
+
+            Toast.fire({
+                icon: 'success',
+                title: "{{ session('success') }}"
+            });
+
+        });
+    </script>
     @endif
 
     @if (session('ERROR'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-
-                Toast.fire({
-                    icon: 'error',
-                    title: "{{ session('error') }}"
-                });
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
             });
-        </script>
+
+            Toast.fire({
+                icon: 'error',
+                title: "{{ session('error') }}"
+            });
+
+        });
+    </script>
     @endif
 
     <script>
@@ -381,6 +382,22 @@
                 checkboxes.forEach(checkbox => checkbox.checked = this.checked);
             });
         }
+    </script>
+
+    <script>
+        $(() => {
+            const getNotifUnseen = () => {
+                fetch('{{ route("student.getUnseenNotifications") }}')
+                    .then(res => res.json())
+                    .then(data => {
+                        $('#notif_count').text(data.length)
+                    });
+            }
+            getNotifUnseen();
+            setInterval(() => {
+                getNotifUnseen();
+            }, 5000);
+        })
     </script>
 
 </body>

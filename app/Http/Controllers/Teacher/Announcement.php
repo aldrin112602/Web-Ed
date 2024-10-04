@@ -66,7 +66,7 @@ class Announcement extends Controller
         $notifications[] = [
             'type' => 'alert',
             'user_id' => $student_handle->student_id,
-            'title' => 'Announcement',
+            'title' => 'Announcement -' . $user->name,
             'message' => $newAnnouncement->announcement ?? null,
             'icon' => 'bell',
             'priority' => 'medium',

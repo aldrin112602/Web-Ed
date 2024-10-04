@@ -40,9 +40,16 @@ Route::prefix('student')->group(function () {
         // Notification route
         Route::prefix('notifications')->group(function () {
             Route::get('/', [StudentNotificationController::class, 'index'])->name('student.notification');
+            
             Route::post('/mark-all-as-read', [StudentNotificationController::class, 'markAllAsRead'])->name('student.notifications.markAllAsRead');
+            
             Route::delete('/{id}', [StudentNotificationController::class, 'delete'])->name('student.notifications.delete');
+            
             Route::delete('/', [StudentNotificationController::class, 'deleteSelected'])->name('student.deleteSelected.notifications');
+
+
+            Route::get('/unseenNotif',[StudentNotificationController::class, 'getUnseenNotifications'])->name('student.getUnseenNotifications');
+            
         });
 
 

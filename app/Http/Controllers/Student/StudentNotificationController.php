@@ -9,7 +9,8 @@ use App\Models\Student\StudentNotification;
 
 class StudentNotificationController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $user = Auth::guard('student')->user();
         return view('student.notification.notification', [
             'user' => $user,
@@ -69,7 +70,8 @@ class StudentNotificationController extends Controller
         return response()->json($notifications);
     }
 
-    public function markAllAsRead() {
+    public function markAllAsRead()
+    {
         $user = Auth::guard('student')->user();
         StudentNotification::where('user_id', $user->id)
             ->update(['is_seen' => true]);
@@ -99,7 +101,4 @@ class StudentNotificationController extends Controller
 
         return redirect()->back()->with('error', 'No notifications selected for deletion.');
     }
-
-
-
 }
