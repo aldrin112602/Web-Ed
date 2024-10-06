@@ -51,55 +51,87 @@ class StudentsGradeController extends Controller
 
 
 
-
     public function grading(Request $request)
-{
-    // Get distinct strands, sections, and grades for the dropdowns
-    $grades = TeacherGradeHandle::where('teacher_id', $this->user->id)->distinct()->pluck('grade');
-    $strands = TeacherGradeHandle::where('teacher_id', $this->user->id)->distinct()->pluck('strand');
-    $sections = TeacherGradeHandle::where('teacher_id', $this->user->id)->distinct()->pluck('section');
+    {
+        // Get distinct grades, strands, and sections for the dropdowns
+        $grades = TeacherGradeHandle::where('teacher_id', $this->user->id)
+            ->distinct()
+            ->pluck('grade');
 
-    // Start building the student query
-    $studentQuery = StudentHandle::join('teacher_grade_handles', 'student_handles.grade_handle_id', '=', 'teacher_grade_handles.id')
-        ->select('student_handles.*', 'teacher_grade_handles.grade', 'teacher_grade_handles.strand', 'teacher_grade_handles.section')
-        ->where('student_handles.teacher_id', $this->user->id); // Specify table for teacher_id
+        $strands = TeacherGradeHandle::where('teacher_id', $this->user->id)
+            ->when($request->filled('grade'), function ($query) use ($request) {
+                $query->where('grade', $request->grade);
+            })
+            ->distinct()
+            ->pluck('strand');
 
-    // Apply filters if they exist
-    if ($request->has('grade') && $request->grade != '') {
-        $studentQuery->where('teacher_grade_handles.grade', $request->grade);
+        $sections = TeacherGradeHandle::where('teacher_id', $this->user->id)
+            ->when($request->filled('grade'), function ($query) use ($request) {
+                $query->where('grade', $request->grade);
+            })
+            ->when($request->filled('strand'), function ($query) use ($request) {
+                $query->where('strand', $request->strand);
+            })
+            ->distinct()
+            ->pluck('section');
+
+        // Initialize variables to hold the students
+        $allStudents = collect();
+        $allMaleStudents = collect();
+        $allFemaleStudents = collect();
+
+        // Only query students if the section is filled
+        if ($request->filled('section')) {
+            // Start building the student query with eager loading for the account relationship
+            $studentQuery = StudentHandle::with('account') // Eager load 'account'
+                ->join('teacher_grade_handles', 'student_handles.grade_handle_id', '=', 'teacher_grade_handles.id')
+                ->select('student_handles.*', 'teacher_grade_handles.grade', 'teacher_grade_handles.strand', 'teacher_grade_handles.section')
+                ->where('student_handles.teacher_id', $this->user->id);
+
+            // Apply filters
+            if ($request->filled('grade')) {
+                $studentQuery->where('teacher_grade_handles.grade', $request->grade);
+            }
+            if ($request->filled('strand')) {
+                $studentQuery->where('teacher_grade_handles.strand', $request->strand);
+            }
+            if ($request->filled('section')) {
+                $studentQuery->where('teacher_grade_handles.section', $request->section);
+            }
+
+            // Get the filtered students
+            $allStudents = $studentQuery->get();
+
+            // Filter male and female students based on the filtered students
+            $allMaleStudents = $allStudents->filter(function ($student) {
+                return $student->account->gender === 'Male';
+            });
+
+            $allFemaleStudents = $allStudents->filter(function ($student) {
+                return $student->account->gender === 'Female';
+            });
+        }
+
+        // Return the view with the necessary data
+        return view('teacher.students_grade.grading', [
+            'user' => $this->user,
+            'handleSubjects' => $this->handleSubjects,
+            'allStudents' => $allStudents,
+            'allFemaleStudents' => $allFemaleStudents,
+            'allMaleStudents' => $allMaleStudents,
+            'StudentAccount' => StudentAccount::class,
+            'gradingHeaders' => $this->gradingHeaders,
+            'strands' => $strands,
+            'sections' => $sections,
+            'grades' => $grades,
+        ]);
     }
-    if ($request->has('strand') && $request->strand != '') {
-        $studentQuery->where('teacher_grade_handles.strand', $request->strand);
-    }
-    if ($request->has('section') && $request->section != '') {
-        $studentQuery->where('teacher_grade_handles.section', $request->section);
-    }
 
-    // Get the filtered students
-    $allStudents = $studentQuery->get();
 
-    // Filter male and female students based on the filtered student set
-    $allMaleStudents = $allStudents->filter(function($student) {
-        return $student->account->gender === 'Male';
-    });
 
-    $allFemaleStudents = $allStudents->filter(function($student) {
-        return $student->account->gender === 'Female';
-    });
 
-    return view('teacher.students_grade.grading', [
-        'user' => $this->user,
-        'handleSubjects' => $this->handleSubjects,
-        'allStudents' => $allStudents,
-        'allFemaleStudents' => $allFemaleStudents,
-        'allMaleStudents' => $allMaleStudents,
-        'StudentAccount' => StudentAccount::class,
-        'gradingHeaders' => $this->gradingHeaders,
-        'strands' => $strands,
-        'sections' => $sections,
-        'grades' => $grades,
-    ]);
-}
+
+
 
 
     public function grading_sheet()

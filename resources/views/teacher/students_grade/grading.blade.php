@@ -57,7 +57,7 @@
                 <div class="inline">
                     <div class="flex items-center justify-start">
                         <select class="py-1 text-sm" name="grade" id="grade">
-                            <option value="" disabled class="hidden">-- Grade --</option>
+                            <option value="" disabled class="hidden" selected>-- Grade --</option>
                             @foreach($grades as $grade)
                             <option value="{{ $grade }}" {{ request('grade') == $grade ? 'selected' : '' }}>
                                 Grade {{ $grade }}
@@ -67,7 +67,7 @@
 
 
                         <select class="py-1 text-sm" name="strand" id="strand">
-                            <option value="" disabled class="hidden">-- Strand --</option>
+                            <option value="" disabled class="hidden" selected>-- Strand --</option>
                             @foreach($strands as $strand)
                             <option value="{{ $strand }}" {{ request('strand') == $strand ? 'selected' : '' }}>
                                 {{ $strand }}
@@ -76,7 +76,7 @@
                         </select>
 
                         <select class="py-1 text-sm" name="section" id="section">
-                            <option value="" disabled class="hidden">-- Section --</option>
+                            <option value="" disabled class="hidden" selected>-- Section --</option>
                             @foreach($sections as $section)
                             <option value="{{ $section }}" {{ request('section') == $section ? 'selected' : '' }}>
                                 {{ $section }}
@@ -91,25 +91,38 @@
                 <script>
                     $(document).ready(function() {
                         // Function to update URL query parameters
-                        function updateQueryString(param, value) {
+                        function updateQueryString(param, value, resetSection = false) {
                             var currentUrl = new URL(window.location.href);
+
+                            // If resetSection is true, remove the 'section' parameter from the URL
+                            if (resetSection) {
+                                currentUrl.searchParams.delete('section');
+                            }
+
+                            // Update or delete the query parameter based on value
                             if (value) {
                                 currentUrl.searchParams.set(param, value);
                             } else {
                                 currentUrl.searchParams.delete(param);
                             }
+
+                            // Redirect to the updated URL
                             window.location.href = currentUrl.href;
                         }
 
+                        // When grade changes
                         $('#grade').on('change', function() {
                             var gradeValue = $(this).val();
                             updateQueryString('grade', gradeValue);
                         });
+
+                        // When strand changes, also reset the section
                         $('#strand').on('change', function() {
                             var strandValue = $(this).val();
-                            updateQueryString('strand', strandValue);
+                            updateQueryString('strand', strandValue, true); // Pass true to reset the section
                         });
 
+                        // When section changes
                         $('#section').on('change', function() {
                             var sectionValue = $(this).val();
                             updateQueryString('section', sectionValue);
