@@ -8,14 +8,14 @@
         <div class="flex items-center justify-start gap-2">
             <span>Region: </span>
             <p class="border p-1 bg-white border-slate-500">
-                IV - A
+                {{ $gradingHeaders->region ?? 'IV - A' }}
             </p>
         </div>
         <div>
             <div class="flex items-center justify-start gap-2">
                 <span>Division: </span>
                 <p class="border p-1 bg-white border-slate-500">
-                    2nd
+                    {{ $gradingHeaders->division ?? '2nd' }}
                 </p>
             </div>
         </div>
@@ -25,20 +25,20 @@
         <div class="flex items-center justify-start gap-2">
             <span>School name: </span>
             <p class="border p-1 bg-white border-slate-500">
-                Ark Technological Institute Education System Inc
+                {{ $gradingHeaders->school_name ?? 'Ark Technological Institute Education System Inc' }}
             </p>
         </div>
         <div class="flex items-center justify-start gap-2">
             <span>School ID: </span>
             <p class="border p-1 bg-white border-slate-500">
-                405210
+                {{ $gradingHeaders->school_id ?? '405210' }}
             </p>
         </div>
 
         <div class="flex items-center justify-start gap-2">
             <span>School Year: </span>
             <select name="school_year p-1" id="school_year">
-                <option value="2023-2024">2023-2024</option>
+                <option value="{{ $gradingHeaders->year ?? '2023-2024' }}">{{ $gradingHeaders->year ?? '2023-2024' }}</option>
             </select>
         </div>
     </div>
@@ -53,10 +53,69 @@
                 </select>
             </td>
             <td class="border p-2" colspan="13">
-                Grade & Section:
+                Grade, Strand & Section:
+                <div class="inline">
+                    <div class="flex items-center justify-start">
+                        <select class="py-1 text-sm" name="grade" id="grade">
+                            <option value="" disabled class="hidden">-- Grade --</option>
+                            <option value="11" {{ request('grade') == '11' ? 'selected' : '' }}>Grade 11</option>
+                            <option value="12" {{ request('grade') == '12' ? 'selected' : '' }}>Grade 12</option>
+                        </select>
+
+                        <select class="py-1 text-sm" name="strand" id="strand">
+                            <option value="" disabled class="hidden">-- Strand --</option>
+                            <option value="ABM" {{ request('strand') == 'ABM' ? 'selected' : '' }}>ABM</option>
+                            <option value="ICT" {{ request('strand') == 'ICT' ? 'selected' : '' }}>ICT</option>
+                            <option value="HE" {{ request('strand') == 'HE' ? 'selected' : '' }}>HE</option>
+                            <option value="HUMSS" {{ request('strand') == 'HUMSS' ? 'selected' : '' }}>HUMSS</option>
+                        </select>
+
+                        <select class="py-1 text-sm" name="section" id="section">
+                            <option value="" disabled class="hidden">-- Section --</option>
+                            <option value="A" {{ request('section') == 'A' ? 'selected' : '' }}>A</option>
+                            <option value="B" {{ request('section') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="C" {{ request('section') == 'C' ? 'selected' : '' }}>C</option>
+                            <option value="D" {{ request('section') == 'D' ? 'selected' : '' }}>D</option>
+                            <option value="E" {{ request('section') == 'E' ? 'selected' : '' }}>E</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <script>
+                    $(document).ready(function() {
+                        // Function to update URL query parameters
+                        function updateQueryString(param, value) {
+                            var currentUrl = new URL(window.location.href);
+                            if (value) {
+                                currentUrl.searchParams.set(param, value);
+                            } else {
+                                currentUrl.searchParams.delete(param);
+                            }
+                            window.location.href = currentUrl.href;
+                        }
+
+                        $('#grade').on('change', function() {
+                            var gradeValue = $(this).val();
+                            updateQueryString('grade', gradeValue);
+                        });
+                        $('#strand').on('change', function() {
+                            var strandValue = $(this).val();
+                            updateQueryString('strand', strandValue);
+                        });
+
+                        $('#section').on('change', function() {
+                            var sectionValue = $(this).val();
+                            updateQueryString('section', sectionValue);
+                        });
+                    });
+                </script>
+
             </td>
             <td class="border p-2" colspan="13">
-                Teacher:
+                Teacher: <p class="border p-1 bg-white border-slate-500 inline">
+                    {{ $user->name }}
+                </p>
             </td>
             <td class="border p-2" colspan="3" rowspan="3">
                 Quarterly Assessment
@@ -109,9 +168,9 @@
                 <td class="border p-1 cursor-pointer" contenteditable="true">25%</td>
 
                 @for ($i = 1; $i <= 10; $i++)
-                <!-- Min: 5, highest: 10 -->
-                <td id="performance_task_highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
-                @endfor
+                    <!-- Min: 5, highest: 10 -->
+                    <td id="performance_task_highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
+                    @endfor
 
 
                     <td class="border p-2"></td>
@@ -239,9 +298,9 @@
 </div>
 
 <div class="flex items-center justify-end p-5 gap-3">
-    <button type="button" class="px-5 py-3 bg-slate-200 text-black rounded border">Cancel</button>
+    <!-- <button type="button" class="px-5 py-3 bg-slate-200 text-black rounded border">Cancel</button> -->
 
-    <button type="submit" class="px-5 py-3 bg-fuchsia-800 text-white rounded">Save changes</button>
+    <button type="submit" class="px-5 py-3 bg-blue-800 text-white rounded">Save changes</button>
 </div>
 
 
@@ -327,11 +386,11 @@
 
 
 
-        window.addEventListener('beforeunload', function(event) {
-            // Display a confirmation dialog
-            event.preventDefault(); 
-            event.returnValue = 'Are you sure to leave the page?';
-        });
+        // window.addEventListener('beforeunload', function(event) {
+        //     // Display a confirmation dialog
+        //     event.preventDefault(); 
+        //     event.returnValue = 'Are you sure to leave the page?';
+        // });
 
     });
 </script>

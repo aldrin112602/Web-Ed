@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\GradingHeader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TeacherGradeHandle;
@@ -12,7 +13,7 @@ use App\Models\Student\StudentAccount;
 
 class StudentsGradeController extends Controller
 {
-    public $user, $handleSubjects, $allStudents, $allMaleStudents, $allFemaleStudents;
+    public $user, $handleSubjects, $allStudents, $allMaleStudents, $allFemaleStudents, $gradingHeaders;
 
     public function __construct()
     {
@@ -30,6 +31,11 @@ class StudentsGradeController extends Controller
             ->whereHas('account', function ($query) {
                 $query->where('gender', 'Female');
             })->where('teacher_id', $this->user->id)->get();
+
+
+
+            // grading headers
+            $this->gradingHeaders = GradingHeader::first();
     }
 
 
@@ -38,14 +44,14 @@ class StudentsGradeController extends Controller
 
     public function grading()
     {
-
         return view('teacher.students_grade.grading', [
             'user' => $this->user,
             'handleSubjects' => $this->handleSubjects,
             'allStudents' => $this->allStudents,
             'allFemaleStudents' => $this->allFemaleStudents,
             'allMaleStudents' => $this->allMaleStudents,
-            'StudentAccount' => StudentAccount::class
+            'StudentAccount' => StudentAccount::class,
+            'gradingHeaders' => $this->gradingHeaders
         ]);
     }
 
