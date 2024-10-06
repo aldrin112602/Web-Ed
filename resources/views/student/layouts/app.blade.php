@@ -78,11 +78,11 @@
                         <sup id="notif_count" class="text-white bg-rose-600 rounded-full px-1" style="margin-left: -10px; margin-top: -10px;">0</sup>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a class="hover:text-blue-500" href="{{ route('student.chats.index') }}">
                         <i class="fa-regular fa-message"></i>
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
         <div class="block md:flex h-screen items-start justify-start">
@@ -145,13 +145,13 @@
                 <div class="py-2">
                     <hr>
                 </div>
-                <div
+                <!-- <div
                     class="p-3 {{ request()->is('student/chats') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('student.chats.index') }}"
                         class="text-sm flex items-center justify-start gap-3"><i
                             class="fa-regular fa-message"></i>Messages <sup class="text-rose-600 font-semibold"
                             id="messageCounts">0</sup></a>
-                </div>
+                </div> -->
                 <script>
                     $(() => {
                         $.ajax({
