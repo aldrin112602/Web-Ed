@@ -6,7 +6,6 @@ use App\Http\Controllers\Student\{
     QRCodeScanController,
     StudentController as Student,
     StudentOtpController,
-    StudentConversationController,
     GradeController,
     StudentNotificationController
 };
