@@ -75,12 +75,6 @@ Route::prefix('student')->group(function () {
         // Add Student-specific routes here
         Route::get('dashboard', [Student::class, 'dashboard'])->name('student.dashboard');
 
-        // chat conversation
-        Route::get('/chats', [StudentConversationController::class, 'index'])->name('student.chats.index');
-        Route::get('/chats/messages', [StudentConversationController::class, 'loadMessages'])->name('student.chats.loadMessages');
-        Route::post('/chats/send', [StudentConversationController::class, 'sendMessage']);
-        Route::get('chats/counts', [StudentConversationController::class, 'getMessageCounts'])->name('student.get_message_count');
-
 
         // Student logout route
         Route::post('logout', [Student::class, 'logout'])->name('student.logout');
