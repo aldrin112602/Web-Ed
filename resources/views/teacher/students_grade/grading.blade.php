@@ -109,9 +109,11 @@
                 <td class="border p-1 cursor-pointer" contenteditable="true">25%</td>
 
                 @for ($i = 1; $i <= 10; $i++)
-                    <td class="border p-1 cursor-pointer" contenteditable="true">
-                    </td>
-                    @endfor
+                <!-- Min: 5, highest: 10 -->
+                <td id="performance_task_highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
+                @endfor
+
+
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
@@ -247,7 +249,7 @@
 <script>
     $(() => {
         // Select all contenteditable cells for highest possible score
-        let highestScoreCells = $('td#highest_possible_score');
+        let highestScoreCells = $('td#highest_possible_score, td#performance_task_highest_possible_score');
 
         // Add input event listeners to each cell for validation
         highestScoreCells.each(function() {

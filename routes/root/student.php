@@ -27,7 +27,7 @@ Route::prefix('student')->group(function () {
 
     /***
      * ///////////////////////////
-     * /// MIDDLEWARE: TEACHER ///
+     * /// MIDDLEWARE: STUDENT ///
      * ///////////////////////////
      */
 
