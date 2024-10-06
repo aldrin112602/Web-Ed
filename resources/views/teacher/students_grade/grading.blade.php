@@ -58,26 +58,32 @@
                     <div class="flex items-center justify-start">
                         <select class="py-1 text-sm" name="grade" id="grade">
                             <option value="" disabled class="hidden">-- Grade --</option>
-                            <option value="11" {{ request('grade') == '11' ? 'selected' : '' }}>Grade 11</option>
-                            <option value="12" {{ request('grade') == '12' ? 'selected' : '' }}>Grade 12</option>
+                            @foreach($grades as $grade)
+                            <option value="{{ $grade }}" {{ request('grade') == $grade ? 'selected' : '' }}>
+                                Grade {{ $grade }}
+                            </option>
+                            @endforeach
                         </select>
+
 
                         <select class="py-1 text-sm" name="strand" id="strand">
                             <option value="" disabled class="hidden">-- Strand --</option>
-                            <option value="ABM" {{ request('strand') == 'ABM' ? 'selected' : '' }}>ABM</option>
-                            <option value="ICT" {{ request('strand') == 'ICT' ? 'selected' : '' }}>ICT</option>
-                            <option value="HE" {{ request('strand') == 'HE' ? 'selected' : '' }}>HE</option>
-                            <option value="HUMSS" {{ request('strand') == 'HUMSS' ? 'selected' : '' }}>HUMSS</option>
+                            @foreach($strands as $strand)
+                            <option value="{{ $strand }}" {{ request('strand') == $strand ? 'selected' : '' }}>
+                                {{ $strand }}
+                            </option>
+                            @endforeach
                         </select>
 
                         <select class="py-1 text-sm" name="section" id="section">
                             <option value="" disabled class="hidden">-- Section --</option>
-                            <option value="A" {{ request('section') == 'A' ? 'selected' : '' }}>A</option>
-                            <option value="B" {{ request('section') == 'B' ? 'selected' : '' }}>B</option>
-                            <option value="C" {{ request('section') == 'C' ? 'selected' : '' }}>C</option>
-                            <option value="D" {{ request('section') == 'D' ? 'selected' : '' }}>D</option>
-                            <option value="E" {{ request('section') == 'E' ? 'selected' : '' }}>E</option>
+                            @foreach($sections as $section)
+                            <option value="{{ $section }}" {{ request('section') == $section ? 'selected' : '' }}>
+                                {{ $section }}
+                            </option>
+                            @endforeach
                         </select>
+
                     </div>
 
                 </div>
