@@ -1,3 +1,4 @@
+
 @extends('teacher.layouts.app')
 
 @section('title', 'Chats')
