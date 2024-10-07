@@ -1,4 +1,5 @@
-@extends('student.layouts.app')
+
+@extends('teacher.layouts.app')
 
 @section('title', 'Chats')
 @section('content')
@@ -114,15 +115,14 @@
         selectedUserId = userId;
         selectedUserType = userType;
 
-        $.getJSON(`/student/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
+        $.getJSON(`/teacher/chats/messages/?user_id=${selectedUserId}&user_type=${selectedUserType}`, function(data) {
             const messagesDiv = $('#messages');
             messagesDiv.empty();
 
             if (data.length > 0) {
                 $.each(data, function(index, message) {
                     const profile = message.receiver_account?.profile;
-                    console.log(profile)
-                    const profileUrl = profile ? `http://127.0.0.1:8000/storage/${profile}` : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
+                    const profileUrl = profile ? `/storage/${profile}` : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png';
 
                     const messageElement = $('<div>').addClass('msg msg_id_' + message.id_number).html(`
                         <img src="${profileUrl}" style="width: 30px; height: 30px; object-fit: cover;">
@@ -153,7 +153,7 @@
         const message = messageInput.val();
 
         $.ajax({
-            url: '/student/chats/send',
+            url: '/teacher/chats/send',
             type: 'POST',
             contentType: 'application/json',
             headers: {
