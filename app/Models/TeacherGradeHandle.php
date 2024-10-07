@@ -20,4 +20,10 @@ class TeacherGradeHandle extends Model
     {
         return $this->belongsTo(TeacherAccount::class, 'teacher_id');
     }
+
+
+    public function students()
+    {
+        return $this->hasMany(StudentHandle::class, 'grade_handle_id');
+    }
 }

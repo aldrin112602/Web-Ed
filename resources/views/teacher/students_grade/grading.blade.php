@@ -8,14 +8,14 @@
         <div class="flex items-center justify-start gap-2">
             <span>Region: </span>
             <p class="border p-1 bg-white border-slate-500">
-                IV - A
+                {{ $gradingHeaders->region ?? 'IV - A' }}
             </p>
         </div>
         <div>
             <div class="flex items-center justify-start gap-2">
                 <span>Division: </span>
                 <p class="border p-1 bg-white border-slate-500">
-                    2nd
+                    {{ $gradingHeaders->division ?? '2nd' }}
                 </p>
             </div>
         </div>
@@ -25,20 +25,20 @@
         <div class="flex items-center justify-start gap-2">
             <span>School name: </span>
             <p class="border p-1 bg-white border-slate-500">
-                Ark Technological Institute Education System Inc
+                {{ $gradingHeaders->school_name ?? 'Ark Technological Institute Education System Inc' }}
             </p>
         </div>
         <div class="flex items-center justify-start gap-2">
             <span>School ID: </span>
             <p class="border p-1 bg-white border-slate-500">
-                405210
+                {{ $gradingHeaders->school_id ?? '405210' }}
             </p>
         </div>
 
         <div class="flex items-center justify-start gap-2">
             <span>School Year: </span>
             <select name="school_year p-1" id="school_year">
-                <option value="2023-2024">2023-2024</option>
+                <option value="{{ $gradingHeaders->year ?? '2023-2024' }}">{{ $gradingHeaders->year ?? '2023-2024' }}</option>
             </select>
         </div>
     </div>
@@ -53,10 +53,88 @@
                 </select>
             </td>
             <td class="border p-2" colspan="13">
-                Grade & Section:
+                Grade, Strand & Section:
+                <div class="inline">
+                    <div class="flex items-center justify-start">
+                        <select class="py-1 text-sm" name="grade" id="grade">
+                            <option value="" disabled class="hidden" selected>-- Grade --</option>
+                            @foreach($grades as $grade)
+                            <option value="{{ $grade }}" {{ request('grade') == $grade ? 'selected' : '' }}>
+                                Grade {{ $grade }}
+                            </option>
+                            @endforeach
+                        </select>
+
+
+                        <select class="py-1 text-sm" name="strand" id="strand">
+                            <option value="" disabled class="hidden" selected>-- Strand --</option>
+                            @foreach($strands as $strand)
+                            <option value="{{ $strand }}" {{ request('strand') == $strand ? 'selected' : '' }}>
+                                {{ $strand }}
+                            </option>
+                            @endforeach
+                        </select>
+
+                        <select class="py-1 text-sm" name="section" id="section">
+                            <option value="" disabled class="hidden" selected>-- Section --</option>
+                            @foreach($sections as $section)
+                            <option value="{{ $section }}" {{ request('section') == $section ? 'selected' : '' }}>
+                                {{ $section }}
+                            </option>
+                            @endforeach
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <script>
+                    $(document).ready(function() {
+                        // Function to update URL query parameters
+                        function updateQueryString(param, value, resetSection = false) {
+                            var currentUrl = new URL(window.location.href);
+
+                            // If resetSection is true, remove the 'section' parameter from the URL
+                            if (resetSection) {
+                                currentUrl.searchParams.delete('section');
+                            }
+
+                            // Update or delete the query parameter based on value
+                            if (value) {
+                                currentUrl.searchParams.set(param, value);
+                            } else {
+                                currentUrl.searchParams.delete(param);
+                            }
+
+                            // Redirect to the updated URL
+                            window.location.href = currentUrl.href;
+                        }
+
+                        // When grade changes
+                        $('#grade').on('change', function() {
+                            var gradeValue = $(this).val();
+                            updateQueryString('grade', gradeValue);
+                        });
+
+                        // When strand changes, also reset the section
+                        $('#strand').on('change', function() {
+                            var strandValue = $(this).val();
+                            updateQueryString('strand', strandValue, true); // Pass true to reset the section
+                        });
+
+                        // When section changes
+                        $('#section').on('change', function() {
+                            var sectionValue = $(this).val();
+                            updateQueryString('section', sectionValue);
+                        });
+                    });
+                </script>
+
             </td>
             <td class="border p-2" colspan="13">
-                Teacher:
+                Teacher: <p class="border p-1 bg-white border-slate-500 inline">
+                    {{ $user->name }}
+                </p>
             </td>
             <td class="border p-2" colspan="3" rowspan="3">
                 Quarterly Assessment
@@ -109,9 +187,11 @@
                 <td class="border p-1 cursor-pointer" contenteditable="true">25%</td>
 
                 @for ($i = 1; $i <= 10; $i++)
-                    <td class="border p-1 cursor-pointer" contenteditable="true">
-                    </td>
+                    <!-- Min: 5, highest: 10 -->
+                    <td id="performance_task_highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
                     @endfor
+
+
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
@@ -237,9 +317,9 @@
 </div>
 
 <div class="flex items-center justify-end p-5 gap-3">
-    <button type="button" class="px-5 py-3 bg-slate-200 text-black rounded border">Cancel</button>
+    <!-- <button type="button" class="px-5 py-3 bg-slate-200 text-black rounded border">Cancel</button> -->
 
-    <button type="submit" class="px-5 py-3 bg-fuchsia-800 text-white rounded">Save changes</button>
+    <button type="submit" class="px-5 py-3 bg-blue-800 text-white rounded">Save changes</button>
 </div>
 
 
@@ -247,7 +327,7 @@
 <script>
     $(() => {
         // Select all contenteditable cells for highest possible score
-        let highestScoreCells = $('td#highest_possible_score');
+        let highestScoreCells = $('td#highest_possible_score, td#performance_task_highest_possible_score');
 
         // Add input event listeners to each cell for validation
         highestScoreCells.each(function() {
@@ -325,11 +405,11 @@
 
 
 
-        window.addEventListener('beforeunload', function(event) {
-            // Display a confirmation dialog
-            event.preventDefault(); 
-            event.returnValue = 'Are you sure to leave the page?';
-        });
+        // window.addEventListener('beforeunload', function(event) {
+        //     // Display a confirmation dialog
+        //     event.preventDefault(); 
+        //     event.returnValue = 'Are you sure to leave the page?';
+        // });
 
     });
 </script>

@@ -19,6 +19,11 @@ class StudentHandle extends Model
         return $this->belongsTo(StudentAccount::class, 'id');
     }
 
+    public function gradeHandle()
+    {
+        return $this->belongsTo(TeacherGradeHandle::class, 'grade_handle_id');
+    }
+
     public function account()
     {
         return $this->hasOne(StudentAccount::class, 'id', 'student_id');
