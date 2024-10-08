@@ -180,7 +180,9 @@
             <td class="border p-2 bg-slate-50 text-sm">Highest Possible Score</td>
             @for ($i = 1; $i <= 10; $i++)
                 <!-- Min: 5, highest: 10 -->
-                <td id="highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
+                <td data-id_written="{{ $i }}" id="highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true">
+                    {{ $highestPossibleScores['highest_possible_written_' . $i] ?? '' }}
+                </td>
                 @endfor
                 <td class="border p-2"></td>
                 <td class="border p-1 cursor-pointer" contenteditable="true">100.00</td>
@@ -188,7 +190,9 @@
 
                 @for ($i = 1; $i <= 10; $i++)
                     <!-- Min: 5, highest: 10 -->
-                    <td id="performance_task_highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true"></td>
+                    <td data-id_task="{{ $i }}" id="performance_task_highest_possible_score" data-cell-number="{{ $i }}" class="border p-1 cursor-pointer" contenteditable="true">
+                        {{ $highestPossibleScores['highest_possible_task_' . $i] ?? '' }}
+                    </td>
                     @endfor
 
 
@@ -317,10 +321,76 @@
 </div>
 
 <div class="flex items-center justify-end p-5 gap-3">
-    <!-- <button type="button" class="px-5 py-3 bg-slate-200 text-black rounded border">Cancel</button> -->
 
-    <button type="submit" class="px-5 py-3 bg-blue-800 text-white rounded">Save changes</button>
+    <button id="submitBtn" type="submit" class="px-5 py-3 bg-blue-800 text-white rounded">Save changes</button>
 </div>
+
+<!-- submit function -->
+<script>
+    $(document).ready(function() {
+        $('#submitBtn').click(function() {
+            let formData = {};
+            let allFilled = true;
+            let allNumbers = true;
+
+            for (let i = 1; i <= 10; i++) {
+                let writtenScore = $(`td[data-id_written="${i}"]`).text().trim();
+                formData['highest_possible_written_' + i] = writtenScore;
+
+                if (writtenScore === "" || isNaN(writtenScore)) {
+                    allFilled = false;
+                    allNumbers = false;
+                }
+            }
+            for (let i = 1; i <= 10; i++) {
+                let taskScore = $(`td[data-id_task="${i}"]`).text().trim();
+                formData['highest_possible_task_' + i] = taskScore;
+                if (taskScore === "" || isNaN(taskScore)) {
+                    allFilled = false;
+                    allNumbers = false;
+                }
+            }
+
+            if (!allFilled) {
+                alert("All fields in highest possible scores are required.");
+                return;
+            }
+
+            if (!allNumbers) {
+                alert("Please enter valid numbers in all fields.");
+                return;
+            }
+
+            $.ajax({
+                url: '{{ route("teacher.addHighestPossibleScore") }}',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Changes saved successfully!',
+                    })
+                    console.log('Success:', response);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: 'There was a problem saving the changes. Please try again.',
+                    });
+                }
+            });
+        });
+
+    });
+</script>
+<!-- end submit function -->
 
 
 

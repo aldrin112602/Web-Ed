@@ -32,5 +32,8 @@ class HighestPossibleScoreGradingSheet extends Model
         'highest_possible_task_8',
         'highest_possible_task_9',
         'highest_possible_task_10',
+
+
+        'teacher_id'
     ];
 }

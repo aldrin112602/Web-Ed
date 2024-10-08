@@ -17,7 +17,8 @@ use App\Http\Controllers\Teacher\{
     StudentsGradeController,
     TeacherNotificationController,
     attendanceController,
-    FaceScanController
+    FaceScanController,
+    HighestPossibleScore
 };
 
 use App\Http\Controllers\Student\ExportController;
@@ -43,6 +44,7 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+        Route::post('/highest-possible-scores', [HighestPossibleScore::class, 'store'])->name('teacher.addHighestPossibleScore');
 
         // Announcement routes
         Route::prefix('announcements')->group(function () {

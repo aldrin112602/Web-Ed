@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\GradingHeader;
+use App\Models\HighestPossibleScoreGradingSheet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TeacherGradeHandle;
@@ -79,6 +80,7 @@ class StudentsGradeController extends Controller
         $allStudents = collect();
         $allMaleStudents = collect();
         $allFemaleStudents = collect();
+        $highestPossibleScores = HighestPossibleScoreGradingSheet::where('teacher_id', $this->user->id)->first();
 
         // Only query students if the section is filled
         if ($request->filled('section')) {
@@ -124,6 +126,7 @@ class StudentsGradeController extends Controller
             'strands' => $strands,
             'sections' => $sections,
             'grades' => $grades,
+            'highestPossibleScores' => $highestPossibleScores
         ]);
     }
 
