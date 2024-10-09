@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+    <script src="{{ asset('build/assets/app.js') }}" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Create Account')</title>
@@ -12,6 +14,8 @@
     <script src="https://www.w3schools.com/lib/w3.js"></script>
 
     @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ asset('build/assets/app.css') }}">
+    
     @livewireStyles
     <style>
         html::-webkit-scrollbar {
