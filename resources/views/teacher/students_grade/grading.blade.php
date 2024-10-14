@@ -90,39 +90,29 @@
 
                 <script>
                     $(document).ready(function() {
-                        // Function to update URL query parameters
                         function updateQueryString(param, value, resetSection = false) {
                             var currentUrl = new URL(window.location.href);
-
-                            // If resetSection is true, remove the 'section' parameter from the URL
                             if (resetSection) {
                                 currentUrl.searchParams.delete('section');
                             }
-
-                            // Update or delete the query parameter based on value
                             if (value) {
                                 currentUrl.searchParams.set(param, value);
                             } else {
                                 currentUrl.searchParams.delete(param);
                             }
-
-                            // Redirect to the updated URL
                             window.location.href = currentUrl.href;
                         }
 
-                        // When grade changes
                         $('#grade').on('change', function() {
                             var gradeValue = $(this).val();
                             updateQueryString('grade', gradeValue);
                         });
 
-                        // When strand changes, also reset the section
                         $('#strand').on('change', function() {
                             var strandValue = $(this).val();
-                            updateQueryString('strand', strandValue, true); // Pass true to reset the section
+                            updateQueryString('strand', strandValue, true);
                         });
 
-                        // When section changes
                         $('#section').on('change', function() {
                             var sectionValue = $(this).val();
                             updateQueryString('section', sectionValue);
@@ -328,6 +318,26 @@
 <!-- submit function -->
 <script>
     $(document).ready(function() {
+
+    // Handle input event on the student's score cells
+    $('[data-for="written_work"], [data-for="performance_task"]').on('input', function() {
+            // Get the data-cell attribute to find the corresponding highest possible score
+            var cellNumber = $(this).data('cell');
+            
+            // Get the highest possible score for this column
+            var highestPossibleScore = parseFloat($('#highest_possible_score[data-cell-number="' + cellNumber + '"]').text());
+
+            // Get the current input value
+            var currentScore = parseFloat($(this).text());
+
+            // Validate if the score exceeds the highest possible score
+            if (currentScore > highestPossibleScore) {
+                alert('Score cannot be higher than the highest possible score (' + highestPossibleScore + ')');
+                // Reset the value if it's greater than the allowed maximum
+                $(this).text('');
+            }
+        });
+        
         $('#submitBtn').click(function() {
             let formData = {};
             let allFilled = true;
