@@ -314,183 +314,91 @@
 
     <button id="submitBtn" type="submit" class="px-5 py-3 bg-blue-800 text-white rounded">Save changes</button>
 </div>
-
-<!-- submit function -->
 <script>
     $(document).ready(function() {
-
-    // Handle input event on the student's score cells
-    $('[data-for="written_work"], [data-for="performance_task"]').on('input', function() {
-            // Get the data-cell attribute to find the corresponding highest possible score
-            var cellNumber = $(this).data('cell');
-            
-            // Get the highest possible score for this column
-            var highestPossibleScore = parseFloat($('#highest_possible_score[data-cell-number="' + cellNumber + '"]').text());
-
-            // Get the current input value
-            var currentScore = parseFloat($(this).text());
-
-            // Validate if the score exceeds the highest possible score
-            if (currentScore > highestPossibleScore) {
-                alert('Score cannot be higher than the highest possible score (' + highestPossibleScore + ')');
-                // Reset the value if it's greater than the allowed maximum
-                $(this).text('');
+        $('[data-for="written_work"], [data-for="performance_task"]').on("input", function() {
+            var t = $(this).data("cell"),
+                e = parseFloat($('#highest_possible_score[data-cell-number="' + t + '"]').text());
+            parseFloat($(this).text()) > e && (alert("Score cannot be higher than the highest possible score (" + e + ")"), $(this).text(""))
+        }), $("#submitBtn").click(function() {
+            let t = {},
+                e = !0,
+                s = !0;
+            for (let r = 1; r <= 10; r++) {
+                let i = $(`td[data-id_written="${r}"]`).text().trim();
+                t["highest_possible_written_" + r] = i, ("" === i || isNaN(i)) && (e = !1, s = !1)
             }
-        });
-        
-        $('#submitBtn').click(function() {
-            let formData = {};
-            let allFilled = true;
-            let allNumbers = true;
-
-            for (let i = 1; i <= 10; i++) {
-                let writtenScore = $(`td[data-id_written="${i}"]`).text().trim();
-                formData['highest_possible_written_' + i] = writtenScore;
-
-                if (writtenScore === "" || isNaN(writtenScore)) {
-                    allFilled = false;
-                    allNumbers = false;
-                }
+            for (let a = 1; a <= 10; a++) {
+                let o = $(`td[data-id_task="${a}"]`).text().trim();
+                t["highest_possible_task_" + a] = o, ("" === o || isNaN(o)) && (e = !1, s = !1)
             }
-            for (let i = 1; i <= 10; i++) {
-                let taskScore = $(`td[data-id_task="${i}"]`).text().trim();
-                formData['highest_possible_task_' + i] = taskScore;
-                if (taskScore === "" || isNaN(taskScore)) {
-                    allFilled = false;
-                    allNumbers = false;
-                }
-            }
-
-            if (!allFilled) {
+            if (!e) {
                 alert("All fields in highest possible scores are required.");
-                return;
+                return
             }
-
-            if (!allNumbers) {
+            if (!s) {
                 alert("Please enter valid numbers in all fields.");
-                return;
+                return
             }
-
             $.ajax({
                 url: '{{ route("teacher.addHighestPossibleScore") }}',
-                type: 'POST',
-                data: JSON.stringify(formData),
-                contentType: 'application/json',
+                type: "POST",
+                data: JSON.stringify(t),
+                contentType: "application/json",
                 headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
                 },
-                success: function(response) {
+                success: function(t) {
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Changes saved successfully!',
+                        icon: "success",
+                        title: "Success!",
+                        text: "Changes saved successfully!"
+                    }), console.log("Success:", t)
+                },
+                error: function(t) {
+                    console.error("Error:", t), Swal.fire({
+                        icon: "error",
+                        title: "Error!",
+                        text: "There was a problem saving the changes. Please try again."
                     })
-                    console.log('Success:', response);
-                },
-                error: function(error) {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error!',
-                        text: 'There was a problem saving the changes. Please try again.',
-                    });
                 }
-            });
+            })
         });
-
-    });
-</script>
-<!-- end submit function -->
-
-
-
-<script>
-    $(() => {
-        // Select all contenteditable cells for highest possible score
-        let highestScoreCells = $('td#highest_possible_score, td#performance_task_highest_possible_score');
-
-        // Add input event listeners to each cell for validation
-        highestScoreCells.each(function() {
-            $(this).on('blur', function(e) {
-                validateHighestScore(this);
-            });
+        $("td#highest_possible_score, td#performance_task_highest_possible_score").each(function() {
+            $(this).on("blur", function(t) {
+                var e;
+                let s, r;
+                e = this, s = $(e).text().trim(), r = parseInt(s), s && (isNaN(r) || r < 5 || r > 10 ? (alert("The highest possible score must be between 5 and 10."), $(e).text("").addClass("border border-red-500").focus()) : $(e).removeClass("border-red-500"))
+            })
         });
-
-        // Validate input for highest possible score (Min: 5, Max: 10)
-        function validateHighestScore(cell) {
-            let inputValue = $(cell).text().trim();
-            let value = parseInt(inputValue);
-
-
-            if (!inputValue) return;
-
-
-
-            // Check if the value is a valid number between 5 and 10
-            if (isNaN(value) || value < 5 || value > 10) {
-                alert('The highest possible score must be between 5 and 10.');
-                $(cell).text('').addClass('border border-red-500').focus()
-            } else {
-                // Remove the border if the input is valid
-                $(cell).removeClass('border-red-500');
-            }
-
-
-        }
-
-        // The rest of your code for handling calculations
-        let inputCells = [];
-        $('td[contenteditable="true"]').each((i, td) => {
-            if (td.hasAttribute('data-user-id')) inputCells.push(td);
-        });
-
-        inputCells.forEach(td => {
-            td.addEventListener('input', function(e) {
-                calculateTotalsAndScores(this);
-            });
-        });
-
-        function calculateTotalsAndScores(cell) {
-            const userId = cell.getAttribute('data-user-id');
-            const scoreType = cell.getAttribute('data-for');
-
-            let total = 0;
-            let highestScore = 0;
-
-            $(`td[data-user-id="${userId}"][data-for="${scoreType}"]`).each((i, td) => {
-                const cellValue = parseInt(td.textContent) || 0;
-                total += cellValue;
-            });
-
-            const totalCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_total"]`);
-            totalCell.text(total);
-
-            const highestScoreCell = $(`tr:contains('Highest Possible Score') td[data-for="${scoreType}"]`).eq(0);
-            highestScore = parseInt(highestScoreCell.text()) || 0;
-
-            let percentageScore = "";
-            let weightedScore = "";
-
-            if (total !== 0 && highestScore !== 0) {
-                percentageScore = (total / highestScore * 100).toFixed(2);
-                weightedScore = (percentageScore * 0.25).toFixed(2);
-            }
-
-            const psCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_ps"]`);
-            psCell.text(percentageScore);
-
-            const wsCell = $(cell).closest('tr').find(`td[data-for="${scoreType}_ws"]`);
-            wsCell.text(weightedScore);
-        }
-
-
-
-        // window.addEventListener('beforeunload', function(event) {
-        //     // Display a confirmation dialog
-        //     event.preventDefault(); 
-        //     event.returnValue = 'Are you sure to leave the page?';
-        // });
-
+        let t = [];
+        $('td[contenteditable="true"]').each((e, s) => {
+            s.hasAttribute("data-user-id") && t.push(s)
+        }), t.forEach(t => {
+            t.addEventListener("input", function(t) {
+                (function t(e) {
+                    let s = e.getAttribute("data-user-id"),
+                        r = e.getAttribute("data-for"),
+                        i = 0,
+                        a = 0;
+                    $(`td[data-user-id="${s}"][data-for="${r}"]`).each((t, e) => {
+                        let s = parseInt(e.textContent) || 0;
+                        i += s
+                    });
+                    let o = $(e).closest("tr").find(`td[data-for="${r}_total"]`);
+                    o.text(i);
+                    let n = $(`tr:contains('Highest Possible Score') td[data-for="${r}"]`).eq(0);
+                    a = parseInt(n.text()) || 0;
+                    let d = "",
+                        l = "";
+                    0 !== i && 0 !== a && (l = (.25 * (d = (i / a * 100).toFixed(2))).toFixed(2));
+                    let c = $(e).closest("tr").find(`td[data-for="${r}_ps"]`);
+                    c.text(d);
+                    let h = $(e).closest("tr").find(`td[data-for="${r}_ws"]`);
+                    h.text(l)
+                })(this)
+            })
+        }), window.addEventListener("beforeunload", function(t) {})
     });
 </script>
 
