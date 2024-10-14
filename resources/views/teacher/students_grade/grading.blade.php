@@ -316,34 +316,58 @@
 </div>
 <script>
     $(document).ready(function() {
+        var t = new URLSearchParams(location.search);
         $('[data-for="written_work"], [data-for="performance_task"]').on("input", function() {
             var t = $(this).data("cell"),
                 e = parseFloat($('#highest_possible_score[data-cell-number="' + t + '"]').text());
             parseFloat($(this).text()) > e && (alert("Score cannot be higher than the highest possible score (" + e + ")"), $(this).text(""))
         }), $("#submitBtn").click(function() {
-            let t = {},
-                e = !0,
-                s = !0;
-            for (let r = 1; r <= 10; r++) {
-                let i = $(`td[data-id_written="${r}"]`).text().trim();
-                t["highest_possible_written_" + r] = i, ("" === i || isNaN(i)) && (e = !1, s = !1)
-            }
+            let e = {},
+                s = !0,
+                r = !0;
             for (let a = 1; a <= 10; a++) {
-                let o = $(`td[data-id_task="${a}"]`).text().trim();
-                t["highest_possible_task_" + a] = o, ("" === o || isNaN(o)) && (e = !1, s = !1)
+                let i = $(`td[data-id_written="${a}"]`).text().trim();
+                e["highest_possible_written_" + a] = i, ("" === i || isNaN(i)) && (s = !1, r = !1)
             }
-            if (!e) {
+            for (let n = 1; n <= 10; n++) {
+                let o = $(`td[data-id_task="${n}"]`).text().trim();
+                e["highest_possible_task_" + n] = o, ("" === o || isNaN(o)) && (s = !1, r = !1)
+            }
+            if (!s) {
                 alert("All fields in highest possible scores are required.");
                 return
             }
-            if (!s) {
+            if (!r) {
                 alert("Please enter valid numbers in all fields.");
                 return
             }
-            $.ajax({
+            var d = [];
+            $("tr").each(function() {
+                var e = $(this).find("td[data-user-id]").data("user-id");
+                if (e) {
+                    var s = {
+                        student_id: e,
+                        grade: t.get("grade") || null,
+                        strand: t.get("strand") || null,
+                        section: t.get("section") || null,
+                        written_scores: {},
+                        task_scores: {}
+                    };
+                    $(this).find('td[data-for="written_work"]').each(function() {
+                        var t = $(this).data("cell");
+                        s.written_scores["written_" + t] = parseFloat($(this).text()) || null
+                    }), $(this).find('td[data-for="performance_task"]').each(function() {
+                        var t = $(this).data("cell");
+                        s.task_scores["task_" + t] = parseFloat($(this).text()) || null
+                    }), d.push(s)
+                }
+            }), $.ajax({
                 url: '{{ route("teacher.addHighestPossibleScore") }}',
                 type: "POST",
-                data: JSON.stringify(t),
+                data: JSON.stringify({
+                    ...e,
+                    studentScores: d
+                }),
                 contentType: "application/json",
                 headers: {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
@@ -363,39 +387,33 @@
                     })
                 }
             })
-        });
-        $("td#highest_possible_score, td#performance_task_highest_possible_score").each(function() {
+        }), $("td#highest_possible_score, td#performance_task_highest_possible_score").each(function() {
             $(this).on("blur", function(t) {
                 var e;
                 let s, r;
-                e = this, s = $(e).text().trim(), r = parseInt(s), s && (isNaN(r) || r < 5 || r > 10 ? (alert("The highest possible score must be between 5 and 10."), $(e).text("").addClass("border border-red-500").focus()) : $(e).removeClass("border-red-500"))
+                e = this, r = parseInt(s = $(e).text().trim()), s && (isNaN(r) || r < 5 || r > 10 ? (alert("The highest possible score must be between 5 and 10."), $(e).text("").addClass("border border-red-500").focus()) : $(e).removeClass("border-red-500"))
             })
         });
-        let t = [];
-        $('td[contenteditable="true"]').each((e, s) => {
-            s.hasAttribute("data-user-id") && t.push(s)
-        }), t.forEach(t => {
+        let e = [];
+        $('td[contenteditable="true"]').each((t, s) => {
+            s.hasAttribute("data-user-id") && e.push(s)
+        }), e.forEach(t => {
             t.addEventListener("input", function(t) {
                 (function t(e) {
                     let s = e.getAttribute("data-user-id"),
                         r = e.getAttribute("data-for"),
-                        i = 0,
-                        a = 0;
+                        a = 0,
+                        i = 0;
                     $(`td[data-user-id="${s}"][data-for="${r}"]`).each((t, e) => {
-                        let s = parseInt(e.textContent) || 0;
-                        i += s
+                        a += parseInt(e.textContent) || 0
                     });
-                    let o = $(e).closest("tr").find(`td[data-for="${r}_total"]`);
-                    o.text(i);
-                    let n = $(`tr:contains('Highest Possible Score') td[data-for="${r}"]`).eq(0);
-                    a = parseInt(n.text()) || 0;
-                    let d = "",
-                        l = "";
-                    0 !== i && 0 !== a && (l = (.25 * (d = (i / a * 100).toFixed(2))).toFixed(2));
-                    let c = $(e).closest("tr").find(`td[data-for="${r}_ps"]`);
-                    c.text(d);
-                    let h = $(e).closest("tr").find(`td[data-for="${r}_ws"]`);
-                    h.text(l)
+                    $(e).closest("tr").find(`td[data-for="${r}_total"]`).text(a);
+                    i = parseInt($(`tr:contains('Highest Possible Score') td[data-for="${r}"]`).eq(0).text()) || 0;
+                    let n = "",
+                        o = "";
+                    0 !== a && 0 !== i && (o = (.25 * (n = (a / i * 100).toFixed(2))).toFixed(2));
+                    $(e).closest("tr").find(`td[data-for="${r}_ps"]`).text(n);
+                    $(e).closest("tr").find(`td[data-for="${r}_ws"]`).text(o)
                 })(this)
             })
         }), window.addEventListener("beforeunload", function(t) {})
