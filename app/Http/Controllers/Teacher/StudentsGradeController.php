@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\TeacherGradeHandle;
 use App\Models\StudentHandle;
 use App\Models\Student\StudentAccount;
-
+use App\Models\StudentGrade;
 
 class StudentsGradeController extends Controller
 {
@@ -20,7 +20,8 @@ class StudentsGradeController extends Controller
         $allMaleStudents,
         $allFemaleStudents,
         $gradingHeaders,
-        $gradeHandles;
+        $gradeHandles,
+        $studentGrades;
 
     public function __construct()
     {
@@ -47,6 +48,8 @@ class StudentsGradeController extends Controller
         $this->gradeHandles = TeacherGradeHandle::where('teacher_id', $this->user->id)
             ->distinct()
             ->get(['grade', 'section', 'strand']);
+
+        $this->studentGrades = StudentGrade::where('teacher_id', $this->user->id)->get();
     }
 
 
@@ -54,7 +57,7 @@ class StudentsGradeController extends Controller
 
     public function grading(Request $request)
     {
-        // Get distinct grades, strands, and sections for the dropdowns
+
         $grades = TeacherGradeHandle::where('teacher_id', $this->user->id)
             ->distinct()
             ->pluck('grade');
@@ -76,21 +79,19 @@ class StudentsGradeController extends Controller
             ->distinct()
             ->pluck('section');
 
-        // Initialize variables to hold the students
         $allStudents = collect();
         $allMaleStudents = collect();
         $allFemaleStudents = collect();
+        $studentGrades = collect();
         $highestPossibleScores = HighestPossibleScoreGradingSheet::where('teacher_id', $this->user->id)->first();
 
-        // Only query students if the section is filled
         if ($request->filled('section')) {
-            // Start building the student query with eager loading for the account relationship
-            $studentQuery = StudentHandle::with('account') // Eager load 'account'
+
+            $studentQuery = StudentHandle::with('account')
                 ->join('teacher_grade_handles', 'student_handles.grade_handle_id', '=', 'teacher_grade_handles.id')
                 ->select('student_handles.*', 'teacher_grade_handles.grade', 'teacher_grade_handles.strand', 'teacher_grade_handles.section')
                 ->where('student_handles.teacher_id', $this->user->id);
 
-            // Apply filters
             if ($request->filled('grade')) {
                 $studentQuery->where('teacher_grade_handles.grade', $request->grade);
             }
@@ -101,10 +102,7 @@ class StudentsGradeController extends Controller
                 $studentQuery->where('teacher_grade_handles.section', $request->section);
             }
 
-            // Get the filtered students
             $allStudents = $studentQuery->get();
-
-            // Filter male and female students based on the filtered students
             $allMaleStudents = $allStudents->filter(function ($student) {
                 return $student->account->gender === 'Male';
             });
@@ -112,9 +110,13 @@ class StudentsGradeController extends Controller
             $allFemaleStudents = $allStudents->filter(function ($student) {
                 return $student->account->gender === 'Female';
             });
+
+            $studentIds = $allStudents->pluck('id');
+            $studentGrades = StudentGrade::whereIn('student_id', $studentIds)
+                ->where('teacher_id', $this->user->id)
+                ->get();
         }
 
-        // Return the view with the necessary data
         return view('teacher.students_grade.grading', [
             'user' => $this->user,
             'handleSubjects' => $this->handleSubjects,
@@ -126,9 +128,11 @@ class StudentsGradeController extends Controller
             'strands' => $strands,
             'sections' => $sections,
             'grades' => $grades,
-            'highestPossibleScores' => $highestPossibleScores
+            'highestPossibleScores' => $highestPossibleScores,
+            'studentGrades' => $studentGrades
         ]);
     }
+
 
 
 

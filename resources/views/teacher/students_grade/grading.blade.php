@@ -211,35 +211,58 @@
                 {{ $student->account->name }}
             </td>
 
+            {{-- Display written work grades --}}
+            @php
+            $totalWrittenGrade = 0; // Initialize the total written work grade
+            $studentGrade = $studentGrades->where('student_id', $student->account->id)->first();
+            @endphp
+
             @for ($i = 1; $i <= 10; $i++)
+                @php
+                $writtenGrade=$studentGrade ? $studentGrade['written_' . $i] : 0;
+                $totalWrittenGrade +=$writtenGrade; // Accumulate total
+                @endphp
                 <td data-for="written_work" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                {{ $writtenGrade }}
                 </td>
                 @endfor
 
-                <td class="border p-2" data-for="written_work_total"></td>
+                {{-- Display total written work grade --}}
+                <td class="border p-2" data-for="written_work_total">
+                    {{ $totalWrittenGrade }}
+                </td>
+
+                {{-- Display placeholders for PS and WS columns --}}
                 <td class="border p-2" data-for="written_work_ps"></td>
                 <td class="border p-2" data-for="written_work_ws"></td>
 
+                {{-- Display performance task grades --}}
+                @php
+                $totalTaskGrade = 0; // Initialize the total task grade
+                @endphp
 
                 @for ($i = 1; $i <= 10; $i++)
-
-
+                    @php
+                    $taskGrade=$studentGrade ? $studentGrade['task_' . $i] : 0;
+                    $totalTaskGrade +=$taskGrade; // Accumulate total
+                    @endphp
                     <td data-for="performance_task" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                    {{ $taskGrade }}
                     </td>
                     @endfor
 
-                    <td class="border p-2"></td>
+                    <td class="border p-2">{{ $totalTaskGrade }}</td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
 
-                    <td class="border p-1 cursor-pointer" contenteditable="true">
-                    </td>
+                    <td class="border p-1 cursor-pointer" contenteditable="true"></td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
         </tr>
         @endforeach
+
         <!-- per row -->
         @for ($i = 0; $i < 3; $i++)
             <!-- per cell -->
@@ -254,7 +277,7 @@
 
 
 
-            <!-- female -->
+
             <tr class="border">
                 <td class="border p-2 bg-slate-100">Female</td>
                 @for ($j=0; $j < 31; $j++)
@@ -268,33 +291,58 @@
                     {{ $student->account->name }}
                 </td>
 
+                {{-- Display written work grades --}}
+                @php
+                $totalWrittenGrade = 0;
+                $studentGrade = $studentGrades->where('student_id', $student->account->id)->first();
+                @endphp
+
                 @for ($i = 1; $i <= 10; $i++)
+                    @php
+                    $writtenGrade=$studentGrade ? $studentGrade['written_' . $i] : 0;
+                    $totalWrittenGrade +=$writtenGrade;
+                    @endphp
                     <td data-for="written_work" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                    {{ $writtenGrade }}
                     </td>
                     @endfor
 
-                    <td class="border p-2" data-for="written_work_total"></td>
+                    {{-- Display total written work grade --}}
+                    <td class="border p-2" data-for="written_work_total">
+                        {{ $totalWrittenGrade }}
+                    </td>
+
+                    {{-- Display placeholders for PS and WS columns --}}
                     <td class="border p-2" data-for="written_work_ps"></td>
                     <td class="border p-2" data-for="written_work_ws"></td>
+
+                    {{-- Display performance task grades --}}
+                    @php
+                    $totalTaskGrade = 0;
+                    @endphp
+
                     @for ($i = 1; $i <= 10; $i++)
-
-
+                        @php
+                        $taskGrade=$studentGrade ? $studentGrade['task_' . $i] : 0;
+                        $totalTaskGrade +=$taskGrade;
+                        @endphp
                         <td data-for="performance_task" data-cell="{{ $i }}" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                        {{ $taskGrade }}
                         </td>
                         @endfor
 
-                        <td class="border p-2"></td>
+                        <td class="border p-2">{{ $totalTaskGrade }}</td>
                         <td class="border p-2"></td>
                         <td class="border p-2"></td>
 
-                        <td class="border p-1 cursor-pointer" contenteditable="true">
-                        </td>
+                        <td class="border p-1 cursor-pointer" contenteditable="true"></td>
                         <td class="border p-2"></td>
                         <td class="border p-2"></td>
                         <td class="border p-2"></td>
                         <td class="border p-2"></td>
             </tr>
             @endforeach
+
             <!-- per row -->
             @for ($i = 0; $i < 3; $i++)
                 <!-- per cell -->
