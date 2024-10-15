@@ -14,6 +14,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite('resources/css/app.css')
     @yield('custom_css')
+
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
 </head>
 
 <body class="bg-gray-100">
@@ -292,6 +294,16 @@
             selectAll.addEventListener('change', function() {
                 let checkboxes = document.querySelectorAll('.selectRow');
                 checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+            });
+        }
+    </script>
+
+<script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+                console.log('Service Worker registration failed:', error);
             });
         }
     </script>
