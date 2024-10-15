@@ -24,7 +24,7 @@
 
         <div class="container relative z-10 mx-auto flex flex-col items-center justify-center min-h-screen px-4 text-center space-y-6">
             <!-- Main Title -->
-            <h1 class="text-6xl font-extrabold mb-2 tracking-wide">Welcome to WebEd</h1>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-2 tracking-wide">Welcome to WebEd</h1>
 
             <!-- Subheading -->
             <p class="text-xl md:text-2xl max-w-2xl mx-auto font-medium">
