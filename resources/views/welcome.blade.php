@@ -28,7 +28,7 @@
 
             <!-- Subheading -->
             <p class="text-xl md:text-2xl max-w-2xl mx-auto font-medium">
-                Revolutionizing education with smart solutions for students, teachers, and institutions. Empowering success through technology.
+                Revolutionizing education with smart solutions for students, teachers, and institutions. <br> Empowering success through technology.
             </p>
 
             <!-- Call to Action Buttons -->
