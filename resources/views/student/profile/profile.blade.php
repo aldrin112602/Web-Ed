@@ -104,7 +104,7 @@
             <div class="block md:flex align-center justify-between my-2 gap-5">
                 <div class="md:w-1/3 w-full">
                     <label for="phone_number" class="block text-gray-700 text-sm mb-1 mt-2">Phone number</label>
-                    <input readonly type="tel" id="phone_number" name="phone_number" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $user->phone_number }}">
+                    <input readonly type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $user->phone_number }}">
                     @error('phone_number')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Create Account')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <!-- <link rel="manifest" href="{{ asset('manifest.json') }}"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -392,13 +392,13 @@
     </script>
 
 <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-            }).catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-        }
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
+        //         console.log('Service Worker registered with scope:', registration.scope);
+        //     }).catch(function(error) {
+        //         console.log('Service Worker registration failed:', error);
+        //     });
+        // }
     </script>
 
 </body>

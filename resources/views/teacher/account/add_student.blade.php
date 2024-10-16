@@ -63,7 +63,7 @@
                 
                 <div class="w-full  my-2">
                         <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
-                        <input type="number" id="parents_contact_number" name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
+                        <input oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" type="number" id="parents_contact_number"  name="parents_contact_number" class="form-input w-full rounded border-gray-300 @error('parents_contact_number') border-red-500 @enderror" value="{{ old('parents_contact_number') }}">
                         @error('parents_contact_number')
                         <span class="text-red-500 text-sm">{{ $message }}</span>
                         @enderror
@@ -79,7 +79,7 @@
                         </div>
                         <div class="md:w-1/2 w-full">
                                 <label for="phone_number" class="block text-gray-700 text-sm mb-1">Phone number</label>
-                                <input type="tel" id="phone_number" name="phone_number" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
+                                <input type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
                                 @error('phone_number')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                                 @enderror

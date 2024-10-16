@@ -16,7 +16,7 @@
 
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/face-scan.css') }}">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <!-- <link rel="manifest" href="{{ asset('manifest.json') }}"> -->
 </head>
 
 <body class="flex items-center justify-center h-screen">
@@ -225,13 +225,13 @@
 
     </script>
     <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-            }).catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-        }
+        // if ('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
+        //         console.log('Service Worker registered with scope:', registration.scope);
+        //     }).catch(function(error) {
+        //         console.log('Service Worker registration failed:', error);
+        //     });
+        // }
     </script>
 </body>
 

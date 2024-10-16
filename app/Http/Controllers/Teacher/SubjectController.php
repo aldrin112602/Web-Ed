@@ -54,7 +54,7 @@ class SubjectController extends Controller
                 return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
             }
 
-            $subject_list = SubjectModel::where('teacher_id', $user->id)->where('grade_handle_id', $id)->paginate(10);
+            $subject_list = SubjectModel::where('teacher_id', $user->id)->where('grade_handle_id', $id)->paginate(100);
 
             $grade_handle = TeacherGradeHandle::find($id);
             $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
