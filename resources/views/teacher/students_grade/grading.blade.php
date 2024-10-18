@@ -126,20 +126,20 @@
                     {{ $user->name }}
                 </p>
             </td>
-            <td class="border p-2" colspan="3" rowspan="3">
-                Quarterly Assessment
+            <td class="border p-2 text-center" colspan="3" rowspan="3">
+                Quarterly Assessment (25%)
             </td>
-            <td class="border p-2" rowspan="4">
+            <td class="border p-2 text-center" rowspan="4">
                 Initial Grade
             </td>
-            <td class="border p-2" rowspan="4">
+            <td class="border p-2 text-center" rowspan="4">
                 Quarterly Grade
             </td>
         </tr>
 
         <tr class="border">
-            <td class="border p-2" colspan="13">WRITTEN WORK</td>
-            <td class="border p-2" colspan="13">PERFORMANCE TASK</td>
+            <td class="border p-2" colspan="13">WRITTEN WORK (25%)</td>
+            <td class="border p-2" colspan="13">PERFORMANCE TASK (50%)</td>
         </tr>
 
         <tr class="border">
@@ -174,7 +174,7 @@
                     {{ $highestPossibleScores['highest_possible_written_' . $i] ?? '' }}
                 </td>
                 @endfor
-                <td class="border p-2"></td>
+                <td class="border p-2" id="highest_possible_written_total"></td>
                 <td class="border p-1 cursor-pointer" contenteditable="true">100.00</td>
                 <td class="border p-1 cursor-pointer" contenteditable="true">25%</td>
 
@@ -186,7 +186,7 @@
                     @endfor
 
 
-                    <td class="border p-2"></td>
+                    <td class="border p-2" id="highest_possible_task_total"></td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
                     <td class="border p-1 cursor-pointer" contenteditable="true">
@@ -468,6 +468,47 @@
     });
 </script>
 
+
+<!-- highest possible score event for getting total  -->
+<script>
+$(document).ready(function () {
+    function calculateTotalWritten() {
+        let totalWritten = 0;
+        $('[id="highest_possible_score"]').each(function () {
+            let value = $(this).text().trim();
+            let number = parseFloat(value);
+            if (!isNaN(number)) {
+                totalWritten += number;
+            }
+        });
+        $('#highest_possible_written_total').text(totalWritten);
+    }
+
+    function calculateTotalTask() {
+        let totalTask = 0;
+        $('[id="performance_task_highest_possible_score"]').each(function () {
+            let value = $(this).text().trim();
+            let number = parseFloat(value);
+            if (!isNaN(number)) {
+                totalTask += number;
+            }
+        });
+        $('#highest_possible_task_total').text(totalTask);
+    }
+    $('[id="highest_possible_score"]').on('input', function () {
+        calculateTotalWritten();
+    });
+
+    $('[id="performance_task_highest_possible_score"]').on('input', function () {
+        calculateTotalTask();
+    });
+
+    calculateTotalWritten();
+    calculateTotalTask();
+});
+
+</script>
+<!-- highest possible score event for getting total  -->
 
 
 
