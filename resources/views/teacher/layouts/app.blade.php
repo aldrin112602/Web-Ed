@@ -62,7 +62,18 @@
 <body class="bg-gray-100">
     <main class="min-h-screen">
         <div class="w-full flex items-center justify-between bg-white px-8 py-3 shadow border-b">
-            <h2 class="text-blue-900 font-semibold">WebEd</h2>
+            <h2 class="text-blue-900 font-semibold">
+                <script>
+                    $(() => {
+                        $('#toggleBtn').click(() => {
+                            $('#sideBar').toggle(100);
+                        });
+                    });
+                </script>
+                <button id="toggleBtn" style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
+                    <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
+                </button> WebEd
+            </h2>
             <ul class="flex items-center justify-end gap-8">
                 <li>
                     <a class="hover:text-blue-500" href="{{ route('teacher.announcements') }}">
@@ -81,13 +92,12 @@
                 </li>
             </ul>
         </div>
+
+
         <div class="block md:flex min-h-screen items-start justify-start">
             <!-- sidebar -->
-            <div class="hidden md:block  p-4 bg-white shadow border-r" style="height: 100%; min-width: 280px">
+            <div id="sideBar" class="hidden md:block  p-4 bg-white shadow border-r" style="height: 100%; min-width: 280px">
                 <div class="p-3 flex items-center justify-start gap-3">
-                    <button style="height: 30px; width: 30px" class="bg-slate-100 rounded hover:bg-slate-50 hover:border">
-                        <i class="fa-solid fa-bars-staggered text-gray-600 text-sm"></i>
-                    </button>
                     <div class="flex items-center justify-start gap-1">
                         <span class="font-semibold text-gray-600">WebEd</span>
                         <img src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
@@ -288,47 +298,47 @@
     <script>
         try {
             const dropzone = document.getElementById('dropzone');
-            if(dropzone) {
+            if (dropzone) {
                 document.addEventListener('DOMContentLoaded', () => {
-                const fileInput = document.getElementById('file-upload');
-                const preview = document.getElementById('preview');
+                    const fileInput = document.getElementById('file-upload');
+                    const preview = document.getElementById('preview');
 
-                const displayPreview = (file) => {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () => {
-                        preview.src = reader.result;
-                        preview.classList.remove('hidden');
+                    const displayPreview = (file) => {
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => {
+                            preview.src = reader.result;
+                            preview.classList.remove('hidden');
+                        };
                     };
-                };
 
-                dropzone.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    dropzone.classList.add('border-indigo-600');
-                });
+                    dropzone.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        dropzone.classList.add('border-indigo-600');
+                    });
 
-                dropzone.addEventListener('dragleave', (e) => {
-                    e.preventDefault();
-                    dropzone.classList.remove('border-indigo-600');
-                });
+                    dropzone.addEventListener('dragleave', (e) => {
+                        e.preventDefault();
+                        dropzone.classList.remove('border-indigo-600');
+                    });
 
-                dropzone.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    dropzone.classList.remove('border-indigo-600');
-                    const file = e.dataTransfer.files[0];
-                    if (file) {
-                        displayPreview(file);
-                        fileInput.files = e.dataTransfer.files;
-                    }
-                });
+                    dropzone.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        dropzone.classList.remove('border-indigo-600');
+                        const file = e.dataTransfer.files[0];
+                        if (file) {
+                            displayPreview(file);
+                            fileInput.files = e.dataTransfer.files;
+                        }
+                    });
 
-                fileInput.addEventListener('change', (e) => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        displayPreview(file);
-                    }
+                    fileInput.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (file) {
+                            displayPreview(file);
+                        }
+                    });
                 });
-            });
             }
         } catch (err) {
 
@@ -578,7 +588,7 @@
         });
     </script>
 
-<script>
+    <script>
         // if ('serviceWorker' in navigator) {
         //     navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
         //         console.log('Service Worker registered with scope:', registration.scope);
@@ -588,7 +598,7 @@
         // }
     </script>
 
-    
+
     @yield('scripts')
 </body>
 
