@@ -3,7 +3,8 @@
 @section('title', 'Teacher Login')
 @section('content')
 
-<form action="{{ route('teacher.handleLogin') }}" method="post" class="w-full max-w-md bg-white  rounded-lg p-8" style="box-shadow: 0 0 10px 100vw rgba(0, 0, 0, 0.4);">
+<!-- Modal trigger -->
+<form action="{{ route('teacher.handleLogin') }}" method="post" class="w-full max-w-md bg-white rounded-lg p-8" style="box-shadow: 0 0 10px 100vw rgba(0, 0, 0, 0.4);">
     @csrf
 
     <h2 class="text-2xl font-bold text-center mb-6 text-gray-500">Teacher Login</h2>
@@ -35,9 +36,16 @@
         <a href="{{ route('teacher.password.request') }}" class="text-sm text-blue-600 hover:underline font-semibold">Forgot Password?</a>
     </div>
 
+    <!-- Terms and Conditions checkbox and trigger -->
+    <div class="mb-4">
+        <input type="checkbox" id="agreeTerms" name="agreeTerms" class="form-checkbox rounded">
+        <label for="agreeTerms" class="ml-2 text-gray-700 text-sm">
+            I agree with the <a href="#" class="text-blue-600 hover:underline" id="termsTrigger">terms and conditions</a>.
+        </label>
+    </div>
 
     <div>
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Log In</button>
+        <button type="submit" id="loginButton" class="w-full py-2 rounded bg-gray-300" disabled>Log In</button>
     </div>
 </form>
 
