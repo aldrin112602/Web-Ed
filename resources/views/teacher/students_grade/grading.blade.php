@@ -178,7 +178,7 @@
                 @endfor
                 <td class="border p-2" id="highest_possible_written_total"></td>
                 <td class="border p-1 cursor-pointer" contenteditable="true">100.00</td>
-                <td class="border p-1 cursor-pointer" contenteditable="true">25%</td>
+                <td class="border p-1 cursor-pointer" contenteditable="true" id="highest_possible_ws_total">25%</td>
 
                 @for ($i = 1; $i <= 10; $i++)
                     <!-- Min: 5, highest: 10 -->
@@ -366,6 +366,12 @@
 </div>
 <script>
     $(document).ready(function() {
+        const percentToDecimal = (percentStr) => {
+            const dec = parseFloat(percentStr) / 100
+            return dec;
+        };
+
+        console.log(percentToDecimal('25%'))
         var t = new URLSearchParams(location.search);
         $('[data-for="written_work"], [data-for="performance_task"]').on("input", function() {
             var t = $(this).data("cell"),
@@ -457,13 +463,26 @@
                     $(`td[data-user-id="${s}"][data-for="${r}"]`).each((t, e) => {
                         a += parseInt(e.textContent) || 0
                     });
+
+
                     $(e).closest("tr").find(`td[data-for="${r}_total"]`).text(a);
+
+                    // Calculate PS (Percentage Score) for this student
+                    let percentageScore = (a / parseFloat($('#highest_possible_score').text().trim())) * 100;
+
+                    // Calculate WS (Weighted Score)
+                    let weightedScore = percentageScore * percentToDecimal($('#highest_possible_ws_total').text().trim());
+
+                    // Update the PS and WS cells for the student
+                    $(e).closest("tr").find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
+                    $(e).closest("tr").find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
+
+
                     i = parseInt($(`tr:contains('Highest Possible Score') td[data-for="${r}"]`).eq(0).text()) || 0;
                     let n = "",
                         o = "";
                     0 !== a && 0 !== i && (o = (.25 * (n = (a / i * 100).toFixed(2))).toFixed(2));
-                    $(e).closest("tr").find(`td[data-for="${r}_ps"]`).text(n);
-                    $(e).closest("tr").find(`td[data-for="${r}_ws"]`).text(o)
+
                 })(this)
             })
         }), window.addEventListener("beforeunload", function(t) {})
@@ -473,80 +492,77 @@
 
 <!-- highest possible score event for getting total  -->
 <script>
-$(document).ready(function() {
-    const weight = 0.25;
+    $(document).ready(function() {
+        const weight = 0.25;
 
-    // Function to calculate total for written work
-    function calculateTotalWritten() {
-        let totalWritten = 0;
+        // Function to calculate total for written work
+        function calculateTotalWritten() {
+            let totalWritten = 0;
 
-        // Loop through all written work grades to calculate the total
-        $('[id="highest_possible_score"]').each(function() {
-            let value = $(this).text().trim();
-            let number = parseFloat(value);
-            if (!isNaN(number)) {
-                totalWritten += number;
-            }
-        });
-
-        // Update the total written work score in the table
-        $('#highest_possible_written_total').text(totalWritten);
-
-        // Calculate PS and WS for each student based on total written work
-        $('tr').each(function() {
-            let userId = $(this).find('td').data('user-id'); // Extract userId from the row
-            let studentTotalWritten = 0;
-
-            // Sum up the written work grades for this student
-            $(this).find('td[data-for="written_work"]').each(function() {
-                let grade = parseFloat($(this).text().trim()) || 0;
-                studentTotalWritten += grade;
+            // Loop through all written work grades to calculate the total
+            $('[id="highest_possible_score"]').each(function() {
+                let value = $(this).text().trim();
+                let number = parseFloat(value);
+                if (!isNaN(number)) {
+                    totalWritten += number;
+                }
             });
 
+            // Update the total written work score in the table
+            $('#highest_possible_written_total').text(totalWritten);
+            // $('tr').each(function() {
+            //     let userId = $(this).find('td').data('user-id'); // Extract userId from the row
+            //     let studentTotalWritten = 0;
+
+            //     // Sum up the written work grades for this student
+            //     $(this).find('td[data-for="written_work"]').each(function() {
+            //         let grade = parseFloat($(this).text().trim()) || 0;
+            //         studentTotalWritten += grade;
+            //     });
+
             // Calculate PS (Percentage Score) for this student
-            let percentageScore = (studentTotalWritten / totalWritten) * 100;
+            // let percentageScore = (studentTotalWritten / totalWritten) * 100;
 
-            // Calculate WS (Weighted Score)
-            let weightedScore = percentageScore * weight;
+            // // Calculate WS (Weighted Score)
+            // let weightedScore = percentageScore * weight;
 
-            // Update the PS and WS cells for the student
-            $(this).find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
-            $(this).find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
+            // // Update the PS and WS cells for the student
+            // $(this).find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
+            // $(this).find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
+            // });
+        }
+
+        // Function to calculate total for performance tasks
+        function calculateTotalTask() {
+            let totalTask = 0;
+
+            // Loop through all performance task scores to calculate the total
+            $('[id="performance_task_highest_possible_score"]').each(function() {
+                let value = $(this).text().trim();
+                let number = parseFloat(value);
+                if (!isNaN(number)) {
+                    totalTask += number;
+                }
+            });
+
+            // Update the total task score in the table
+            $('#highest_possible_task_total').text(totalTask);
+        }
+
+        // Event listener to recalculate written work total and scores when input changes
+        $(document).on('input', '[id="highest_possible_score"]', function() {
+            calculateTotalWritten();
         });
-    }
 
-    // Function to calculate total for performance tasks
-    function calculateTotalTask() {
-        let totalTask = 0;
-
-        // Loop through all performance task scores to calculate the total
-        $('[id="performance_task_highest_possible_score"]').each(function() {
-            let value = $(this).text().trim();
-            let number = parseFloat(value);
-            if (!isNaN(number)) {
-                totalTask += number;
-            }
+        // Event listener to recalculate task total when input changes
+        $(document).on('input', '[id="performance_task_highest_possible_score"]', function() {
+            calculateTotalTask();
         });
 
-        // Update the total task score in the table
-        $('#highest_possible_task_total').text(totalTask);
-    }
-
-    // Event listener to recalculate written work total and scores when input changes
-    $(document).on('input', '[id="highest_possible_score"]', function() {
+        // Initial calculation on page load
         calculateTotalWritten();
-    });
-
-    // Event listener to recalculate task total when input changes
-    $(document).on('input', '[id="performance_task_highest_possible_score"]', function() {
         calculateTotalTask();
     });
-
-    // Initial calculation on page load
-    calculateTotalWritten();
-    calculateTotalTask();
-});
-
 </script>
 <!-- highest possible score event for getting total  -->
 
