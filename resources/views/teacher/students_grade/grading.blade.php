@@ -468,10 +468,10 @@
                     $(e).closest("tr").find(`td[data-for="${r}_total"]`).text(a);
 
                     // Calculate PS (Percentage Score) for this student
-                    let percentageScore = (a / parseFloat($('#highest_possible_score').text().trim())) * 100;
+                    let percentageScore = (a / parseFloat($('#highest_possible_score').text().trim())) * 10;
 
                     // Calculate WS (Weighted Score)
-                    let weightedScore = percentageScore * percentToDecimal($('#highest_possible_ws_total').text().trim());
+                    let weightedScore = (percentageScore * percentToDecimal($('#highest_possible_ws_total').text().trim()));
 
                     // Update the PS and WS cells for the student
                     $(e).closest("tr").find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
