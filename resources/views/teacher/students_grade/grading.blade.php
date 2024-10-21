@@ -189,12 +189,12 @@
 
 
                     <td class="border p-2" id="highest_possible_task_total"></td>
-                    <td class="border p-2"></td>
-                    <td class="border p-2"></td>
+                    <td class="border p-2" contenteditable="true">100.00</td>
+                    <td class="border p-2" contenteditable="true">50%</td>
                     <td class="border p-1 cursor-pointer" contenteditable="true">
                     </td>
-                    <td class="border p-2"></td>
-                    <td class="border p-2"></td>
+                    <td class="border p-2" contenteditable="true">100.00</td>
+                    <td class="border p-2" contenteditable="true">25%</td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
         </tr>
@@ -253,7 +253,7 @@
                     </td>
                     @endfor
 
-                    <td class="border p-2">{{ $totalTaskGrade }}</td>
+                    <td class="border p-2" data-for="performance_task_total">{{ $totalTaskGrade }}</td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
 
@@ -333,7 +333,7 @@
                         </td>
                         @endfor
 
-                        <td class="border p-2">{{ $totalTaskGrade }}</td>
+                        <td class="border p-2" data-for="performance_task_total">{{ $totalTaskGrade }}</td>
                         <td class="border p-2"></td>
                         <td class="border p-2"></td>
 
@@ -460,9 +460,13 @@
                         r = e.getAttribute("data-for"),
                         a = 0,
                         i = 0;
+
+                        
                     $(`td[data-user-id="${s}"][data-for="${r}"]`).each((t, e) => {
                         a += parseInt(e.textContent) || 0
                     });
+
+                    console.log(`td[data-for="${r}_total"]`)
 
 
                     $(e).closest("tr").find(`td[data-for="${r}_total"]`).text(a);
@@ -474,18 +478,14 @@
                     let weightedScore = (percentageScore * percentToDecimal($('#highest_possible_ws_total').text().trim()));
 
                     // Update the PS and WS cells for the student
-                    $(e).closest("tr").find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
-                    $(e).closest("tr").find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
-
-
-                    i = parseInt($(`tr:contains('Highest Possible Score') td[data-for="${r}"]`).eq(0).text()) || 0;
-                    let n = "",
-                        o = "";
-                    0 !== a && 0 !== i && (o = (.25 * (n = (a / i * 100).toFixed(2))).toFixed(2));
+                    if (r.trim() == 'written_work') {
+                        $(e).closest("tr").find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
+                        $(e).closest("tr").find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
+                    }
 
                 })(this)
             })
-        }), window.addEventListener("beforeunload", function(t) {})
+        }) // window.addEventListener("beforeunload", function(t) {})
     });
 </script>
 
@@ -493,7 +493,6 @@
 <!-- highest possible score event for getting total  -->
 <script>
     $(document).ready(function() {
-        const weight = 0.25;
 
         // Function to calculate total for written work
         function calculateTotalWritten() {
@@ -510,26 +509,7 @@
 
             // Update the total written work score in the table
             $('#highest_possible_written_total').text(totalWritten);
-            // $('tr').each(function() {
-            //     let userId = $(this).find('td').data('user-id'); // Extract userId from the row
-            //     let studentTotalWritten = 0;
 
-            //     // Sum up the written work grades for this student
-            //     $(this).find('td[data-for="written_work"]').each(function() {
-            //         let grade = parseFloat($(this).text().trim()) || 0;
-            //         studentTotalWritten += grade;
-            //     });
-
-            // Calculate PS (Percentage Score) for this student
-            // let percentageScore = (studentTotalWritten / totalWritten) * 100;
-
-            // // Calculate WS (Weighted Score)
-            // let weightedScore = percentageScore * weight;
-
-            // // Update the PS and WS cells for the student
-            // $(this).find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
-            // $(this).find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
-            // });
         }
 
         // Function to calculate total for performance tasks
@@ -565,7 +545,6 @@
     });
 </script>
 <!-- highest possible score event for getting total  -->
-
 
 
 @endsection
