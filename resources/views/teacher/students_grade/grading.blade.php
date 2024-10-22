@@ -178,7 +178,7 @@
                 @endfor
                 <td class="border p-2" id="highest_possible_written_total"></td>
                 <td class="border p-1 cursor-pointer" contenteditable="true">100.00</td>
-                <td class="border p-1 cursor-pointer" contenteditable="true" id="highest_possible_ws_total">25%</td>
+                <td class="border p-1 cursor-pointer" contenteditable="true" id="highest_possible_ws">25%</td>
 
                 @for ($i = 1; $i <= 10; $i++)
                     <!-- Min: 5, highest: 10 -->
@@ -190,7 +190,7 @@
 
                     <td class="border p-2" id="highest_possible_task_total"></td>
                     <td class="border p-2" contenteditable="true">100.00</td>
-                    <td class="border p-2" contenteditable="true">50%</td>
+                    <td class="border p-2" contenteditable="true" id="highest_possible_task">50%</td>
                     <td class="border p-1 cursor-pointer" contenteditable="true">
                     </td>
                     <td class="border p-2" contenteditable="true">100.00</td>
@@ -254,8 +254,8 @@
                     @endfor
 
                     <td class="border p-2" data-for="performance_task_total">{{ $totalTaskGrade }}</td>
-                    <td class="border p-2"></td>
-                    <td class="border p-2"></td>
+                    <td class="border p-2" data-for="performance_task_ps">0.00</td>
+                    <td class="border p-2" data-for="performance_task_ws">0.00</td>
 
                     <td class="border p-1 cursor-pointer" contenteditable="true"></td>
                     <td class="border p-2"></td>
@@ -315,8 +315,8 @@
                     </td>
 
                     {{-- Display placeholders for PS and WS columns --}}
-                    <td class="border p-2" data-for="written_work_ps"></td>
-                    <td class="border p-2" data-for="written_work_ws"></td>
+                    <td class="border p-2" data-for="written_work_ps">0.00</td>
+                    <td class="border p-2" data-for="written_work_ws">0.00</td>
 
                     {{-- Display performance task grades --}}
                     @php
@@ -334,8 +334,8 @@
                         @endfor
 
                         <td class="border p-2" data-for="performance_task_total">{{ $totalTaskGrade }}</td>
-                        <td class="border p-2"></td>
-                        <td class="border p-2"></td>
+                        <td class="border p-2" data-for="performance_task_ps">0.00</td>
+                        <td class="border p-2" data-for="performance_task_ws">0.00</td>
 
                         <td class="border p-1 cursor-pointer" contenteditable="true"></td>
                         <td class="border p-2"></td>
@@ -471,16 +471,21 @@
 
                     $(e).closest("tr").find(`td[data-for="${r}_total"]`).text(a);
 
-                    // Calculate PS (Percentage Score) for this student
-                    let percentageScore = (a / parseFloat($('#highest_possible_score').text().trim())) * 10;
 
-                    // Calculate WS (Weighted Score)
-                    let weightedScore = (percentageScore * percentToDecimal($('#highest_possible_ws_total').text().trim()));
+                    let written_percentageScore = (a / parseFloat($('#highest_possible_written_total').text().trim())) * 100;
+                    let written_weightedScore = (written_percentageScore * percentToDecimal($('#highest_possible_ws').text().trim()));
+
+                    // performance task
+                    let performance_percentageScore = (a / parseFloat($('#highest_possible_task_total').text().trim())) * 100;
+                    let performance_weightedScore = (performance_percentageScore * percentToDecimal($('#highest_possible_task').text().trim()));
 
                     // Update the PS and WS cells for the student
                     if (r.trim() == 'written_work') {
-                        $(e).closest("tr").find('td[data-for="written_work_ps"]').text(percentageScore.toFixed(2));
-                        $(e).closest("tr").find('td[data-for="written_work_ws"]').text(weightedScore.toFixed(2));
+                        $(e).closest("tr").find('td[data-for="written_work_ps"]').text(written_percentageScore.toFixed(2));
+                        $(e).closest("tr").find('td[data-for="written_work_ws"]').text(written_weightedScore.toFixed(2));
+                    } else {
+                        $(e).closest("tr").find('td[data-for="performance_task_ps"]').text(performance_percentageScore.toFixed(2));
+                        $(e).closest("tr").find('td[data-for="performance_task_ws"]').text(performance_weightedScore.toFixed(2));
                     }
 
                 })(this)
