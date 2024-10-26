@@ -59,26 +59,35 @@ class GradeHandleController extends Controller
 
 
 
-
     public function submitAddHandleGrade(Request $request)
     {
-        $validatedData = $request->validate(
-            [
-                'grade' => 'required|integer',
-                'section' => 'required|string|max:255',
-                'strand' => 'required|string|max:255'
-            ]
-        );
-
+        $validatedData = $request->validate([
+            'grade' => 'required|integer',
+            'section' => 'required|string|max:255',
+            'strand' => 'required|string|max:255'
+        ]);
 
         $user = Auth::user();
 
+        // Check if the grade handle exists for the authenticated teacher
+        $exists = TeacherGradeHandle::where('teacher_id', $user->id)
+            ->where('grade', $validatedData['grade'])
+            ->where('section', $validatedData['section'])
+            ->where('strand', $validatedData['strand'])
+            ->exists();
+
+        if ($exists) {
+            return redirect()->back()->with('error', 'This grade handle already exists.');
+        }
+
+        // Create the new grade handle
         $teacherGradeHandle = new TeacherGradeHandle($validatedData);
         $teacherGradeHandle->teacher_id = $user->id;
         $teacherGradeHandle->save();
 
         return redirect()->route('teacher.dashboard')->with('success', "Grade handle added successfully");
     }
+
 
 
 
