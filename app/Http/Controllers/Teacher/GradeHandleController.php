@@ -22,27 +22,39 @@ class GradeHandleController extends Controller
         ]);
     }
 
-    public function updateGradeHandle(Request $request, $id)
-    {
-        $request->validate([
-            'grade' => 'required|integer',
-            'section' => 'required|string|max:255',
-            'strand' => 'required|string|max:255'
-        ]);
+public function updateGradeHandle(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'grade' => 'required|integer',
+        'section' => 'required|string|max:255',
+        'strand' => 'required|string|max:255'
+    ]);
 
-        $grade_handle = TeacherGradeHandle::where('id', $id)->first();
+    // Find the grade handle record by ID
+    $grade_handle = TeacherGradeHandle::find($id);
 
-        if (!$grade_handle) {
-            return redirect()->route('teacher.dashboard')->with('error', 'Error: Data not found.');
-        }
-
-        $grade_handle->grade = $request->grade;
-        $grade_handle->section = $request->section;
-        $grade_handle->strand = $request->strand;
-        $grade_handle->save();
-
-        return redirect()->route('teacher.dashboard')->with('success', "Grade handle updated successfully");
+    if (!$grade_handle) {
+        return redirect()->route('teacher.dashboard')->with('error', 'Error: Data not found.');
     }
+
+    // Check for duplicates excluding the current record
+    $exists = TeacherGradeHandle::where('teacher_id', $grade_handle->teacher_id)
+                ->where('grade', $validatedData['grade'])
+                ->where('section', $validatedData['section'])
+                ->where('strand', $validatedData['strand'])
+                ->where('id', '!=', $id)
+                ->exists();
+
+    if ($exists) {
+        return redirect()->back()->with('error', 'This grade handle combination already exists.');
+    }
+
+    // Update the grade handle details
+    $grade_handle->update($validatedData);
+
+    return redirect()->route('teacher.dashboard')->with('success', "Grade handle updated successfully");
+}
+
 
     public function deleteGradeHandle(Request $request)
     {
