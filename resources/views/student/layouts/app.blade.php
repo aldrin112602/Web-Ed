@@ -100,8 +100,8 @@
                     
                     <div class="flex items-center justify-start gap-1">
                         <span class="font-semibold text-gray-600">WebEd</span>
-                        <img src="{{ asset('images/ark_logo.jpg') }}" alt=""
-                            style="height: 30px; width: 30px" />
+                        <img class="object-cover" src="{{ asset('images/ark_logo.jpg') }}" alt=""
+                            style="height: 30px; width: 30px;" />
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@
 
                 <div
                     class="p-3 {{ request()->is('student/profile') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i
+                    <a href="{{ route('student.profile') }}" class="text-sm flex items-center justify-start gap-3"><i
                             class="fa-solid fa-user"></i>My Profile</a>
                 </div>
 
@@ -159,11 +159,7 @@
                             
                         </a>
                 </div>
-                <div
-                    class="p-3 {{ request()->is('student/settings') || request()->is('student/profile') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="{{ route('student.profile') }}" class="text-sm flex items-center justify-start gap-3"><i
-                            class="fa-solid fa-gear"></i>Settings</a>
-                </div>
+                
                 <div class="p-3 hover:bg-blue-50 hover:text-blue-500 text-gray-700 rounded">
                     <form id="logout-form" action="{{ route('student.logout') }}" method="POST">
                         @csrf
@@ -176,10 +172,10 @@
                 <div class="p-3 text-gray-700">
                     <div class="flex justify-start items-center gap-2">
                         <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}"
-                            alt="User profile" class="rounded-full border" style="height: 45px; width: 45px;">
-                        <div class="flex flex-col justify-start items-start flex-wrap">
+                            alt="User profile" class="rounded-full border object-cover" style="height: 45px; width: 45px;">
+                        <div class="flex flex-col justify-start items-start flex-wrap" style="max-width: 300px;">
                             <span class="text-gray-600 text-xs font-semibold">{{ $user->name }}</span>
-                            <span class="text-gray-500 text-xs">{{ $user->email }}</span>
+                            <span class="text-gray-500 text-xs" style="text-wrap: wrap;">{{ $user->email }}</span>
                         </div>
                     </div>
                 </div>
@@ -192,72 +188,7 @@
             <!-- main content -->
         </div>
     </main>
-    <script>
-        try {
-            const dropzone = document.getElementById('dropzone');
 
-            if (dropzone) {
-                document.addEventListener('DOMContentLoaded', () => {
-
-                    const fileInput = document.getElementById('file-upload');
-                    const preview = document.getElementById('preview');
-
-                    const displayPreview = (file) => {
-                        const reader = new FileReader();
-                        reader.readAsDataURL(file);
-                        reader.onload = () => {
-                            preview.src = reader.result;
-                            preview.classList.remove('hidden');
-                        };
-                    };
-
-                    dropzone.addEventListener('dragover', (e) => {
-                        e.preventDefault();
-                        dropzone.classList.add('border-indigo-600');
-                    });
-
-                    dropzone.addEventListener('dragleave', (e) => {
-                        e.preventDefault();
-                        dropzone.classList.remove('border-indigo-600');
-                    });
-
-                    dropzone.addEventListener('drop', (e) => {
-                        e.preventDefault();
-                        dropzone.classList.remove('border-indigo-600');
-                        const file = e.dataTransfer.files[0];
-                        if (file) {
-                            displayPreview(file);
-                            fileInput.files = e.dataTransfer.files;
-                        }
-                    });
-
-                    fileInput.addEventListener('change', (e) => {
-                        const file = e.target.files[0];
-                        if (file) {
-                            displayPreview(file);
-                        }
-                    });
-                });
-            }
-        } catch (err) {
-
-        }
-    </script>
-
-    <script>
-        try {
-            $(document).ready(() => {
-                $('.toggle-password').on('click', function() {
-                    const passwordInput = $($(this).attr('toggle'));
-                    const isPassword = passwordInput.attr('type') === 'password';
-                    passwordInput.attr('type', isPassword ? 'text' : 'password');
-                    $(this).toggleClass('fa-eye fa-eye-slash');
-                });
-            });
-        } catch (err) {
-
-        }
-    </script>
     @if (session('success'))
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -397,15 +328,6 @@
         })
     </script>
 
-<script>
-        // if ('serviceWorker' in navigator) {
-        //     navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
-        //         console.log('Service Worker registered with scope:', registration.scope);
-        //     }).catch(function(error) {
-        //         console.log('Service Worker registration failed:', error);
-        //     });
-        // }
-    </script>
 
 </body>
 

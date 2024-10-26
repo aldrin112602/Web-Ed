@@ -7,14 +7,12 @@
     <div class="md:px-20 px-10">
         <div class="block md:flex items-center justify-between">
             <div class="flex my-2 items-center justify-start gap-3">
-                <form action="{{ route('student.updateProfilePhoto') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
-                    @csrf
-                    
+                <div>
                     <label for="profile_photo" class="cursor-pointer">
-                    <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
+                    <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover" style="height: 80px; width: 80px">
 
                     </label>
-                </form>
+                </div>
                 <div>
                     <h1 class="font-semibold text-sm md:text-lg text-blue-900">{{ $user->name }}</h1>
                     <p class="text-gray-600 text-sm">
@@ -25,43 +23,8 @@
                     </p>
                 </div>
             </div>
-            <!-- <div class="flex my-2 items-center justify-start gap-3">
-                <button type="button" id="uploadButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Upload New Photo</button>
-                <form action="{{ route('student.deleteProfilePhoto') }}" method="POST" id="deleteForm" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" id="deleteButton" class="bg-slate-50 text-slate-800 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Delete</button>
-                </form>
-            </div> -->
+            <button class="px-4 py-2 rounded bg-blue-600 text-white"><i class="fas fa-info-circle text-slate-100" title="If you find there's wrong information about your profile details, just make a request, thank you!"></i> | Request profile update</button>
         </div>
-
-        <script>
-            // $(document).ready(function() {
-            //     $('#uploadButton').click(function() {
-            //         $('#profile_photo').click();
-            //     });
-
-            //     $('#profile_photo').change(function() {
-            //         $('#uploadForm').submit();
-            //     });
-
-            //     $('#deleteButton').click(function() {
-            //         Swal.fire({
-            //             title: 'Delete',
-            //             text: 'Are you sure to delete your profile photo?',
-            //             icon: 'warning',
-            //             showCancelButton: true,
-            //             confirmButtonColor: '#3085d6',
-            //             cancelButtonColor: '#d33',
-            //             confirmButtonText: 'Yes, delete it!'
-            //         }).then((result) => {
-            //             if (result.isConfirmed) {
-            //                 $('#deleteForm').submit();
-            //             }
-            //         });
-            //     });
-            // });
-        </script>
 
         <div class="py-3">
             <hr>
@@ -150,55 +113,9 @@
 
             
 
-
-            <!-- <div class="flex my-2 items-center justify-start gap-3 mt-3">
-                <button type="button" id="editButton" class="px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Edit</button>
-                <button type="submit" id="saveButton" class="hidden bg-slate-900 text-slate-50 border py-1 rounded hover:bg-blue-600 text-sm px-2 shadow">Save changes</button>
-            </div> -->
         </form>
-        <script>
-            // $(document).ready(function() {
-            //     $('#editButton').click(function() {
-            //         $('#personal_info input').prop('readonly', false);
-            //         $('#name').focus();
-            //         $('#saveButton').removeClass('hidden');
-            //         $(this).addClass('hidden');
-            //     });
-            // });
-        </script>
-        @if ($errors->has('name') || $errors->has('email') || $errors->has('phone_number') || $errors->has('address') || $errors->has('gender'))
-        <script>
-            $(() => {
-                $('#editButton').click();
-            })
-        </script>
-        @endif
+        
         <hr class="my-6">
-
-        <!-- <h1 class="font-bold text-gray-600">Update password</h1>
-        <form action="{{ route('student.updatePassword') }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="block md:flex align-center justify-between my-2 gap-5">
-                <div class="md:w-1/2 w-full">
-                    <label for="password" class="block text-gray-700 text-sm mb-1 mt-2">Enter current password</label>
-                    <input type="password" id="password" name="password" class="form-input w-full rounded border-gray-300 @error('password') border-red-500 @enderror" value="{{ old('password') }}">
-                    @error('password')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="md:w-1/2 w-full">
-                    <label for="new_password" class="block text-gray-700 text-sm mb-1 mt-2">Enter new password</label>
-                    <input type="password" id="new_password" name="new_password" class="form-input w-full rounded border-gray-300 @error('new_password') border-red-500 @enderror" value="{{ old('new_password') }}">
-                    @error('new_password')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-            <a href="route('student.password.request')" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
-            <br>
-            <button type="submit" class="mt-2 px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Update password</button>
-        </form> -->
         <br><br><br>
     </div>
 
