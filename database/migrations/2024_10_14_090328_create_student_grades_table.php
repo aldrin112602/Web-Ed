@@ -30,6 +30,9 @@ return new class extends Migration
             $table->integer('written_8')->nullable();
             $table->integer('written_9')->nullable();
             $table->integer('written_10')->nullable();
+            $table->integer('written_total')->nullable();
+            $table->integer('written_ps')->nullable();
+            $table->integer('written_ws')->nullable();
 
             // For Performance Task
             $table->integer('task_1')->nullable();
@@ -42,6 +45,9 @@ return new class extends Migration
             $table->integer('task_8')->nullable();
             $table->integer('task_9')->nullable();
             $table->integer('task_10')->nullable();
+            $table->integer('task_total')->nullable();
+            $table->integer('task_ps')->nullable();
+            $table->integer('task_ws')->nullable();
 
             
             $table->timestamps();

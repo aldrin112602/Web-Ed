@@ -15,7 +15,7 @@ class HighestPossibleScore extends Controller
      */
     public function store(Request $request)
     {
-        
+        // Validate incoming data
         $validatedData = $request->validate([
             'highest_possible_written_1' => 'integer|min:5|max:10|nullable',
             'highest_possible_written_2' => 'integer|min:5|max:10|nullable',
@@ -38,49 +38,66 @@ class HighestPossibleScore extends Controller
             'highest_possible_task_8' => 'integer|min:5|max:10|nullable',
             'highest_possible_task_9' => 'integer|min:5|max:10|nullable',
             'highest_possible_task_10' => 'integer|min:5|max:10|nullable',
-
+            
             'studentScores' => 'array', 
             'studentScores.*.student_id' => 'required|integer',
             'studentScores.*.written_scores' => 'array',
             'studentScores.*.task_scores' => 'array',
+            'studentScores.*.grade' => 'nullable|string',
+            'studentScores.*.strand' => 'nullable|string',
+            'studentScores.*.section' => 'nullable|string',
+            'studentScores.*.written_total' => 'nullable|numeric',
+            'studentScores.*.written_ps' => 'nullable|numeric',
+            'studentScores.*.written_ws' => 'nullable|numeric',
+            'studentScores.*.task_total' => 'nullable|numeric',
+            'studentScores.*.task_ps' => 'nullable|numeric',
+            'studentScores.*.task_ws' => 'nullable|numeric',
         ]);
 
-        $existingGradingSheet = HighestPossibleScoreGradingSheet::where('teacher_id', Auth::id())->first();
+        // Save or update the highest possible scores
+        $highestPossibleData = array_filter($validatedData, fn($key) => str_starts_with($key, 'highest_possible_'), ARRAY_FILTER_USE_KEY);
+        $existingGradingSheet = HighestPossibleScoreGradingSheet::updateOrCreate(
+            ['teacher_id' => Auth::id()],
+            array_merge($highestPossibleData, ['teacher_id' => Auth::id()])
+        );
 
-        if ($existingGradingSheet) {
-            $existingGradingSheet->update($validatedData);
-        } else {
-            HighestPossibleScoreGradingSheet::create([
-                ...$validatedData,
-                'teacher_id' => Auth::id(),
-            ]);
-        }
-
-        $studentScores = $request->input('studentScores');
-
+        // Process student scores data
+        $studentScores = $validatedData['studentScores'];
         foreach ($studentScores as $studentData) {
-            $studentId = $studentData['student_id'];
-            $grade = $studentData['grade'];
-            $strand = $studentData['strand'];
-            $section = $studentData['section'];
-            $studentGrade = StudentGrade::firstOrNew(['student_id' => $studentId, 'teacher_id' => Auth::id(), 'grade' => $grade, 'strand' => $strand, 'section' => $section]);
-            $writtenScores = [];
+            $studentGrade = StudentGrade::updateOrCreate(
+                [
+                    'student_id' => $studentData['student_id'],
+                    'teacher_id' => Auth::id(),
+                    'grade' => $studentData['grade'],
+                    'strand' => $studentData['strand'],
+                    'section' => $studentData['section'],
+                ],
+                [
+                    'written_total' => $studentData['written_total'] ?? 0,
+                    'written_ps' => $studentData['written_ps'] ?? 0,
+                    'written_ws' => $studentData['written_ws'] ?? 0,
+                    'task_total' => $studentData['task_total'] ?? 0,
+                    'task_ps' => $studentData['task_ps'] ?? 0,
+                    'task_ws' => $studentData['task_ws'] ?? 0,
+                ]
+            );
+
+            // Update written and task scores separately
             foreach ($studentData['written_scores'] as $key => $score) {
-                $writtenScores[$key] = $score;
+                $studentGrade->setAttribute($key, $score);
             }
 
-            $taskScores = [];
             foreach ($studentData['task_scores'] as $key => $score) {
-                $taskScores[$key] = $score;
+                $studentGrade->setAttribute($key, $score);
             }
-            $studentGrade->fill(array_merge($writtenScores, $taskScores));
+
             $studentGrade->save();
         }
 
         return response()->json([
-            'message' => 'Highest possible scores and student scores have been successfully saved.',
-            'studentGrade' =>  $studentGrade,
-            'request' => $request->all()
+            'message' => 'Data has been successfully saved.',
+            'highestPossibleData' => $existingGradingSheet,
+            'studentGrades' => $studentScores
         ], 201);
     }
 }

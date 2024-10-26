@@ -26,6 +26,9 @@ class StudentGrade extends Model
         'written_8',
         'written_9',
         'written_10',
+        'written_total',
+        'written_ps',
+        'written_ws',
         'task_1',
         'task_2',
         'task_3',
@@ -36,5 +39,9 @@ class StudentGrade extends Model
         'task_8',
         'task_9',
         'task_10',
+        'task_total',
+        'task_ps',
+        'task_ws',
+        
     ];
 }

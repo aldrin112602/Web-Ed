@@ -207,6 +207,9 @@
                 </td>
                 @endfor
         </tr>
+        <!-- ======================================== -->
+        <!-- =========== for male students ========== -->
+        <!-- ======================================== -->
         @foreach ($allMaleStudents as $student)
         <tr>
             <td class="border p-2">
@@ -235,8 +238,8 @@
                 </td>
 
                 {{-- Display placeholders for PS and WS columns --}}
-                <td class="border p-2" data-for="written_work_ps">0.00</td>
-                <td class="border p-2" data-for="written_work_ws">0.00</td>
+                <td class="border p-2" data-for="written_work_ps">{{ $studentGrade['written_ps'] ?? '0.00' }}</td>
+                <td class="border p-2" data-for="written_work_ws">{{ $studentGrade['written_ws'] ?? '0.00' }}</td>
 
                 {{-- Display performance task grades --}}
                 @php
@@ -254,8 +257,8 @@
                     @endfor
 
                     <td class="border p-2" data-for="performance_task_total">{{ $totalTaskGrade }}</td>
-                    <td class="border p-2" data-for="performance_task_ps">0.00</td>
-                    <td class="border p-2" data-for="performance_task_ws">0.00</td>
+                    <td class="border p-2" data-for="performance_task_ps">{{ $studentGrade['task_ps'] ?? '0.00' }}</td>
+                    <td class="border p-2" data-for="performance_task_ws">{{ $studentGrade['task_ws'] ?? '0.00' }}</td>
 
                     <td class="border p-1 cursor-pointer" contenteditable="true"></td>
                     <td class="border p-2"></td>
@@ -287,6 +290,10 @@
                     </td>
                     @endfor
             </tr>
+
+            <!-- ========================================== -->
+            <!-- =========== for female students ========== -->
+            <!-- ========================================== -->
             @foreach ($allFemaleStudents as $student)
             <tr>
                 <td class="border p-2">
@@ -315,8 +322,8 @@
                     </td>
 
                     {{-- Display placeholders for PS and WS columns --}}
-                    <td class="border p-2" data-for="written_work_ps">0.00</td>
-                    <td class="border p-2" data-for="written_work_ws">0.00</td>
+                    <td class="border p-2" data-for="written_work_ps">{{ $studentGrade['written_ps'] ?? '0.00' }}</td>
+                    <td class="border p-2" data-for="written_work_ws">{{ $studentGrade['written_ws'] ?? '0.00' }}</td>
 
                     {{-- Display performance task grades --}}
                     @php
@@ -334,8 +341,8 @@
                         @endfor
 
                         <td class="border p-2" data-for="performance_task_total">{{ $totalTaskGrade }}</td>
-                        <td class="border p-2" data-for="performance_task_ps">0.00</td>
-                        <td class="border p-2" data-for="performance_task_ws">0.00</td>
+                        <td class="border p-2" data-for="performance_task_ps">{{ $studentGrade['task_ps'] ?? '0.00' }}</td>
+                        <td class="border p-2" data-for="performance_task_ws">{{ $studentGrade['task_ws'] ?? '0.00' }}</td>
 
                         <td class="border p-1 cursor-pointer" contenteditable="true"></td>
                         <td class="border p-2"></td>
@@ -407,7 +414,14 @@
                         strand: t.get("strand") || null,
                         section: t.get("section") || null,
                         written_scores: {},
-                        task_scores: {}
+                        task_scores: {},
+                        written_total: parseFloat($(this).find('td[data-for="written_work_total"]').text().trim()) || 0,
+                        written_ps: parseFloat($(this).find('td[data-for="written_work_ps"]').text()) || 0,
+                        written_ws: parseFloat($(this).find('td[data-for="written_work_ws"]').text()) || 0,
+
+                        task_total: parseFloat($(this).find('td[data-for="performance_task_total"]').text()) || 0,
+                        task_ps: parseFloat($(this).find('td[data-for="performance_task_ps"]').text()) || 0,
+                        task_ws: parseFloat($(this).find('td[data-for="performance_task_ws"]').text()) || 0,
                     };
                     $(this).find('td[data-for="written_work"]').each(function() {
                         var t = $(this).data("cell");
@@ -422,7 +436,8 @@
                 type: "POST",
                 data: JSON.stringify({
                     ...e,
-                    studentScores: d
+                    studentScores: d,
+
                 }),
                 contentType: "application/json",
                 headers: {
@@ -443,6 +458,7 @@
                     })
                 }
             })
+
         }), $("td#highest_possible_score, td#performance_task_highest_possible_score").each(function() {
             $(this).on("blur", function(t) {
                 var e;
@@ -461,7 +477,7 @@
                         a = 0,
                         i = 0;
 
-                        
+
                     $(`td[data-user-id="${s}"][data-for="${r}"]`).each((t, e) => {
                         a += parseInt(e.textContent) || 0
                     });
