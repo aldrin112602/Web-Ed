@@ -9,7 +9,7 @@
             <div class="flex my-2 items-center justify-start gap-3">
                 <form action="{{ route('student.updateProfilePhoto') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
                     @csrf
-                    <input type="file" name="profile_photo" id="profile_photo" class="hidden" accept="image/*">
+                    
                     <label for="profile_photo" class="cursor-pointer">
                     <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
 
