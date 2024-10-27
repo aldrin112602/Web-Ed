@@ -10,7 +10,7 @@ use App\Models\{Admin\SubjectModel, TeacherGradeHandle, StudentHandle};
 use App\Models\Student\StudentAccount;
 use App\Models\Student\AttendanceHistory;
 use App\Models\Teacher\TeacherAccount;
-
+use Illuminate\Support\Facades\Http;
 
 class TeacherController extends Controller
 {
@@ -83,10 +83,63 @@ class TeacherController extends Controller
 
         $credentials = $request->only('username', 'password');
 
-        if (Auth::guard('teacher')->attempt($credentials, $request->filled('remember'))) {
-            // Authentication passed
+        // Manually verify credentials without logging in
+        if (
+            Auth::guard('teacher')->getProvider()->retrieveByCredentials($credentials) &&
+            Auth::guard('teacher')->getProvider()->validateCredentials(
+                $user = Auth::guard('teacher')->getProvider()->retrieveByCredentials($credentials),
+                $credentials
+            )
+        ) {
+            // Credentials are valid
 
-            return redirect()->intended('teacher/dashboard');
+            // Generate OTP
+            $otp = random_int(100000, 999999); // Generates a 6-digit OTP
+
+            // Send OTP via Mail API
+            $email = $user->email;
+
+            // Prepare data for the API request
+            $data = [
+                'recipient' => $email,
+                'subject' => 'Your OTP Code',
+                'html' => "
+                    <html>
+                        <body style='font-family: Arial, sans-serif;'>
+                            <div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;'>
+                                <h2 style='color: #4CAF50;'>Your OTP Code</h2>
+                                <p style='font-size: 16px;'>Hello,</p>
+                                <p style='font-size: 16px;'>Your OTP code is:</p>
+                                <p style='font-size: 24px; font-weight: bold; color: #333;'>$otp</p>
+                                <p style='font-size: 16px;'>Please enter this code to complete your login process. The code will expire in 10 minutes.</p>
+                                <br>
+                                <p style='font-size: 14px; color: #666;'>Best regards,<br>WebEd Team</p>
+                            </div>
+                        </body>
+                    </html>",
+                'from_name' => 'WebEd',
+                'from_mail' => 'noreply@yourapp.com'
+            ];
+
+
+            $response = Http::post('https://mail-api-v1.onrender.com/api/email/send', $data);
+
+            if ($response->successful()) {
+
+                // Store user and OTP data in session using Session::put
+                Session::put('otp', $otp);
+                Session::put('otp_expiry', now()->addMinutes(10));
+                Session::put('pending_user_id', $user->id);
+
+                // Redirect to OTP verification page
+                return redirect()->route('teacher.2fa.index');
+            }
+
+            // Handle case if OTP sending fails
+            return redirect()->back()->with(
+                'error',
+                'Failed to send OTP. Please try again.',
+            );
         }
 
         // Authentication failed
@@ -94,6 +147,8 @@ class TeacherController extends Controller
             'password' => 'Invalid username or password.',
         ])->withInput($request->except('password'));
     }
+
+
 
     public function dashboard()
     {

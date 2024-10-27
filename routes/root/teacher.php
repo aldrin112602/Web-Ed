@@ -18,12 +18,11 @@ use App\Http\Controllers\Teacher\{
     TeacherNotificationController,
     attendanceController,
     FaceScanController,
-    HighestPossibleScore
+    HighestPossibleScore,
+    TwoFAController
 };
 
 use App\Http\Controllers\Student\ExportController;
-
-
 
 // Teacher routes
 Route::prefix('teacher')->group(function () {
@@ -37,6 +36,14 @@ Route::prefix('teacher')->group(function () {
     Route::post('reset-password', [TeacherOtpController::class, 'update'])->name('teacher.password.update');
     Route::get('verify-otp', [TeacherOtpController::class, 'verifyFormOtp'])->name('teacher.verify-form.otp');
     Route::post('verify-otp', [TeacherOtpController::class, 'verifyOtp'])->name('teacher.verify.otp');
+
+
+
+
+    // Two-Factor Authentication (2FA) routes
+    Route::get('2fa', [TwoFAController::class, 'index'])->name('teacher.2fa.index'); // Show 2FA form
+    Route::post('2fa', [TwoFAController::class, 'verify'])->name('teacher.2fa.verify'); // Handle 2FA submission
+
 
     /***
      * ///////////////////////////
