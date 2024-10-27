@@ -5,7 +5,8 @@ use App\Http\Controllers\Guidance\{
     GuidanceConversationController,
     GuidanceController as Guidance,
     GuidanceOtpController,
-    GuidanceNotificationController
+    GuidanceNotificationController,
+    TwoFAController
 };
 use App\Http\Controllers\Student\ExportController;
 
@@ -23,6 +24,13 @@ Route::prefix('guidance')->group(function () {
     Route::get('verify-otp', [GuidanceOtpController::class, 'verifyFormOtp'])->name('guidance.verify-form.otp');
 
     Route::post('verify-otp', [GuidanceOtpController::class, 'verifyOtp'])->name('guidance.verify.otp');
+
+
+
+    // Two-Factor Authentication (2FA) routes
+    Route::get('2fa', [TwoFAController::class, 'index'])->name('guidance.2fa.index'); // Show 2FA form
+    Route::post('2fa', [TwoFAController::class, 'verify'])->name('guidance.2fa.verify'); // Handle 2FA submission
+
 
 
 

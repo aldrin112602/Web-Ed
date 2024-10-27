@@ -49,6 +49,7 @@ class StudentOtpController extends Controller
         }
     }
 
+
     public function verifyOtp(Request $request)
     {
         $request->validate(['otp' => 'required']);

@@ -13,7 +13,8 @@ use App\Http\Controllers\Admin\{
     attendanceController as Attendace,
     AdminConversationController,
     AdminNotificationController,
-    FaceScanController
+    FaceScanController,
+    TwoFAController
 };
 use App\Http\Controllers\Student\ExportController;
 
@@ -30,6 +31,11 @@ Route::prefix('admin')->group(function () {
     Route::post('reset-password', [AdminOtpController::class, 'update'])->name('admin.password.update');
     Route::get('verify-otp', [AdminOtpController::class, 'verifyFormOtp'])->name('admin.verify-form.otp');
     Route::post('verify-otp', [AdminOtpController::class, 'verifyOtp'])->name('admin.verify.otp');
+
+    // Two-Factor Authentication (2FA) routes
+    Route::get('2fa', [TwoFAController::class, 'index'])->name('admin.2fa.index'); // Show 2FA form
+    Route::post('2fa', [TwoFAController::class, 'verify'])->name('admin.2fa.verify'); // Handle 2FA submission
+
 
 
     /***

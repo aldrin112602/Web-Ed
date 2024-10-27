@@ -11,12 +11,18 @@ use App\Models\Student\AttendanceHistory;
 use App\Models\TeacherGradeHandle;
 use App\Models\Admin\SubjectModel;
 use App\Models\Teacher\TeacherAccount;
-
-
-
+use Illuminate\Support\Facades\Http;
+use App\Services\PHPMailerService;
 
 class GuidanceController extends Controller
 {
+
+    protected $mailerService;
+
+    public function __construct(PHPMailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
 
 
     public function attendanceReport()
@@ -81,26 +87,47 @@ class GuidanceController extends Controller
     }
 
     public function handleLogin(Request $request)
-    {
-        // Validate the input
-        $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
-        ]);
+{
+    // Validate the input
+    $request->validate([
+        'username' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
-        $credentials = $request->only('username', 'password');
+    // Retrieve the user by username
+    $user = Auth::guard('guidance')->getProvider()->retrieveByCredentials($request->only('username'));
 
-        if (Auth::guard('guidance')->attempt($credentials, $request->filled('remember'))) {
-            // Authentication passed
+    // Check if the user exists and if the password is correct
+    if ($user && Hash::check($request->password, $user->password)) {
+        // Generate OTP
+        $otp = random_int(100000, 999999);
+        $email = $user->email;
 
-            return redirect()->intended('guidance/dashboard');
+        $isSuccess = $this->mailerService->send2FA($email, $otp);
+
+        if ($isSuccess) {
+            // Store user and OTP data in session
+            Session::put('otp', $otp);
+            Session::put('otp_expiry', now()->addMinutes(10));
+            Session::put('pending_user_id', $user->id);
+
+            // Redirect to OTP verification page
+            return redirect()->route('guidance.2fa.index');
         }
 
-        // Authentication failed
-        return redirect()->back()->withErrors([
-            'password' => 'Invalid username or password.',
-        ])->withInput($request->except('password'));
+        // Handle case if OTP sending fails
+        return redirect()->back()->with(
+            'error',
+            'Failed to send OTP. Please try again.',
+        );
     }
+
+    // Authentication failed
+    return redirect()->back()->withErrors([
+        'password' => 'Invalid username or password.',
+    ])->withInput($request->except('password'));
+}
+
 
     public function dashboard()
     {

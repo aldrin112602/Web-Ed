@@ -7,7 +7,8 @@ use App\Http\Controllers\Student\{
     StudentController as Student,
     StudentOtpController,
     GradeController,
-    StudentNotificationController
+    StudentNotificationController,
+    TwoFAController
 };
 
 
@@ -23,6 +24,13 @@ Route::prefix('student')->group(function () {
     Route::post('reset-password', [StudentOtpController::class, 'update'])->name('student.password.update');
     Route::get('verify-otp', [StudentOtpController::class, 'verifyFormOtp'])->name('student.verify-form.otp');
     Route::post('verify-otp', [StudentOtpController::class, 'verifyOtp'])->name('student.verify.otp');
+
+
+
+    // Two-Factor Authentication (2FA) routes
+    Route::get('2fa', [TwoFAController::class, 'index'])->name('student.2fa.index'); // Show 2FA form
+    Route::post('2fa', [TwoFAController::class, 'verify'])->name('student.2fa.verify'); // Handle 2FA submission
+
 
 
     /***

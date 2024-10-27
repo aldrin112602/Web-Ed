@@ -23,6 +23,45 @@ class PHPMailerService
         $this->mailer->Port       = env('MAIL_PORT') ?? 465;
     }
 
+
+
+    public function send2FA($to, $otp)
+    {
+        try {
+            // Recipients
+            $this->mailer->setFrom(
+                // email address
+                env('MAIL_FROM_ADDRESS') ?? 'caballeroaldrin02@gmail.com',
+                // from name
+                env('MAIL_FROM_NAME') ?? 'WebEd'
+            );
+            $this->mailer->addAddress($to);
+
+            // Content
+            $this->mailer->isHTML(true);
+            $this->mailer->Subject = 'Your OTP Code';
+            $this->mailer->Body    = "
+                    <html>
+                        <body style='font-family: Arial, sans-serif;'>
+                            <div style='max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd;'>
+                                <h2 style='color: #4CAF50;'>Your OTP Code</h2>
+                                <p style='font-size: 16px;'>Hello,</p>
+                                <p style='font-size: 16px;'>Your OTP code is:</p>
+                                <p style='font-size: 24px; font-weight: bold; color: #333;'>$otp</p>
+                                <p style='font-size: 16px;'>Please enter this code to complete your login process. The code will expire in 10 minutes.</p>
+                                <br>
+                                <p style='font-size: 14px; color: #666;'>Best regards,<br>WebEd Team</p>
+                            </div>
+                        </body>
+                    </html>";
+
+            $this->mailer->send();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function sendOtp($to, $otp)
     {
         try {
