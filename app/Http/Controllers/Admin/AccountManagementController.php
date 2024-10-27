@@ -138,7 +138,7 @@ class AccountManagementController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
-            $query = AdminAccount::query();
+            $query = AdminAccount::where('id', '!=', Auth::id());
 
 
             // Apply gender filter
@@ -282,7 +282,7 @@ class AccountManagementController extends Controller
             ]);
 
             if ($request->filled('new_password')) {
-                $user->password = $request->new_password;
+                $user->password = bcrypt($request->new_password);
             }
 
             if ($request->hasFile('profile')) {
@@ -290,10 +290,9 @@ class AccountManagementController extends Controller
                     Storage::disk('public')->delete($user->profile);
                 }
 
-                $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
+                $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
                 $user->profile = $profilePhotoPath;
             }
-
 
             if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
                 StudentImage::where('student_id', $user->id)->delete();
@@ -308,25 +307,22 @@ class AccountManagementController extends Controller
                 }
             }
 
-
-
             $user->save();
 
             $auth_user = Auth::user();
-            History::create(
-                [
-                    'user_id' => $auth_user->id,
-                    'position' => $auth_user->role,
-                    'history' => "Updated user account",
-                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
-                ]
-            );
+            History::create([
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Updated user account",
+                'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
+            ]);
 
             return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
         }
 
         return redirect()->route('admin.login');
     }
+
     /////////////////// END /////////////////////
 
 

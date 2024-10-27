@@ -100,7 +100,7 @@
                 <div class="p-3 flex items-center justify-start gap-3">
                     <div class="flex items-center justify-start gap-1">
                         <span class="font-semibold text-gray-600">WebEd</span>
-                        <img src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
+                        <img class="object-cover" src="{{ asset('images/ark_logo.jpg') }}" alt="" style="height: 30px; width: 30px" />
                     </div>
                 </div>
 
@@ -279,7 +279,7 @@
                 <hr>
                 <div class="p-3 text-gray-700">
                     <div class="flex justify-start items-center gap-2">
-                        <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="User profile" class="rounded-full border" style="height: 45px; width: 45px;">
+                        <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="User profile" class="rounded-full  object-cover" style="height: 45px; width: 45px;">
                         <div class="flex flex-col justify-start items-start flex-wrap">
                             <span class="text-gray-600 text-xs font-semibold">{{ $user->name }}</span>
                             <span class="text-gray-500 text-xs">{{ $user->email }}</span>

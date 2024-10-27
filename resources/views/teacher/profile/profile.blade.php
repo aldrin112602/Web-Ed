@@ -11,7 +11,7 @@
                     @csrf
                     <input type="file" name="profile_photo" id="profile_photo" class="hidden" accept="image/*">
                     <label for="profile_photo" class="cursor-pointer">
-                        <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover md:w-32 w-24">
+                        <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover" style="width: 100px; height: 100px;">
 
                     </label>
                 </form>
@@ -195,7 +195,7 @@
                     @enderror
                 </div>
             </div>
-            <a href="route('teacher.password.request')" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
+            <a href="{{route('teacher.password.request')}}" class="text-sm mb-3 italic hover:underline text-slate-500 hover:text-blue-700">Forgot password?</a>
             <br>
             <button type="submit" class="mt-2 px-2 bg-blue-900 text-white py-1 rounded hover:bg-blue-600 text-sm">Update password</button>
         </form>
