@@ -2,6 +2,18 @@
 
 @section('title', 'User Profile')
 @section('content')
+
+<style>
+    dialog {
+        width: 100%;
+        max-width: 500px;
+        border: none;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+    }
+</style>
+
 <div class="min-w-full bg-white border-t border-l" style="min-height: 560px">
     <h1 class="text-blue-700 font-semibold p-3 bg-slate-100 border-b">User Profile</h1>
     <div class="md:px-20 px-10">
@@ -9,8 +21,7 @@
             <div class="flex my-2 items-center justify-start gap-3">
                 <div>
                     <label for="profile_photo" class="cursor-pointer">
-                    <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover" style="height: 80px; width: 80px">
-
+                        <img src="{{ isset($user->profile) ? asset('storage/' . $user->profile) : 'https://static.vecteezy.com/system/resources/previews/019/896/008/original/male-user-avatar-icon-in-flat-design-style-person-signs-illustration-png.png' }}" alt="Profile Image" class="mt-2 border bg-white shadow rounded-full object-cover" style="height: 80px; width: 80px">
                     </label>
                 </div>
                 <div>
@@ -23,7 +34,9 @@
                     </p>
                 </div>
             </div>
-            <button class="px-4 py-2 rounded bg-blue-600 text-white"><i class="fas fa-info-circle text-slate-100" title="If you find there's wrong information about your profile details, just make a request, thank you!"></i> | Request profile update</button>
+            <button id="requestUpdateButton" class="px-4 py-2 rounded bg-blue-600 text-white">
+                <i class="fas fa-info-circle text-slate-100" title="If you find there's wrong information about your profile details, just make a request, thank you!"></i> | Request profile update
+            </button>
         </div>
 
         <div class="py-3">
@@ -52,9 +65,9 @@
                 </div>
 
 
-                
 
-                
+
+
                 <div class="md:w-1/3 w-full">
                     <label for="id_number" class="block text-gray-700 text-sm mb-1 mt-2">ID No.</label>
                     <input readonly type="number" id="id_number" name="id_number" class="form-input w-full rounded border-gray-300 @error('id_number') border-red-500 @enderror" value="{{ old('id_number') ?? $user->id_number }}">
@@ -62,12 +75,12 @@
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-                
+
             </div>
             <div class="block md:flex align-center justify-between my-2 gap-5">
                 <div class="md:w-1/3 w-full">
                     <label for="phone_number" class="block text-gray-700 text-sm mb-1 mt-2">Phone number</label>
-                    <input readonly type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $user->phone_number }}">
+                    <input readonly type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $user->phone_number }}">
                     @error('phone_number')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
@@ -83,7 +96,7 @@
                 </div>
 
 
-                
+
                 <div class="md:w-1/3 w-full">
                     <label for="gender" class="block text-gray-700 text-sm mb-1 mt-2">Gender</label>
                     <input readonly type="text" id="gender" name="gender" class="form-input w-full rounded border-gray-300 @error('gender') border-red-500 @enderror" value="{{ old('gender') ?? $user->gender }}">
@@ -95,14 +108,14 @@
 
 
             <div class="block md:flex align-center justify-between my-2 gap-5">
-            <div class="md:w-1/2 w-full">
+                <div class="md:w-1/2 w-full">
                     <label for="username" class="block text-gray-700 text-sm mb-1 mt-2">Username</label>
                     <input readonly type="text" id="username" name="username" class="form-input w-full rounded border-gray-300 @error('username') border-red-500 @enderror" value="{{ old('username') ?? $user->username }}">
                     @error('username')
                     <span class="text-red-500 text-sm">{{ $message }}</span>
                     @enderror
                 </div>
-            <div class="md:w-1/2 w-full">
+                <div class="md:w-1/2 w-full">
                     <label for="address" class="block text-gray-700 text-sm mb-1 mt-2">Address</label>
                     <input readonly type="text" id="address" name="address" class="form-input w-full rounded border-gray-300 @error('address') border-red-500 @enderror" value="{{ old('address') ?? $user->address }}">
                     @error('address')
@@ -111,17 +124,44 @@
                 </div>
             </div>
 
-            
+
 
         </form>
-        
+
+        <dialog id="updateRequestModal" class="rounded-lg shadow-lg p-5">
+            <h2 class="text-lg font-bold mb-2 text-left">Request Profile Update</h2>
+            <hr>
+            <p class="text-left my-4">Please provide details of the required updates to your profile.</p>
+            <form method="POST" action="">
+                @csrf
+                <textarea name="update_details" rows="4" class="form-input w-full rounded border-gray-300 mb-4" placeholder="Describe the changes needed..."></textarea>
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded bg-gray-500 text-white">Cancel</button>
+                    <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Submit</button>
+                </div>
+            </form>
+        </dialog>
+
         <hr class="my-6">
         <br><br><br>
     </div>
-
-
-
-
-
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal = document.getElementById('updateRequestModal');
+        const openButton = document.getElementById('requestUpdateButton');
+
+        openButton.addEventListener('click', function() {
+            modal.showModal();
+        });
+
+        function closeModal() {
+            modal.close();
+        }
+
+        window.closeModal = closeModal;
+    });
+</script>
+
 @endsection
