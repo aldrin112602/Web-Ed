@@ -76,9 +76,6 @@ class StudentController extends Controller
     }
 
 
-
-
-
     public function updateStudent(Request $request, $id)
 {
     if (Auth::guard('teacher')->check()) {
@@ -113,7 +110,7 @@ class StudentController extends Controller
 
         // Update password if provided
         if ($request->filled('new_password')) {
-            $user->password = bcrypt($request->new_password);
+            $user->password = $request->new_password;
         }
 
         // Update username if provided
@@ -123,24 +120,43 @@ class StudentController extends Controller
 
         // Handle profile photo upload
         if ($request->hasFile('profile')) {
-            if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-                Storage::disk('public')->delete($user->profile);
+            $destinationPath = public_path('storage/profiles');
+            $file = $request->file('profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+
+            // Check if the directory exists, if not, create it
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
             }
 
-            $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
-            $user->profile = $profilePhotoPath;
+            // Delete the existing profile photo if it exists
+            if ($user->profile && file_exists(public_path($user->profile))) {
+                unlink(public_path($user->profile));
+            }
+
+            // Move the uploaded file
+            $file->move($destinationPath, $fileName);
+            $user->profile = 'storage/profiles/' . $fileName;
         }
 
         // Handle face images upload (expecting exactly 3 images)
         if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
+            // Delete existing face images for the student
             StudentImage::where('student_id', $user->id)->delete();
 
+            // Create directory for face images if it doesn't exist
+            $faceImagesPath = public_path('storage/face_images/' . $user->name);
+            if (!file_exists($faceImagesPath)) {
+                mkdir($faceImagesPath, 0777, true);
+            }
+
             foreach ($request->file('face_images') as $index => $file) {
-                $imagePath = $file->storeAs('face_images/' . $user->name, "$index.jpg", 'public');
+                $imageName = "$index.jpg";
+                $file->move($faceImagesPath, $imageName);
 
                 StudentImage::create([
                     'student_id' => $user->id,
-                    'image_path' => $imagePath,
+                    'image_path' => 'storage/face_images/' . $user->name . '/' . $imageName,
                 ]);
             }
         }
@@ -163,6 +179,7 @@ class StudentController extends Controller
 
     return redirect()->route('teacher.login');
 }
+
 
 
 

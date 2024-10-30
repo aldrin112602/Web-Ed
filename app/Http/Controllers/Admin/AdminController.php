@@ -248,40 +248,92 @@ class AdminController extends Controller
 
 
 
+    // public function updateProfilePhoto(Request $request)
+    // {
+    //     if (Auth::guard('admin')->check()) {
+    //         $user = Auth::guard('admin')->user();
+
+    //         $request->validate([
+    //             'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //         ]);
+
+    //         if ($request->hasFile('profile_photo')) {
+    //             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+    //                 Storage::disk('public')->delete($user->profile);
+    //             }
+
+    //             $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
+    //             $user->profile = $profilePhotoPath;
+    //             $user->save();
+
+    // $auth_user = Auth::user();
+    // History::create(
+    //     [
+    //         'user_id' => $auth_user->id,
+    //         'position' => $auth_user->role,
+    //         'history' => "Update his/her profile photo",
+    //         'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
+    //     ]
+    // );
+
+
+    //             return redirect()->back()->with('success', 'Profile photo updated successfully!');
+    //         }
+    //     }
+
+    //     return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
+    // }
+
     public function updateProfilePhoto(Request $request)
-    {
-        if (Auth::guard('admin')->check()) {
-            $user = Auth::guard('admin')->user();
+{
+    if (Auth::guard('admin')->check()) {
+        $user = Auth::guard('admin')->user();
 
-            $request->validate([
-                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
 
-            if ($request->hasFile('profile_photo')) {
-                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-                    Storage::disk('public')->delete($user->profile);
-                }
+        if ($request->hasFile('profile_photo')) {
+            // Define the target directory in the public path
+            $destinationPath = public_path('storage/profiles');
+            $file = $request->file('profile_photo');
+            $fileName = time() . '_' . $file->getClientOriginalName();
 
-                $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
-                $user->profile = $profilePhotoPath;
-                $user->save();
-
-                $auth_user = Auth::user();
-                History::create(
-                    [
-                        'user_id' => $auth_user->id,
-                        'position' => $auth_user->role,
-                        'history' => "Update his/her profile photo",
-                        'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
-                    ]
-                );
-
-                return redirect()->back()->with('success', 'Profile photo updated successfully!');
+            // Check if the directory exists, if not, create it
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
             }
-        }
 
-        return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
+            // Check if the user has an existing profile photo and delete it
+            if ($user->profile && file_exists(public_path($user->profile))) {
+                unlink(public_path($user->profile));
+            }
+
+            // Move the uploaded file to the target directory
+            $file->move($destinationPath, $fileName);
+
+            // Save the file path without extra 'storage/' prefix in the database
+            $user->profile = 'profiles/' . $fileName;
+            $user->save();
+
+
+            $auth_user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $auth_user->id,
+                    'position' => $auth_user->role,
+                    'history' => "Update his/her profile photo",
+                    'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
+                ]
+            );
+
+            return redirect()->back()->with('success', 'Profile photo updated successfully!');
+        }
     }
+
+    return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
+}
+
 
 
     public function deleteProfilePhoto()

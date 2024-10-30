@@ -249,11 +249,88 @@ class AccountManagementController extends Controller
     }
 
 
+    // public function updateStudent(Request $request, $id)
+    // {
+    //     if (Auth::guard('admin')->check()) {
+    //         $user = StudentAccount::findOrFail($id);
+
+    //         $request->validate([
+    //             'name' => ['required', 'string', 'max:255', new TwoWords],
+    //             'new_password' => 'nullable|string|min:6|max:255',
+    //             'parents_contact_number' => 'required|string|min:11|max:11',
+    //             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //             'phone_number' => 'required|string|min:11|max:11',
+    //             'address' => 'nullable|string|max:255',
+    //             'parents_email' => 'required',
+    //             'extension_name' => 'nullable|string|max:255',
+    //             'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
+    //             'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
+    //         ]);
+
+    //         $user->update([
+    //             'name' => $request->name,
+    //             'id_number' => $request->id_number,
+    //             'email' => $request->email,
+    //             'phone_number' => $request->phone_number,
+    //             'address' => $request->address,
+    //             'gender' => $request->gender,
+    //             'strand' => $request->strand,
+    //             'parents_email' => $request->parents_email,
+    //             'grade' => $request->grade,
+    //             'extension_name' => $request->extension_name,
+    //             'parents_contact_number' => $request->parents_contact_number,
+    //         ]);
+
+    //         if ($request->filled('new_password')) {
+    //             $user->password = $request->new_password;
+    //         }
+
+    //         if ($request->hasFile('profile')) {
+    //             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+    //                 Storage::disk('public')->delete($user->profile);
+    //             }
+
+    //             $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+    //             $user->profile = $profilePhotoPath;
+    //         }
+
+    //         if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
+    //             StudentImage::where('student_id', $user->id)->delete();
+
+    //             foreach ($request->file('face_images') as $index => $file) {
+    //                 $imagePath = $file->storeAs('face_images/' . $user->name, "$index.jpg", 'public');
+
+    //                 StudentImage::create([
+    //                     'student_id' => $user->id,
+    //                     'image_path' => $imagePath,
+    //                 ]);
+    //             }
+    //         }
+
+    //         $user->save();
+
+    //         $auth_user = Auth::user();
+    //         History::create([
+    //             'user_id' => $auth_user->id,
+    //             'position' => $auth_user->role,
+    //             'history' => "Updated user account",
+    //             'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
+    //         ]);
+
+    //         return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
+    //     }
+
+    //     return redirect()->route('admin.login');
+    // }
+
+
+
     public function updateStudent(Request $request, $id)
     {
         if (Auth::guard('admin')->check()) {
             $user = StudentAccount::findOrFail($id);
 
+            // Validate input
             $request->validate([
                 'name' => ['required', 'string', 'max:255', new TwoWords],
                 'new_password' => 'nullable|string|min:6|max:255',
@@ -267,6 +344,7 @@ class AccountManagementController extends Controller
                 'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
             ]);
 
+            // Update basic user information
             $user->update([
                 'name' => $request->name,
                 'id_number' => $request->id_number,
@@ -281,11 +359,19 @@ class AccountManagementController extends Controller
                 'parents_contact_number' => $request->parents_contact_number,
             ]);
 
+            // Update password if provided
             if ($request->filled('new_password')) {
-                $user->password = bcrypt($request->new_password);
+                $user->password = $request->new_password;
             }
 
+            // Handle profile photo upload with folder check
             if ($request->hasFile('profile')) {
+                $profileDirectory = public_path('storage/profiles');
+                if (!is_dir($profileDirectory)) {
+                    mkdir($profileDirectory, 0777, true);
+                }
+
+                // Check if the user has an existing profile photo and delete it
                 if ($user->profile && Storage::disk('public')->exists($user->profile)) {
                     Storage::disk('public')->delete($user->profile);
                 }
@@ -294,12 +380,17 @@ class AccountManagementController extends Controller
                 $user->profile = $profilePhotoPath;
             }
 
+            // Handle face images upload with folder check
             if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
-                StudentImage::where('student_id', $user->id)->delete();
+                $faceImagesDirectory = public_path('storage/face_images/' . $user->name);
+                if (!is_dir($faceImagesDirectory)) {
+                    mkdir($faceImagesDirectory, 0777, true);
+                }
 
+                // Delete previous face images and update with new ones
+                StudentImage::where('student_id', $user->id)->delete();
                 foreach ($request->file('face_images') as $index => $file) {
                     $imagePath = $file->storeAs('face_images/' . $user->name, "$index.jpg", 'public');
-
                     StudentImage::create([
                         'student_id' => $user->id,
                         'image_path' => $imagePath,
@@ -309,6 +400,7 @@ class AccountManagementController extends Controller
 
             $user->save();
 
+            // Log history of the update
             $auth_user = Auth::user();
             History::create([
                 'user_id' => $auth_user->id,
@@ -317,11 +409,13 @@ class AccountManagementController extends Controller
                 'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
             ]);
 
+            // Redirect with success message
             return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
         }
 
         return redirect()->route('admin.login');
     }
+
 
     /////////////////// END /////////////////////
 
@@ -361,59 +455,122 @@ class AccountManagementController extends Controller
     }
 
 
+    // public function updateTeacher(Request $request, $id)
+    // {
+    //     if (Auth::guard('admin')->check()) {
+    //         $user = TeacherAccount::findOrFail($id);
+
+    //         // Consolidate validation rules
+    //         $request->validate([
+    //             'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number,' . $user->id,
+    //             'name' => ['required', 'string', 'max:255', new TwoWords],
+    //             'new_password' => 'nullable|string|min:6|max:255',
+    //             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //             'phone_number' => 'required|string|min:11|max:11',
+    //             'address' => 'nullable|string|max:255',
+    //             'extension_name' => 'nullable|string|max:255',
+    //             'email' => 'required|email|max:255|unique:teacher_accounts,email,' . $user->id,
+    //             'position' => 'required',
+    //         ]);
+
+    //         // Update user attributes
+    //         $user->update([
+    //             'id_number' => $request->id_number,
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'phone_number' => $request->phone_number,
+    //             'address' => $request->address,
+    //             'extension_name' => $request->extension_name,
+    //             'gender' => $request->gender,
+    //             'grade_handle' => $request->grade_handle,
+    //             'position' => $request->position,
+    //         ]);
+
+    //         // Handle new password if provided
+    //         if ($request->filled('new_password')) {
+    //             $user->password = $request->new_password;
+    //         }
+
+    //         // Handle profile photo upload if provided
+    //         if ($request->hasFile('profile')) {
+    //             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+    //                 Storage::disk('public')->delete($user->profile);
+    //             }
+
+    //             $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+    //             $user->profile = $profilePhotoPath;
+    //         }
+
+    //         $user->save();
+
+    //         return redirect()->route('admin.teacher_list')->with('success', 'Teacher updated successfully');
+    //     }
+
+    //     return redirect()->route('admin.login');
+    // }
+
     public function updateTeacher(Request $request, $id)
-    {
-        if (Auth::guard('admin')->check()) {
-            $user = TeacherAccount::findOrFail($id);
+{
+    if (Auth::guard('admin')->check()) {
+        $user = TeacherAccount::findOrFail($id);
 
-            // Consolidate validation rules
-            $request->validate([
-                'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
-                'new_password' => 'nullable|string|min:6|max:255',
-                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'phone_number' => 'required|string|min:11|max:11',
-                'address' => 'nullable|string|max:255',
-                'extension_name' => 'nullable|string|max:255',
-                'email' => 'required|email|max:255|unique:teacher_accounts,email,' . $user->id,
-                'position' => 'required',
-            ]);
+        // Validate input
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number,' . $user->id,
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'new_password' => 'nullable|string|min:6|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'required|string|min:11|max:11',
+            'address' => 'nullable|string|max:255',
+            'extension_name' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255|unique:teacher_accounts,email,' . $user->id,
+            'position' => 'required',
+        ]);
 
-            // Update user attributes
-            $user->update([
-                'id_number' => $request->id_number,
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'address' => $request->address,
-                'extension_name' => $request->extension_name,
-                'gender' => $request->gender,
-                'grade_handle' => $request->grade_handle,
-                'position' => $request->position,
-            ]);
+        // Update basic user information
+        $user->update([
+            'id_number' => $request->id_number,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'extension_name' => $request->extension_name,
+            'gender' => $request->gender,
+            'grade_handle' => $request->grade_handle,
+            'position' => $request->position,
+        ]);
 
-            // Handle new password if provided
-            if ($request->filled('new_password')) {
-                $user->password = $request->new_password;
-            }
-
-            // Handle profile photo upload if provided
-            if ($request->hasFile('profile')) {
-                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-                    Storage::disk('public')->delete($user->profile);
-                }
-
-                $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
-                $user->profile = $profilePhotoPath;
-            }
-
-            $user->save();
-
-            return redirect()->route('admin.teacher_list')->with('success', 'Teacher updated successfully');
+        // Update password if provided
+        if ($request->filled('new_password')) {
+            $user->password = $request->new_password;
         }
 
-        return redirect()->route('admin.login');
+        // Handle profile photo upload with folder check
+        if ($request->hasFile('profile')) {
+            $profileDirectory = public_path('storage/profiles');
+            if (!is_dir($profileDirectory)) {
+                mkdir($profileDirectory, 0777, true);
+            }
+
+            // Delete the existing profile photo if it exists
+            if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                Storage::disk('public')->delete($user->profile);
+            }
+
+            // Store new profile photo
+            $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+            $user->profile = $profilePhotoPath;
+        }
+
+        $user->save();
+
+        // Redirect with success message
+        return redirect()->route('admin.teacher_list')->with('success', 'Teacher updated successfully');
     }
+
+    return redirect()->route('admin.login');
+}
+
 
     /////////////////// END /////////////////////
 
@@ -463,66 +620,134 @@ class AccountManagementController extends Controller
     }
 
 
+    // public function updateGuidance(Request $request, $id)
+    // {
+    //     if (Auth::guard('admin')->check()) {
+    //         $user = GuidanceAccount::findOrFail($id);
+
+    //         // Consolidate validation rules
+    //         $request->validate([
+    //             'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number,' . $user->id,
+    //             'name' => ['required', 'string', 'max:255', new TwoWords],
+    //             'new_password' => 'nullable|string|min:6|max:255',
+    //             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //             'phone_number' => 'required|string|min:11|max:11',
+    //             'address' => 'nullable|string|max:255',
+    //             'extension_name' => 'nullable|string|max:255',
+    //             'email' => 'required|email|max:255|unique:guidance_accounts,email,' . $user->id,
+    //         ]);
+
+    //         // Update user attributes
+    //         $user->update([
+    //             'id_number' => $request->id_number,
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'phone_number' => $request->phone_number,
+    //             'address' => $request->address,
+    //             'extension_name' => $request->extension_name,
+    //             'gender' => $request->gender,
+    //         ]);
+
+    //         // Handle new password if provided
+    //         if ($request->filled('new_password')) {
+    //             $user->password = $request->new_password;
+    //         }
+
+    //         // Handle profile photo upload if provided
+    //         if ($request->hasFile('profile')) {
+    //             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+    //                 Storage::disk('public')->delete($user->profile);
+    //             }
+
+    //             $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+    //             $user->profile = $profilePhotoPath;
+    //         }
+
+    //         $user->save();
+
+    //         $_user = Auth::user();
+    //         History::create(
+    //             [
+    //                 'user_id' => $_user->id,
+    //                 'position' => $_user->role ?? 'Admin',
+    //                 'history' => "Updated guidance account",
+    //                 'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+    //             ]
+    //         );
+
+    //         return redirect()->route('admin.guidance_list')->with('success', 'Guidance updated successfully');
+    //     }
+
+    //     return redirect()->route('admin.login');
+    // }
+
     public function updateGuidance(Request $request, $id)
-    {
-        if (Auth::guard('admin')->check()) {
-            $user = GuidanceAccount::findOrFail($id);
+{
+    if (Auth::guard('admin')->check()) {
+        $user = GuidanceAccount::findOrFail($id);
 
-            // Consolidate validation rules
-            $request->validate([
-                'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
-                'new_password' => 'nullable|string|min:6|max:255',
-                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'phone_number' => 'required|string|min:11|max:11',
-                'address' => 'nullable|string|max:255',
-                'extension_name' => 'nullable|string|max:255',
-                'email' => 'required|email|max:255|unique:guidance_accounts,email,' . $user->id,
-            ]);
+        // Validate input
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number,' . $user->id,
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'new_password' => 'nullable|string|min:6|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'required|string|min:11|max:11',
+            'address' => 'nullable|string|max:255',
+            'extension_name' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255|unique:guidance_accounts,email,' . $user->id,
+        ]);
 
-            // Update user attributes
-            $user->update([
-                'id_number' => $request->id_number,
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'address' => $request->address,
-                'extension_name' => $request->extension_name,
-                'gender' => $request->gender,
-            ]);
+        // Update user attributes
+        $user->update([
+            'id_number' => $request->id_number,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'extension_name' => $request->extension_name,
+            'gender' => $request->gender,
+        ]);
 
-            // Handle new password if provided
-            if ($request->filled('new_password')) {
-                $user->password = $request->new_password;
-            }
-
-            // Handle profile photo upload if provided
-            if ($request->hasFile('profile')) {
-                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-                    Storage::disk('public')->delete($user->profile);
-                }
-
-                $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
-                $user->profile = $profilePhotoPath;
-            }
-
-            $user->save();
-
-            $_user = Auth::user();
-            History::create(
-                [
-                    'user_id' => $_user->id,
-                    'position' => $_user->role ?? 'Admin',
-                    'history' => "Updated guidance account",
-                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
-                ]
-            );
-
-            return redirect()->route('admin.guidance_list')->with('success', 'Guidance updated successfully');
+        // Handle new password if provided
+        if ($request->filled('new_password')) {
+            $user->password = $request->new_password;
         }
 
-        return redirect()->route('admin.login');
+        // Handle profile photo upload with folder existence check
+        if ($request->hasFile('profile')) {
+            $profileDirectory = public_path('storage/profiles');
+            if (!is_dir($profileDirectory)) {
+                mkdir($profileDirectory, 0777, true);
+            }
+
+            // Delete existing profile photo if it exists
+            if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                Storage::disk('public')->delete($user->profile);
+            }
+
+            // Store new profile photo
+            $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+            $user->profile = $profilePhotoPath;
+        }
+
+        $user->save();
+
+        // Log history of the update
+        $_user = Auth::user();
+        History::create([
+            'user_id' => $_user->id,
+            'position' => $_user->role ?? 'Admin',
+            'history' => "Updated guidance account",
+            'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
+        ]);
+
+        return redirect()->route('admin.guidance_list')->with('success', 'Guidance updated successfully');
     }
+
+    return redirect()->route('admin.login');
+}
+
     /////////////////// END /////////////////////
 
 
@@ -575,65 +800,133 @@ class AccountManagementController extends Controller
     }
 
 
+    // public function updateAdmin(Request $request, $id)
+    // {
+    //     if (Auth::guard('admin')->check()) {
+    //         $user = AdminAccount::findOrFail($id);
+
+    //         // Consolidate validation rules
+    //         $request->validate([
+    //             'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
+    //             'name' => ['required', 'string', 'max:255', new TwoWords],
+    //             'new_password' => 'nullable|string|min:6|max:255',
+    //             'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //             'phone_number' => 'required|string|min:11|max:11',
+    //             'address' => 'nullable|string|max:255',
+    //             'extension_name' => 'nullable|string|max:255',
+    //             'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
+    //         ]);
+
+    //         // Update user attributes
+    //         $user->update([
+    //             'id_number' => $request->id_number,
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'phone_number' => $request->phone_number,
+    //             'address' => $request->address,
+    //             'extension_name' => $request->extension_name,
+    //             'gender' => $request->gender,
+    //         ]);
+
+    //         // Handle new password if provided
+    //         if ($request->filled('new_password')) {
+    //             $user->password = $request->new_password;
+    //         }
+
+    //         // Handle profile photo upload if provided
+    //         if ($request->hasFile('profile')) {
+    //             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+    //                 Storage::disk('public')->delete($user->profile);
+    //             }
+
+    //             $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+    //             $user->profile = $profilePhotoPath;
+    //         }
+
+    //         $user->save();
+
+    //         $user = Auth::user();
+    //         History::create(
+    //             [
+    //                 'user_id' => $user->id,
+    //                 'position' => $user->role ?? 'Admin',
+    //                 'history' => "Updated admin account",
+    //                 'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+    //             ]
+    //         );
+
+    //         return redirect()->route('admin.admin_list')->with('success', 'Admin updated successfully');
+    //     }
+
+    //     return redirect()->route('admin.login');
+    // }
+
     public function updateAdmin(Request $request, $id)
-    {
-        if (Auth::guard('admin')->check()) {
-            $user = AdminAccount::findOrFail($id);
+{
+    if (Auth::guard('admin')->check()) {
+        $user = AdminAccount::findOrFail($id);
 
-            // Consolidate validation rules
-            $request->validate([
-                'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
-                'new_password' => 'nullable|string|min:6|max:255',
-                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'phone_number' => 'required|string|min:11|max:11',
-                'address' => 'nullable|string|max:255',
-                'extension_name' => 'nullable|string|max:255',
-                'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
-            ]);
+        // Validate input
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'new_password' => 'nullable|string|min:6|max:255',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'phone_number' => 'required|string|min:11|max:11',
+            'address' => 'nullable|string|max:255',
+            'extension_name' => 'nullable|string|max:255',
+            'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
+        ]);
 
-            // Update user attributes
-            $user->update([
-                'id_number' => $request->id_number,
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone_number' => $request->phone_number,
-                'address' => $request->address,
-                'extension_name' => $request->extension_name,
-                'gender' => $request->gender,
-            ]);
+        // Update user attributes
+        $user->update([
+            'id_number' => $request->id_number,
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'address' => $request->address,
+            'extension_name' => $request->extension_name,
+            'gender' => $request->gender,
+        ]);
 
-            // Handle new password if provided
-            if ($request->filled('new_password')) {
-                $user->password = $request->new_password;
-            }
-
-            // Handle profile photo upload if provided
-            if ($request->hasFile('profile')) {
-                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-                    Storage::disk('public')->delete($user->profile);
-                }
-
-                $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
-                $user->profile = $profilePhotoPath;
-            }
-
-            $user->save();
-
-            $user = Auth::user();
-            History::create(
-                [
-                    'user_id' => $user->id,
-                    'position' => $user->role ?? 'Admin',
-                    'history' => "Updated admin account",
-                    'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
-                ]
-            );
-
-            return redirect()->route('admin.admin_list')->with('success', 'Admin updated successfully');
+        // Handle new password if provided
+        if ($request->filled('new_password')) {
+            $user->password = $request->new_password;
         }
 
-        return redirect()->route('admin.login');
+        // Handle profile photo upload with folder existence check
+        if ($request->hasFile('profile')) {
+            $profileDirectory = public_path('storage/profiles');
+            if (!is_dir($profileDirectory)) {
+                mkdir($profileDirectory, 0777, true);
+            }
+
+            // Delete existing profile photo if it exists
+            if ($user->profile && Storage::disk('public')->exists($user->profile)) {
+                Storage::disk('public')->delete($user->profile);
+            }
+
+            // Store new profile photo
+            $profilePhotoPath = $request->file('profile')->store('profiles', 'public');
+            $user->profile = $profilePhotoPath;
+        }
+
+        $user->save();
+
+        // Log the update in history
+        $_user = Auth::user();
+        History::create([
+            'user_id' => $_user->id,
+            'position' => $_user->role ?? 'Admin',
+            'history' => "Updated admin account",
+            'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
+        ]);
+
+        return redirect()->route('admin.admin_list')->with('success', 'Admin updated successfully');
     }
+
+    return redirect()->route('admin.login');
+}
+
     /////////////////// END /////////////////////
 }
