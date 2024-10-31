@@ -94,6 +94,7 @@ class AdminCreateController extends Controller
         // Create a new student account with request data (excluding 'profile' and 'face_images')
         $account = new StudentAccount($request->except('profile', 'face_images'));
         $grade_handle = TeacherGradeHandle::where('id', $request->add_to)->first();
+        $account->section = $grade_handle->section;
 
         // Handle profile photo upload
         if ($request->hasFile('profile')) {
