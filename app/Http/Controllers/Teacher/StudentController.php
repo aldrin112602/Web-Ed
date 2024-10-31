@@ -136,7 +136,7 @@ class StudentController extends Controller
 
             // Move the uploaded file
             $file->move($destinationPath, $fileName);
-            $user->profile = 'storage/profiles/' . $fileName;
+            $user->profile = 'profiles/' . $fileName;
         }
 
         // Handle face images upload (expecting exactly 3 images)
@@ -156,7 +156,7 @@ class StudentController extends Controller
 
                 StudentImage::create([
                     'student_id' => $user->id,
-                    'image_path' => 'storage/face_images/' . $user->name . '/' . $imageName,
+                    'image_path' => 'face_images/' . $user->name . '/' . $imageName,
                 ]);
             }
         }

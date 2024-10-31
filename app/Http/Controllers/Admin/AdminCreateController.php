@@ -18,330 +18,196 @@ use App\Models\{
 
 class AdminCreateController extends Controller
 {
-    // public function createAdmin(Request $request)
-    // {
-    //     $request->validate([
-    //         'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number',
-    //         'name' => ['required', 'string', 'max:255', new TwoWords],
-    //         'gender' => 'required|string|in:Male,Female',
-    //         'username' => 'required|string|unique:admin_accounts,username',
-    //         'password' => 'required|string|min:6|max:255',
-    //         'email' => 'required|email|unique:admin_accounts,email',
-    //         'position' => 'nullable|string|max:255',
-    //         'role' => 'nullable|string|max:255',
-    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-    //         'phone_number' => 'required|string|min:11|max:11'
-    //     ]);
-
-    //     $account = new AdminAccount($request->all());
-
-    //     $profilePath = $request->file('profile')->store('profiles', 'public');
-    //     $account->profile = $profilePath;
-
-    //     $account->save();
-
-    //     $auth_user = Auth::user();
-    //     History::create(
-    //         [
-    //             'user_id' => $auth_user->id,
-    //             'position' => $auth_user->role,
-    //             'history' => "Create admin account",
-    //             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name
-    //         ]
-    //     );
-
-    //     return redirect()
-    //         ->back()
-    //         ->with('success', 'Account added successfully!');
-    // }
-
-    // public function createStudent(Request $request)
-    // {
-    //     $request->validate([
-    //         'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
-    //         'name' => ['required', 'string', 'max:255', new TwoWords],
-    //         'gender' => 'required|string|in:Male,Female',
-    //         'username' => 'required|string|unique:student_accounts,username',
-    //         'password' => 'required|string|min:6|max:255',
-    //         'strand' => 'required',
-    //         'add_to' => 'required',
-    //         'grade' => 'required',
-    //         'parents_email' => 'required',
-    //         'parents_contact_number' => 'required|string|min:11|max:11',
-    //         'email' => 'required|email|unique:student_accounts,email',
-    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-    //         'phone_number' => 'required|string|min:11|max:11',
-    //         'face_images' => 'required|array|min:3|max:3',
-    //         'face_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-    //     ]);
-
-    //     $account = new StudentAccount($request->all());
-    //     $grade_handle = TeacherGradeHandle::where('id', $request->add_to)->first();
-
-    //     $profilePath = $request->file('profile')->store('profiles', 'public');
-    //     $account->profile = $profilePath;
-    //     $account->save();
-
-
-    //     if ($grade_handle) {
-    //         StudentHandle::create([
-    //             'student_id' => $account->id,
-    //             'teacher_id' => $grade_handle->teacher->id,
-    //             'grade_handle_id' => $request->add_to
-    //         ]);
-    //     }
-
-    //     if ($request->hasFile('face_images')) {
-    //         foreach ($request->file('face_images') as $index => $file) {
-    //             $imagePath = $file->storeAs('face_images/' . $account->name, "$index.jpg", 'public');
-    //             StudentImage::create([
-    //                 'student_id' => $account->id,
-    //                 'image_path' => $imagePath,
-    //             ]);
-    //         }
-    //     }
-
-
-    //     $auth_user = Auth::user();
-    //     History::create(
-    //         [
-    //             'user_id' => $auth_user->id,
-    //             'position' => $auth_user->role,
-    //             'history' => "Create student account",
-    //             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name
-    //         ]
-    //     );
-
-    //     return redirect()
-    //         ->back()
-    //         ->with('success', 'Account added successfully!');
-    // }
-
-
-    // public function createTeacher(Request $request)
-    // {
-    //     $request->validate([
-    //         'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number',
-    //         'name' => ['required', 'string', 'max:255', new TwoWords],
-    //         'gender' => 'required|string|in:Male,Female',
-    //         'position' => 'required|string|max:255',
-    //         'username' => 'required|string|unique:teacher_accounts,username',
-    //         'password' => 'required|string|min:6|max:255',
-    //         'email' => 'required|email|unique:teacher_accounts,email',
-    //         'role' => 'nullable|string|max:255',
-    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-    //         'phone_number' => 'required|string|min:11|max:11'
-    //     ]);
-
-    //     $account = new TeacherAccount($request->all());
-
-    //     $profilePath = $request->file('profile')->store('profiles', 'public');
-    //     $account->profile = $profilePath;
-
-
-    //     $account->save();
-    //     $auth_user = Auth::user();
-    //     History::create(
-    //         [
-    //             'user_id' => $auth_user->id,
-    //             'position' => $auth_user->role,
-    //             'history' => "Create teacher account",
-    //             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name
-    //         ]
-    //     );
-    //     return redirect()
-    //         ->back()
-    //         ->with('success', 'Account added successfully!');
-    // }
-
-    // public function createGuidance(Request $request)
-    // {
-    //     $request->validate([
-    //         'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number',
-    //         'name' => ['required', 'string', 'max:255', new TwoWords],
-    //         'gender' => 'required|string|in:Male,Female',
-    //         'username' => 'required|string|unique:guidance_accounts,username',
-    //         'password' => 'required|string|min:6|max:255',
-    //         'email' => 'required|email|unique:guidance_accounts,email',
-    //         'role' => 'nullable|string|max:255',
-    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-    //         'phone_number' => 'required|string|min:11|max:11'
-    //     ]);
-
-    //     $account = new GuidanceAccount($request->all());
-
-    //     $profilePath = $request->file('profile')->store('profiles', 'public');
-    //     $account->profile = $profilePath;
-
-
-    //     $account->save();
-    //     $auth_user = Auth::user();
-    //     History::create(
-    //         [
-    //             'user_id' => $auth_user->id,
-    //             'position' => $auth_user->role,
-    //             'history' => "Create guidance account",
-    //             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name
-    //         ]
-    //     );
-    //     return redirect()
-    //         ->back()
-    //         ->with('success', 'Account added successfully!');
-    // }
-
 
 
     public function createAdmin(Request $request)
-{
-    $request->validate([
-        'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number',
-        'name' => ['required', 'string', 'max:255', new TwoWords],
-        'gender' => 'required|string|in:Male,Female',
-        'username' => 'required|string|unique:admin_accounts,username',
-        'password' => 'required|string|min:6|max:255',
-        'email' => 'required|email|unique:admin_accounts,email',
-        'position' => 'nullable|string|max:255',
-        'role' => 'nullable|string|max:255',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-        'phone_number' => 'required|string|min:11|max:11'
-    ]);
-
-    $account = new AdminAccount($request->all());
-
-    // Ensure profiles folder exists
-    $profileDirectory = public_path('storage/profiles');
-    if (!is_dir($profileDirectory)) {
-        mkdir($profileDirectory, 0777, true);
-    }
-
-    $profilePath = $request->file('profile')->store('profiles', 'public');
-    $account->profile = $profilePath;
-
-    $account->save();
-
-    // Record history
-    $auth_user = Auth::user();
-    History::create([
-        'user_id' => $auth_user->id,
-        'position' => $auth_user->role,
-        'history' => "Create admin account",
-        'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
-    ]);
-
-    return redirect()->back()->with('success', 'Account added successfully!');
-}
-
-public function createStudent(Request $request)
-{
-    $request->validate([
-        'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
-        'name' => ['required', 'string', 'max:255', new TwoWords],
-        'gender' => 'required|string|in:Male,Female',
-        'username' => 'required|string|unique:student_accounts,username',
-        'password' => 'required|string|min:6|max:255',
-        'strand' => 'required',
-        'add_to' => 'required',
-        'grade' => 'required',
-        'parents_email' => 'required',
-        'parents_contact_number' => 'required|string|min:11|max:11',
-        'email' => 'required|email|unique:student_accounts,email',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-        'phone_number' => 'required|string|min:11|max:11',
-        'face_images' => 'required|array|min:3|max:3',
-        'face_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-    ]);
-
-    $account = new StudentAccount($request->all());
-    $grade_handle = TeacherGradeHandle::where('id', $request->add_to)->first();
-
-    // Ensure profiles folder exists
-    $profileDirectory = public_path('storage/profiles');
-    if (!is_dir($profileDirectory)) {
-        mkdir($profileDirectory, 0777, true);
-    }
-
-    $profilePath = $request->file('profile')->store('profiles', 'public');
-    $account->profile = $profilePath;
-    $account->save();
-
-    // Create student handle if grade handle exists
-    if ($grade_handle) {
-        StudentHandle::create([
-            'student_id' => $account->id,
-            'teacher_id' => $grade_handle->teacher->id,
-            'grade_handle_id' => $request->add_to,
+    {
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
+            'username' => 'required|string|unique:admin_accounts,username',
+            'password' => 'required|string|min:6|max:255',
+            'email' => 'required|email|unique:admin_accounts,email',
+            'position' => 'nullable|string|max:255',
+            'role' => 'nullable|string|max:255',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone_number' => 'required|string|min:11|max:11'
         ]);
+
+        // Create a new admin account with request data (excluding 'profile')
+        $account = new AdminAccount($request->except('profile'));
+
+        // Handle profile photo upload
+        if ($request->hasFile('profile')) {
+            $destinationPath = public_path('storage/profiles');
+            $file = $request->file('profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+
+            // Check if the directory exists, if not, create it
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Move the uploaded file to the target directory
+            $file->move($destinationPath, $fileName);
+
+            // Save the file path without the 'storage/' prefix in the database
+            $account->profile = 'profiles/' . $fileName;
+        }
+
+        // Save the new admin account to the database
+        $account->save();
+
+        // Record history
+        $auth_user = Auth::user();
+        History::create([
+            'user_id' => $auth_user->id,
+            'position' => $auth_user->role,
+            'history' => "Create admin account",
+            'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
+        ]);
+
+        return redirect()->back()->with('success', 'Account added successfully!');
     }
 
-    // Ensure face_images folder exists and upload face images
-    $faceImagesDirectory = public_path('storage/face_images/' . $account->name);
-    if (!is_dir($faceImagesDirectory)) {
-        mkdir($faceImagesDirectory, 0777, true);
-    }
+    public function createStudent(Request $request)
+    {
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
+            'username' => 'required|string|unique:student_accounts,username',
+            'password' => 'required|string|min:6|max:255',
+            'strand' => 'required',
+            'add_to' => 'required',
+            'grade' => 'required',
+            'parents_email' => 'required',
+            'parents_contact_number' => 'required|string|min:11|max:11',
+            'email' => 'required|email|unique:student_accounts,email',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone_number' => 'required|string|min:11|max:11',
+            'face_images' => 'required|array|min:3|max:3',
+            'face_images.*' => 'required|image|max:10240',
+        ]);
 
-    if ($request->hasFile('face_images')) {
-        foreach ($request->file('face_images') as $index => $file) {
-            $imagePath = $file->storeAs('face_images/' . $account->name, "$index.jpg", 'public');
-            StudentImage::create([
+        // Create a new student account with request data (excluding 'profile' and 'face_images')
+        $account = new StudentAccount($request->except('profile', 'face_images'));
+        $grade_handle = TeacherGradeHandle::where('id', $request->add_to)->first();
+
+        // Handle profile photo upload
+        if ($request->hasFile('profile')) {
+            $destinationPath = public_path('storage/profiles');
+            $file = $request->file('profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+
+            // Check if the directory exists, if not, create it
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Move the uploaded file to the target directory
+            $file->move($destinationPath, $fileName);
+
+            // Save the file path without the 'storage/' prefix in the database
+            $account->profile = 'profiles/' . $fileName;
+        }
+
+        // Save the student account to the database
+        $account->save();
+
+        // Create student handle if grade handle exists
+        if ($grade_handle) {
+            StudentHandle::create([
                 'student_id' => $account->id,
-                'image_path' => $imagePath,
+                'teacher_id' => $grade_handle->teacher->id,
+                'grade_handle_id' => $request->add_to,
             ]);
         }
+
+        // Handle face images upload
+        $faceImagesDirectory = public_path('storage/face_images/' . $account->name);
+        if (!file_exists($faceImagesDirectory)) {
+            mkdir($faceImagesDirectory, 0777, true);
+        }
+
+        if ($request->hasFile('face_images')) {
+            foreach ($request->file('face_images') as $index => $file) {
+                $fileName = "$index.jpg";
+                $file->move($faceImagesDirectory, $fileName);
+
+                StudentImage::create([
+                    'student_id' => $account->id,
+                    'image_path' => 'face_images/' . $account->name . '/' . $fileName,
+                ]);
+            }
+        }
+
+        // Record history
+        $auth_user = Auth::user();
+        History::create([
+            'user_id' => $auth_user->id,
+            'position' => $auth_user->role,
+            'history' => "Create student account",
+            'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
+        ]);
+
+        return redirect()->back()->with('success', 'Account added successfully!');
     }
 
-    // Record history
-    $auth_user = Auth::user();
-    History::create([
-        'user_id' => $auth_user->id,
-        'position' => $auth_user->role,
-        'history' => "Create student account",
-        'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
-    ]);
 
-    return redirect()->back()->with('success', 'Account added successfully!');
-}
+    public function createTeacher(Request $request)
+    {
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
+            'position' => 'required|string|max:255',
+            'username' => 'required|string|unique:teacher_accounts,username',
+            'password' => 'required|string|min:6|max:255',
+            'email' => 'required|email|unique:teacher_accounts,email',
+            'role' => 'nullable|string|max:255',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone_number' => 'required|string|min:11|max:11'
+        ]);
 
-public function createTeacher(Request $request)
-{
-    $request->validate([
-        'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number',
-        'name' => ['required', 'string', 'max:255', new TwoWords],
-        'gender' => 'required|string|in:Male,Female',
-        'position' => 'required|string|max:255',
-        'username' => 'required|string|unique:teacher_accounts,username',
-        'password' => 'required|string|min:6|max:255',
-        'email' => 'required|email|unique:teacher_accounts,email',
-        'role' => 'nullable|string|max:255',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
-        'phone_number' => 'required|string|min:11|max:11'
-    ]);
+        // Create a new teacher account with request data (excluding 'profile')
+        $account = new TeacherAccount($request->except('profile'));
 
-    $account = new TeacherAccount($request->all());
+        // Handle profile photo upload
+        if ($request->hasFile('profile')) {
+            $destinationPath = public_path('storage/profiles');
+            $file = $request->file('profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
 
-    // Ensure profiles folder exists
-    $profileDirectory = public_path('storage/profiles');
-    if (!is_dir($profileDirectory)) {
-        mkdir($profileDirectory, 0777, true);
+            // Check if the directory exists, if not, create it
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Move the uploaded file to the target directory
+            $file->move($destinationPath, $fileName);
+
+            // Save the file path without the 'storage/' prefix in the database
+            $account->profile = 'profiles/' . $fileName;
+        }
+
+        // Save the teacher account to the database
+        $account->save();
+
+        // Record history
+        $auth_user = Auth::user();
+        History::create([
+            'user_id' => $auth_user->id,
+            'position' => $auth_user->role,
+            'history' => "Create teacher account",
+            'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
+        ]);
+
+        return redirect()->back()->with('success', 'Account added successfully!');
     }
 
-    $profilePath = $request->file('profile')->store('profiles', 'public');
-    $account->profile = $profilePath;
-
-    $account->save();
-
-    // Record history
-    $auth_user = Auth::user();
-    History::create([
-        'user_id' => $auth_user->id,
-        'position' => $auth_user->role,
-        'history' => "Create teacher account",
-        'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
-    ]);
-
-    return redirect()->back()->with('success', 'Account added successfully!');
-}
-
-public function createGuidance(Request $request)
+    public function createGuidance(Request $request)
 {
     $request->validate([
         'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number',
@@ -351,21 +217,32 @@ public function createGuidance(Request $request)
         'password' => 'required|string|min:6|max:255',
         'email' => 'required|email|unique:guidance_accounts,email',
         'role' => 'nullable|string|max:255',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif',
+        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         'phone_number' => 'required|string|min:11|max:11'
     ]);
 
-    $account = new GuidanceAccount($request->all());
+    // Create a new guidance account with request data (excluding 'profile')
+    $account = new GuidanceAccount($request->except('profile'));
 
-    // Ensure profiles folder exists
-    $profileDirectory = public_path('storage/profiles');
-    if (!is_dir($profileDirectory)) {
-        mkdir($profileDirectory, 0777, true);
+    // Handle profile photo upload
+    if ($request->hasFile('profile')) {
+        $destinationPath = public_path('storage/profiles');
+        $file = $request->file('profile');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+
+        // Check if the directory exists, if not, create it
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        // Move the uploaded file to the target directory
+        $file->move($destinationPath, $fileName);
+
+        // Save the file path without the 'storage/' prefix in the database
+        $account->profile = 'profiles/' . $fileName;
     }
 
-    $profilePath = $request->file('profile')->store('profiles', 'public');
-    $account->profile = $profilePath;
-
+    // Save the guidance account to the database
     $account->save();
 
     // Record history
@@ -379,6 +256,7 @@ public function createGuidance(Request $request)
 
     return redirect()->back()->with('success', 'Account added successfully!');
 }
+
 
 
 

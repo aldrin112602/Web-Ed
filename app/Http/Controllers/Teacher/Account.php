@@ -96,69 +96,6 @@ class Account extends Controller
     }
 
 
-
-    // public function submitAddStudent(Request $request)
-    // {
-    //     $request->validate([
-    //         'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
-    //         'name' => ['required', 'string', 'max:255', new TwoWords],
-    //         'gender' => 'required|string|in:Male,Female',
-    //         'username' => 'required|string|unique:student_accounts,username',
-    //         'password' => 'required|string|min:6|max:255',
-    //         'parents_email' => 'required',
-    //         'parents_contact_number' => 'required|string|min:11|max:11',
-    //         'email' => 'required|email|unique:student_accounts,email',
-    //         'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-    //         'phone_number' => 'required|string|min:11|max:11',
-    //         'face_images' => 'required|array|min:3|max:3',
-    //         'face_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
-    //     ]);
-
-
-    //     $id = request()->query('id');
-    //     if (!$id || !TeacherGradeHandle::find($id)) {
-    //         return redirect()->route('teacher.dashboard')->with('error', 'Invalid grade handle ID');
-    //     }
-    //     $grade_handle = TeacherGradeHandle::find($id);
-
-    //     $account = new StudentAccount($request->all());
-
-    //     $profilePath = $request->file('profile')->store('profiles', 'public');
-    //     $account->profile = $profilePath;
-    //     $account->save();
-
-    //     if ($request->hasFile('face_images')) {
-    //         foreach ($request->file('face_images') as $index => $file) {
-    //             $imagePath = $file->storeAs('face_images/' . $account->name, "$index.jpg", 'public');
-    //             StudentImage::create([
-    //                 'student_id' => $account->id,
-    //                 'image_path' => $imagePath,
-    //             ]);
-    //         }
-    //     }
-
-
-    //     $auth_user = Auth::user();
-    //     History::create(
-    //         [
-    //             'user_id' => $auth_user->id,
-    //             'position' => $auth_user->role,
-    //             'history' => "Create student account",
-    //             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name
-    //         ]
-    //     );
-
-    //     StudentHandle::create([
-    //         'student_id' => $account->id,
-    //         'teacher_id' => $auth_user->id,
-    //         'grade_handle_id' => $grade_handle->id
-    //     ]);
-
-    //     return redirect()
-    //         ->route('teacher.student_list', ['id' => $grade_handle->id])
-    //         ->with('success', 'Account added successfully!');
-    // }
-
     public function submitAddStudent(Request $request)
 {
     $request->validate([
@@ -170,10 +107,10 @@ class Account extends Controller
         'parents_email' => 'required',
         'parents_contact_number' => 'required|string|min:11|max:11',
         'email' => 'required|email|unique:student_accounts,email',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        'profile' => 'required|image|max:10240',
         'phone_number' => 'required|string|min:11|max:11',
         'face_images' => 'required|array|min:3|max:3',
-        'face_images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
+        'face_images.*' => 'required|image|max:10240',
     ]);
 
     $id = request()->query('id');
@@ -193,7 +130,7 @@ class Account extends Controller
     $profileFile = $request->file('profile');
     $profileFileName = time() . '_' . $profileFile->getClientOriginalName();
     $profileFile->move($profileDestination, $profileFileName);
-    $account->profile = 'storage/profiles/' . $profileFileName;
+    $account->profile = 'profiles/' . $profileFileName;
     $account->save();
 
     // Handle face images upload (expecting exactly 3 images)
@@ -209,7 +146,7 @@ class Account extends Controller
 
             StudentImage::create([
                 'student_id' => $account->id,
-                'image_path' => 'storage/face_images/' . $account->name . '/' . $imageName,
+                'image_path' => 'face_images/' . $account->name . '/' . $imageName,
             ]);
         }
     }
