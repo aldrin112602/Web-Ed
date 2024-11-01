@@ -16,8 +16,18 @@ use App\Models\{
     TeacherGradeHandle
 };
 
+use App\Services\PHPMailerService;
+
 class AdminCreateController extends Controller
 {
+
+
+    protected $mailerService;
+
+    public function __construct(PHPMailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
 
 
     public function createAdmin(Request $request)
@@ -56,8 +66,15 @@ class AdminCreateController extends Controller
             $account->profile = 'profiles/' . $fileName;
         }
 
+        $sent = $this->mailerService->sendAccountCredentials($account->email, $account->username, $request->password, $account->name, 'admin');
+
+        if (!$sent) {
+            return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+        }
+
         // Save the new admin account to the database
         $account->save();
+
 
         // Record history
         $auth_user = Auth::user();
@@ -114,6 +131,8 @@ class AdminCreateController extends Controller
             $account->profile = 'profiles/' . $fileName;
         }
 
+
+
         // Save the student account to the database
         $account->save();
 
@@ -152,6 +171,13 @@ class AdminCreateController extends Controller
             'history' => "Create student account",
             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
         ]);
+
+
+        $sent = $this->mailerService->sendAccountCredentials($account->email, $account->username, $request->password, $account->name, 'student');
+
+        if (!$sent) {
+            return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+        }
 
         return redirect()->back()->with('success', 'Account added successfully!');
     }
@@ -205,58 +231,70 @@ class AdminCreateController extends Controller
             'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
         ]);
 
+        $sent = $this->mailerService->sendAccountCredentials($account->email, $account->username, $request->password, $account->name, 'teacher');
+
+        if (!$sent) {
+            return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+        }
+
         return redirect()->back()->with('success', 'Account added successfully!');
     }
 
     public function createGuidance(Request $request)
-{
-    $request->validate([
-        'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number',
-        'name' => ['required', 'string', 'max:255', new TwoWords],
-        'gender' => 'required|string|in:Male,Female',
-        'username' => 'required|string|unique:guidance_accounts,username',
-        'password' => 'required|string|min:6|max:255',
-        'email' => 'required|email|unique:guidance_accounts,email',
-        'role' => 'nullable|string|max:255',
-        'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'phone_number' => 'required|string|min:11|max:11'
-    ]);
+    {
+        $request->validate([
+            'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number',
+            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'gender' => 'required|string|in:Male,Female',
+            'username' => 'required|string|unique:guidance_accounts,username',
+            'password' => 'required|string|min:6|max:255',
+            'email' => 'required|email|unique:guidance_accounts,email',
+            'role' => 'nullable|string|max:255',
+            'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'phone_number' => 'required|string|min:11|max:11'
+        ]);
 
-    // Create a new guidance account with request data (excluding 'profile')
-    $account = new GuidanceAccount($request->except('profile'));
+        // Create a new guidance account with request data (excluding 'profile')
+        $account = new GuidanceAccount($request->except('profile'));
 
-    // Handle profile photo upload
-    if ($request->hasFile('profile')) {
-        $destinationPath = public_path('storage/profiles');
-        $file = $request->file('profile');
-        $fileName = time() . '_' . $file->getClientOriginalName();
+        // Handle profile photo upload
+        if ($request->hasFile('profile')) {
+            $destinationPath = public_path('storage/profiles');
+            $file = $request->file('profile');
+            $fileName = time() . '_' . $file->getClientOriginalName();
 
-        // Check if the directory exists, if not, create it
-        if (!file_exists($destinationPath)) {
-            mkdir($destinationPath, 0777, true);
+            // Check if the directory exists, if not, create it
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+
+            // Move the uploaded file to the target directory
+            $file->move($destinationPath, $fileName);
+
+            // Save the file path without the 'storage/' prefix in the database
+            $account->profile = 'profiles/' . $fileName;
         }
 
-        // Move the uploaded file to the target directory
-        $file->move($destinationPath, $fileName);
+        // Save the guidance account to the database
+        $account->save();
 
-        // Save the file path without the 'storage/' prefix in the database
-        $account->profile = 'profiles/' . $fileName;
+        // Record history
+        $auth_user = Auth::user();
+        History::create([
+            'user_id' => $auth_user->id,
+            'position' => $auth_user->role,
+            'history' => "Create guidance account",
+            'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
+        ]);
+
+        $sent = $this->mailerService->sendAccountCredentials($account->email, $account->username, $request->password, $account->name, 'guidance');
+
+        if (!$sent) {
+            return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+        }
+
+        return redirect()->back()->with('success', 'Account added successfully!');
     }
-
-    // Save the guidance account to the database
-    $account->save();
-
-    // Record history
-    $auth_user = Auth::user();
-    History::create([
-        'user_id' => $auth_user->id,
-        'position' => $auth_user->role,
-        'history' => "Create guidance account",
-        'description' => 'ID Number: ' . $account->id_number . ', Name: ' . $account->name,
-    ]);
-
-    return redirect()->back()->with('success', 'Account added successfully!');
-}
 
 
 

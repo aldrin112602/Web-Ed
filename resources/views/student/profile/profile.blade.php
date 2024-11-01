@@ -132,15 +132,77 @@
             <h2 class="text-lg font-bold mb-2 text-left">Request Profile Update</h2>
             <hr>
             <p class="text-left my-4">Please provide details of the required updates to your profile.</p>
-            <form method="POST" action="">
+            <form id="updateRequestForm">
                 @csrf
-                <textarea name="update_details" rows="4" class="form-input w-full rounded border-gray-300 mb-4" placeholder="Describe the changes needed..."></textarea>
+                <input type="hidden" name="type" value="alert" />
+                <input type="hidden" name="title" value="Request profile update for {{ $user->name }}">
+                <textarea name="message" rows="4" class="form-input w-full rounded border-gray-300 mb-4" placeholder="Describe the changes needed"></textarea>
+
+                <!-- URL is dynamically set using JavaScript -->
+                <input type="hidden" id="urlField" name="url">
+
+                <input type="hidden" name="icon" value="info-circle">
+                <input type="hidden" name="priority" value="high">
+
                 <div class="flex justify-end gap-3">
                     <button type="button" onclick="closeModal()" class="px-4 py-2 rounded bg-gray-500 text-white">Cancel</button>
                     <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white">Submit</button>
                 </div>
             </form>
         </dialog>
+
+        <script>
+            $(document).ready(function() {
+                // Set URL dynamically in the form field
+                const domain = window.location.origin;
+                const userId = "{{ $user->id }}";
+                $('#urlField').val(`${domain}/admin/account_management/student/${userId}/edit`);
+
+                $('#updateRequestForm').on('submit', function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    const data = {};
+
+                    // Convert FormData to an object
+                    formData.forEach((value, key) => {
+                        data[key] = value;
+                    });
+
+
+
+                    fetch("{{ route('student.request_profile_update') }}", {
+                            method: "POST",
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.json())
+                        .then(response => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: 'Request submitted successfully!'
+                            })
+                        })
+                        .catch(err => {
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: error.message
+                            });
+                        })
+                        .finally(() => {
+                            closeModal();
+                        });
+                });
+            });
+        </script>
+
+
 
         <hr class="my-6">
         <br><br><br>

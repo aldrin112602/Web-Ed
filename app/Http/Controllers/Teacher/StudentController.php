@@ -7,11 +7,17 @@ use Illuminate\Http\Request;
 use App\Rules\TwoWords;
 use Illuminate\Support\Facades\{Auth, Storage};
 use App\Models\{TeacherGradeHandle, Student\StudentAccount, StudentImage, History};
-
-
+use App\Services\PHPMailerService;
 
 class StudentController extends Controller
 {
+
+    protected $mailerService;
+
+    public function __construct(PHPMailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
     // return the list of all students
     public function index(Request $request)
     {
@@ -77,108 +83,117 @@ class StudentController extends Controller
 
 
     public function updateStudent(Request $request, $id)
-{
-    if (Auth::guard('teacher')->check()) {
-        $user = StudentAccount::findOrFail($id);
+    {
+        if (Auth::guard('teacher')->check()) {
+            $user = StudentAccount::findOrFail($id);
 
-        // Validate input
-        $request->validate([
-            'name' => ['required', 'string', 'max:255', new TwoWords],
-            'new_password' => 'nullable|string|min:6|max:255',
-            'parents_contact_number' => 'required|string|min:11|max:11',
-            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'phone_number' => 'required|string|min:11|max:11',
-            'address' => 'nullable|string|max:255',
-            'parents_email' => 'required',
-            'extension_name' => 'nullable|string|max:255',
-            'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
-            'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
-        ]);
+            // Validate input
+            $request->validate([
+                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'new_password' => 'nullable|string|min:6|max:255',
+                'parents_contact_number' => 'required|string|min:11|max:11',
+                'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                'phone_number' => 'required|string|min:11|max:11',
+                'address' => 'nullable|string|max:255',
+                'parents_email' => 'required',
+                'extension_name' => 'nullable|string|max:255',
+                'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
+                'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
+            ]);
 
-        // Update basic user information
-        $user->update([
-            'name' => $request->name,
-            'id_number' => $request->id_number,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            'address' => $request->address,
-            'gender' => $request->gender,
-            'parents_email' => $request->parents_email,
-            'extension_name' => $request->extension_name,
-            'parents_contact_number' => $request->parents_contact_number,
-        ]);
+            // Update basic user information
+            $user->update([
+                'name' => $request->name,
+                'id_number' => $request->id_number,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'parents_email' => $request->parents_email,
+                'extension_name' => $request->extension_name,
+                'parents_contact_number' => $request->parents_contact_number,
+            ]);
 
-        // Update password if provided
-        if ($request->filled('new_password')) {
-            $user->password = $request->new_password;
-        }
-
-        // Update username if provided
-        if ($request->filled('username')) {
-            $user->username = $request->username;
-        }
-
-        // Handle profile photo upload
-        if ($request->hasFile('profile')) {
-            $destinationPath = public_path('storage/profiles');
-            $file = $request->file('profile');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-
-            // Check if the directory exists, if not, create it
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
+            // Update password if provided
+            if ($request->filled('new_password')) {
+                $user->password = $request->new_password;
             }
 
-            // Delete the existing profile photo if it exists
-            if ($user->profile && file_exists(public_path($user->profile))) {
-                unlink(public_path($user->profile));
+            // Update username if provided
+            if ($request->filled('username')) {
+                $user->username = $request->username;
             }
 
-            // Move the uploaded file
-            $file->move($destinationPath, $fileName);
-            $user->profile = 'profiles/' . $fileName;
+            // Handle profile photo upload
+            if ($request->hasFile('profile')) {
+                $destinationPath = public_path('storage/profiles');
+                $file = $request->file('profile');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+
+                // Check if the directory exists, if not, create it
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+
+                // Delete the existing profile photo if it exists
+                if ($user->profile && file_exists(public_path($user->profile))) {
+                    unlink(public_path($user->profile));
+                }
+
+                // Move the uploaded file
+                $file->move($destinationPath, $fileName);
+                $user->profile = 'profiles/' . $fileName;
+            }
+
+            // Handle face images upload (expecting exactly 3 images)
+            if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
+                // Delete existing face images for the student
+                StudentImage::where('student_id', $user->id)->delete();
+
+                // Create directory for face images if it doesn't exist
+                $faceImagesPath = public_path('storage/face_images/' . $user->name);
+                if (!file_exists($faceImagesPath)) {
+                    mkdir($faceImagesPath, 0777, true);
+                }
+
+                foreach ($request->file('face_images') as $index => $file) {
+                    $imageName = "$index.jpg";
+                    $file->move($faceImagesPath, $imageName);
+
+                    StudentImage::create([
+                        'student_id' => $user->id,
+                        'image_path' => 'face_images/' . $user->name . '/' . $imageName,
+                    ]);
+                }
+            }
+
+            $user->save();
+
+            // Log history of the update
+            $auth_user = Auth::user();
+            History::create([
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Updated user account",
+                'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
+            ]);
+
+
+            if (isset($request->new_password)) {
+                $sent = $this->mailerService->sendUpdatedPassword($user->email, $request->new_password, $user->username, $user->name, 'student');
+
+                if (!$sent) {
+                    return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+                }
+            }
+
+            // Redirect with success message
+            $id = request()->query('id');
+            return redirect()->route('teacher.student_list', ['id' => $id])->with('success', 'Student updated successfully');
         }
 
-        // Handle face images upload (expecting exactly 3 images)
-        if ($request->hasFile('face_images') && count($request->file('face_images')) === 3) {
-            // Delete existing face images for the student
-            StudentImage::where('student_id', $user->id)->delete();
-
-            // Create directory for face images if it doesn't exist
-            $faceImagesPath = public_path('storage/face_images/' . $user->name);
-            if (!file_exists($faceImagesPath)) {
-                mkdir($faceImagesPath, 0777, true);
-            }
-
-            foreach ($request->file('face_images') as $index => $file) {
-                $imageName = "$index.jpg";
-                $file->move($faceImagesPath, $imageName);
-
-                StudentImage::create([
-                    'student_id' => $user->id,
-                    'image_path' => 'face_images/' . $user->name . '/' . $imageName,
-                ]);
-            }
-        }
-
-        $user->save();
-
-        // Log history of the update
-        $auth_user = Auth::user();
-        History::create([
-            'user_id' => $auth_user->id,
-            'position' => $auth_user->role,
-            'history' => "Updated user account",
-            'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name
-        ]);
-
-        // Redirect with success message
-        $id = request()->query('id');
-        return redirect()->route('teacher.student_list', ['id' => $id])->with('success', 'Student updated successfully');
+        return redirect()->route('teacher.login');
     }
-
-    return redirect()->route('teacher.login');
-}
 
 
 

@@ -91,7 +91,7 @@
                 faceapi.matchDimensions(overlay, displaySize);
 
                 const labeledFaceDescriptors = await loadLabeledImages();
-                const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
+                const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.4);
 
                 async function onPlay() {
                     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
@@ -224,15 +224,7 @@
     });
 
     </script>
-    <script>
-        // if ('serviceWorker' in navigator) {
-        //     navigator.serviceWorker.register('{{ asset("service-worker.js") }}').then(function(registration) {
-        //         console.log('Service Worker registered with scope:', registration.scope);
-        //     }).catch(function(error) {
-        //         console.log('Service Worker registration failed:', error);
-        //     });
-        // }
-    </script>
+
 </body>
 
 </html>

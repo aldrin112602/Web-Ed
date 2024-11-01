@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\AdminNotification;
+use App\Models\Admin\AdminAccount;
 
 class AdminNotificationController extends Controller
 {
@@ -42,6 +43,39 @@ class AdminNotificationController extends Controller
 
         return response()->json(['message' => 'Notification created successfully.']);
     }
+
+
+
+    public function createNotificationForAll(Request $request)
+{
+    
+
+    $validatedData = $request->validate([
+        'type' => 'required|string',
+        'title' => 'required|string|max:255',
+        'message' => 'required|string',
+        'url' => 'nullable|url',
+        'icon' => 'nullable|string',
+        'priority' => 'nullable|in:low,medium,high',
+    ]);
+
+    // Fetch all admin users
+    $admins = AdminAccount::all();
+
+    foreach ($admins as $admin) {
+        AdminNotification::create([
+            'type' => $validatedData['type'],
+            'user_id' => $admin->id, // Send to each admin
+            'title' => $validatedData['title'],
+            'message' => $validatedData['message'],
+            'url' => $validatedData['url'] ?? null,
+            'icon' => $validatedData['icon'] ?? null,
+            'priority' => $validatedData['priority'] ?? 'low',
+        ]);
+    }
+
+    return response()->json(['message' => 'Notification created for all admins successfully.']);
+}
 
     public function markAsSeen($notificationId)
     {
