@@ -10,6 +10,7 @@ use App\Http\Controllers\Student\{
     StudentNotificationController,
     TwoFAController
 };
+use App\Http\Controllers\Admin\AdminNotificationController;
 
 
 // Student routes
@@ -40,6 +41,9 @@ Route::prefix('student')->group(function () {
      */
 
     Route::middleware('auth:student')->group(function () {
+
+        // request profile update
+        Route::post('/profile/request_update', [AdminNotificationController::class, 'createNotificationForAll'])->name('student.request_profile_update');
 
         // announcement
         Route::get('/announcement', [AnnouncementControler::class, 'announcements'])->name('student.announcement');
