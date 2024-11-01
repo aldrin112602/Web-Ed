@@ -20,12 +20,19 @@ use App\Models\{
     TeacherGradeHandle,
     StudentImage
 };
+use App\Services\PHPMailerService;
+
 
 class AccountManagementController extends Controller
 {
 
 
+    protected $mailerService;
 
+    public function __construct(PHPMailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
 
 
     public function submitAddHandleGrade(Request $request)
@@ -347,6 +354,15 @@ class AccountManagementController extends Controller
                 'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
             ]);
 
+
+            if (isset($request->new_password)) {
+                $sent = $this->mailerService->sendUpdatedPassword($user->email, $request->new_password, $user->username, $user->name, 'student');
+
+                if (!$sent) {
+                    return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+                }
+            }
+
             // Redirect with success message
             return redirect()->route('admin.student_list')->with('success', 'Student updated successfully');
         }
@@ -453,6 +469,16 @@ class AccountManagementController extends Controller
                 $user->profile = 'profiles/' . $fileName;
             }
             $user->save();
+
+
+
+            if (isset($request->new_password)) {
+                $sent = $this->mailerService->sendUpdatedPassword($user->email, $request->new_password, $user->username, $user->name, 'teacher');
+
+                if (!$sent) {
+                    return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+                }
+            }
 
             // Redirect with success message
             return redirect()->route('admin.teacher_list')->with('success', 'Teacher updated successfully');
@@ -576,6 +602,14 @@ class AccountManagementController extends Controller
                 'history' => "Updated guidance account",
                 'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
             ]);
+
+            if (isset($request->new_password)) {
+                $sent = $this->mailerService->sendUpdatedPassword($user->email, $request->new_password, $user->username, $user->name, 'guidance');
+
+                if (!$sent) {
+                    return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+                }
+            }
 
             return redirect()->route('admin.guidance_list')->with('success', 'Guidance updated successfully');
         }
@@ -703,8 +737,17 @@ class AccountManagementController extends Controller
                 'description' => 'ID Number: ' . $user->id_number . ', Name: ' . $user->name,
             ]);
 
+
+
+            $sent = $this->mailerService->sendUpdatedPassword($user->email, $request->new_password, $user->username, $user->name, 'admin');
+
+            if (!$sent) {
+                return redirect()->back()->with('error', 'Failed to send account credentials via email.');
+            }
+
             return redirect()->route('admin.admin_list')->with('success', 'Admin updated successfully');
         }
+        
 
         return redirect()->route('admin.login');
     }
