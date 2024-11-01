@@ -237,7 +237,7 @@ class GuidanceController extends Controller
         $user = Auth::guard('guidance')->user();
 
         $request->validate([
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_photo' => 'required|image|max:2048',
         ]);
 
         if ($request->hasFile('profile_photo')) {

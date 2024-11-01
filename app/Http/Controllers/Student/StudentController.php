@@ -225,21 +225,39 @@ public function handleLogin(Request $request)
         if (Auth::guard('student')->check()) {
             $user = Auth::guard('student')->user();
 
+
+
             $request->validate([
-                'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'profile_photo' => 'required|image|max:2048',
             ]);
-
+    
             if ($request->hasFile('profile_photo')) {
-                if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-                    Storage::disk('public')->delete($user->profile);
+                // Define the target directory in the public path
+                $destinationPath = public_path('storage/profiles');
+                $file = $request->file('profile_photo');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+    
+                // Check if the directory exists, if not, create it
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
                 }
-
-                $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
-                $user->profile = $profilePhotoPath;
+    
+                // Check if the user has an existing profile photo and delete it
+                if ($user->profile && file_exists(public_path($user->profile))) {
+                    unlink(public_path($user->profile));
+                }
+    
+                // Move the uploaded file to the target directory
+                $file->move($destinationPath, $fileName);
+    
+                // Save the file path without extra 'storage/' prefix in the database
+                $user->profile = 'profiles/' . $fileName;
                 $user->save();
-
+    
                 return redirect()->back()->with('success', 'Profile photo updated successfully!');
             }
+
+            
         }
 
         return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);

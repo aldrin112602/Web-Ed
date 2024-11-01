@@ -160,7 +160,7 @@
 
                                 @else
                                 @foreach ($handleSubjects as $gradeHandle)
-                                <a href="{{ route('teacher.student_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && (request()->is('teacher/student_list') || request()->is('teacher/absents') || request()->is('teacher/presents'))) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }}</a>
+                                <a href="{{ route('teacher.student_list', ['id' => $gradeHandle->id])}}" title="Click to view" class="{{ (request()->query('id') == $gradeHandle->id && (request()->is('teacher/student_list') || request()->is('teacher/absents') || request()->is('teacher/presents'))) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>Grade {{ $gradeHandle->grade }} - {{ $gradeHandle->strand }} ({{ $gradeHandle->section }})</a>
                                 @endforeach
                                 @endif
                             </div>

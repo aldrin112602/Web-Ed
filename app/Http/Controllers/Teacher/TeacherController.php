@@ -88,41 +88,41 @@ class TeacherController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
-    
+
         // Retrieve the user by username
         $user = Auth::guard('teacher')->getProvider()->retrieveByCredentials($request->only('username'));
-    
+
         // Check if the user exists and if the password is correct
         if ($user && Hash::check($request->password, $user->password)) {
             // Generate OTP
             $otp = random_int(100000, 999999);
             $email = $user->email;
-    
+
             $isSuccess = $this->mailerService->send2FA($email, $otp);
-    
+
             if ($isSuccess) {
                 // Store user and OTP data in session
                 Session::put('otp', $otp);
                 Session::put('otp_expiry', now()->addMinutes(10));
                 Session::put('pending_user_id', $user->id);
-    
+
                 // Redirect to OTP verification page
                 return redirect()->route('teacher.2fa.index');
             }
-    
+
             // Handle case if OTP sending fails
             return redirect()->back()->with(
                 'error',
                 'Failed to send OTP. Please try again.',
             );
         }
-    
+
         // Authentication failed
         return redirect()->back()->withErrors([
             'password' => 'Invalid username or password.',
         ])->withInput($request->except('password'));
     }
-    
+
 
     public function dashboard()
     {
@@ -239,43 +239,43 @@ class TeacherController extends Controller
 
 
     public function updateProfilePhoto(Request $request)
-{
-    if (Auth::guard('teacher')->check()) {
-        $user = Auth::guard('teacher')->user();
+    {
+        if (Auth::guard('teacher')->check()) {
+            $user = Auth::guard('teacher')->user();
 
-        $request->validate([
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+            $request->validate([
+                'profile_photo' => 'required|image|max:2048',
+            ]);
 
-        if ($request->hasFile('profile_photo')) {
-            // Define the target directory in the public path
-            $destinationPath = public_path('storage/profiles');
-            $file = $request->file('profile_photo');
-            $fileName = time() . '_' . $file->getClientOriginalName();
+            if ($request->hasFile('profile_photo')) {
+                // Define the target directory in the public path
+                $destinationPath = public_path('storage/profiles');
+                $file = $request->file('profile_photo');
+                $fileName = time() . '_' . $file->getClientOriginalName();
 
-            // Check if the directory exists, if not, create it
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0777, true);
+                // Check if the directory exists, if not, create it
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
+
+                // Check if the user has an existing profile photo and delete it
+                if ($user->profile && file_exists(public_path($user->profile))) {
+                    unlink(public_path($user->profile));
+                }
+
+                // Move the uploaded file to the target directory
+                $file->move($destinationPath, $fileName);
+
+                // Save the file path without extra 'storage/' prefix in the database
+                $user->profile = 'profiles/' . $fileName;
+                $user->save();
+
+                return redirect()->back()->with('success', 'Profile photo updated successfully!');
             }
-
-            // Check if the user has an existing profile photo and delete it
-            if ($user->profile && file_exists(public_path($user->profile))) {
-                unlink(public_path($user->profile));
-            }
-
-            // Move the uploaded file to the target directory
-            $file->move($destinationPath, $fileName);
-
-            // Save the file path without extra 'storage/' prefix in the database
-            $user->profile = 'profiles/' . $fileName;
-            $user->save();
-
-            return redirect()->back()->with('success', 'Profile photo updated successfully!');
         }
-    }
 
-    return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
-}
+        return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
+    }
 
 
 

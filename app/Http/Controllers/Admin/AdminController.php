@@ -245,52 +245,13 @@ class AdminController extends Controller
     }
 
 
-
-
-
-    // public function updateProfilePhoto(Request $request)
-    // {
-    //     if (Auth::guard('admin')->check()) {
-    //         $user = Auth::guard('admin')->user();
-
-    //         $request->validate([
-    //             'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-    //         ]);
-
-    //         if ($request->hasFile('profile_photo')) {
-    //             if ($user->profile && Storage::disk('public')->exists($user->profile)) {
-    //                 Storage::disk('public')->delete($user->profile);
-    //             }
-
-    //             $profilePhotoPath = $request->file('profile_photo')->store('profiles', 'public');
-    //             $user->profile = $profilePhotoPath;
-    //             $user->save();
-
-    // $auth_user = Auth::user();
-    // History::create(
-    //     [
-    //         'user_id' => $auth_user->id,
-    //         'position' => $auth_user->role,
-    //         'history' => "Update his/her profile photo",
-    //         'description' => 'ID Number: ' . $auth_user->id_number . ', Name: ' . $auth_user->name
-    //     ]
-    // );
-
-
-    //             return redirect()->back()->with('success', 'Profile photo updated successfully!');
-    //         }
-    //     }
-
-    //     return redirect()->back()->withErrors(['error' => 'Failed to update profile photo.']);
-    // }
-
     public function updateProfilePhoto(Request $request)
 {
     if (Auth::guard('admin')->check()) {
         $user = Auth::guard('admin')->user();
 
         $request->validate([
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profile_photo' => 'required|image|max:2048',
         ]);
 
         if ($request->hasFile('profile_photo')) {
