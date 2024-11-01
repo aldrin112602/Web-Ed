@@ -68,7 +68,7 @@
                 <form id="delete_form_{{ $notification->id }}" action="{{ route('admin.notifications.delete', $notification->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="button" onclick="deleteNotif({{ $notification->id }})" class="delete-notification-btn bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded">
+                    <button type="button" onclick="deleteNotif({{$notification->id}})" class="delete-notification-btn bg-red-500 hover:bg-red-700 text-white py-1 px-4 rounded">
                         Delete
                     </button>
                 </form>
