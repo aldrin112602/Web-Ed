@@ -15,7 +15,7 @@
                         <i class="fas fa-search absolute text-sm text-slate-400" style="top: 50%; left: 10px; transform: translateY(-50%)"></i>
 
                     </div>
-                    <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
+                    <!-- <select name="gender" class="py-2 border rounded-md" onchange="document.getElementById('filterForm').submit();">
                         <option value="" disabled selected hidden>Gender</option>
                         <option value="Male" {{ request()->get('gender') == 'Male' ? 'selected' : '' }}>Male</option>
                         <option value="Female" {{ request()->get('gender') == 'Female' ? 'selected' : '' }}>Female</option>
@@ -34,7 +34,7 @@
                         <option value="11" {{ request()->get('grade') == '11' ? 'selected' : '' }}>Grade 11</option>
                         <option value="12" {{ request()->get('grade') == '12' ? 'selected' : '' }}>Grade 12</option>
                         <option value="All" {{ request()->get('grade') == "All" ? "selected" : "" }}>All</option>
-                    </select>
+                    </select> -->
                 </form>
             </div>
             
@@ -58,9 +58,9 @@
         </div>
 
         <hr class="my-3">
-        @if ($account_list->count())
+        @if ($faceScans->count())
         <p class="text-sm text-slate-500 mb-3">
-            Showing {{ $account_list->firstItem() }} - {{ $account_list->lastItem() }} of {{ $account_list->total() }} students
+            Showing {{ $faceScans->firstItem() }} - {{ $faceScans->lastItem() }} of {{ $faceScans->total() }} students
         </p>
 
         <!-- Student List Table -->
@@ -86,18 +86,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($account_list as $list)
+                    @foreach($faceScans as $list)
                     <tr>
-                        {{-- <td class="py-2 text-center border">
-                            <input type="checkbox" class="selectRow highlight-checkbox" data-id="{{ $list->id }}">
-                        </td> --}}
-                        <td class="py-2 text-center border">{{ $list->id_number }}</td>
-                        <td class="py-2 text-center border">{{ $list->username }}</td>
-                        <td class="py-2 text-center border">{{ $list->name }}</td>
-                        <td class="py-2 text-center border">{{ $list->gender }}</td>
-                        <td class="py-2 text-center border">{{ $list->grade }}</td>
-                        <td class="py-2 text-center border">{{ $list->strand }}</td>
-                        <td class="py-2 text-center border">{{ $list->scan_created_at }}</td>
+                        
+                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $list->student_id)->first()->id_number }}</td>
+                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $list->student_id)->first()->username }}</td>
+                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $list->student_id)->first()->name }}</td>
+                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $list->student_id)->first()->gender }}</td>
+                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $list->student_id)->first()->grade }}</td>
+                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $list->student_id)->first()->strand }}</td>
+                        <td class="py-2 text-center border">{{ $Carbon::parse($list->created_at)->format('Y/m/d - h:i A') }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -105,7 +103,7 @@
         </div>
         <!-- Display pagination links -->
         <div class="w-full mb-4 mt-4">
-            {{ $account_list->appends(request()->query())->links() }}
+            {{ $faceScans->appends(request()->query())->links() }}
         </div>
         @else
         <p>No records found.</p>
