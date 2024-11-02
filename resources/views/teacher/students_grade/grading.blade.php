@@ -47,9 +47,17 @@
     <table class="w-full bg-white mt-4">
         <tr class="border">
             <td class="border p-2" rowspan="3">
-                <select name="quarter" id="quarter" class="border-0 p-0 px-10">
-                    <option value="First Quarter">First Quarter</option>
-                    <option value="Second Quarter">Second Quarter</option>
+                <select name="semester" id="semester" class="border mb-2 w-52 p-0 px-10">
+                    <option value="" selected disabled class="hidden">-- Semester --</option>
+                    <option {{ request('semester') == 'First Semester' ? 'selected' : '' }} value="First Semester">First Semester</option>
+                    <option {{ request('semester') == 'Second Semester' ? 'selected' : '' }} value="Second Semester">Second Semester</option>
+                </select>
+                <select name="quarter" id="quarter" class="border w-52 p-0 px-10">
+                    <option value="" selected disabled class="hidden">-- Quarter --</option>
+                    <option {{ request('quarter') == 'First Quarter' ? 'selected' : '' }} value="First Quarter">First Quarter</option>
+                    <option {{ request('quarter') == 'Second Quarter' ? 'selected' : '' }} value="Second Quarter">Second Quarter</option>
+                    <option {{ request('quarter') == 'Third Quarter' ? 'selected' : '' }} value="Third Quarter">Third Quarter</option>
+                    <option {{ request('quarter') == 'Fourth Quarter' ? 'selected' : '' }} value="Fourth Quarter">Fourth Quarter</option>
                 </select>
             </td>
             <td class="border p-2" colspan="13">
@@ -117,17 +125,54 @@
                             var sectionValue = $(this).val();
                             updateQueryString('section', sectionValue);
                         });
+
+                        $('#semester').on('change', function() {
+                            var semesterValue = $(this).val();
+                            updateQueryString('semester', semesterValue);
+                        });
+                        $('#quarter').on('change', function() {
+                            var quarterValue = $(this).val();
+                            updateQueryString('quarter', quarterValue);
+                        });
+                        $('#subject').on('change', function() {
+                            var subjectValue = $(this).val();
+                            updateQueryString('subject', subjectValue);
+                        });
+                        $('#track').on('change', function() {
+                            var trackValue = $(this).val();
+                            updateQueryString('track', trackValue);
+                        });
                     });
                 </script>
 
             </td>
             <td class="border p-2" colspan="13">
-                Teacher: <p class="border p-1 bg-white border-slate-500 inline">
-                    {{ $user->name }}
-                </p>
+                <div class="flex items-center justify-between">
+                    <span>Teacher:</span>
+                    <span class="font-bold">{{ $user->name }}</span>
+                </div>
+                <div class="flex items-center justify-between mt-2">
+                    <span>Subject:</span>
+                    <select name="subject" id="subject" class="border mb-2 w-52 p-0 px-10">
+                    <option value="" selected disabled class="hidden">-- Subject --</option>
+                    @foreach ($subjects as $subject)
+                        <option {{ request('subject') == $subject->subject ? 'selected' : '' }} value="{{ $subject->subject }}">{{ $subject->subject }}</option>
+                    @endforeach
+                </select>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span>Track:</span>
+                    <select name="track" id="track" class="border mb-2 w-52 p-0 px-10">
+                        <option value="" selected disabled class="hidden">-- Track --</option>
+                        <option {{ request('track') == 'Core Subject (All Tracks)' ? 'selected' : '' }} value="Core Subject (All Tracks)">Core Subject (All Tracks)</option>
+                        <option {{ request('track') == 'Academic Track (except Immersion)' ? 'selected' : '' }} value="Academic Track (except Immersion)">Academic Track (except Immersion)</option>
+                        <option {{ request('track') == 'Work: Immersion/ Culminating Activity (for Academic Track)' ? 'selected' : '' }} value="Work: Immersion/ Culminating Activity (for Academic Track)">Work: Immersion/ Culminating Activity (for Academic Track)</option>
+                        <option {{ request('track') == 'TVL/Sports/ Arts and Design Track' ? 'selected' : '' }} value="TVL/Sports/ Arts and Design Track">TVL/Sports/ Arts and Design Track</option>
+                    </select>
+                </div>
             </td>
             <td class="border p-2 text-center" colspan="3" rowspan="3">
-                Quarterly Assessment (25%)
+                Quarterly Assessment <br> (<span contenteditable="true" class="cursor-pointer" id="custom_quarterly_assessment_percentage"> 25% </span> <i class="fas fa-edit text-gray-400 cursor-pointer" onclick="$('#custom_quarterly_assessment_percentage').focus()"></i> )
             </td>
             <td class="border p-2 text-center" rowspan="4">
                 Initial Grade
@@ -138,8 +183,8 @@
         </tr>
 
         <tr class="border">
-            <td class="border p-2" colspan="13">WRITTEN WORK (25%)</td>
-            <td class="border p-2" colspan="13">PERFORMANCE TASK (50%)</td>
+            <td class="border p-2" colspan="13">WRITTEN WORK (<span contenteditable="true" class="cursor-pointer" id="custom_written_percentage"> 25% </span> <i class="fas fa-edit text-gray-400 cursor-pointer" onclick="$('#custom_written_percentage').focus()"></i> ) </td>
+            <td class="border p-2" colspan="13">PERFORMANCE TASK (<span contenteditable="true" class="cursor-pointer" id="custom_performance_task_percentage"> 50% </span> <i class="fas fa-edit text-gray-400 cursor-pointer" onclick="$('#custom_performance_task_percentage').focus()"></i> )</td>
         </tr>
 
         <tr class="border">

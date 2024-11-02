@@ -93,6 +93,8 @@ Route::prefix('teacher')->group(function () {
 
         // students grade
         Route::get('grading', [StudentsGradeController::class, 'grading'])->name('teacher.grading');
+
+        // not needed at the moment
         Route::get('custom_grade', [StudentsGradeController::class, 'custom_grade'])->name('teacher.custom_grade');
         Route::get('grading_sheet', [StudentsGradeController::class, 'grading_sheet'])->name('teacher.grading_sheet');
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\SubjectModel;
 use App\Models\GradingHeader;
 use App\Models\HighestPossibleScoreGradingSheet;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class StudentsGradeController extends Controller
         $gradingHeaders,
         $gradeHandles,
         $studentGrades;
+        
 
     public function __construct()
     {
@@ -117,6 +119,23 @@ class StudentsGradeController extends Controller
                 ->get();
         }
 
+        $gradeHandle = null;
+        $subjects = [];
+
+    if($request->filled('grade') && $request->filled('section') && $request->filled('strand')) {
+        $gradeHandle = TeacherGradeHandle::where('teacher_id', Auth::id())
+        ->where('grade', $request->grade)
+        ->where('section', $request->section)
+        ->where('strand', $request->strand)->first();
+    }
+
+    
+
+    if(isset($gradeHandle)) {
+        $subjects = SubjectModel::where('teacher_id', Auth::id())
+        ->where('grade_handle_id', $gradeHandle->id)->get();
+    }
+
         return view('teacher.students_grade.grading', [
             'user' => $this->user,
             'handleSubjects' => $this->handleSubjects,
@@ -129,7 +148,8 @@ class StudentsGradeController extends Controller
             'sections' => $sections,
             'grades' => $grades,
             'highestPossibleScores' => $highestPossibleScores,
-            'studentGrades' => $studentGrades
+            'studentGrades' => $studentGrades,
+            'subjects' => $subjects
         ]);
     }
 
