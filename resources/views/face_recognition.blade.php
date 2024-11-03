@@ -16,14 +16,44 @@
 
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="{{ asset('css/face-scan.css') }}">
-    <!-- <link rel="manifest" href="{{ asset('manifest.json') }}"> -->
+    <style>
+        .instruction {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            transition: width 0.3s ease-in-out;
+        }
+    </style>
 </head>
 
 <body class="flex items-center justify-center h-screen">
     <div class="w-full lg:w-3/4 xl:w-2/3 flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8 bg-white p-6 shadow-lg rounded-lg">
         <div class="text-center flex flex-col items-center">
-            <p class="font-bold text-lg mb-2">LOOK AT THE CAMERA</p>
+            <p class="font-bold text-lg mb-2">FACE VERIFICATION</p>
             <div class="relative w-full max-w-md">
+                <div id="instruction" class="instruction">Please look at the camera</div>
                 <video id="video" class="w-full h-auto bg-blue-100" autoplay muted></video>
                 <canvas id="overlay" class="absolute top-0 left-0 w-full h-full"></canvas>
             </div>
@@ -52,9 +82,34 @@
         </div>
     </div>
 
+
+
     <script>
         $(document).ready(function() {
             let hasSubmitted = false;
+            let currentStep = 0;
+            const verificationSteps = [{
+                    instruction: 'Please look at the camera',
+                    action: 'center',
+                    progress: 25
+                },
+                {
+                    instruction: 'Turn your head to the left',
+                    action: 'left',
+                    progress: 50
+                },
+                {
+                    instruction: 'Turn your head to the right',
+                    action: 'right',
+                    progress: 75
+                },
+                {
+                    instruction: 'Verification complete!',
+                    action: 'complete',
+                    progress: 100
+                }
+            ];
+
             const video = $('#video')[0];
             const studentName = $('#student-name');
             const studentStrand = $('#student-strand');
@@ -67,8 +122,7 @@
             Promise.all([
                 faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
                 faceapi.nets.faceLandmark68Net.loadFromUri('{{ asset("face_api/models") }}'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}'),
-                faceapi.nets.faceLandmark68TinyNet.loadFromUri('{{ asset("face_api/models") }}') // Load the tiny landmark model for faster processing
+                faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}')
             ]).then(startVideo).catch(err => console.error('Error loading models:', err));
 
             function startVideo() {
@@ -90,32 +144,106 @@
                 };
                 faceapi.matchDimensions(overlay, displaySize);
 
-                const labeledFaceDescriptors = await loadLabeledImages();
-                const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.4);
-
                 async function onPlay() {
-                    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors();
+                    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+                        .withFaceLandmarks()
+                        .withFaceDescriptors();
+
+                    if (detections.length === 0) {
+                        return requestAnimationFrame(onPlay);
+                    }
+                    const landmarks = detections[0].landmarks;
+                    const jawOutline = landmarks.getJawOutline();
+                    const nose = landmarks.getNose();
+
+                    // Check head position based on current step
+                    switch (verificationSteps[currentStep].action) {
+                        case 'center':
+                            if (isLookingCenter(jawOutline, nose)) {
+                                moveToNextStep();
+                            }
+                            break;
+                        case 'left':
+                            if (isLookingLeft(jawOutline, nose)) {
+                                moveToNextStep();
+                            }
+                            break;
+                        case 'right':
+                            if (isLookingRight(jawOutline, nose)) {
+                                moveToNextStep();
+                            }
+                            break;
+                        case 'complete':
+                            if (!hasSubmitted) {
+                                startFaceMatching(detections[0].descriptor);
+                            }
+                            break;
+                    }
+
                     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-                    overlay.getContext('2d').clearRect(0, 0, overlay.width, overlay.height);
-
-                    const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor));
-                    results.forEach((result, i) => {
-                        const box = resizedDetections[i].detection.box;
-                        const drawBox = new faceapi.draw.DrawBox(box, {
-                            label: result.toString()
-                        });
-                        drawBox.draw(overlay);
-
-                        if (result.label !== 'unknown') {
-                            updateStudentInfo(result.label);
-                        }
-                    });
+                    const ctx = overlay.getContext('2d');
+                    ctx.clearRect(0, 0, overlay.width, overlay.height);
+                    faceapi.draw.drawDetections(overlay, resizedDetections);
+                    // afceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
 
                     requestAnimationFrame(onPlay);
                 }
 
                 onPlay();
             });
+
+            function moveToNextStep() {
+                currentStep++;
+                if (currentStep < verificationSteps.length) {
+                    $('#instruction').text(verificationSteps[currentStep].instruction);
+                    $('#progress-bar').css('width', verificationSteps[currentStep].progress + '%');
+                }
+            }
+
+            function isLookingLeft(jawOutline, nose) {
+                const jawCenter = getCenter(jawOutline);
+                const nosePosition = getCenter(nose);
+                return (nosePosition.x - jawCenter.x) < -10;
+            }
+
+            function isLookingRight(jawOutline, nose) {
+                const jawCenter = getCenter(jawOutline);
+                const nosePosition = getCenter(nose);
+                return (nosePosition.x - jawCenter.x) > 10;
+            }
+
+            function isLookingCenter(jawOutline, nose) {
+                const jawCenter = getCenter(jawOutline);
+                const nosePosition = getCenter(nose);
+                return Math.abs(nosePosition.x - jawCenter.x) < 5;
+            }
+
+            function getCenter(points) {
+                const center = points.reduce((acc, pt) => ({
+                    x: acc.x + pt.x,
+                    y: acc.y + pt.y
+                }), {
+                    x: 0,
+                    y: 0
+                });
+                return {
+                    x: center.x / points.length,
+                    y: center.y / points.length
+                };
+            }
+
+            async function startFaceMatching(faceDescriptor) {
+                const labeledFaceDescriptors = await loadLabeledImages();
+                const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.4);
+                const result = faceMatcher.findBestMatch(faceDescriptor);
+
+                if (result.label !== 'unknown') {
+                    $('#instruction').text(result.label);
+                    updateStudentInfo(result.label);
+                } else {
+                    $('#instruction').text('Unknown');
+                }
+            }
 
             resetButton.on('click', () => {
                 hasSubmitted = false;
@@ -151,6 +279,8 @@
                 );
             }
 
+
+
             function getTimeIn() {
                 const date = new Date();
                 const hours = date.getHours() > 12? date.getHours() - 12 : date.getHours();
@@ -172,7 +302,7 @@
                         id,
                         name,
                         strand,
-                        id_number,
+                        id_number
                     } = data;
 
                     studentName.text(name);
@@ -185,7 +315,7 @@
                             url: '{{ route("face.attendance") }}',
                             type: 'POST',
                             data: {
-                                student_id: id,
+                                student_id: id
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -203,7 +333,6 @@
                                         title: 'Your attendance has been recorded for today!',
                                         icon: 'info'
                                     });
-                                    console.error('Failed to submit attendance:', response.message);
                                 }
                             },
                             error: function(err) {
@@ -214,15 +343,16 @@
                 }).fail(err => console.error('Error fetching student info:', err));
             }
         });
+    </script>
 
 
-    window.addEventListener('beforeunload', function (e) {
-        var confirmationMessage = 'Are you sure to reload this page? this may takes some times to load all models once you reload the page.';
+    <script>
+        window.addEventListener('beforeunload', function(e) {
+            var confirmationMessage = 'Are you sure to reload this page? this may takes some times to load all models once you reload the page.';
 
-        (e || window.event).returnValue = confirmationMessage;
-        return confirmationMessage;
-    });
-
+            (e || window.event).returnValue = confirmationMessage;
+            return confirmationMessage;
+        });
     </script>
 
 </body>
