@@ -97,9 +97,41 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
+        // Function to add logo to QR code
+        function addLogoToQRCode(qrCanvas) {
+            const ctx = qrCanvas.getContext('2d');
+            const logo = new Image();
+            
+            // Replace with your actual logo path
+            logo.src = "{{ asset('images/icon_192x192.png') }}";
+
+        
+            
+            logo.onload = function() {
+                // Calculate logo size (20% of QR code size)
+                const logoWidth = qrCanvas.width * 0.2;
+                const logoHeight = qrCanvas.height * 0.2;
+                
+                // Calculate position to center the logo
+                const logoX = (qrCanvas.width - logoWidth) / 2;
+                const logoY = (qrCanvas.height - logoHeight) / 2;
+                
+                // Create a white background for the logo
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(logoX - 2, logoY - 2, logoWidth + 4, logoHeight + 4);
+                
+                // Draw the logo
+                ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+            };
+        }
+
+        // Initialize QR code with higher error correction
         const qrcode = new QRCode($('#qr_generate')[0], {
             width: 400,
             height: 400,
+            colorDark: "#222222",
+            colorLight: "#fefefe",
+            correctLevel: QRCode.CorrectLevel.H
         });
 
         let qrData = localStorage.getItem('qrData');
@@ -107,6 +139,18 @@
         const createNewQr = () => {
             qrData = @json($data);
             localStorage.setItem('qrData', qrData);
+            
+            // Generate QR code with encoded data
+            qrcode.makeCode(window.btoa(qrData));
+            
+            // Add logo after a small delay to ensure QR code is generated
+            setTimeout(() => {
+                const qrCanvas = document.querySelector('#qr_generate canvas');
+                if (qrCanvas) {
+                    addLogoToQRCode(qrCanvas);
+                }
+            }, 50);
+
             Swal.fire({
                 title: 'Success',
                 text: 'QR Code generated successfully!',
@@ -135,103 +179,105 @@
         });
 
         if (!qrData) {
-            
             createNewQr();
         } else {
             // If QR data exists in localStorage, parse it
             console.log('QR data loaded from localStorage');
-
             
-        
-        }
+            const parsedData = JSON.parse(qrData);
+            const {
+                subject_id,
+                teacher_id,
+                grade_handle_id
+            } = parsedData;
+            const expirationTime = parsedData.expiration;
 
-        const parsedData = JSON.parse(qrData);
-        const {
-            subject_id,
-            teacher_id,
-            grade_handle_id
-        } = parsedData;
-        const expirationTime = parsedData.expiration;
-
-        // Generate QR code
-        qrcode.makeCode(window.btoa(qrData));
-
-        // Update present and absent count
-        setInterval(function() {
+            // Generate QR code with logo
+            qrcode.makeCode(window.btoa(qrData));
             
-            $.ajax({
-                url: '{{ route("getPresentCount") }}',
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                },
-                data: JSON.stringify({
-                    subject_id,
-                    teacher_id,
-                    grade_handle_id
-                }),
-                success: function(data) {
-                    // $('#present').text(data.count);
-                },
-                error: function(err) {
-                    console.error(err);
-                },
-            });
+            // Add logo after QR code generation
+            setTimeout(() => {
+                const qrCanvas = document.querySelector('#qr_generate canvas');
+                if (qrCanvas) {
+                    addLogoToQRCode(qrCanvas);
+                }
+            }, 50);
 
-            $.ajax({
-                url: '{{ route("getAbsentCount") }}',
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                },
-                data: JSON.stringify({
-                    teacher_id,
-                    grade_handle_id
-                }),
-                success: function(data) {
-                    // $('#absent').text(data.count);
-                },
-                error: function(err) {
-                    console.error(err);
-                },
-            });
-        }, 5000);
-
-        // Countdown Timer
-        const countdownElement = $('<div>', {
-            class: 'text-green-600 p-2 text-center'
-        }).appendTo('#qr_generate');
-
-        function updateCountdown() {
-            const now = Math.floor(Date.now() / 1000);
-            const timeLeft = expirationTime - now;
-
-            if (timeLeft <= 0) {
-                countdownElement.text('QR Code has expired!').removeClass('text-green-600').addClass('text-rose-600');
-                Swal.fire({
-                    title: 'Expired',
-                    text: 'The QR code has expired.',
-                    icon: 'error',
-                }).then(() => {
-                    qrcodeConfirmation();
+            // Update present and absent count
+            setInterval(function() {
+                $.ajax({
+                    url: '{{ route("getPresentCount") }}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    data: JSON.stringify({
+                        subject_id,
+                        teacher_id,
+                        grade_handle_id
+                    }),
+                    success: function(data) {
+                        // $('#present').text(data.count);
+                    },
+                    error: function(err) {
+                        console.error(err);
+                    },
                 });
-                clearInterval(interval);
-                localStorage.removeItem('qrData');
-                return;
-            } 
 
+                $.ajax({
+                    url: '{{ route("getAbsentCount") }}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    data: JSON.stringify({
+                        teacher_id,
+                        grade_handle_id
+                    }),
+                    success: function(data) {
+                        // $('#absent').text(data.count);
+                    },
+                    error: function(err) {
+                        console.error(err);
+                    },
+                });
+            }, 5000);
 
-            
+            // Countdown Timer
+            const countdownElement = $('<div>', {
+                class: 'text-green-600 p-2 text-center'
+            }).appendTo('#qr_generate');
 
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            countdownElement.text(`Expires in: ${minutes} minute(s) and ${seconds < 10 ? '0' : ''}${seconds} second(s)`);
+            function updateCountdown() {
+                const now = Math.floor(Date.now() / 1000);
+                const timeLeft = expirationTime - now;
+
+                if (timeLeft <= 0) {
+                    countdownElement.text('QR Code has expired!')
+                        .removeClass('text-green-600')
+                        .addClass('text-rose-600');
+                    Swal.fire({
+                        title: 'Expired',
+                        text: 'The QR code has expired.',
+                        icon: 'error',
+                    }).then(() => {
+                        qrcodeConfirmation();
+                    });
+                    clearInterval(interval);
+                    localStorage.removeItem('qrData');
+                    return;
+                }
+
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownElement.text(`Expires in: ${minutes} minute(s) and ${seconds < 10 ? '0' : ''}${seconds} second(s)`);
+            }
+
+            updateCountdown();
+            const interval = setInterval(updateCountdown, 1000);
         }
-
-        updateCountdown();
-        const interval = setInterval(updateCountdown, 1000);
 
         // Mark Present button action
         $('.mark-present-btn').on('click', function() {
@@ -276,6 +322,5 @@
             });
         });
     });
-
 </script>
 @endsection

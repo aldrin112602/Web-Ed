@@ -3,28 +3,31 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="px-6 py-4">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Today Subject -->
-        <div class="p-4 shadow-md rounded-lg">
-            <div class="font-bold text-lg mb-2">Today Subject</div>
+<div class="px-6 py-4 space-y-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Today's Subject -->
+        <div class="p-6 shadow-md rounded-lg bg-gray-50">
+            <div class="font-semibold text-xl text-gray-700 mb-3">Today's Subject</div>
             @if ($subjects_today->isEmpty())
-            <div class="bg-white p-4 rounded text-center">
-                <div class="text-xl font-bold">No Subjects Found!</div>
-                <div>You don't have subjects today.</div>
+            <div class="bg-white p-6 rounded-lg text-center border border-gray-200">
+                <div class="text-xl font-bold text-gray-600">No Subjects Found!</div>
+                <p class="text-gray-500">You don't have subjects today.</p>
             </div>
             @else
-            <div class="grid grid-cols-1 gap-4">
+            <div class="space-y-4">
                 @foreach ($subjects_today as $subject)
-                <div class="p-4 shadow rounded bg-white">{{$subject->subject}}
-                    <hr>
-                <div class="flex items-center justify-between mt-3">
-                <span class="text-sm text-gray-500">
-                {{ $TeacherModel::where('id', $subject->teacher_id)->first()->name }} <br>
-                {{$subject->day}} | {{$subject->time}}
-                </span>
-                <a href="{{ route('qr.scan.get', [ 'subject_id' => $subject->id, 'teacher_id' => $subject->teacher_id ]) }}" style="font-size: 13px;" class="bg-blue-500 hover:bg-blue-700 p-2 py-1 rounded text-white">Scan QR</a>
-                </div>
+                <div class="p-4 shadow rounded bg-white border border-gray-200">
+                    <div class="font-medium text-gray-800">{{ $subject->subject }}</div>
+                    <hr class="my-2">
+                    <div class="flex items-center justify-between mt-2 text-sm text-gray-500">
+                        <div>
+                            {{ $TeacherModel::where('id', $subject->teacher_id)->first()->name }} <br>
+                            {{ $subject->day }} | {{ $subject->time }}
+                        </div>
+                        <a href="{{ route('qr.scan.get', [ 'subject_id' => $subject->id, 'teacher_id' => $subject->teacher_id ]) }}" class="bg-blue-500 hover:bg-blue-600 text-white rounded px-3 pt-2 pb-2 flex items-center space-x-2">
+                            <i class="fas fa-qrcode"></i> <!-- QR Code Icon -->
+                        </a>
+                    </div>
                 </div>
                 @endforeach
             </div>
@@ -32,34 +35,36 @@
         </div>
 
         <!-- Enrolled Subjects -->
-        <div class="col-span-2 p-4 shadow-md rounded-lg">
+        <div class="col-span-2 p-6 shadow-md rounded-lg bg-gray-50">
             <div class="flex justify-between items-center">
-                <div class="font-bold text-lg">Enrolled Subjects</div>
-                <a href="#" class="text-blue-500">See all</a>
+                <div class="font-semibold text-xl text-gray-700">Enrolled Subjects</div>
+                <a href="#" class="text-blue-500 hover:text-blue-600 text-sm">See all</a>
             </div>
             @if ($enrolled_subjects->isEmpty())
-            <div class="bg-white p-4 rounded text-center">
-                <div class="text-xl font-bold">No Subjects Found!</div>
-                <div>You don't have subjects to display at this time.</div>
+            <div class="bg-white p-6 rounded-lg text-center border border-gray-200">
+                <div class="text-xl font-bold text-gray-600">No Subjects Found!</div>
+                <p class="text-gray-500">You don't have subjects to display at this time.</p>
             </div>
             @else
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 @foreach ($enrolled_subjects as $subject)
-                <div class="text-center p-4 shadow rounded bg-white cursor-pointer">{{ $subject->subject }}</div>
+                <div class="p-4 shadow rounded bg-white border border-gray-200 text-center hover:bg-gray-100 cursor-pointer">
+                    <span class="font-medium text-gray-800">{{ $subject->subject }}</span>
+                </div>
                 @endforeach
             </div>
             @endif
         </div>
     </div>
 
-    <!-- Notification Area -->
-    <div class="mt-4 p-4 shadow-md rounded-lg">
-        <div class="font-bold text-lg mb-2">Notifications</div>
-        <ul class="list-disc pl-5">
-            <li>Hello John Doe! You have incomplete Grade in Earth and Life Science</li>
-            <li>Hello John Doe! It is almost due date of your task in General Mathematics</li>
-            <li>Hello John Doe! Congratulations you have completed your Quiz in General Mathematics!</li>
-            <li>Hello John Doe! Sir Clifford GIVEN ASSIGNMENT in General Mathematics!</li>
+    <!-- Notifications Area -->
+    <div class="p-6 shadow-md rounded-lg bg-gray-50">
+        <div class="font-semibold text-xl text-gray-700 mb-3">Notifications</div>
+        <ul class="list-disc pl-5 space-y-2 text-gray-600">
+            <li>Hello John Doe! You have an incomplete grade in Earth and Life Science.</li>
+            <li>Hello John Doe! The due date for your task in General Mathematics is approaching.</li>
+            <li>Hello John Doe! Congratulations on completing your quiz in General Mathematics!</li>
+            <li>Hello John Doe! Sir Clifford assigned a new assignment in General Mathematics.</li>
         </ul>
     </div>
 </div>

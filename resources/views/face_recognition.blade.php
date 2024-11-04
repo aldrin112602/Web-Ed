@@ -9,9 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Face Recognition</title>
     <script src="{{ asset('face_api/face-api.min.js') }}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @vite('resources/css/app.css')
@@ -45,10 +49,39 @@
             border-radius: 10px;
             transition: width 0.3s ease-in-out;
         }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            color: white;
+            font-size: 24px;
+        }
+
+        video {
+            transform: scaleX(-1);
+        }
     </style>
 </head>
 
 <body class="flex items-center justify-center h-screen">
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p class="mt-2">Initializing face recognition system...</p>
+        </div>
+    </div>
+
     <div class="w-full lg:w-3/4 xl:w-2/3 flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-8 bg-white p-6 shadow-lg rounded-lg">
         <div class="text-center flex flex-col items-center">
             <p class="font-bold text-lg mb-2">FACE VERIFICATION</p>
@@ -82,12 +115,13 @@
         </div>
     </div>
 
-
-
     <script>
         $(document).ready(function() {
             let hasSubmitted = false;
             let currentStep = 0;
+            let faceMatcher = null;
+            let isSystemReady = false;
+
             const verificationSteps = [{
                     instruction: 'Please look at the camera',
                     action: 'center',
@@ -95,12 +129,12 @@
                 },
                 {
                     instruction: 'Turn your head to the left',
-                    action: 'left',
+                    action: 'right',
                     progress: 50
                 },
                 {
                     instruction: 'Turn your head to the right',
-                    action: 'right',
+                    action: 'left',
                     progress: 75
                 },
                 {
@@ -118,23 +152,85 @@
             const resetButton = $('#resetButton');
             const overlay = $('#overlay')[0];
             const progressBar = $('#progress-bar');
+            const loadingOverlay = $('#loading-overlay');
 
-            Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
-                faceapi.nets.faceLandmark68Net.loadFromUri('{{ asset("face_api/models") }}'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}')
-            ]).then(startVideo).catch(err => console.error('Error loading models:', err));
+            async function initializeSystem() {
+                try {
+                    // Show loading overlay
+                    loadingOverlay.show();
+
+                    // Load face-api.js models
+                    await Promise.all([
+                        faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
+                        faceapi.nets.faceLandmark68Net.loadFromUri('{{ asset("face_api/models") }}'),
+                        faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}')
+                    ]);
+
+                    // Initialize face matcher
+                    faceMatcher = await initializeFaceMatcher();
+
+                    // Start video
+                    await startVideo();
+
+                    // Hide loading overlay
+                    loadingOverlay.hide();
+                    isSystemReady = true;
+
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                    loadingOverlay.hide();
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to initialize face recognition system. Please refresh the page.',
+                        icon: 'error'
+                    });
+                }
+            }
+
+            async function initializeFaceMatcher() {
+                try {
+                    const labels = await $.get('{{ route("fetch_labels") }}');
+                    const labeledFaceDescriptors = await Promise.all(
+                        labels.map(async label => {
+                            const descriptions = [];
+                            for (let i = 0; i < 3; i++) {
+                                const img = await faceapi.fetchImage(
+                                    `{{ asset('storage/face_images/') }}/${label}/${i}.jpg`
+                                );
+                                const detection = await faceapi.detectSingleFace(img,
+                                        new faceapi.TinyFaceDetectorOptions())
+                                    .withFaceLandmarks()
+                                    .withFaceDescriptor();
+
+                                if (detection) {
+                                    descriptions.push(detection.descriptor);
+                                }
+                            }
+                            return new faceapi.LabeledFaceDescriptors(label, descriptions);
+                        })
+                    );
+
+                    return new faceapi.FaceMatcher(labeledFaceDescriptors, 0.4);
+                } catch (error) {
+                    console.error('Error initializing face matcher:', error);
+                    throw error;
+                }
+            }
 
             function startVideo() {
-                navigator.mediaDevices.getUserMedia({
-                    video: {}
-                }).then(stream => {
-                    video.srcObject = stream;
-                    video.onloadedmetadata = () => {
-                        overlay.width = video.videoWidth;
-                        overlay.height = video.videoHeight;
-                    };
-                }).catch(err => console.error('Error accessing webcam:', err));
+                return navigator.mediaDevices.getUserMedia({
+                        video: {}
+                    })
+                    .then(stream => {
+                        video.srcObject = stream;
+                        return new Promise((resolve) => {
+                            video.onloadedmetadata = () => {
+                                overlay.width = video.videoWidth;
+                                overlay.height = video.videoHeight;
+                                resolve();
+                            };
+                        });
+                    });
             }
 
             $(video).on('play', async () => {
@@ -145,37 +241,40 @@
                 faceapi.matchDimensions(overlay, displaySize);
 
                 async function onPlay() {
-                    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+                    if (!isSystemReady) return requestAnimationFrame(onPlay);
+
+                    const detections = await faceapi.detectAllFaces(video,
+                            new faceapi.TinyFaceDetectorOptions())
                         .withFaceLandmarks()
                         .withFaceDescriptors();
 
                     if (detections.length === 0) {
                         return requestAnimationFrame(onPlay);
                     }
+
                     const landmarks = detections[0].landmarks;
                     const jawOutline = landmarks.getJawOutline();
                     const nose = landmarks.getNose();
 
-                    // Check head position based on current step
                     switch (verificationSteps[currentStep].action) {
                         case 'center':
-                            if (isLookingCenter(jawOutline, nose)) {
-                                moveToNextStep();
-                            }
+                            if (isLookingCenter(jawOutline, nose)) moveToNextStep();
                             break;
                         case 'left':
-                            if (isLookingLeft(jawOutline, nose)) {
-                                moveToNextStep();
-                            }
+                            if (isLookingLeft(jawOutline, nose)) moveToNextStep();
                             break;
                         case 'right':
-                            if (isLookingRight(jawOutline, nose)) {
-                                moveToNextStep();
-                            }
+                            if (isLookingRight(jawOutline, nose)) moveToNextStep();
                             break;
                         case 'complete':
                             if (!hasSubmitted) {
-                                startFaceMatching(detections[0].descriptor);
+                                const result = faceMatcher.findBestMatch(detections[0].descriptor);
+                                if (result.label !== 'unknown') {
+                                    $('#instruction').text(result.label);
+                                    updateStudentInfo(result.label);
+                                } else {
+                                    $('#instruction').text('Unknown');
+                                }
                             }
                             break;
                     }
@@ -183,8 +282,7 @@
                     const resizedDetections = faceapi.resizeResults(detections, displaySize);
                     const ctx = overlay.getContext('2d');
                     ctx.clearRect(0, 0, overlay.width, overlay.height);
-                    faceapi.draw.drawDetections(overlay, resizedDetections);
-                    // afceapi.draw.drawFaceLandmarks(overlay, resizedDetections);
+                    // faceapi.draw.drawDetections(overlay, resizedDetections);
 
                     requestAnimationFrame(onPlay);
                 }
@@ -196,7 +294,7 @@
                 currentStep++;
                 if (currentStep < verificationSteps.length) {
                     $('#instruction').text(verificationSteps[currentStep].instruction);
-                    $('#progress-bar').css('width', verificationSteps[currentStep].progress + '%');
+                    progressBar.css('width', verificationSteps[currentStep].progress + '%');
                 }
             }
 
@@ -232,60 +330,11 @@
                 };
             }
 
-            async function startFaceMatching(faceDescriptor) {
-                const labeledFaceDescriptors = await loadLabeledImages();
-                const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.4);
-                const result = faceMatcher.findBestMatch(faceDescriptor);
-
-                if (result.label !== 'unknown') {
-                    $('#instruction').text(result.label);
-                    updateStudentInfo(result.label);
-                } else {
-                    $('#instruction').text('Unknown');
-                }
-            }
-
-            resetButton.on('click', () => {
-                hasSubmitted = false;
-                studentName.text('N/A');
-                studentStrand.text('N/A');
-                studentId.text('N/A');
-                timeIn.text('N/A');
-
-                Swal.fire({
-                    title: 'Face Scan Reset successfully',
-                    icon: 'success'
-                });
-            });
-
-            async function loadLabeledImages() {
-                const labels = await $.get('{{ route("fetch_labels") }}');
-                console.log('Labels:', labels);
-
-                return Promise.all(
-                    labels.map(async label => {
-                        const descriptions = [];
-                        for (let i = 0; i < 3; i++) {
-                            const img = await faceapi.fetchImage(`{{ asset('storage/face_images/') }}/${label}/${i}.jpg`);
-                            const detections = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();
-                            if (detections) {
-                                descriptions.push(detections.descriptor);
-                            } else {
-                                console.warn(`No detections for ${label} image ${i}`);
-                            }
-                        }
-                        return new faceapi.LabeledFaceDescriptors(label, descriptions);
-                    })
-                );
-            }
-
-
-
             function getTimeIn() {
                 const date = new Date();
-                const hours = date.getHours() > 12? date.getHours() - 12 : date.getHours();
+                const hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
                 const minutes = String(date.getMinutes()).padStart(2, '0');
-                return `${hours}:${minutes}${date.getHours() >= 12? ' PM' : ' AM'}`;
+                return `${hours}:${minutes}${date.getHours() >= 12 ? ' PM' : ' AM'}`;
             }
 
             function getDate() {
@@ -321,37 +370,60 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function(response) {
-                                if (response.success) {
-                                    Swal.fire({
-                                        title: 'Face Successfully Scanned!',
-                                        text: 'Your attendance has been recorded. Please proceed to your respective room',
-                                        icon: 'success'
-                                    });
-                                } else {
-                                    hasSubmitted = true;
-                                    Swal.fire({
-                                        title: 'Your attendance has been recorded for today!',
-                                        icon: 'info'
-                                    });
-                                }
+                                hasSubmitted = true;
+                                Swal.fire({
+                                    title: response.success ?
+                                        'Face Successfully Scanned!' : 'Attendance Already Recorded',
+                                    text: response.success ?
+                                        'Your attendance has been recorded. Please proceed to your respective room' : 'Your attendance has been recorded for today!',
+                                    icon: response.success ? 'success' : 'info'
+                                });
                             },
                             error: function(err) {
                                 console.error('Error submitting attendance:', err);
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Failed to submit attendance. Please try again.',
+                                    icon: 'error'
+                                });
                             }
                         });
                     }
-                }).fail(err => console.error('Error fetching student info:', err));
+                }).fail(err => {
+                    console.error('Error fetching student info:', err);
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to fetch student information. Please try again.',
+                        icon: 'error'
+                    });
+                });
             }
-        });
-    </script>
 
+            resetButton.on('click', () => {
+                hasSubmitted = false;
+                currentStep = 0;
+                $('#instruction').text(verificationSteps[0].instruction);
+                progressBar.css('width', '0%');
+                studentName.text('N/A');
+                studentStrand.text('N/A');
+                studentId.text('N/A');
+                timeIn.text('N/A');
 
-    <script>
-        window.addEventListener('beforeunload', function(e) {
-            var confirmationMessage = 'Are you sure to reload this page? this may takes some times to load all models once you reload the page.';
+                Swal.fire({
+                    title: 'Face Scan Reset successfully',
+                    icon: 'success'
+                });
+            });
 
-            (e || window.event).returnValue = confirmationMessage;
-            return confirmationMessage;
+            // Confirmation before page reload
+            window.addEventListener('beforeunload', function(e) {
+                var confirmationMessage = 'Are you sure to reload this page? This may take some time to load all models once you reload the page.';
+                (e || window.event).returnValue = confirmationMessage;
+                return confirmationMessage;
+            });
+
+            // Initialize the system when the page loads
+            initializeSystem();
         });
     </script>
 
