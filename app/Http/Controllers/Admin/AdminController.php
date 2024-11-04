@@ -73,6 +73,33 @@ class AdminController extends Controller
         }
     }
 
+
+    public function resendOTP()
+    {
+        $userId = Session::get('pending_user_id');
+        $user = AdminAccount::find($userId);
+
+        if (!$user) {
+            return redirect()->route('admin.login')->with('error', 'Session expired. Please login again.');
+        }
+
+        // Generate new OTP
+        $otp = random_int(100000, 999999);
+        $email = $user->email;
+
+        $isSuccess = $this->mailerService->send2FA($email, $otp);
+
+        if ($isSuccess) {
+            // Update session with new OTP and expiry
+            Session::put('otp', $otp);
+            Session::put('otp_expiry', now()->addMinutes(10));
+
+            return redirect()->route('admin.2fa.index')->with('success', 'New OTP has been sent to your email.');
+        }
+
+        return redirect()->back()->with('error', 'Failed to send new OTP. Please try again.');
+    }
+
     public function handleLogin(Request $request)
 {
     // Validate the input

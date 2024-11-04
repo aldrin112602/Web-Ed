@@ -43,6 +43,7 @@ Route::prefix('teacher')->group(function () {
     // Two-Factor Authentication (2FA) routes
     Route::get('2fa', [TwoFAController::class, 'index'])->name('teacher.2fa.index'); // Show 2FA form
     Route::post('2fa', [TwoFAController::class, 'verify'])->name('teacher.2fa.verify'); // Handle 2FA submission
+    Route::get('/2fa/resend', [Teacher::class, 'resendOTP'])->name('teacher.2fa.resend');
 
 
     /***

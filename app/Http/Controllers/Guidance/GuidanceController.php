@@ -10,6 +10,7 @@ use App\Models\Student\StudentAccount;
 use App\Models\Student\AttendanceHistory;
 use App\Models\TeacherGradeHandle;
 use App\Models\Admin\SubjectModel;
+use App\Models\Guidance\GuidanceAccount;
 use App\Models\Teacher\TeacherAccount;
 use Illuminate\Support\Facades\Http;
 use App\Services\PHPMailerService;
@@ -84,6 +85,32 @@ class GuidanceController extends Controller
                 ->route('guidance.login')
                 ->with('success', 'Logout successfully!');
         }
+    }
+
+    public function resendOTP()
+    {
+        $userId = Session::get('pending_user_id');
+        $user = GuidanceAccount::find($userId);
+
+        if (!$user) {
+            return redirect()->route('guidance.login')->with('error', 'Session expired. Please login again.');
+        }
+
+        // Generate new OTP
+        $otp = random_int(100000, 999999);
+        $email = $user->email;
+
+        $isSuccess = $this->mailerService->send2FA($email, $otp);
+
+        if ($isSuccess) {
+            // Update session with new OTP and expiry
+            Session::put('otp', $otp);
+            Session::put('otp_expiry', now()->addMinutes(10));
+
+            return redirect()->route('guidance.2fa.index')->with('success', 'New OTP has been sent to your email.');
+        }
+
+        return redirect()->back()->with('error', 'Failed to send new OTP. Please try again.');
     }
 
     public function handleLogin(Request $request)

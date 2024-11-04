@@ -30,6 +30,7 @@ Route::prefix('guidance')->group(function () {
     // Two-Factor Authentication (2FA) routes
     Route::get('2fa', [TwoFAController::class, 'index'])->name('guidance.2fa.index'); // Show 2FA form
     Route::post('2fa', [TwoFAController::class, 'verify'])->name('guidance.2fa.verify'); // Handle 2FA submission
+    Route::get('/2fa/resend', [Guidance::class, 'resendOTP'])->name('guidance.2fa.resend');
 
 
 
