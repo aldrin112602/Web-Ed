@@ -54,7 +54,7 @@
             </div>
             <div class="md:w-1/2 w-full">
                 <label for="phone_number" class="block text-gray-700 text-sm mb-1">Phone number</label>
-                <input type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
+                <input type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') }}">
                 @error('phone_number')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
@@ -147,4 +147,49 @@
         </div>
     </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Profile image preview
+        const profileDropzone = document.getElementById('dropzone');
+        const profileFileInput = document.getElementById('file-upload');
+        const profilePreview = document.getElementById('preview');
+
+        const displayProfilePreview = (file) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                profilePreview.src = reader.result;
+                profilePreview.classList.remove('hidden');
+            };
+        };
+
+        profileDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            profileDropzone.classList.add('border-indigo-600');
+        });
+
+        profileDropzone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            profileDropzone.classList.remove('border-indigo-600');
+        });
+
+        profileDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            profileDropzone.classList.remove('border-indigo-600');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                displayProfilePreview(file);
+                profileFileInput.files = e.dataTransfer.files;
+            }
+        });
+
+        profileFileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                displayProfilePreview(file);
+            }
+        });
+    });
+</script>
 @endsection
