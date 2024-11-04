@@ -224,6 +224,23 @@ class AccountManagementController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $student = StudentAccount::findOrFail($id);
+
+            // Delete face images for the student
+            StudentImage::where('student_id', $student->id)->delete();
+            
+            $directory = public_path('storage/face_images/'. $student->name);
+            if (is_dir($directory)) {
+                array_map('unlink', glob($directory. '/*'));
+                rmdir($directory);
+            }
+            
+
+            // Delete the student's profile photo if it exists
+            if ($student->profile && file_exists(public_path($student->profile))) {
+                unlink(public_path($student->profile));
+            }
+
+            
             $student->delete();
 
             $user = Auth::user();

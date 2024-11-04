@@ -3,6 +3,11 @@
 @section('title', 'Scan QR')
 
 @section('content')
+<style>
+    video {
+        transform: scaleX(-1);
+    }
+</style>
 <div class="p-5 bg-white">
     <h1 class="text-xl">Scan QR</h1>
     <div id="reader"></div>
@@ -33,33 +38,33 @@
         lastScannedCode = parsedCode;
         lastScanTime = currentTime;
 
-        fetch('{{ route('qr.scan') }}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: parsedCode
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data?.error) {
-                Swal.fire({
-                    title: "Error",
-                    text: data.error,
-                    icon: "error"
-                });
-            } else {
-                Swal.fire({
-                    title: "Success",
-                    text: data.success,
-                    icon: "success"
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        fetch("{{route('qr.scan')}}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: parsedCode
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data?.error) {
+                    Swal.fire({
+                        title: "Error",
+                        text: data.error,
+                        icon: "error"
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Success",
+                        text: data.success,
+                        icon: "success"
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     function onScanFailure(error) {
@@ -67,7 +72,10 @@
     }
 
     let html5QrcodeScanner = new Html5QrcodeScanner(
-        "reader", { fps: 10, qrbox: 300 }
+        "reader", {
+            fps: 10,
+            qrbox: 300
+        }
     );
 
     html5QrcodeScanner.render(onScanSuccess, onScanFailure);

@@ -27,7 +27,9 @@ class FaceScanController extends Controller
         // Retrieve all face scans of handled students
         $faceScans = FaceScan::whereIn('student_id', $student_handle_ids)
             ->select('student_id', 'time', 'created_at')
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
+
 
 
         // Return the view with relevant data

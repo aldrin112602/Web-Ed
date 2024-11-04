@@ -196,6 +196,46 @@ class StudentController extends Controller
     }
 
 
+    public function deleteStudent($id)
+    {
+        if (Auth::guard('teacher')->check()) {
+            $student = StudentAccount::findOrFail($id);
+
+            // Delete face images for the student
+            StudentImage::where('student_id', $student->id)->delete();
+            
+            $directory = public_path('storage/face_images/'. $student->name);
+            if (is_dir($directory)) {
+                array_map('unlink', glob($directory. '/*'));
+                rmdir($directory);
+            }
+            
+
+            // Delete the student's profile photo if it exists
+            if ($student->profile && file_exists(public_path($student->profile))) {
+                unlink(public_path($student->profile));
+            }
+
+            
+
+            $user = Auth::user();
+            History::create(
+                [
+                    'user_id' => $user->id,
+                    'position' => $user->role ?? 'Teacher',
+                    'history' => "Deleted student account",
+                    'description' => 'ID Number: ' . $student->id_number . ', Name: ' . $student->name
+                ]
+            );
+
+            $student->delete();
+
+            return redirect()->back()->with('success', 'Student deleted successfully');
+        }
+
+        return redirect()->route('teacher.login');
+    }
+
 
 
     /////////////////// END /////////////////////
