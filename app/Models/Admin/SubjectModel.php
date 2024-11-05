@@ -18,6 +18,8 @@ class SubjectModel extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'subject_models';
+
     protected $fillable = [
         'subject',
         'teacher_id',

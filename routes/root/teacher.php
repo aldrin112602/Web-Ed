@@ -19,7 +19,8 @@ use App\Http\Controllers\Teacher\{
     attendanceController,
     FaceScanController,
     HighestPossibleScore,
-    TwoFAController
+    TwoFAController,
+    ClassHistory
 };
 
 use App\Http\Controllers\Student\ExportController;
@@ -52,6 +53,10 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+        // routes for class histories
+        Route::get('/class_history', [ClassHistory::class, 'index'])->name('teacher.class_history');
+
+        // highest possible scores
         Route::post('/highest-possible-scores', [HighestPossibleScore::class, 'store'])->name('teacher.addHighestPossibleScore');
 
         // Announcement routes
