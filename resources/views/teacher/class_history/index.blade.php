@@ -47,7 +47,7 @@
                         {{ $history->subjectDetails->time ?? 'N/A' }}
                     </td>
                     <td class="py-3 px-6 text-center">
-                        <a href="#" class="bg-blue-500 text-white py-1 px-3 rounded-full text-xs">
+                        <a href="{{ route('teacher.view_class_history', $history->subjectDetails->id ?? 1) }}" class="bg-blue-500 text-white py-1 px-3 rounded-full text-xs">
                             <i class="fas fa-eye"></i> View
                         </a>
                     </td>
