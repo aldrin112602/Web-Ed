@@ -13,6 +13,10 @@ class StudentGrade extends Model
     protected $fillable = [
         'teacher_id',
         'student_id',
+        'subject',
+        'track',
+        'semester',
+        'quarter',
         'grade',
         'strand',
         'section',

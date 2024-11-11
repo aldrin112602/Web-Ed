@@ -9,6 +9,16 @@ class HighestPossibleScoreGradingSheet extends Model
 {
     use HasFactory;
     protected $fillable = [
+
+        // for new added fields
+        'semester',
+        'quarter',
+        'subject',
+        'track',
+        'grade',
+        'strand',
+        'section',
+
         // for written
         'highest_possible_written_1',
         'highest_possible_written_2',
