@@ -13,11 +13,26 @@ return new class extends Migration
     {
         Schema::create('grading_headers', function (Blueprint $table) {
             $table->id();
+            $table->integer('teacher_id')->nullable();
             $table->string('region')->default('IV - A')->nullable();
             $table->string('division')->default('2nd')->nullable();
             $table->string('school_name')->default('Ark Technological Institute Education System Inc')->nullable();
             $table->string('school_id')->default('405210')->nullable();
             $table->string('school_year')->default('2023-2024')->nullable();
+            
+            // Added new fields
+            $table->string('semester')->nullable();
+            $table->string('quarter')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('track')->nullable();
+            $table->string('grade')->nullable();
+            $table->string('strand')->nullable();
+            $table->string('section')->nullable();
+
+            $table->string('written_work_percentage')->nullable();
+            $table->string('performance_task_percentage')->nullable();
+            $table->string('quarterly_assessment_percentage')->nullable();
+
             $table->timestamps();
         });
     }

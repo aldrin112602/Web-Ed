@@ -93,234 +93,251 @@
 @endsection
 
 @section('scripts')
-<script src="{{ asset('js/qrcode.min.js') }}"></script>
+<script src="{{ asset('js/qrcode.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
-        // Function to add logo to QR code
-        function addLogoToQRCode(qrCanvas) {
-            const ctx = qrCanvas.getContext('2d');
-            const logo = new Image();
-            
-            // Replace with your actual logo path
-            logo.src = "{{ asset('images/icon_192x192.png') }}";
-
+    // Function to add logo to QR code with proper error handling
+    function generateQRWithLogo(qrContainer, data, logoUrl) {
+        // Clear previous content
+        $(qrContainer).empty();
         
+        // Generate initial QR code but hide it
+        const qrWrapper = document.createElement('div');
+        qrWrapper.style.display = 'none';
+        qrContainer.appendChild(qrWrapper);
+        
+        const qr = new QRCode(qrWrapper, {
+            text: window.btoa(data),
+            width: 400,
+            height: 400,
+            colorDark: "#000",
+            colorLight: "#fff",
+            correctLevel: QRCode.CorrectLevel.H,
+            quietZone: 15
+        });
+
+        // Add logo after QR code is generated
+        setTimeout(() => {
+            const qrCanvas = qrWrapper.querySelector('canvas');
+            if (!qrCanvas) return;
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size to match QR code
+            canvas.width = qrCanvas.width;
+            canvas.height = qrCanvas.height;
+            
+            // Draw existing QR code onto new canvas
+            ctx.drawImage(qrCanvas, 0, 0);
+
+            // Load and draw logo
+            const logo = new Image();
+            logo.crossOrigin = "Anonymous";
             
             logo.onload = function() {
                 // Calculate logo size (20% of QR code size)
-                const logoWidth = qrCanvas.width * 0.2;
-                const logoHeight = qrCanvas.height * 0.2;
+                const logoSize = canvas.width * 0.2;
+                const logoX = (canvas.width - logoSize) / 2;
+                const logoY = (canvas.height - logoSize) / 2;
                 
-                // Calculate position to center the logo
-                const logoX = (qrCanvas.width - logoWidth) / 2;
-                const logoY = (qrCanvas.height - logoHeight) / 2;
-                
-                // Create a white background for the logo
+                // Create white background for logo
                 ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(logoX - 2, logoY - 2, logoWidth + 4, logoHeight + 4);
+                ctx.fillRect(logoX - 5, logoY - 5, logoSize + 10, logoSize + 10);
                 
-                // Draw the logo
-                ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
+                // Draw logo
+                ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
+                
+                // Remove the hidden wrapper with original QR
+                qrWrapper.remove();
+                
+                // Add the new canvas to container
+                canvas.classList.add('qr-canvas');
+                qrContainer.appendChild(canvas);
             };
-        }
 
-        // Initialize QR code with higher error correction
-        const qrcode = new QRCode($('#qr_generate')[0], {
-            width: 400,
-            height: 400,
-            colorDark: "#222222",
-            colorLight: "#fefefe",
-            correctLevel: QRCode.CorrectLevel.H
+            logo.onerror = function() {
+                console.error('Failed to load logo image');
+                // If logo fails to load, show original QR code
+                qrWrapper.style.display = 'block';
+            };
+
+            logo.src = logoUrl;
+        }, 100);
+    }
+
+    let qrData = localStorage.getItem('qrData');
+    const qrContainer = document.getElementById('qr_generate');
+    const logoUrl = "{{ asset('images/icon_192x192.png') }}";
+
+    const createNewQr = () => {
+        qrData = @json($data);
+        localStorage.setItem('qrData', qrData);
+        
+        generateQRWithLogo(qrContainer, qrData, logoUrl);
+
+        Swal.fire({
+            title: 'Success',
+            text: 'QR Code generated successfully!',
+            icon: 'success',
+        }).then(() => {
+            location.reload();
         });
+    };
 
-        let qrData = localStorage.getItem('qrData');
-
-        const createNewQr = () => {
-            qrData = @json($data);
-            localStorage.setItem('qrData', qrData);
-            
-            // Generate QR code with encoded data
-            qrcode.makeCode(window.btoa(qrData));
-            
-            // Add logo after a small delay to ensure QR code is generated
-            setTimeout(() => {
-                const qrCanvas = document.querySelector('#qr_generate canvas');
-                if (qrCanvas) {
-                    addLogoToQRCode(qrCanvas);
-                }
-            }, 50);
-
-            Swal.fire({
-                title: 'Success',
-                text: 'QR Code generated successfully!',
-                icon: 'success',
-            }).then(() => {
-                location.reload();
-            });
-        }
-
-        const qrcodeConfirmation = () => {
-            Swal.fire({
-                title: 'Generate new QR Code',
-                text: 'Are you sure to continue?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, continue'
-            }).then((result) => {
-                if (result.isConfirmed) createNewQr();
-            });
-        }
-
-        $('#generateNewQrCode').click(() => {
-            qrcodeConfirmation()
+    const qrcodeConfirmation = () => {
+        Swal.fire({
+            title: 'Generate new QR Code',
+            text: 'Are you sure to continue?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, continue'
+        }).then((result) => {
+            if (result.isConfirmed) createNewQr();
         });
+    };
 
-        if (!qrData) {
-            createNewQr();
-        } else {
-            // If QR data exists in localStorage, parse it
-            console.log('QR data loaded from localStorage');
-            
-            const parsedData = JSON.parse(qrData);
-            const {
-                subject_id,
-                teacher_id,
-                grade_handle_id
-            } = parsedData;
-            const expirationTime = parsedData.expiration;
+    $('#generateNewQrCode').click(() => {
+        qrcodeConfirmation();
+    });
 
-            // Generate QR code with logo
-            qrcode.makeCode(window.btoa(qrData));
-            
-            // Add logo after QR code generation
-            setTimeout(() => {
-                const qrCanvas = document.querySelector('#qr_generate canvas');
-                if (qrCanvas) {
-                    addLogoToQRCode(qrCanvas);
-                }
-            }, 50);
+    if (!qrData) {
+        createNewQr();
+    } else {
+        console.log('QR data loaded from localStorage');
+        
+        const parsedData = JSON.parse(qrData);
+        const {
+            subject_id,
+            teacher_id,
+            grade_handle_id
+        } = parsedData;
+        const expirationTime = parsedData.expiration;
 
-            // Update present and absent count
-            setInterval(function() {
-                $.ajax({
-                    url: '{{ route("getPresentCount") }}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                    },
-                    data: JSON.stringify({
-                        subject_id,
-                        teacher_id,
-                        grade_handle_id
-                    }),
-                    success: function(data) {
-                        // $('#present').text(data.count);
-                    },
-                    error: function(err) {
-                        console.error(err);
-                    },
+        // Generate QR code with logo
+        generateQRWithLogo(qrContainer, qrData, logoUrl);
+
+        // Update present and absent count
+        setInterval(function() {
+            $.ajax({
+                url: '{{ route("getPresentCount") }}',
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                data: JSON.stringify({
+                    subject_id,
+                    teacher_id,
+                    grade_handle_id
+                }),
+                success: function(data) {
+                    $('#present').text(data.count);
+                },
+                error: function(err) {
+                    console.error(err);
+                },
+            });
+
+            $.ajax({
+                url: '{{ route("getAbsentCount") }}',
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+                data: JSON.stringify({
+                    teacher_id,
+                    grade_handle_id
+                }),
+                success: function(data) {
+                    $('#absent').text(data.count);
+                },
+                error: function(err) {
+                    console.error(err);
+                },
+            });
+        }, 5000);
+
+        // Countdown Timer
+        const countdownElement = $('<div>', {
+            class: 'text-green-600 p-2 text-center'
+        }).appendTo('#qr_generate');
+
+        function updateCountdown() {
+            const now = Math.floor(Date.now() / 1000);
+            const timeLeft = expirationTime - now;
+
+            if (timeLeft <= 0) {
+                countdownElement.text('QR Code has expired!')
+                    .removeClass('text-green-600')
+                    .addClass('text-rose-600');
+                Swal.fire({
+                    title: 'Expired',
+                    text: 'The QR code has expired.',
+                    icon: 'error',
+                }).then(() => {
+                    qrcodeConfirmation();
                 });
-
-                $.ajax({
-                    url: '{{ route("getAbsentCount") }}',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Content-Type': 'application/json',
-                    },
-                    data: JSON.stringify({
-                        teacher_id,
-                        grade_handle_id
-                    }),
-                    success: function(data) {
-                        // $('#absent').text(data.count);
-                    },
-                    error: function(err) {
-                        console.error(err);
-                    },
-                });
-            }, 5000);
-
-            // Countdown Timer
-            const countdownElement = $('<div>', {
-                class: 'text-green-600 p-2 text-center'
-            }).appendTo('#qr_generate');
-
-            function updateCountdown() {
-                const now = Math.floor(Date.now() / 1000);
-                const timeLeft = expirationTime - now;
-
-                if (timeLeft <= 0) {
-                    countdownElement.text('QR Code has expired!')
-                        .removeClass('text-green-600')
-                        .addClass('text-rose-600');
-                    Swal.fire({
-                        title: 'Expired',
-                        text: 'The QR code has expired.',
-                        icon: 'error',
-                    }).then(() => {
-                        qrcodeConfirmation();
-                    });
-                    clearInterval(interval);
-                    localStorage.removeItem('qrData');
-                    return;
-                }
-
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                countdownElement.text(`Expires in: ${minutes} minute(s) and ${seconds < 10 ? '0' : ''}${seconds} second(s)`);
+                clearInterval(interval);
+                localStorage.removeItem('qrData');
+                return;
             }
 
-            updateCountdown();
-            const interval = setInterval(updateCountdown, 1000);
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            countdownElement.text(`Expires in: ${minutes} minute(s) and ${seconds < 10 ? '0' : ''}${seconds} second(s)`);
         }
 
-        // Mark Present button action
-        $('.mark-present-btn').on('click', function() {
-            const studentId = $(this).data('student-id');
-            const subjectId = $(this).data('subject-id');
+        updateCountdown();
+        const interval = setInterval(updateCountdown, 1000);
+    }
 
-            Swal.fire({
-                title: 'Set as Present?',
-                text: 'Are you sure you want to mark this student as present?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, set as present!',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: '{{ route("markAttendanceManually") }}',
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json',
-                        },
-                        data: JSON.stringify({
-                            student_id: studentId,
-                            subject_id: subjectId
-                        }),
-                        success: function(data) {
-                            if (data.success) {
-                                Swal.fire('Success!', data.message, 'success').then(function() {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire('Error!', data.message || 'There was an issue marking attendance.', 'error');
-                            }
-                        },
-                        error: function() {
-                            Swal.fire('Error!', 'There was an issue marking attendance.', 'error');
-                        },
-                    });
-                }
-            });
+    // Mark Present button action
+    $('.mark-present-btn').on('click', function() {
+        const studentId = $(this).data('student-id');
+        const subjectId = $(this).data('subject-id');
+
+        Swal.fire({
+            title: 'Set as Present?',
+            text: 'Are you sure you want to mark this student as present?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, set as present!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '{{ route("markAttendanceManually") }}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json',
+                    },
+                    data: JSON.stringify({
+                        student_id: studentId,
+                        subject_id: subjectId
+                    }),
+                    success: function(data) {
+                        if (data.success) {
+                            Swal.fire('Success!', data.message, 'success').then(function() {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error!', data.message || 'There was an issue marking attendance.', 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'There was an issue marking attendance.', 'error');
+                    },
+                });
+            }
         });
     });
+});
 </script>
 @endsection

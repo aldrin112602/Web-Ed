@@ -19,7 +19,8 @@ use App\Http\Controllers\Teacher\{
     attendanceController,
     FaceScanController,
     HighestPossibleScore,
-    TwoFAController
+    TwoFAController,
+    ClassHistory
 };
 
 use App\Http\Controllers\Student\ExportController;
@@ -43,6 +44,7 @@ Route::prefix('teacher')->group(function () {
     // Two-Factor Authentication (2FA) routes
     Route::get('2fa', [TwoFAController::class, 'index'])->name('teacher.2fa.index'); // Show 2FA form
     Route::post('2fa', [TwoFAController::class, 'verify'])->name('teacher.2fa.verify'); // Handle 2FA submission
+    Route::get('/2fa/resend', [Teacher::class, 'resendOTP'])->name('teacher.2fa.resend');
 
 
     /***
@@ -51,6 +53,11 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+        // routes for class histories
+        Route::get('/class_history', [ClassHistory::class, 'index'])->name('teacher.class_history');
+        Route::get('view_class_history/{id}', [ClassHistory::class, 'view_class_history'])->name('teacher.view_class_history');
+
+        // highest possible scores
         Route::post('/highest-possible-scores', [HighestPossibleScore::class, 'store'])->name('teacher.addHighestPossibleScore');
 
         // Announcement routes

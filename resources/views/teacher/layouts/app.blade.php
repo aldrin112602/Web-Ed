@@ -169,7 +169,7 @@
                 </div>
 
                 <div class="p-3 {{ request()->is('teacher/class_history') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
-                    <a href="" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clock-rotate-left"></i>Class History</a>
+                    <a href="{{ route('teacher.class_history') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-clock-rotate-left"></i>Class History</a>
                 </div>
 
 

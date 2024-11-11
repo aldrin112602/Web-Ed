@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('highest_possible_score_grading_sheets', function (Blueprint $table) {
             $table->id();
+
+            // Added new fields
+            $table->string('semester')->nullable();
+            $table->string('quarter')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('track')->nullable();
+            $table->string('grade')->nullable();
+            $table->string('strand')->nullable();
+            $table->string('section')->nullable();
+
+
             // For Written Work
             $table->integer('highest_possible_written_1')->nullable();
             $table->integer('highest_possible_written_2')->nullable();

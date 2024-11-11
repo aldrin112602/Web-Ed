@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Admin\SubjectModel;
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model};
 
 class QrGenerate extends Model
@@ -14,4 +15,9 @@ class QrGenerate extends Model
         'created_at',
         'updated_at'
     ];
+
+    public function subject()
+    {
+        return $this->belongsTo(SubjectModel::class, 'subject_id');
+    }
 }
