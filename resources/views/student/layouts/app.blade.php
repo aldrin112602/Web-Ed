@@ -127,11 +127,11 @@
                 </div>
 
 
-                <div
+                <!-- <div
                     class="p-3 {{ request()->is('student/attendance_report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="" class="text-sm flex items-center justify-start gap-3"><i
                             class="fa-solid fa-cube"></i>Attendance Report</a>
-                </div>
+                </div> -->
 
                 <div
                     class="p-3 {{ request()->is('student/attendance_history') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">

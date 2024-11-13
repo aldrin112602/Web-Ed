@@ -8,7 +8,8 @@ use App\Http\Controllers\Student\{
     StudentOtpController,
     GradeController,
     StudentNotificationController,
-    TwoFAController
+    TwoFAController,
+    ExportController
 };
 use App\Http\Controllers\Admin\AdminNotificationController;
 
@@ -75,6 +76,10 @@ Route::prefix('student')->group(function () {
         // scan qr
         Route::post('/qr/scan', [QRCodeScanController::class, 'scanQRCode'])->name('qr.scan');
         Route::get('/qr/scan', [QRCodeScanController::class, 'scanQRCodeGet'])->name('qr.scan.get');
+
+
+        // download attendance
+        Route::get('/attendance_download/{id}', [ExportController::class, 'exportAttendanceHistory'])->name('student.download_attendance_history');
 
 
         // attendance history

@@ -3,18 +3,33 @@
 @section('title', 'Attendance History')
 
 @section('content')
+<style>
+    @media print {
+        #tablePreview {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: white;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+        }
+
+    }
+</style>
+
 <div class="px-6 py-4">
     <!-- Search and Actions -->
     <div class="flex justify-between items-center mb-4">
         <input type="text" placeholder="Search..." class="p-2 border border-gray-300 rounded">
         <div>
-            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded mr-2">Print</button>
-            <button class="bg-gray-800 text-white px-4 py-2 rounded">Download</button>
+            <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded mr-2" onclick="window.print()">Print</button>
+            <a href="{{ route('student.download_attendance_history', $user->id) }}" class="bg-gray-800 text-white px-4 py-2 rounded">Download</a>
         </div>
     </div>
 
     <!-- Attendance Table -->
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto" id="tablePreview">
         @if ($attendace_histories->isEmpty())
         <div class="text-center p-10 bg-white">
             <p>
