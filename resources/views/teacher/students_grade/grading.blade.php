@@ -195,6 +195,7 @@
             <td class="border p-2">Learner's Name</td>
             @for ($i = 1; $i <= 10; $i++)
                 <td class="border p-2">{{ $i }}</td>
+                
                 @endfor
                 <td class="border p-2">Total</td>
                 <td class="border p-2">PS</td>
