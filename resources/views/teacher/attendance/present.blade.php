@@ -93,7 +93,7 @@
                         <td class="py-2 text-center border">{{ $StudentAccount::where('id', $present->student_id)->first()->gender }}</td>
                         <td class="py-2 text-center border">{{ $StudentAccount::where('id', $present->student_id)->first()->strand }}</td>
                         <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                            <a href="{{ route('teacher.view_attendance_history', $present->student_id) }}?status=present" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
                         </td>
                     </tr>
                     @endforeach

@@ -109,7 +109,7 @@
                         }}</td>
                         <td class="py-2 text-center border">{{ $account->strand }}</td>
                         <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                            <a href="{{ route('teacher.view_attendance_history', $present->student_id) }}?status=absent" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
 
                         </td>
                     </tr>

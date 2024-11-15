@@ -1,10 +1,12 @@
 @extends('teacher.layouts.app')
 
 @section('title', 'Attendance History')
-@section('custom_css')
+
+@section('content')
+
 <style>
     @media print {
-        #tablePreview {
+        #tablePreview2 {
             position: fixed;
             top: 0;
             left: 0;
@@ -16,8 +18,7 @@
 
     }
 </style>
-@endsection
-@section('content')
+
 <div class="p-4 bg-white">
 
     <div class="flex justify-between items-center mb-4">
@@ -32,16 +33,11 @@
         </div>
     </div>
 
-    {{-- lagay ko name mo sa github haha --}}
-
-
-
-
     <hr class="my-3">
 
 
     <!-- Attendance Table -->
-    <div class="overflow-x-auto" id="tablePreview">
+    <div class="overflow-x-auto" id="tablePreview2">
         <h2 class="text-2xl font-bold text-gray-700 my-4">
             {{ $student->name }} Attendance History
         </h2>
@@ -53,7 +49,7 @@
             </p>
         </div>
         @else
-        <table id="tbl_list" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <table id="tbl_list" class="min-w-full bg-white shadow-md overflow-hidden">
             <thead class="bg-gray-600 text-white uppercase text-sm leading-normal">
                 <tr>
                     <th class="py-3 px-6 text-left">Date</th>

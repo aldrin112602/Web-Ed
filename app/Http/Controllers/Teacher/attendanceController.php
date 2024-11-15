@@ -39,6 +39,8 @@ class attendanceController extends Controller
             $query->where('grade', $request->grade);
         }
 
+                
+        
         $account_list = $query->paginate(10);
 
 
@@ -50,14 +52,21 @@ class attendanceController extends Controller
     }
 
 
-    public function viewAttendanceHistory($id)
+    public function viewAttendanceHistory(Request $request, $id)
     {
         $user = Auth::guard('teacher')->user();
-        $attendace_histories = AttendanceHistory::where('student_id', $id)->get();
+        $attendace_histories_query = AttendanceHistory::query();
         $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
+
+        // Apply status filter
+        if ($request->has('status') && in_array($request->status, ['absent', 'present'])) {
+            $attendace_histories_query->where('status', $request->status);
+        }
+
+
         return view('teacher.attendance.view_attendance_history', [
             'user' => $user,
-            'attendace_histories' => $attendace_histories,
+            'attendace_histories' => $attendace_histories_query->get(),
             'TeacherGradeHandle' => TeacherGradeHandle::class,
             'SubjectModel' => SubjectModel::class,
             'TeacherAccount' => TeacherAccount::class,
