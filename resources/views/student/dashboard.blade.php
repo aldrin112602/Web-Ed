@@ -36,10 +36,7 @@
 
         <!-- Enrolled Subjects -->
         <div class="col-span-2 p-6 shadow-md rounded-lg bg-gray-50">
-            <div class="flex justify-between items-center">
-                <div class="font-semibold text-xl text-gray-700">Enrolled Subjects</div>
-                <a href="#" class="text-blue-500 hover:text-blue-600 text-sm">See all</a>
-            </div>
+            <div class="font-semibold text-xl text-gray-700">Enrolled Subjects</div>
             @if ($enrolled_subjects->isEmpty())
             <div class="bg-white p-6 rounded-lg text-center border border-gray-200">
                 <div class="text-xl font-bold text-gray-600">No Subjects Found!</div>
@@ -55,17 +52,6 @@
             </div>
             @endif
         </div>
-    </div>
-
-    <!-- Notifications Area -->
-    <div class="p-6 shadow-md rounded-lg bg-gray-50">
-        <div class="font-semibold text-xl text-gray-700 mb-3">Notifications</div>
-        <ul class="list-disc pl-5 space-y-2 text-gray-600">
-            <li>Hello John Doe! You have an incomplete grade in Earth and Life Science.</li>
-            <li>Hello John Doe! The due date for your task in General Mathematics is approaching.</li>
-            <li>Hello John Doe! Congratulations on completing your quiz in General Mathematics!</li>
-            <li>Hello John Doe! Sir Clifford assigned a new assignment in General Mathematics.</li>
-        </ul>
     </div>
 </div>
 @endsection
