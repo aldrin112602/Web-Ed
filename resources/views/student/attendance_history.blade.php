@@ -24,7 +24,7 @@
         <input type="text" placeholder="Search..." class="p-2 border border-gray-300 rounded">
         <div>
             <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded mr-2" onclick="window.print()">Print</button>
-            <a href="{{ route('student.download_attendance_history', $user->id) }}" class="bg-gray-800 text-white px-4 py-2 rounded">Download</a>
+            <a href="{{ route('student.download_attendance_history', $user->id) }}" class="bg-gray-800 text-white px-4 py-2 rounded">Export</a>
         </div>
     </div>
 
