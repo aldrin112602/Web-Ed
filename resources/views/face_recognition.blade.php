@@ -71,6 +71,52 @@
         video {
             transform: scaleX(-1);
         }
+
+        /* Toggle Switch Styles */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.toggle-slider {
+            background-color: #2196F3;
+        }
+
+        input:checked+.toggle-slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
 
@@ -93,6 +139,17 @@
             <div class="progress-container">
                 <div class="progress-bar" id="progress-bar"></div>
             </div>
+
+            <!-- Time In/Out Toggle Switch -->
+            <div class="mt-4 flex items-center justify-center space-x-2">
+                <span class="text-sm font-medium">Time Out</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="timeToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="text-sm font-medium">Time In</span>
+            </div>
+
             <button id="resetButton" class="mt-4 bg-black text-white py-2 px-6 rounded cursor-pointer">Reset</button>
         </div>
         <div class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 flex flex-col space-y-2 h-full mb-60">
@@ -109,7 +166,7 @@
                 <span id="student-id" class="ml-2">N/A</span>
             </div>
             <div class="flex justify-between items-center">
-                <span class="font-bold">Time In:</span>
+                <span class="font-bold">Time <span id="time-type">In</span>:</span>
                 <span id="time-in" class="ml-2">N/A</span>
             </div>
         </div>
@@ -121,6 +178,7 @@
             let currentStep = 0;
             let faceMatcher = null;
             let isSystemReady = false;
+            let isTimeIn = true;
 
             const verificationSteps = [{
                     instruction: 'Please look at the camera',
@@ -153,26 +211,26 @@
             const overlay = $('#overlay')[0];
             const progressBar = $('#progress-bar');
             const loadingOverlay = $('#loading-overlay');
+            const timeToggle = $('#timeToggle');
+            const timeType = $('#time-type');
+
+            // Time toggle event handler
+            timeToggle.on('change', function() {
+                isTimeIn = $(this).is(':checked');
+                timeType.text(isTimeIn ? 'In' : 'Out');
+            });
 
             async function initializeSystem() {
                 try {
-                    // Show loading overlay
                     loadingOverlay.show();
-
-                    // Load face-api.js models
                     await Promise.all([
                         faceapi.nets.tinyFaceDetector.loadFromUri('{{ asset("face_api/models") }}'),
                         faceapi.nets.faceLandmark68Net.loadFromUri('{{ asset("face_api/models") }}'),
                         faceapi.nets.faceRecognitionNet.loadFromUri('{{ asset("face_api/models") }}')
                     ]);
 
-                    // Initialize face matcher
                     faceMatcher = await initializeFaceMatcher();
-
-                    // Start video
                     await startVideo();
-
-                    // Hide loading overlay
                     loadingOverlay.hide();
                     isSystemReady = true;
 
@@ -271,7 +329,7 @@
                                 const result = faceMatcher.findBestMatch(detections[0].descriptor);
                                 if (result.label !== 'unknown') {
                                     $('#instruction').text(result.label);
-                                    updateStudentInfo(result.label);
+                                    if(!hasSubmitted) updateStudentInfo(result.label);
                                 } else {
                                     $('#instruction').text('Unknown');
                                 }
@@ -282,7 +340,6 @@
                     const resizedDetections = faceapi.resizeResults(detections, displaySize);
                     const ctx = overlay.getContext('2d');
                     ctx.clearRect(0, 0, overlay.width, overlay.height);
-                    // faceapi.draw.drawDetections(overlay, resizedDetections);
 
                     requestAnimationFrame(onPlay);
                 }
@@ -360,26 +417,29 @@
                     timeIn.text(getDate() + ' ' + getTimeIn());
 
                     if (!hasSubmitted) {
+
                         $.ajax({
                             url: '{{ route("face.attendance") }}',
                             type: 'POST',
                             data: {
-                                student_id: id
+                                student_id: id,
+                                is_time_in: String(isTimeIn) // Add time in/out parameter
                             },
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function(response) {
                                 hasSubmitted = true;
+
+                                console.log(response)
                                 Swal.fire({
-                                    title: response.success ?
-                                        'Face Successfully Scanned!' : 'Attendance Already Recorded',
-                                    text: response.success ?
-                                        'Your attendance has been recorded. Please proceed to your respective room' : 'Your attendance has been recorded for today!',
+                                    title: response.success ? 'Face Successfully Scanned!' : 'Info!',
+                                    text: response.message,
                                     icon: response.success ? 'success' : 'info'
                                 });
                             },
                             error: function(err) {
+                                hasSubmitted = true;
                                 console.error('Error submitting attendance:', err);
                                 Swal.fire({
                                     title: 'Error',
@@ -388,6 +448,9 @@
                                 });
                             }
                         });
+
+                        hasSubmitted = true;
+
                     }
                 }).fail(err => {
                     console.error('Error fetching student info:', err);
@@ -408,6 +471,9 @@
                 studentStrand.text('N/A');
                 studentId.text('N/A');
                 timeIn.text('N/A');
+                timeToggle.prop('checked', true); // Reset to Time In
+                isTimeIn = true;
+                timeType.text('In'); // Reset the display text
 
                 Swal.fire({
                     title: 'Face Scan Reset successfully',

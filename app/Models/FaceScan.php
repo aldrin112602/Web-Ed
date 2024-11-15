@@ -10,5 +10,6 @@ class FaceScan extends Model
     protected $fillable = [
         'student_id',
         'time',
+        'time_out'
     ];
 }
