@@ -19,10 +19,6 @@
                 margin-top: 5rem;
             }
         }
-
-
-
-
     }
 </style>
 <div>
