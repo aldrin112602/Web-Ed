@@ -77,11 +77,11 @@
 
                     @foreach ($presents as $present)
                     <tr class="tbl_tr">
-                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $present->student_id)->first()->id_number }}</td>
-                        <td class="py-2 text-center border">{{ explode(" ", $StudentAccount::where('id', $present->student_id)->first()->name)[0] }}</td>
-                        <td class="py-2 text-center border">{{ explode(" ", $StudentAccount::where('id', $present->student_id)->first()->name)[1] }}</td>
-                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $present->student_id)->first()->gender }}</td>
-                        <td class="py-2 text-center border">{{ $StudentAccount::where('id', $present->student_id)->first()->strand }}</td>
+                        <td class="py-2 text-center border">{{ $present->id_number }}</td>
+                        <td class="py-2 text-center border">{{ explode(" ", $present->name)[0] }}</td>
+                        <td class="py-2 text-center border">{{ explode(" ", $present->name)[1] }}</td>
+                        <td class="py-2 text-center border">{{ $present->gender }}</td>
+                        <td class="py-2 text-center border">{{ $present->strand }}</td>
                         <td class="py-2 text-center border">
                             <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
                         </td>

@@ -59,11 +59,6 @@ class attendanceController extends Controller
             $attendace_histories->where('status', request()->query('status'));
         }
 
-        
-
-
-
-
 
         return view('admin.attendance.view_attendance_history', [
             'user' => $user,
@@ -74,37 +69,6 @@ class attendanceController extends Controller
             'student' => StudentAccount::where('id', $id)->first()
         ]);
     }
-
-
-    /**
-     * 
-     * 
-     * 
-     * 
-     public function viewAttendanceHistory(Request $request, $id)
-    {
-        $user = Auth::guard('teacher')->user();
-        $attendace_histories_query = AttendanceHistory::query();
-        $handleSubjects = TeacherGradeHandle::where('teacher_id', $user->id)->get();
-
-        // Apply status filter
-        if ($request->has('status') && in_array($request->status, ['absent', 'present'])) {
-            $attendace_histories_query->where('status', $request->status);
-        }
-
-
-        return view('teacher.attendance.view_attendance_history', [
-            'user' => $user,
-            'attendace_histories' => $attendace_histories_query->get(),
-            'TeacherGradeHandle' => TeacherGradeHandle::class,
-            'SubjectModel' => SubjectModel::class,
-            'TeacherAccount' => TeacherAccount::class,
-            'student' => StudentAccount::where('id', $id)->first(),
-            'handleSubjects' => $handleSubjects
-        ]);
-    }
-
-     */
 
 
 
@@ -139,13 +103,33 @@ class attendanceController extends Controller
         ]);
     }
 
-    public function attendacePresent()
+    public function attendacePresent(Request $request)
     {
         $user = Auth::guard('admin')->user();
+
+        // Start a query with joins to link FaceScan and StudentAccount
+        $query = FaceScan::query()
+            ->join('student_accounts', 'face_scans.student_id', '=', 'student_accounts.id')
+            ->select('face_scans.*', 'student_accounts.*');
+
+        // Apply gender filter
+        if ($request->has('gender') && $request->gender != '' && $request->gender != 'All') {
+            $query->where('student_accounts.gender', $request->gender);
+        }
+
+        // Apply strand filter
+        if ($request->has('strand') && $request->strand != '' && $request->strand != 'All') {
+            $query->where('student_accounts.strand', $request->strand);
+        }
+
+        // Apply grade filter
+        if ($request->has('grade') && $request->grade != '' && $request->grade != 'All') {
+            $query->where('student_accounts.grade', $request->grade);
+        }
+
         return view('admin.attendance.present', [
             'user' => $user,
-            'presents' => FaceScan::paginate(10),
-            'StudentAccount' => StudentAccount::class
+            'presents' => $query->paginate(10),
         ]);
     }
 }
