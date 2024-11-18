@@ -1,10 +1,10 @@
 @extends('admin.layouts.app')
 
 @section('title', 'Attendance History')
-@section('custom_css')
+@section('content')
 <style>
     @media print {
-        #tablePreview {
+        #tablePreview2 {
             position: fixed;
             top: 0;
             left: 0;
@@ -16,15 +16,13 @@
 
     }
 </style>
-@endsection
-@section('content')
 <div class="p-4 bg-white">
 
     <div class="flex justify-between items-center mb-4">
 
         <div>
-            <button onclick="window.print()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-400">Print</button>
-            <a href="{{ route('admin.export_attendance_history', $user->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</a>
+            <a href="#!" onclick="window.print()" class="bg-slate-200 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-slate-100">Print <i class="fas fa-print"></i></a>
+            <a href="{{ route('admin.export_attendance_history', $user->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Export <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="relative">
             <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -39,7 +37,7 @@
 
 
     <!-- Attendance Table -->
-    <div class="overflow-x-auto" id="tablePreview">
+    <div class="overflow-x-auto" id="tablePreview2">
         <h2 class="text-2xl font-bold text-gray-700 my-4">
             {{ $student->name }} Attendance History
         </h2>
@@ -51,7 +49,7 @@
             </p>
         </div>
         @else
-        <table id="tbl_list" class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+        <table id="tbl_list" class="min-w-full bg-white shadow-md overflow-hidden">
             <thead class="bg-gray-600 text-white uppercase text-sm leading-normal">
                 <tr>
                     <th class="py-3 px-6 text-left">Date</th>

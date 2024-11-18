@@ -2,11 +2,31 @@
 
 @section('title', 'Class Attendance')
 @section('content')
+<style>
+    @media print {
+        #printable {
+            display: block;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: white;
+
+            button {
+                display: none !important;
+            }
+        }
+    }
+</style>
 <div class="p-5">
-    <div class="bg-white rounded-lg shadow-lg p-6">
+    <div class="bg-white rounded-lg shadow-lg p-6" id="printable">
         <!-- Header Information -->
         <div class="mb-6">
+            <div class="flex items-center justify-between">
             <h2 class="text-2xl font-bold mb-4">Class Attendance</h2>
+            <button onclick="window.print()" class="px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-500">Print</button>
+            </div>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
                     <p class="text-gray-600">Teacher: <span class="font-semibold">{{ $teacher->name }}</span></p>

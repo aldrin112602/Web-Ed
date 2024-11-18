@@ -130,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-3 {{ (request()->is('admin/subject/list') || request()->is('admin/subject') || request()->is('admin/subject/create') || request()->is('admin/subject/{id}/edit')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                <div class="p-3 {{ (request()->is('admin/subject/list') || request()->is('admin/teacher/subject_list') || request()->is('admin/subject') || request()->is('admin/subject/create') || request()->is('admin/subject/{id}/edit')) ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="{{ route('admin.subject') }}" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-bullhorn"></i></i>Subjects</a>
                 </div>
 
@@ -163,9 +163,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-3 {{ request()->is('admin/attendance_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
+                <!-- <div class="p-3 {{ request()->is('admin/attendance_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-sheet-plastic"></i>Attendance Sheet</a>
-                </div>
+                </div> -->
                 <div class="p-3 {{ request()->is('admin/students_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded">
                     <a href="#!" class="text-sm flex items-center justify-start gap-3"><i class="fa-solid fa-graduation-cap"></i>Students Grade</a>
                 </div>

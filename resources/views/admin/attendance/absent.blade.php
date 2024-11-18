@@ -7,8 +7,8 @@
 
         <div class="flex items-center justify-start gap-2">
             <a href="{{ route('admin.attendance.report') }}" class="px-4 py-2 {{ request()->is('admin/attendance/report') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded-md flex items-center justify-center gap-3">Report</a>
-            <a href="{{ route('admin.attendance.present') }}" class="px-4 py-2 {{ request()->is('admin/attendance/present') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded-md flex items-center justify-center gap-3">Present</a>
-            <a href="{{ route('admin.attendance.absent') }}" class="px-4 py-2 {{ request()->is('admin/attendance/absent') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded-md flex items-center justify-center gap-3">Absent</a>
+            <a href="{{ route('admin.attendance.present') }}?status=present" class="px-4 py-2 {{ request()->is('admin/attendance/present') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded-md flex items-center justify-center gap-3">Present</a>
+            <a href="{{ route('admin.attendance.absent') }}?status=absent" class="px-4 py-2 {{ request()->is('admin/attendance/absent') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} rounded-md flex items-center justify-center gap-3">Absent</a>
         </div>
         <!-- Search and Filters -->
         <hr class="my-3">
@@ -42,26 +42,13 @@
                     </select>
                 </form>
             </div>
-            <!-- <a href="#!" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
-                <i class="fas fa-plus"></i>
-                Add Student</a> -->
         </div>
 
         <hr class="my-3">
 
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">ABSENT STUDENT LIST</h1>
-            <div class="flex gap-2">
-                {{-- <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-trash"></i>
-                    Delete</button> --}}
-                <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-print"></i>
-                    Print</button>
-                <a href="#!" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-file-export"></i>
-                    Export</a>
-            </div>
+            
         </div>
 
         <hr class="my-3">
