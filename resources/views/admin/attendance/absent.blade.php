@@ -42,26 +42,13 @@
                     </select>
                 </form>
             </div>
-            <!-- <a href="#!" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center justify-center gap-3">
-                <i class="fas fa-plus"></i>
-                Add Student</a> -->
         </div>
 
         <hr class="my-3">
 
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">ABSENT STUDENT LIST</h1>
-            <div class="flex gap-2">
-                {{-- <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-trash"></i>
-                    Delete</button> --}}
-                <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-print"></i>
-                    Print</button>
-                <a href="#!" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
-                    <i class="fa-solid fa-file-export"></i>
-                    Export</a>
-            </div>
+            
         </div>
 
         <hr class="my-3">
