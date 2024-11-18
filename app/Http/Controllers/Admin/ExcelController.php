@@ -266,8 +266,9 @@ class ExcelController extends Controller
         // Populate data
         $row = 2;
         foreach ($subjects as $subject) {
+            $teacher = TeacherAccount::where('id', $subject->teacher_id)->first();
             $sheet->setCellValue('A' . $row, $subject->subject);
-            $sheet->setCellValue('B' . $row, $subject->teacher);
+            $sheet->setCellValue('B' . $row, $teacher->name);
             $sheet->setCellValue('C' . $row, $subject->time);
             $sheet->setCellValue('D' . $row, $subject->created_at);
             $sheet->setCellValue('E' . $row, $subject->updated_at);
