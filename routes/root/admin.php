@@ -62,6 +62,10 @@ Route::prefix('admin')->group(function () {
         Route::prefix('/teacher')->group(function () {
             // subject list
             Route::get('/subject_list', [SubjectController::class, 'teacherSubjectList'])->name('admin.teacher.subject_list');
+            // export subject list
+            Route::prefix('export')->group(function () {
+                Route::get('subject_list', [ExcelController::class, 'exportTeacherSubjectList'])->name('admin.teacher.export.subject');
+            });
 
             Route::get('/create', [SubjectController::class, 'viewCreateSubject'])->name('admin.teacher.create.subject');
             Route::post('/create', [SubjectController::class, 'createSubject'])->name('admin.teacher.handleCreate.subject');

@@ -16,8 +16,11 @@ class SubjectController extends Controller
     {
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
+
             $grade_handle = TeacherGradeHandle::where('id', request()->query('grade_handle_id'))->first();
+
             $subject_list = SubjectModel::where('teacher_id', request()->query('teacher_id'))->where('grade_handle_id', request()->query('grade_handle_id'))->paginate(10);
+            
 
             return view('admin.subject.teacher_subject_list', [
                 'user' => $user,

@@ -306,7 +306,15 @@ class ExcelController extends Controller
     public function exportTeacherSubjectList()
     {
         $auth_user = Auth::user();
-        $subjects = SubjectModel::where('teacher_id', $auth_user->id)->get();
+        $subjects = SubjectModel::where('teacher_id', (request()->query('teacher_id') ?request()->query('teacher_id') : $auth_user->id));
+
+        $name = (request()->query('teacher_id') ? TeacherAccount::where('id', request()->query('teacher_id'))->first()->name : $auth_user->name);
+
+        if(request()->query('grade_handle_id')) {
+            $subjects = $subjects->where('grade_handle_id', request()->query('grade_handle_id'));
+        }
+        $subjects = $subjects->get();
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -321,7 +329,7 @@ class ExcelController extends Controller
         $row = 2;
         foreach ($subjects as $subject) {
             $sheet->setCellValue('A' . $row, $subject->subject);
-            $sheet->setCellValue('B' . $row, $auth_user->name);
+            $sheet->setCellValue('B' . $row, $name);
             $sheet->setCellValue('C' . $row, $subject->time);
             $sheet->setCellValue('D' . $row, $subject->day);
             $sheet->setCellValue('E' . $row, $subject->created_at);

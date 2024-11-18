@@ -32,7 +32,7 @@
                     <i class="fa-solid fa-trash"></i>
                     Delete</button>
                 <button onclick="window.print()" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-print"></i> Print</button>
-                <a href="{{ route('teacher.export.subject') }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
+                <a href="{{ route('admin.teacher.export.subject') }}?teacher_id={{ $grade_handle->teacher_id }}&grade_handle_id={{ $grade_handle->id }}" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3"><i class="fa-solid fa-file-export"></i> Export</a>
             </div>
         </div>
 
