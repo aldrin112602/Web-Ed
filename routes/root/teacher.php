@@ -20,7 +20,8 @@ use App\Http\Controllers\Teacher\{
     FaceScanController,
     HighestPossibleScore,
     TwoFAController,
-    ClassHistory
+    ClassHistory,
+    ExportController as TeacherExportController
 };
 
 use App\Http\Controllers\Student\ExportController;
@@ -56,6 +57,9 @@ Route::prefix('teacher')->group(function () {
         // routes for class histories
         Route::get('/class_history', [ClassHistory::class, 'index'])->name('teacher.class_history');
         Route::get('view_class_history/{id}', [ClassHistory::class, 'view_class_history'])->name('teacher.view_class_history');
+
+        // export class history
+        Route::get('/export_class_history', [TeacherExportController::class, 'exportClassHistory'])->name('teacher.export_class_history');
 
         // highest possible scores
         Route::post('/highest-possible-scores', [HighestPossibleScore::class, 'store'])->name('teacher.addHighestPossibleScore');

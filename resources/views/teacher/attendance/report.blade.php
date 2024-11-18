@@ -50,7 +50,7 @@
 
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">REPORT</h1>
-            <div class="flex gap-2">
+            <!-- <div class="flex gap-2">
                 {{-- <button id="deleteSelected" class="px-4 py-2 bg-rose-700 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-trash"></i>
                     Delete</button> --}}
@@ -60,7 +60,7 @@
                 <a href="#!" class="px-4 py-2 bg-slate-500 text-white rounded-md flex items-center justify-center gap-3">
                     <i class="fa-solid fa-file-export"></i>
                     Export</a>
-            </div>
+            </div> -->
         </div>
 
         <hr class="my-3">
@@ -104,7 +104,7 @@
                         <td class="py-2 text-center border">{{ $list->grade }}</td>
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
                         <td class="py-2 text-center border">
-                            <a href="{{route('teacher.view_attendance_history', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">View</a>
+                            <a href="{{ route('teacher.view_attendance_history', $list->id) }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
 
                         </td>
                     </tr>

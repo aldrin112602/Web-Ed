@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -14,7 +15,8 @@ return new class extends Migration
         Schema::create('face_scans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
-            $table->time('time');
+            $table->time('time')->default(DB::raw('CURRENT_TIME'))->nullable();
+            $table->time('time_out')->nullable();
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('student_accounts')->onDelete('cascade');
