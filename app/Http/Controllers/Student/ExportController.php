@@ -15,7 +15,12 @@ class ExportController extends Controller
 {
     public function exportAttendanceHistory($id) {
         
-        $attendanceList = AttendanceHistory::where('student_id', $id)->get();
+        $attendanceList = null;
+        if(request()->query('status') && in_array(request()->query('status'), ['absent', 'present'])) {
+            $attendanceList = AttendanceHistory::where('student_id', $id)->where('status', request()->query('status'))->get();
+        } else {
+            $attendanceList = AttendanceHistory::where('student_id', $id)->get();
+        }
 
 
         $spreadsheet = new Spreadsheet();
