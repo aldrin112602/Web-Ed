@@ -22,7 +22,7 @@
 
         <div>
             <a href="#!" onclick="window.print()" class="bg-slate-200 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-slate-100">Print <i class="fas fa-print"></i></a>
-            <a href="{{ route('admin.export_attendance_history', $user->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Export <i class="fas fa-arrow-right"></i></a>
+            <a href="{{ route('admin.export_attendance_history', $user->id) }}?status={{ request()->query('status') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Export <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="relative">
             <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
