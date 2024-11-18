@@ -83,7 +83,7 @@
                         <td class="py-2 text-center border">{{ $present->gender }}</td>
                         <td class="py-2 text-center border">{{ $present->strand }}</td>
                         <td class="py-2 text-center border">
-                            <button class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</button>
+                        <a href="{{route('admin.view_attendance_history', $present->id) }}?status=present" class="px-2 py-1 bg-blue-500 text-white rounded-md">View</a>
                         </td>
                     </tr>
                     @endforeach
