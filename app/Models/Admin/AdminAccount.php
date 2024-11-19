@@ -44,4 +44,5 @@ class AdminAccount extends Authenticatable implements CanResetPassword
     {
         return $this->morphMany(Message::class, 'receiver');
     }
+    
 }

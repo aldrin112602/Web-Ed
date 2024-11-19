@@ -25,12 +25,27 @@ Route::get('/', function () {
 
     return view('welcome');
 });
+Route::get('/login', [PublicController::class, 'login'])->name('login');
 
 
 
+
+
+
+
+
+
+
+
+
+// face recognition and pattern routes
 Route::get('/face_recognition', [FaceRecognitionController::class, 'showFaceRecognition'])->name('face.recognition');
 Route::post('/face_recognition', [PublicController::class, 'faceScanAttendance'])->name('face.attendance');
 
 Route::get('/face_recognition/student-labels', [FaceRecognitionController::class, 'getStudentLabels'])->name('fetch_labels');
 Route::get('/face_recognition/student-info/{label}', [FaceRecognitionController::class, 'getStudentInfo']);
-Route::get('/login', [PublicController::class, 'login'])->name('login');
+
+Route::get('/face_recognition_auth', [FaceRecognitionController::class, 'viewPattern'])->name('face.recognition.pattern_auth');
+
+Route::post('/face-recognition/validate-pattern', [FaceRecognitionController::class, 'validatePattern'])->name('face.recognition.validate');
+

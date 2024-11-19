@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\{
     TwoFAController
 };
 use App\Http\Controllers\Student\ExportController;
-
+use App\Http\Controllers\FaceRecognitionController;
 
 // Admin routes
 Route::prefix('admin')->group(function () {
@@ -45,6 +45,11 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+
+        // pattern for face recognition
+        Route::post('/face-recognition/create-pattern', [FaceRecognitionController::class, 'createPattern'])->name('face.recognition.create');
+        Route::get('/face-recognition/set-pattern', [FaceRecognitionController::class, 'setPattern'])->name('face.recognition.set');
+
 
         // face scan
         Route::get('/facescan', [FaceScanController::class, 'index'])->name('admin.facescan');
