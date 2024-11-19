@@ -146,11 +146,19 @@
                 transform: translateX(5px);
             }
         }
+
+        h3 {
+            margin: 10px 0;
+            color: white;
+            text-align: center;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="container">
+        <h3>Please Draw Pattern</h3>
         <canvas id="patternCanvas" width="300" height="300"></canvas>
         <p id="patternOutput"></p>
         <div class="button-container">
@@ -390,6 +398,10 @@
                                     title: data.success ? 'Success!' : 'Error!',
                                     text: data.message,
                                     showConfirmButton: true
+                                }).then(() => {
+                                    if(data.success) {
+                                        location.href = '/face_recognition'
+                                    }
                                 });
                             })
                             .catch(error => {

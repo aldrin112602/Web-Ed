@@ -30,6 +30,7 @@
             align-items: center;
             min-height: 100vh;
             gap: 20px;
+            flex-wrap: wrap-reverse;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
         }
 
