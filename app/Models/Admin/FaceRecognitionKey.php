@@ -13,7 +13,8 @@ class FaceRecognitionKey extends Model
     protected $fillable = [
         'pattern',
         'created_by_admin_id',
-        'updated_by_admin_id'
+        'updated_by_admin_id',
+        'image_path'
     ];
 
     public function setPatternAttribute($value)

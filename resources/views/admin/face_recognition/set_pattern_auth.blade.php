@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>WebEd - Face Recognition Authentication</title>
+    <title>WebEd - Set Face Recognition Authentication</title>
     <script src="{{ asset('build/assets/app.js') }}" defer></script>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -29,6 +29,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            gap: 20px;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
         }
 
@@ -146,15 +147,27 @@
                 transform: translateX(5px);
             }
         }
+
+        h3 {
+            margin: 10px 0;
+            color: white;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+<div class="container">
+        <h3>Current Pattern for Face <br> Recognition Security</h3>
+        <img src="{{ asset('storage/' . $pattern->image_path) }}" alt="">
+    </div>
+
     <div class="container">
+        <h3>Set Pattern for Face <br> Recognition Security</h3>
         <canvas id="patternCanvas" width="300" height="300"></canvas>
         <p id="patternOutput"></p>
         <div class="button-container">
-            <button id="submitPattern">Verify Pattern</button>
+            <button id="submitPattern">Save Pattern</button>
             <button id="resetButton">Reset Pattern</button>
         </div>
     </div>
@@ -357,27 +370,31 @@
         });
 
         submitButton.addEventListener('click', () => {
+            const canvasData = canvas.toDataURL("image/png");
             const patternData = pattern.join('-');
             if (patternData) {
                 Swal.fire({
-                    title: 'Verifying Pattern...',
+                    title: 'Saving Pattern...',
                     text: 'Please wait',
                     timer: 1000,
                     timerProgressBar: true,
                     didOpen: () => {
                         Swal.showLoading();
-                        fetch('{{ route("face.recognition.validate") }}', {
+                        fetch('{{ route("face.recognition.create") }}', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                                 },
                                 body: JSON.stringify({
-                                    pattern: patternData
+                                    pattern: patternData,
+                                    image: canvasData,
                                 }),
                             })
                             .then(response => response.json())
                             .then(data => {
+
+                                document.querySelector('img').src = canvasData;
 
                                 if (!data.success) {
                                     isPatternValid = false;
@@ -393,6 +410,8 @@
                                 });
                             })
                             .catch(error => {
+
+                                console.log(error)
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',

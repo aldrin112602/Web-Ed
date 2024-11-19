@@ -47,11 +47,5 @@ Route::get('/face_recognition/student-info/{label}', [FaceRecognitionController:
 
 Route::get('/face_recognition_auth', [FaceRecognitionController::class, 'viewPattern'])->name('face.recognition.pattern_auth');
 
-
-
-
-Route::post('/face-recognition/create-pattern', [FaceRecognitionController::class, 'createPattern'])->name('face.recognition.create');
-
-
 Route::post('/face-recognition/validate-pattern', [FaceRecognitionController::class, 'validatePattern'])->name('face.recognition.validate');
 

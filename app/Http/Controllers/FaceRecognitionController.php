@@ -12,32 +12,87 @@ use Illuminate\Support\Facades\Session;
 class FaceRecognitionController extends Controller
 {
     // view pattern blade
-    public function viewPattern() 
+    public function viewPattern()
     {
         if (Session::get('authenticated_user')) {
             return redirect()->route('face.recognition');
         }
-        
+
         return view('pattern_authentication');
     }
-    
+
+    public function setPattern()
+    {
+        $pattern = FaceRecognitionKey::first();
+
+        return view('admin.face_recognition.set_pattern_auth', [
+            'pattern' => $pattern,
+        ]);
+    }
+
     // pattern methods
     public function createPattern(Request $request)
     {
         $request->validate([
             'pattern' => 'required|string',
+            'image' => 'required|string',
         ]);
 
-        $patternKey = FaceRecognitionKey::create([
-            'pattern' => $request->pattern,
-            'created_by_admin_id' => Auth::id(),
-        ]);
+        // Decode the Base64 image
+        $image = $request->input('image');
+        $image = str_replace('data:image/png;base64,', '', $image); // Remove Base64 header
+        $image = str_replace(' ', '+', $image); // Replace spaces with plus signs
+        $decodedImage = base64_decode($image);
 
-        return response()->json([
-            'message' => 'Pattern created successfully!',
-            'data' => $patternKey,
-        ]);
+        // Define the target directory and file name
+        $destinationPath = public_path('storage/pattern_images');
+        $imageName = 'pattern_' . time() . '.png';
+
+        // Check if the directory exists, if not, create it
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        // Save the file in the target directory
+        $filePath = $destinationPath . '/' . $imageName;
+        file_put_contents($filePath, $decodedImage);
+
+        // Build the relative file path for database storage
+        $relativePath = 'pattern_images/' . $imageName;
+
+        // Check if a pattern already exists for the current admin
+        $existingPattern = FaceRecognitionKey::first();
+
+        if ($existingPattern) {
+            // Update the existing pattern
+            $existingPattern->update([
+                'pattern' => $request->pattern,
+                'image_path' => $relativePath,
+                'updated_by_admin_id' => Auth::id(),
+            ]);
+
+            return response()->json([
+                'message' => 'Pattern updated successfully!',
+                'data' => $existingPattern,
+                'success' => true,
+            ]);
+        } else {
+            // Create a new pattern
+            $patternKey = FaceRecognitionKey::create([
+                'pattern' => $request->pattern,
+                'image_path' => $relativePath,
+                'created_by_admin_id' => Auth::id(),
+            ]);
+
+            return response()->json([
+                'message' => 'Pattern created successfully!',
+                'data' => $patternKey,
+                'success' => true,
+            ]);
+        }
     }
+
+
 
     // pattern validation
     public function validatePattern(Request $request)
@@ -53,10 +108,10 @@ class FaceRecognitionController extends Controller
             // Pattern matches
             Session::put('authenticated_user', true);
 
-            return response()->json(['message' => 'Pattern validated successfully!']);
+            return response()->json(['message' => 'Pattern validated successfully!', 'success' => true]);
         } else {
             // Pattern doesn't match
-            return response()->json(['message' => 'Invalid pattern.'], 403);
+            return response()->json(['message' => 'Invalid pattern.', 'success' => false], 403);
         }
     }
 
@@ -69,7 +124,7 @@ class FaceRecognitionController extends Controller
         if (!Session::get('authenticated_user')) {
             return redirect()->route('face.recognition.pattern_auth');
         }
-        
+
         return view('face_recognition');
     }
 

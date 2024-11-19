@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('face_recognition_keys', function (Blueprint $table) {
             $table->id();
             $table->string('pattern');
+            $table->string('image_path')->nullable();
             $table->unsignedBigInteger('created_by_admin_id');
             $table->unsignedBigInteger('updated_by_admin_id')->nullable();
             $table->timestamps();
