@@ -27,6 +27,7 @@ class FaceRecognitionController extends Controller
 
         return view('admin.face_recognition.set_pattern_auth', [
             'pattern' => $pattern,
+            'user' => Auth::user()
         ]);
     }
 

@@ -1,180 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>WebEd - Set Face Recognition Authentication</title>
-    <script src="{{ asset('build/assets/app.js') }}" defer></script>
+@section('title', 'WebEd - Set Face Recognition Authentication')
+@section('content')
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="min-h-screen bg-gradient-to-br from-red-400 to-teal-400 p-4">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-6 min-h-[calc(100vh-2rem)]">
+        <!-- Current Pattern Card -->
+        <div class="w-full max-w-sm p-6 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg transform transition-all duration-300 hover:-translate-y-1">
+            <h3 class="text-xl text-white text-center mb-6">
+                Current Pattern for Face<br>Recognition Security
+            </h3>
+            <div class="flex justify-center">
+                <img src="{{ asset('storage/' . $pattern->image_path) }}" 
+                     alt="Current Pattern" 
+                     class="rounded-lg max-w-full h-auto" id="curr_pattern">
+            </div>
+        </div>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+        <!-- New Pattern Card -->
+        <div class="w-full max-w-sm p-6 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-lg transform transition-all duration-300 hover:-translate-y-1">
+            <h3 class="text-xl text-white text-center mb-6">
+                Set Pattern for Face<br>Recognition Security
+            </h3>
+            <div class="flex justify-center">
+                <canvas id="patternCanvas" 
+                        class="rounded-lg transition-transform duration-300 touch-none"
+                        style="max-width: 100%; height: auto;" width="300" height="300">
+                </canvas>
+            </div>
 
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Montserrat", sans-serif;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            gap: 20px;
-            flex-wrap: wrap-reverse;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-        }
-
-        .container {
-            position: relative;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            transition: transform 0.3s ease;
-        }
-
-        .container:hover {
-            transform: translateY(-5px);
-        }
-
-        canvas {
-            border-radius: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        canvas:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-        }
-
-        #patternOutput {
-            margin-top: 1rem;
-            color: white;
-            font-size: 0.9rem;
-            text-align: center;
-            opacity: 0.8;
-        }
-
-        .button-container {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        button {
-            width: 100%;
-            padding: 0.8rem;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        #resetButton {
-            background: rgba(255, 87, 87, 0.3);
-            display: none;
-        }
-
-        button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        #resetButton:hover {
-            background: rgba(255, 87, 87, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .point {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-5px);
-            }
-
-            75% {
-                transform: translateX(5px);
-            }
-        }
-
-        h3 {
-            margin: 10px 0;
-            color: white;
-            text-align: center;
-        }
-    </style>
-</head>
-
-<body>
-<div class="container">
-        <h3>Current Pattern for Face <br> Recognition Security</h3>
-        <img src="{{ asset('storage/' . $pattern->image_path) }}" alt="">
-    </div>
-
-    <div class="container">
-        <h3>Set Pattern for Face <br> Recognition Security</h3>
-        <canvas id="patternCanvas" width="300" height="300"></canvas>
-        <p id="patternOutput"></p>
-        <div class="button-container">
-            <button id="submitPattern">Save Pattern</button>
-            <button id="resetButton">Reset Pattern</button>
+            <p id="patternOutput" class=" text-white/80 text-center text-sm"></p>
+            <div class="flex gap-3 mt-4">
+                <button id="submitPattern" 
+                        class="flex-1 px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 text-white transition-all duration-300">
+                    Save Pattern
+                </button>
+                <button id="resetButton" 
+                        class="hidden flex-1 px-4 py-2 rounded-lg bg-red-500/30 hover:bg-red-500/40 text-white transition-all duration-300">
+                    Reset Pattern
+                </button>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        const canvas = document.getElementById('patternCanvas');
+<script>
+    const canvas = document.getElementById('patternCanvas');
         const ctx = canvas.getContext('2d');
         const patternOutput = document.getElementById('patternOutput');
         const submitButton = document.getElementById('submitPattern');
@@ -385,7 +256,8 @@
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                                    'X-CSRF-TOKEN': document.querySelector(
+                                        'meta[name="csrf-token"]').content,
                                 },
                                 body: JSON.stringify({
                                     pattern: patternData,
@@ -395,7 +267,7 @@
                             .then(response => response.json())
                             .then(data => {
 
-                                document.querySelector('img').src = canvasData;
+                                document.querySelector('#curr_pattern').src = canvasData;
 
                                 if (!data.success) {
                                     isPatternValid = false;
@@ -447,7 +319,6 @@
         canvas.addEventListener('mouseout', () => {
             canvas.style.transform = 'scale(1)';
         });
-    </script>
-</body>
+</script>
 
-</html>
+@endsection
