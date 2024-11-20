@@ -31,6 +31,8 @@ class FaceRecognitionController extends Controller
         ]);
     }
 
+
+
     // pattern methods
     public function createPattern(Request $request)
     {
@@ -39,52 +41,43 @@ class FaceRecognitionController extends Controller
             'image' => 'required|string',
         ]);
 
-        // Decode the Base64 image
         $image = $request->input('image');
-        $image = str_replace('data:image/png;base64,', '', $image); // Remove Base64 header
-        $image = str_replace(' ', '+', $image); // Replace spaces with plus signs
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
         $decodedImage = base64_decode($image);
 
-        // Define the target directory and file name
         $destinationPath = public_path('storage/pattern_images');
-        $imageName = 'pattern_' . time() . '.png';
+        $imageName = 'pattern' . time() . '.png';
 
-        // Check if the directory exists, if not, create it
         if (!file_exists($destinationPath)) {
             mkdir($destinationPath, 0777, true);
         }
 
-        // Save the file in the target directory
         $filePath = $destinationPath . '/' . $imageName;
         file_put_contents($filePath, $decodedImage);
 
-        // Build the relative file path for database storage
         $relativePath = 'pattern_images/' . $imageName;
 
-        // Check if a pattern already exists for the current admin
         $existingPattern = FaceRecognitionKey::first();
-
         if ($existingPattern) {
-            // Update the existing pattern
+
             $existingPattern->update([
                 'pattern' => $request->pattern,
                 'image_path' => $relativePath,
                 'updated_by_admin_id' => Auth::id(),
             ]);
-
             return response()->json([
                 'message' => 'Pattern updated successfully!',
                 'data' => $existingPattern,
                 'success' => true,
             ]);
         } else {
-            // Create a new pattern
+
             $patternKey = FaceRecognitionKey::create([
                 'pattern' => $request->pattern,
                 'image_path' => $relativePath,
                 'created_by_admin_id' => Auth::id(),
             ]);
-
             return response()->json([
                 'message' => 'Pattern created successfully!',
                 'data' => $patternKey,
