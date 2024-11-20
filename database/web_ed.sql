@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2024 at 03:21 AM
+-- Generation Time: Nov 19, 2024 at 08:15 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,8 +68,8 @@ CREATE TABLE `admin_accounts` (
 --
 
 INSERT INTO `admin_accounts` (`id`, `id_number`, `name`, `gender`, `username`, `password`, `extension_name`, `email`, `position`, `role`, `profile`, `address`, `phone_number`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '1919757448', 'Lonie Grimes', 'Male', 'aldrin02', '$2y$12$PgeQWhBbtY4SWmyIrILOdeYjuBczoDnbeeMVlLzriHRSOTJsXbcna', 'jr', 'aklocko@example.net', NULL, 'Admin', NULL, '88195 Eliezer CircleWest Gerardo, MD 87277', '09615653697', NULL, NULL, '2024-08-14 02:11:22', '2024-10-14 15:08:41'),
-(2, '4496389333', 'Dr. Sarina Morissette DVM', 'Female', 'earnestine92', '$2y$12$WPsVmTcGm8LjD2ZMAcA.QeqxGHSIx/qfPi3SjSySGB.e72bBYOqKi', NULL, 'zulauf.jude@example.com', NULL, 'Admin', NULL, '148 Durgan Brooks\nEast Millieshire, MD 13613', '09452172261', NULL, NULL, '2024-08-14 02:11:23', '2024-08-14 02:11:23'),
+(1, '1919757448', 'Lonie Grimes', 'Male', 'aldrin02', '$2y$12$PgeQWhBbtY4SWmyIrILOdeYjuBczoDnbeeMVlLzriHRSOTJsXbcna', NULL, 'caballeroaldrin02@gmail.com', NULL, 'Admin', 'profiles/1731995193_WIN_20241026_16_52_52_Pro.jpg', '88195 Eliezer CircleWest Gerardo, MD 87277', '09615653697', NULL, NULL, '2024-08-14 02:11:22', '2024-11-19 05:46:33'),
+(2, '4496389333', 'Dr. Sarina Morissette DVM', 'Female', 'earnestine92', '$2y$12$WPsVmTcGm8LjD2ZMAcA.QeqxGHSIx/qfPi3SjSySGB.e72bBYOqKi', NULL, 'zulauf.jude@example.com', NULL, 'Admin', 'profiles/x3cZaAeF2sHcxWToqq3Z89eMNzQOO6mV62Jhw5zs.jpg', '148 Durgan BrooksEast Millieshire, MD 13613', '09452172261', NULL, NULL, '2024-08-14 02:11:23', '2024-10-27 03:17:54'),
 (3, '6788260981', 'Mr. Eino Heathcote V', 'Male', 'conroy.celestino', '$2y$12$ypOxFkqPfUfdAo/cL5Fr3erFXThfTlgaGVatL2tri5gimaL/beOCq', NULL, 'beatty.nicole@example.org', NULL, 'Admin', NULL, '337 Mark Fall Apt. 874\nO\'Konchester, HI 11251-1366', '09640728346', NULL, NULL, '2024-08-14 02:11:24', '2024-08-14 02:11:24'),
 (4, '5842549275', 'Winston Hegmann', 'Male', 'ettie26', '$2y$12$unKK2WF8OrU7y.c7lk4z9OPfbAdKVIJZGeV4aNwBnZ8WK3HezFYsW', NULL, 'hauck.earnest@example.org', NULL, 'Admin', NULL, '612 Ward Corners\nRitchieview, IN 41258-1798', '09185194354', NULL, NULL, '2024-08-14 02:11:25', '2024-08-14 02:11:25'),
 (5, '8724863582', 'Amari Robel', 'Male', 'rcollier', '$2y$12$WYCAnpYUZLVCDm4q9WE2yO92sqbyU5/lw0dP45b0vp6FEBbin1tZa', NULL, 'xokeefe@example.com', NULL, 'Admin', NULL, '60394 Orin Plain Apt. 851\nLake Gail, TN 68897', '09967283288', NULL, NULL, '2024-08-14 02:11:26', '2024-08-14 02:11:26'),
@@ -87,7 +87,8 @@ INSERT INTO `admin_accounts` (`id`, `id_number`, `name`, `gender`, `username`, `
 (17, '7588707393', 'Marques Brakus', 'Female', 'witting.kaela', '$2y$12$LTepdC2BegRrC.PJaxpUUuakZLO6wiUCO1S1moK0bu9bmM66SlOYe', NULL, 'elmer63@example.com', NULL, 'Admin', NULL, '33063 Theresia Point\nNorth Harmony, MD 92958-4483', '09576336202', NULL, NULL, '2024-08-14 02:11:39', '2024-08-14 02:11:39'),
 (18, '5459497807', 'Kameron Moen', 'Male', 'schulist.mikel', '$2y$12$JzQNHHxG8HJu1TX4Jv0Uhu3U3knK1z547vQjxkpC61QY5/1GqONoS', NULL, 'christa30@example.org', NULL, 'Admin', NULL, '97233 Russ Lodge\nRosenbaumhaven, MO 89295', '09641285211', NULL, NULL, '2024-08-14 02:11:40', '2024-08-14 02:11:40'),
 (19, '4910941883', 'Ericka Zulauf', 'Female', 'ceasar.ernser', '$2y$12$X4eZJRw9dKKhPgaCLlu8qeRBYVIRdu2qIg9Hqq3OccWePyByphtEe', NULL, 'mcummings@example.org', NULL, 'Admin', NULL, '35999 Osborne Skyway\nPort Laverne, ME 17488-0512', '09886461593', NULL, NULL, '2024-08-14 02:11:42', '2024-08-14 02:11:42'),
-(20, '4224762057', 'Mr. Rosendo Wiza II', 'Female', 'dwyman', '$2y$12$A8sbo8catRYYPMX5QMmQIeI3EW2X0TwCVieq4gAY/VprqfxYfRAhK', NULL, 'ubrekke@example.net', NULL, 'Admin', NULL, '8169 Rusty Islands\nWiegandchester, KY 08488', '09547278718', NULL, NULL, '2024-08-14 02:11:43', '2024-08-14 02:11:43');
+(20, '4224762057', 'Mr. Rosendo Wiza II', 'Female', 'dwyman', '$2y$12$A8sbo8catRYYPMX5QMmQIeI3EW2X0TwCVieq4gAY/VprqfxYfRAhK', NULL, 'ubrekke@example.net', NULL, 'Admin', NULL, '8169 Rusty Islands\nWiegandchester, KY 08488', '09547278718', NULL, NULL, '2024-08-14 02:11:43', '2024-08-14 02:11:43'),
+(21, '8208758316', 'James Bond', 'Male', 'tae123', '$2y$12$i0x/5SiJcUyezi5XFEY6fOQDE6uskx3Apz9qGbgoR2wqC74zV5Jmu', NULL, 'tae@gmail.com', NULL, 'Admin', 'profiles/4TRqmoKf2uwmBDklz9GM44SNxhDbxx2aleVXVJ3x.jpg', NULL, '09512793354', NULL, NULL, '2024-10-27 03:19:34', '2024-10-27 03:19:34');
 
 -- --------------------------------------------------------
 
@@ -115,14 +116,12 @@ CREATE TABLE `admin_notifications` (
 
 INSERT INTO `admin_notifications` (`id`, `type`, `user_id`, `title`, `message`, `is_seen`, `url`, `icon`, `priority`, `created_at`, `updated_at`) VALUES
 (1, 'reminder', 10, 'Voluptas et sunt enim sit dolor.', 'Ut odio excepturi maiores iusto vel laudantium. Nesciunt accusamus iste iure in. Accusamus provident vitae recusandae molestiae labore. Ut dolor labore quod aliquam qui deserunt. Possimus corporis dolores repellat.', 0, NULL, 'bell', 'high', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
-(2, 'alert', 1, 'Sunt est ut nemo mollitia velit debitis.', 'Eum debitis ducimus est eaque. Ipsum sit ut eum nostrum distinctio impedit. Repudiandae commodi quo quo officia.', 1, 'https://schamberger.net/aperiam-est-sunt-ut-consequatur-voluptatem-quisquam-sint.html', 'envelope', 'high', '2024-09-07 04:15:15', '2024-09-07 04:22:09'),
 (3, 'message', 2, 'Id nemo quisquam debitis dicta atque.', 'Et in culpa provident aliquam et vel illo cumque. Omnis ut reprehenderit quia dignissimos quaerat. Provident quia accusantium itaque. Vitae sint odit qui omnis.', 0, 'http://abbott.com/et-et-optio-eum-aut-ut-minima', 'envelope', 'low', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (4, 'alert', 18, 'Temporibus accusantium dignissimos sunt.', 'Repellat maiores assumenda porro recusandae culpa et consequatur nisi. Est officia repellat doloremque a rerum temporibus et necessitatibus. Numquam ea doloribus tempore libero repudiandae at.', 0, NULL, 'envelope', 'high', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (5, 'alert', 20, 'Dolorem quia consequatur placeat voluptate quam rem.', 'Sit sed officiis et sint. Ea sunt pariatur dolorem. Eos omnis quasi ad et expedita.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (6, 'alert', 12, 'Quas cumque quis eos.', 'Error quae tempore voluptate laboriosam. Enim sunt officiis qui qui odio.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (7, 'reminder', 10, 'Ut asperiores asperiores hic delectus quibusdam.', 'Aut doloribus minima cupiditate et nisi possimus. Rerum itaque incidunt amet odio sed fugit. Temporibus ut dolorem ut harum.', 0, 'http://www.ruecker.com/aut-eveniet-inventore-praesentium-nesciunt-vitae.html', 'info-circle', 'high', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (8, 'reminder', 3, 'Exercitationem numquam sit debitis debitis nesciunt autem.', 'Architecto soluta doloremque omnis magnam recusandae aspernatur. Soluta ullam nulla sed rerum est doloribus. Et qui fugiat temporibus minus. Non aspernatur minus expedita ut dignissimos.', 0, 'http://stokes.info/voluptates-ut-ipsum-voluptas-ratione-tenetur.html', 'bell', 'low', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
-(9, 'alert', 1, 'Aut labore possimus qui modi voluptas non.', 'Cumque dolores sint et ad esse repellat aut. Autem quis vel eos ipsum dolorum consequatur dicta. Similique nulla nihil illum. Quia vel nobis nisi necessitatibus possimus tempore.', 1, 'http://www.wiegand.com/ex-quibusdam-deserunt-perspiciatis-pariatur', 'info-circle', 'high', '2024-09-07 04:15:15', '2024-09-07 04:22:09'),
 (10, 'reminder', 13, 'Qui et ab ut.', 'Aut corrupti rem sint vel qui corporis. Magnam voluptatibus fugiat assumenda atque molestiae repudiandae omnis. Accusantium voluptatem sit dolorum ipsam quae.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (11, 'reminder', 18, 'Et sed expedita in.', 'Iste ipsam repellat ut qui doloribus fugiat asperiores. Ipsum voluptatum sint ut quo maxime.', 0, NULL, 'envelope', 'medium', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
 (12, 'message', 8, 'Consequatur qui optio maxime sapiente in nulla.', 'Reprehenderit voluptate voluptate totam rem. Asperiores aliquam beatae modi. Totam neque itaque est ipsam. Et sed quo iure molestiae vel.', 0, NULL, 'bell', 'high', '2024-09-07 04:15:15', '2024-09-07 04:15:15'),
@@ -184,7 +183,6 @@ INSERT INTO `admin_notifications` (`id`, `type`, `user_id`, `title`, `message`, 
 (68, 'message', 15, 'Et in vel nobis rerum et ea.', 'Adipisci dolore voluptas a omnis temporibus neque id nihil. Non omnis quae ut hic quis odio. Molestiae debitis aut vel fuga fugit esse. Cumque est molestiae ut ipsa et.', 0, NULL, 'bell', 'medium', '2024-09-07 04:15:57', '2024-09-07 04:15:57'),
 (69, 'reminder', 5, 'Enim reiciendis non voluptas debitis laboriosam error.', 'Omnis aut voluptatem dolorum eius et alias velit. Quasi qui est voluptatem culpa. Aut mollitia ut quia sit. Consectetur nisi quo ut minima.', 0, 'http://muller.com/rerum-ratione-doloremque-omnis-ut-neque', 'bell', 'low', '2024-09-07 04:15:57', '2024-09-07 04:15:57'),
 (70, 'reminder', 16, 'Excepturi reprehenderit ut unde aut culpa.', 'Sed hic in esse quo. Eaque ad sit quisquam voluptas eos sint deserunt repudiandae. Esse ipsa accusantium id dolores. Ut soluta aut soluta et fuga cupiditate voluptatum.', 0, 'http://www.moen.net/rerum-aliquam-adipisci-veritatis-qui-consectetur-quasi-perspiciatis.html', 'envelope', 'low', '2024-09-07 04:15:57', '2024-09-07 04:15:57'),
-(71, 'alert', 1, 'Quia nobis adipisci cum sit veritatis exercitationem.', 'Et qui accusamus accusamus dolore illum quaerat voluptatem. Asperiores magni error placeat. Consequuntur aut nostrum sapiente culpa est quas quas. Qui fugiat aut ex quam consectetur. Fuga vero sunt eius.', 1, NULL, 'info-circle', 'medium', '2024-09-07 04:15:57', '2024-09-07 04:22:09'),
 (72, 'reminder', 18, 'Labore ipsam expedita consequatur accusantium.', 'Dignissimos rerum ut sed omnis ratione. Et corrupti delectus sed et eum commodi quae aut. Velit quibusdam eaque dolor ut recusandae id veniam.', 0, 'https://berge.net/pariatur-ullam-et-necessitatibus-quam-sapiente-ea.html', 'bell', 'medium', '2024-09-07 04:15:57', '2024-09-07 04:15:57'),
 (73, 'message', 15, 'Reiciendis excepturi esse nisi accusamus.', 'Accusantium alias dicta excepturi ipsum occaecati corrupti rerum. Explicabo nam perspiciatis quo. Et repudiandae quas quia hic animi nesciunt quasi.', 0, 'https://www.braun.com/quas-optio-quia-suscipit-sed-occaecati', 'info-circle', 'medium', '2024-09-07 04:15:57', '2024-09-07 04:15:57'),
 (74, 'alert', 19, 'Optio incidunt fugiat dignissimos voluptatem quasi non.', 'Eaque aperiam mollitia quod explicabo et dolorum deleniti. Porro sint sunt asperiores quas. Excepturi tempora voluptatibus ab possimus porro illum.', 0, 'http://www.turcotte.biz/', 'envelope', 'low', '2024-09-07 04:15:57', '2024-09-07 04:15:57'),
@@ -206,14 +204,55 @@ INSERT INTO `admin_notifications` (`id`, `type`, `user_id`, `title`, `message`, 
 (90, 'message', 16, 'Ad aut nesciunt quia.', 'Nam animi rerum eos non. Quasi est fuga tempore rem numquam non et libero.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (91, 'alert', 16, 'Laboriosam molestias reiciendis eligendi officia doloremque.', 'Consectetur voluptas est sed consequatur qui ut. Velit est possimus quos rerum inventore impedit aspernatur doloremque. Expedita est consectetur rerum et fugit aliquam quia ea.', 0, 'http://www.kessler.org/et-delectus-ullam-consequatur-sapiente-illo-ipsa-et.html', 'info-circle', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (92, 'alert', 18, 'Ut harum ut excepturi.', 'Facere ut quia error et. Quo nesciunt natus quidem repellendus et veritatis. Iusto labore cum expedita.', 0, NULL, 'envelope', 'high', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
-(93, 'reminder', 1, 'Minima error expedita eveniet nisi.', 'Ab ratione iusto sed nam. Esse et ut molestiae explicabo non consequatur. Repudiandae dolorem amet quaerat.', 1, 'http://www.hartmann.com/nihil-dolorem-distinctio-voluptas-odio-omnis-tempore', 'info-circle', 'high', '2024-09-07 04:15:58', '2024-09-07 04:22:09'),
 (94, 'reminder', 8, 'Impedit quia dolorum fuga.', 'Id odio id alias doloribus eveniet fugit et. Officiis doloremque quo dicta ut libero voluptate ut. Aspernatur laboriosam explicabo maiores iure.', 0, 'http://williamson.org/saepe-vel-voluptatibus-voluptatem-impedit-illo-iure-eaque', 'envelope', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (95, 'reminder', 5, 'Fuga occaecati facilis eius est odit rem.', 'Iusto quia aliquid corporis ut eos ab asperiores. Veritatis cum est qui nihil fugit expedita et. Et laudantium consectetur excepturi et.', 0, 'http://www.armstrong.info/provident-et-magnam-quaerat-molestias-esse', 'info-circle', 'high', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (96, 'message', 4, 'Libero magnam dolorem reiciendis quam rem.', 'Et aspernatur aut qui. Adipisci reprehenderit magnam omnis reprehenderit nostrum. Repellendus suscipit ratione id aperiam aut porro sit. Corporis magni vel ullam.', 0, 'http://moore.com/similique-et-quas-cum-qui', 'envelope', 'low', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (97, 'message', 14, 'Dolor ducimus perferendis qui.', 'Vel non ea veritatis voluptatem quasi. Delectus nobis assumenda possimus illo incidunt cupiditate. Quia et modi et dolorum qui sapiente totam.', 0, NULL, 'info-circle', 'high', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (98, 'message', 14, 'Voluptatem a sint optio.', 'Dicta minima iure et voluptatibus recusandae. Deleniti ipsum quasi ea aut facilis enim. Provident vel praesentium qui deserunt aliquam. Esse quasi ipsum velit nisi illum.', 0, NULL, 'bell', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (99, 'reminder', 11, 'Voluptatibus incidunt et nobis.', 'Sint et molestiae consequuntur veniam sit. Qui quaerat modi quasi. Est non nisi iusto voluptatum.', 0, 'https://stokes.info/omnis-et-quod-consequatur-voluptatibus-aut-ipsa.html', 'bell', 'low', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
-(100, 'alert', 14, 'Ab qui neque doloribus ullam doloremque asperiores.', 'Consequatur recusandae officia pariatur quia alias praesentium aut ut. Iste quam accusamus mollitia distinctio delectus qui. Culpa velit architecto voluptatum quo et consequatur.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58');
+(100, 'alert', 14, 'Ab qui neque doloribus ullam doloremque asperiores.', 'Consequatur recusandae officia pariatur quia alias praesentium aut ut. Iste quam accusamus mollitia distinctio delectus qui. Culpa velit architecto voluptatum quo et consequatur.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
+(101, 'profile_update', 1, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 1, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:45:23'),
+(102, 'profile_update', 2, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(103, 'profile_update', 3, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(104, 'profile_update', 4, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(105, 'profile_update', 5, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(106, 'profile_update', 6, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(107, 'profile_update', 7, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(108, 'profile_update', 8, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(109, 'profile_update', 9, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(110, 'profile_update', 10, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(111, 'profile_update', 11, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(112, 'profile_update', 12, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(113, 'profile_update', 13, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(114, 'profile_update', 14, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(115, 'profile_update', 15, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(116, 'profile_update', 16, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(117, 'profile_update', 17, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(118, 'profile_update', 18, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(119, 'profile_update', 19, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(120, 'profile_update', 20, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(121, 'profile_update', 21, 'Request profile update', 'Hi, paki palitang ng email ko, gawin mong aldrin112602', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:34:23', '2024-11-01 04:34:23'),
+(122, 'profile_update', 1, 'Request profile update', 'fsdfsdfsdf', 1, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:45:23'),
+(123, 'profile_update', 2, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(124, 'profile_update', 3, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(125, 'profile_update', 4, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(126, 'profile_update', 5, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(127, 'profile_update', 6, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(128, 'profile_update', 7, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(129, 'profile_update', 8, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(130, 'profile_update', 9, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(131, 'profile_update', 10, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(132, 'profile_update', 11, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(133, 'profile_update', 12, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(134, 'profile_update', 13, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(135, 'profile_update', 14, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(136, 'profile_update', 15, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(137, 'profile_update', 16, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(138, 'profile_update', 17, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(139, 'profile_update', 18, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(140, 'profile_update', 19, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(141, 'profile_update', 20, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02'),
+(142, 'profile_update', 21, 'Request profile update', 'fsdfsdfsdf', 0, 'http://127.0.0.1:8000/admin/account_management/student/1/edit', 'info-circle', 'high', '2024-11-01 04:36:02', '2024-11-01 04:36:02');
 
 -- --------------------------------------------------------
 
@@ -247,13 +286,6 @@ CREATE TABLE `announcements` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `announcements`
---
-
-INSERT INTO `announcements` (`id`, `teacher_id`, `grade_handle_id`, `title`, `announcement`, `is_seen`, `file_path`, `created_at`, `updated_at`) VALUES
-(2, 1, 5, 'Lorem ipsum dolor', 'Lorem ipsum dolor sit amet', 0, NULL, '2024-10-04 05:30:18', '2024-10-04 05:30:18');
-
 -- --------------------------------------------------------
 
 --
@@ -278,61 +310,19 @@ CREATE TABLE `attendance_histories` (
 --
 
 INSERT INTO `attendance_histories` (`id`, `subject_model_id`, `grade_handle_id`, `teacher_id`, `student_id`, `status`, `date`, `time_in`, `created_at`, `updated_at`) VALUES
-(1, 21, 3, 15, 1, 'Present', '2024-08-24', '07:10 AM', NULL, NULL),
-(2, 22, 14, 15, 1, 'Present', '2024-08-24', '10:20 AM', NULL, NULL),
-(3, 21, 20, 7, 2, 'Absent', '2018-09-12', '16:06:36', '2024-09-14 16:48:45', '2024-09-14 16:48:45'),
 (4, 28, 18, 14, 1, 'Absent', '2004-12-30', '19:58:09', '2024-09-14 16:48:45', '2024-09-14 16:48:45'),
-(5, 27, 15, 12, 1, 'Late', '1999-06-08', '21:09:18', '2024-09-14 16:48:45', '2024-09-14 16:48:45'),
-(6, 29, 1, 1, 2, 'Late', '2000-05-17', '11:14:15', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(7, 27, 14, 3, 2, 'Present', '1988-05-08', '12:21:19', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (8, 22, 1, 12, 1, 'Absent', '2001-07-19', '14:40:05', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(9, 30, 14, 17, 1, 'Absent', '1973-04-11', '11:32:43', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(10, 27, 17, 12, 2, 'Present', '2020-02-22', '06:34:13', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(11, 21, 1, 14, 2, 'Present', '1979-10-18', '19:07:18', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(12, 31, 15, 1, 1, 'Late', '1988-09-23', '22:16:26', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(13, 27, 19, 16, 2, 'Present', '1974-02-15', '00:47:16', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(14, 30, 9, 19, 2, 'Late', '1995-03-03', '02:16:33', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(15, 29, 2, 12, 1, 'Present', '1979-06-17', '17:39:30', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(16, 31, 9, 18, 1, 'Present', '2005-02-09', '15:14:06', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(17, 29, 17, 6, 1, 'Present', '1998-02-09', '18:36:51', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(18, 27, 11, 9, 1, 'Late', '2020-04-10', '00:24:59', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (19, 21, 13, 18, 1, 'Late', '2016-04-02', '15:53:13', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(20, 29, 16, 9, 2, 'Present', '2024-09-14', '12:49:43', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(21, 30, 1, 18, 1, 'Present', '1973-07-13', '03:20:10', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(22, 31, 16, 15, 2, 'Absent', '2000-09-24', '10:06:28', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(23, 27, 20, 1, 2, 'Absent', '1974-05-07', '00:56:55', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(24, 29, 4, 15, 2, 'Absent', '1981-12-06', '12:22:50', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(25, 31, 19, 16, 2, 'Late', '2012-06-09', '23:29:52', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (26, 21, 17, 15, 1, 'Late', '1978-11-25', '22:34:47', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(27, 29, 20, 9, 2, 'Late', '2023-09-08', '03:35:10', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(28, 28, 13, 2, 2, 'Present', '1993-03-16', '16:26:21', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (29, 21, 6, 7, 1, 'Absent', '1987-04-24', '16:21:52', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(30, 23, 10, 1, 2, 'Absent', '1972-12-31', '12:26:12', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(31, 21, 13, 6, 2, 'Late', '1980-01-27', '12:39:14', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(32, 31, 10, 20, 2, 'Absent', '2014-06-28', '06:31:13', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (33, 21, 11, 15, 1, 'Late', '1993-08-02', '05:37:25', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (34, 21, 5, 2, 1, 'Absent', '1987-01-25', '17:31:38', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(35, 29, 6, 6, 1, 'Present', '1991-10-02', '13:15:04', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(36, 30, 17, 18, 1, 'Present', '1987-09-19', '13:57:14', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(37, 31, 16, 17, 2, 'Absent', '1971-11-18', '00:57:38', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(38, 23, 12, 2, 2, 'Absent', '2014-12-19', '13:54:00', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(39, 27, 12, 15, 1, 'Late', '1985-03-23', '11:20:41', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(40, 21, 20, 3, 2, 'Absent', '2023-11-11', '10:47:22', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(41, 27, 17, 3, 2, 'Absent', '2016-01-06', '06:24:09', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (42, 21, 20, 3, 1, 'Late', '2022-01-13', '11:38:14', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(43, 29, 20, 20, 1, 'Absent', '1987-12-04', '00:14:21', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(44, 31, 11, 19, 2, 'Present', '1992-04-13', '08:20:05', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (45, 21, 3, 7, 1, 'Late', '1975-10-28', '14:37:45', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(46, 31, 19, 9, 1, 'Absent', '1972-03-01', '04:48:02', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(47, 21, 12, 11, 2, 'Absent', '1994-12-08', '03:42:46', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (48, 28, 19, 7, 1, 'Late', '2023-06-19', '06:14:22', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (49, 23, 12, 10, 1, 'Late', '2011-07-11', '18:53:48', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(50, 27, 19, 10, 2, 'Late', '1994-07-12', '00:46:10', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(51, 29, 19, 7, 2, 'Late', '1987-08-05', '13:21:10', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
-(52, 27, 4, 3, 1, 'Late', '1985-02-24', '15:40:27', '2024-09-14 16:48:46', '2024-09-14 16:48:46'),
 (53, 21, 5, 1, 1, 'Present', '2024-09-28', '2024-09-28 00:30:34', '2024-09-27 16:30:34', '2024-09-27 16:30:34'),
-(54, 21, 5, 1, 2, 'Present', '2024-09-28', '2024-09-28 00:31:00', '2024-09-27 16:31:00', '2024-09-27 16:31:00'),
-(55, 22, 5, 1, 2, 'Present', '2024-09-28', '2024-09-28 08:43:15', '2024-09-28 00:43:15', '2024-09-28 00:43:15');
+(56, 21, 5, 1, 1, 'Present', '2024-11-04', '13:54:11', '2024-11-04 05:54:11', '2024-11-04 05:54:11');
 
 -- --------------------------------------------------------
 
@@ -361,13 +351,37 @@ CREATE TABLE `cache_locks` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `face_recognition_keys`
+--
+
+CREATE TABLE `face_recognition_keys` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `pattern` varchar(255) NOT NULL,
+  `image_path` varchar(255) DEFAULT NULL,
+  `created_by_admin_id` bigint(20) UNSIGNED NOT NULL,
+  `updated_by_admin_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `face_recognition_keys`
+--
+
+INSERT INTO `face_recognition_keys` (`id`, `pattern`, `image_path`, `created_by_admin_id`, `updated_by_admin_id`, `created_at`, `updated_at`) VALUES
+(4, '$2y$12$/NecU2u8RsgFbgbaNx4ize.laO/.g1XhQmsMlQIhRcnFxEhlcRnei', 'pattern_images/pattern_1731999804.png', 1, 1, '2024-11-19 06:49:31', '2024-11-19 07:03:25');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `face_scans`
 --
 
 CREATE TABLE `face_scans` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `student_id` bigint(20) UNSIGNED NOT NULL,
-  `time` time NOT NULL,
+  `time` time DEFAULT curtime(),
+  `time_out` time DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -376,10 +390,9 @@ CREATE TABLE `face_scans` (
 -- Dumping data for table `face_scans`
 --
 
-INSERT INTO `face_scans` (`id`, `student_id`, `time`, `created_at`, `updated_at`) VALUES
-(3, 1, '04:16:08', '2024-08-24 20:16:08', '2024-08-24 20:16:08'),
-(4, 2, '06:50:08', '2024-09-14 20:16:08', '2024-09-14 20:16:08'),
-(5, 1, '08:21:57', '2024-10-14 00:21:57', '2024-10-14 00:21:57');
+INSERT INTO `face_scans` (`id`, `student_id`, `time`, `time_out`, `created_at`, `updated_at`) VALUES
+(2, 1, '11:54:01', '11:57:06', '2024-11-15 03:54:01', '2024-11-15 03:57:06'),
+(3, 1, '14:12:25', NULL, '2024-11-19 06:12:25', '2024-11-19 06:12:25');
 
 -- --------------------------------------------------------
 
@@ -405,21 +418,25 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `grading_headers` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `teacher_id` int(11) DEFAULT NULL,
   `region` varchar(255) DEFAULT 'IV - A',
   `division` varchar(255) DEFAULT '2nd',
   `school_name` varchar(255) DEFAULT 'Ark Technological Institute Education System Inc',
   `school_id` varchar(255) DEFAULT '405210',
   `school_year` varchar(255) DEFAULT '2023-2024',
+  `semester` varchar(255) DEFAULT NULL,
+  `quarter` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `track` varchar(255) DEFAULT NULL,
+  `grade` varchar(255) DEFAULT NULL,
+  `strand` varchar(255) DEFAULT NULL,
+  `section` varchar(255) DEFAULT NULL,
+  `written_work_percentage` varchar(255) DEFAULT NULL,
+  `performance_task_percentage` varchar(255) DEFAULT NULL,
+  `quarterly_assessment_percentage` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `grading_headers`
---
-
-INSERT INTO `grading_headers` (`id`, `region`, `division`, `school_name`, `school_id`, `school_year`, `created_at`, `updated_at`) VALUES
-(1, 'IV - A', '2nd', 'Ark Technological Institute Education System Inc', '405210', '2023-2024', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -451,7 +468,7 @@ CREATE TABLE `guidance_accounts` (
 --
 
 INSERT INTO `guidance_accounts` (`id`, `id_number`, `name`, `extension_name`, `gender`, `username`, `password`, `email`, `role`, `profile`, `address`, `phone_number`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '1923247534', 'Stefanie Mohr', NULL, 'Female', 'aldrin02', '$2y$12$DmLAnrFe6c266rS3pLira.5bXOePH3RdMtSKBBJKi.k.62YFkMqgK', 'janessa30@example.com', 'Guidance', NULL, '2650 Gilbert Underpass\nZulaufmouth, MD 49373-5270', '09223387088', NULL, NULL, '2024-08-14 02:11:23', '2024-08-14 02:11:23'),
+(1, '1923247534', 'Aldrin Caballero', NULL, 'Female', 'aldrin02', '$2y$12$DmLAnrFe6c266rS3pLira.5bXOePH3RdMtSKBBJKi.k.62YFkMqgK', 'caballeroaldrin02@gmail.com', 'Guidance', 'profiles/1731903502_WIN_20241026_16_52_50_Pro.jpg', '2650 Gilbert UnderpassZulaufmouth, MD 49373-5270', '09223387088', NULL, NULL, '2024-08-14 02:11:23', '2024-11-18 04:23:52'),
 (2, '4680025548', 'Mr. Cleve Mueller', NULL, 'Male', 'jazmyne68', '$2y$12$Xb981w6GXjvf2vZx62CduuroARZDUHmuA10OIYYQNHOfZ.uHe/n.i', 'virginia35@example.net', 'Guidance', NULL, '61996 Lafayette Fork\nNew Andreanebury, NC 44705', '09144886462', NULL, NULL, '2024-08-14 02:11:24', '2024-08-14 02:11:24'),
 (3, '1444004408', 'Ms. Margot Green', NULL, 'Male', 'zluettgen', '$2y$12$Ux3DycUkFd0tzNUmgeb3Huo1Ujv0IIAIC7Jl/1N.mfyIOdpEcoPfy', 'ullrich.destiny@example.com', 'Guidance', NULL, '91994 Mann Points\nMedhursthaven, MA 74344', '09587231241', NULL, NULL, '2024-08-14 02:11:25', '2024-08-14 02:11:25'),
 (4, '2020264065', 'Dr. Fredrick Stark II', NULL, 'Female', 'lwunsch', '$2y$12$Kh7RlSSjaCnlhIZ2hcJwueqQJattZaPs9SMp048K.7LX48Sarw6I6', 'julien99@example.net', 'Guidance', NULL, '2155 Mertie Station Apt. 421\nPort Cortezbury, NY 18525-8901', '09907770793', NULL, NULL, '2024-08-14 02:11:26', '2024-08-14 02:11:26'),
@@ -497,7 +514,6 @@ CREATE TABLE `guidance_notifications` (
 --
 
 INSERT INTO `guidance_notifications` (`id`, `type`, `user_id`, `title`, `message`, `is_seen`, `url`, `icon`, `priority`, `created_at`, `updated_at`) VALUES
-(1, 'alert', 1, 'Voluptatem sit magni soluta odio minima dolorum.', 'Ipsa aspernatur qui beatae magnam. Et qui fugit distinctio nulla et. Dolor pariatur dolorem vel quisquam perspiciatis sapiente.', 0, 'http://rowe.com/omnis-nostrum-laudantium-atque.html', 'info-circle', 'high', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (2, 'message', 17, 'Et mollitia culpa ratione voluptatem.', 'Est et molestiae soluta aperiam blanditiis dolor. Fugit assumenda quis laudantium architecto consequatur. Necessitatibus minus fugit id id iure minima qui. Aperiam et est quae omnis repudiandae consequuntur in.', 0, 'https://www.doyle.com/consequatur-inventore-cum-qui-ea-est-consequatur', 'info-circle', 'medium', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (3, 'alert', 5, 'Rerum consequatur modi quibusdam et quas sit.', 'Voluptatem ut odit et nihil doloribus et. Vel dolores ipsam earum et et. Quasi ad quas molestiae suscipit perferendis cumque et.', 0, 'http://www.crona.net/nostrum-accusamus-dolorem-exercitationem-ad-suscipit-consequatur-sunt', 'bell', 'high', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (4, 'reminder', 9, 'Laborum omnis illum vel.', 'Sequi ut temporibus animi quas nisi. Amet magni fugiat eum et vel dolorum. Sunt quia nobis error. Expedita est dignissimos quaerat modi et laboriosam omnis.', 0, NULL, 'envelope', 'medium', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
@@ -507,7 +523,6 @@ INSERT INTO `guidance_notifications` (`id`, `type`, `user_id`, `title`, `message
 (8, 'message', 4, 'Perferendis in consectetur dolor dolorum quas delectus.', 'Provident omnis reiciendis quis eveniet consequatur magnam odit. Enim ab quibusdam rem a sequi quasi. Quidem qui ut vero est unde ipsam.', 0, 'http://www.kling.com/inventore-animi-nihil-error-dolores-saepe-laboriosam-doloremque', 'envelope', 'low', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (9, 'alert', 9, 'Qui molestiae totam repellendus quia.', 'Omnis provident quod ea dolor. Dolor enim officiis doloribus accusantium minima ut velit voluptatem. Aut est est dolores dicta.', 0, 'http://harber.com/eaque-perferendis-expedita-delectus-placeat-consequuntur-qui-sed-veritatis.html', 'envelope', 'high', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (10, 'message', 14, 'Sit voluptatum unde eius.', 'Incidunt autem molestiae dignissimos qui esse fuga ipsum. Voluptatem pariatur laborum iure qui doloremque et. Inventore assumenda ipsum sequi accusamus odit ullam.', 0, 'https://rice.org/at-officiis-tempora-sapiente-sequi-dignissimos-rerum-quis-voluptatem.html', 'info-circle', 'low', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
-(11, 'reminder', 1, 'Incidunt iste qui et sint voluptatem quia.', 'Rerum quia in earum neque. Facilis voluptatem iste qui neque dicta. Modi neque occaecati aut deserunt et.', 0, 'http://www.grimes.biz/ad-pariatur-sapiente-adipisci-itaque-et', 'bell', 'low', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (12, 'reminder', 9, 'Assumenda sit consequatur vel.', 'Natus aliquid dolores aut delectus iusto beatae ducimus. Perferendis non nobis excepturi consequatur mollitia et. Nemo illum nemo ducimus asperiores possimus provident impedit. Possimus officiis aperiam laboriosam culpa.', 0, NULL, 'info-circle', 'high', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (13, 'alert', 18, 'Molestias deserunt mollitia illum velit voluptate.', 'Numquam sequi quam aspernatur similique animi deserunt quia et. Nisi quia nemo eius. Quia aut quisquam expedita corrupti architecto. Ducimus facilis voluptatem qui sed ab sint.', 0, 'http://mayert.com/', 'envelope', 'medium', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (14, 'reminder', 7, 'Asperiores ut beatae rerum illo reiciendis.', 'Ducimus suscipit nam nobis illo. Est mollitia omnis et ipsam autem voluptates. Ut nihil quod animi soluta voluptatem quia sed.', 0, NULL, 'info-circle', 'high', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
@@ -546,13 +561,11 @@ INSERT INTO `guidance_notifications` (`id`, `type`, `user_id`, `title`, `message
 (47, 'alert', 18, 'Magnam aut sit hic.', 'Temporibus fugit voluptate non sequi nesciunt quam et. Iure et quidem ut odit omnis et excepturi voluptates. Voluptatem qui magni commodi non totam. A nisi harum voluptatem dolorem blanditiis dignissimos. Quasi distinctio fugiat optio consectetur aperiam.', 0, NULL, 'bell', 'low', '2024-09-07 04:15:20', '2024-09-07 04:15:20'),
 (48, 'alert', 14, 'Sint facere et maiores repudiandae.', 'Repellendus sunt qui distinctio amet. Laboriosam enim corrupti non pariatur est aut. Fuga error et rerum deleniti.', 0, NULL, 'bell', 'medium', '2024-09-07 04:15:20', '2024-09-07 04:15:20'),
 (49, 'alert', 14, 'Est maxime explicabo quae repellat.', 'Est impedit soluta aspernatur optio ab est. Error numquam sequi aut dolore occaecati. Reiciendis voluptates qui non consequatur nisi. Qui provident magnam excepturi amet ullam modi vel placeat.', 0, NULL, 'bell', 'low', '2024-09-07 04:15:20', '2024-09-07 04:15:20'),
-(50, 'message', 1, 'Fugiat alias in dolor sit.', 'Et at est nesciunt non autem velit quae. Nisi corrupti qui quia corrupti accusamus. Sunt pariatur illo repudiandae asperiores est inventore.', 0, NULL, 'info-circle', 'low', '2024-09-07 04:15:20', '2024-09-07 04:15:20'),
 (51, 'alert', 18, 'Praesentium maxime accusamus in ad.', 'Consequuntur est sed omnis. Velit libero fuga est amet sed sunt autem. Ut inventore et qui aperiam.', 0, NULL, 'envelope', 'high', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (52, 'reminder', 4, 'Iusto ipsam nam quibusdam aut dolorum temporibus.', 'Facere explicabo aliquam velit accusamus libero nihil. Est natus expedita architecto. Minima quidem sit illum minima et eum. Corporis sed est odio aut maxime voluptatem qui.', 0, NULL, 'info-circle', 'low', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (53, 'reminder', 16, 'Non doloremque qui vero.', 'Odit aut voluptatem ea vero. Ab laudantium vel quae et est. Dolor voluptas aut esse id corrupti enim.', 0, NULL, 'bell', 'low', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (54, 'message', 9, 'Quidem sed ducimus aut iste quod.', 'Exercitationem qui nisi consequatur ducimus modi dolorem. Unde labore qui beatae error harum non velit. Aut et ea voluptates.', 0, 'http://kovacek.com/aliquid-ab-sed-vel-quia-sunt-fugiat-dolorem', 'envelope', 'high', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (55, 'alert', 15, 'Non voluptatem delectus deserunt.', 'Vel debitis voluptas dolor consectetur. Illum veritatis doloribus quam est repellat excepturi. Voluptatem quidem natus deserunt magnam. Aliquid sed aut reprehenderit aspernatur est quod alias molestiae.', 0, NULL, 'bell', 'high', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
-(56, 'alert', 1, 'Sed eos aut hic labore omnis.', 'Incidunt autem recusandae et odio odit et. Eum earum dolorem voluptatem excepturi. Ipsa natus excepturi quasi quia in. Exercitationem quidem fuga consequatur architecto.', 0, 'http://www.jacobson.com/in-error-rerum-blanditiis-deserunt-molestias-consequatur', 'info-circle', 'medium', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (57, 'alert', 10, 'Consequatur nemo voluptas optio perferendis.', 'Non ab tempore delectus aperiam aliquid enim. Neque occaecati numquam eos alias vero id. Culpa dicta qui saepe adipisci rerum. Hic beatae quibusdam ut ducimus est voluptatum eum.', 0, 'http://www.swift.net/', 'info-circle', 'low', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (58, 'message', 20, 'Debitis molestiae delectus ex repellendus.', 'Officiis quasi voluptatem rem numquam dolorum inventore. Nobis nihil minima occaecati nesciunt eaque ducimus. Tempora necessitatibus reprehenderit porro.', 0, 'http://fay.com/', 'info-circle', 'medium', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
 (59, 'message', 3, 'Hic accusamus odio placeat.', 'Est rerum id minus dolorem aut. Numquam asperiores consequatur esse voluptas voluptatibus. Qui similique sit nesciunt reiciendis reprehenderit inventore qui. Et quo enim dolores itaque sit qui.', 0, 'http://kreiger.biz/et-rerum-eos-quasi-sit.html', 'bell', 'high', '2024-09-07 04:15:59', '2024-09-07 04:15:59'),
@@ -620,6 +633,13 @@ CREATE TABLE `guidance_otp_accounts` (
 
 CREATE TABLE `highest_possible_score_grading_sheets` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `semester` varchar(255) DEFAULT NULL,
+  `quarter` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `track` varchar(255) DEFAULT NULL,
+  `grade` varchar(255) DEFAULT NULL,
+  `strand` varchar(255) DEFAULT NULL,
+  `section` varchar(255) DEFAULT NULL,
   `highest_possible_written_1` int(11) DEFAULT NULL,
   `highest_possible_written_2` int(11) DEFAULT NULL,
   `highest_possible_written_3` int(11) DEFAULT NULL,
@@ -644,13 +664,6 @@ CREATE TABLE `highest_possible_score_grading_sheets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `highest_possible_score_grading_sheets`
---
-
-INSERT INTO `highest_possible_score_grading_sheets` (`id`, `highest_possible_written_1`, `highest_possible_written_2`, `highest_possible_written_3`, `highest_possible_written_4`, `highest_possible_written_5`, `highest_possible_written_6`, `highest_possible_written_7`, `highest_possible_written_8`, `highest_possible_written_9`, `highest_possible_written_10`, `highest_possible_task_1`, `highest_possible_task_2`, `highest_possible_task_3`, `highest_possible_task_4`, `highest_possible_task_5`, `highest_possible_task_6`, `highest_possible_task_7`, `highest_possible_task_8`, `highest_possible_task_9`, `highest_possible_task_10`, `teacher_id`, `created_at`, `updated_at`) VALUES
-(1, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1, '2024-10-08 05:06:58', '2024-10-08 05:27:49');
 
 -- --------------------------------------------------------
 
@@ -709,7 +722,58 @@ INSERT INTO `histories` (`id`, `position`, `user_id`, `history`, `description`, 
 (34, 'Admin', 1, 'Updated a subject ', 'Subject updated: ', '2024-09-02 08:20:35', '2024-09-02 08:20:35'),
 (35, 'Admin', 1, 'Deleted a subject ', 'Subject deleted: ', '2024-09-02 08:20:40', '2024-09-02 08:20:40'),
 (36, 'Teacher', 1, 'Exported subject list', NULL, '2024-09-28 15:01:41', '2024-09-28 15:01:41'),
-(37, 'Admin', 1, 'Update his/her account information', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-14 15:08:41', '2024-10-14 15:08:41');
+(37, 'Admin', 1, 'Update his/her account information', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-14 15:08:41', '2024-10-14 15:08:41'),
+(38, 'Teacher', 1, 'Create student account', 'ID Number: 284373, Name: James Bond', '2024-10-26 00:53:50', '2024-10-26 00:53:50'),
+(39, 'Teacher', 1, 'Updated user account', 'ID Number: 818311, Name: Aldrin Caballero', '2024-10-27 02:52:20', '2024-10-27 02:52:20'),
+(40, 'Teacher', 1, 'Updated user account', 'ID Number: 818311, Name: Aldrin Caballero', '2024-10-27 03:01:06', '2024-10-27 03:01:06'),
+(41, 'Teacher', 1, 'Updated user account', 'ID Number: 818311, Name: Aldrin Caballero', '2024-10-27 03:01:27', '2024-10-27 03:01:27'),
+(42, 'Admin', 1, 'Updated admin account', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-27 03:17:54', '2024-10-27 03:17:54'),
+(43, 'Admin', 1, 'Updated admin account', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-27 03:18:01', '2024-10-27 03:18:01'),
+(44, 'Admin', 1, 'Create admin account', 'ID Number: 8208758316, Name: James Bond', '2024-10-27 03:19:34', '2024-10-27 03:19:34'),
+(45, 'Admin', 1, 'Updated admin account', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-27 03:19:56', '2024-10-27 03:19:56'),
+(46, 'Admin', 1, 'Updated guidance account', 'ID Number: 1923247534, Name: Stefanie Mohr', '2024-10-27 03:20:10', '2024-10-27 03:20:10'),
+(47, 'Admin', 1, 'Updated guidance account', 'ID Number: 1923247534, Name: Stefanie Mohr', '2024-10-27 03:20:26', '2024-10-27 03:20:26'),
+(48, 'Admin', 1, 'Updated user account', 'ID Number: 818311, Name: Aldrin Caballero', '2024-10-27 03:24:55', '2024-10-27 03:24:55'),
+(49, 'Admin', 1, 'Update his/her profile photo', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-27 03:25:08', '2024-10-27 03:25:08'),
+(50, 'Admin', 1, 'Update his/her account information', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-27 03:28:49', '2024-10-27 03:28:49'),
+(51, 'Admin', 1, 'Update his/her account information', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-10-27 03:29:53', '2024-10-27 03:29:53'),
+(52, 'Teacher', 1, 'Updated user account', 'ID Number: 539350, Name: Jenny Rose Perez', '2024-11-01 01:10:23', '2024-11-01 01:10:23'),
+(53, 'Teacher', 1, 'Updated user account', 'ID Number: 818311, Name: Aldrin Caballero', '2024-11-01 01:11:12', '2024-11-01 01:11:12'),
+(54, 'Teacher', 1, 'Create student account', 'ID Number: 404926, Name: James Arthur', '2024-11-01 01:19:20', '2024-11-01 01:19:20'),
+(55, 'Teacher', 1, 'Updated user account', 'ID Number: 404926, Name: James Arthur', '2024-11-01 01:47:07', '2024-11-01 01:47:07'),
+(56, 'Admin', 1, 'Updated user account', 'ID Number: 818311, Name: Aldrin Caballero', '2024-11-01 05:16:26', '2024-11-01 05:16:26'),
+(57, 'Teacher', 1, 'Created a subject', 'Subject created: ', '2024-11-01 06:11:24', '2024-11-01 06:11:24'),
+(58, 'Teacher', 1, 'Added the subject  to Aldrin Caballero\'s account', NULL, '2024-11-01 06:12:11', '2024-11-01 06:12:11'),
+(59, 'Teacher', 1, 'Created a subject', 'Subject created: ', '2024-11-01 06:12:39', '2024-11-01 06:12:39'),
+(60, 'Teacher', 1, 'Added the subject  to Aldrin Caballero\'s account', NULL, '2024-11-01 06:17:16', '2024-11-01 06:17:16'),
+(61, 'Teacher', 1, 'Deleted all selected subjects', 'Deleted ids: 29,35,36', '2024-11-02 03:19:20', '2024-11-02 03:19:20'),
+(62, 'Teacher', 1, 'Create student account', 'ID Number: 555402, Name: drgdrgdgd fgdfg', '2024-11-04 07:04:22', '2024-11-04 07:04:22'),
+(63, 'Teacher', 1, 'Deleted student account', 'ID Number: 555402, Name: drgdrgdgd fgdfg', '2024-11-04 07:09:14', '2024-11-04 07:09:14'),
+(64, 'Teacher', 1, 'Create student account', 'ID Number: 326760, Name: John Doe', '2024-11-04 07:15:30', '2024-11-04 07:15:30'),
+(65, 'Teacher', 1, 'Deleted student account', 'ID Number: 326760, Name: John Doe', '2024-11-04 07:41:53', '2024-11-04 07:41:53'),
+(66, 'Teacher', 1, 'Exported class history', NULL, '2024-11-17 23:48:23', '2024-11-17 23:48:23'),
+(67, 'Teacher', 1, 'Exported class history', NULL, '2024-11-17 23:49:49', '2024-11-17 23:49:49'),
+(68, 'Teacher', 1, 'Exported class history', NULL, '2024-11-17 23:50:20', '2024-11-17 23:50:20'),
+(69, 'Admin', 1, 'Exported admin list', NULL, '2024-11-18 04:29:17', '2024-11-18 04:29:17'),
+(70, 'Admin', 1, 'Updated a subject ', 'Subject updated: ', '2024-11-18 04:37:45', '2024-11-18 04:37:45'),
+(71, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:43:28', '2024-11-18 04:43:28'),
+(72, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:45:08', '2024-11-18 04:45:08'),
+(73, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:47:33', '2024-11-18 04:47:33'),
+(74, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:48:09', '2024-11-18 04:48:09'),
+(75, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:48:52', '2024-11-18 04:48:52'),
+(76, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:53:30', '2024-11-18 04:53:30'),
+(77, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:53:47', '2024-11-18 04:53:47'),
+(78, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 04:56:21', '2024-11-18 04:56:21'),
+(79, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 05:11:45', '2024-11-18 05:11:45'),
+(80, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 05:20:05', '2024-11-18 05:20:05'),
+(81, 'Admin', 1, 'Created a subject', 'Subject created: ', '2024-11-18 05:22:15', '2024-11-18 05:22:15'),
+(82, 'Admin', 1, 'Updated a subject ', 'Subject updated: ', '2024-11-18 05:35:40', '2024-11-18 05:35:40'),
+(83, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 05:51:45', '2024-11-18 05:51:45'),
+(84, 'Admin', 1, 'Exported subject list', NULL, '2024-11-18 06:00:07', '2024-11-18 06:00:07'),
+(85, 'Admin', 1, 'Deleted all selected subjects', 'Deleted ids: 31', '2024-11-18 06:05:31', '2024-11-18 06:05:31'),
+(86, 'Admin', 1, 'Updated a subject ', 'Subject updated: ', '2024-11-18 06:05:50', '2024-11-18 06:05:50'),
+(87, 'Admin', 1, 'Deleted a subject ', 'Subject deleted: ', '2024-11-18 06:05:57', '2024-11-18 06:05:57'),
+(88, 'Admin', 1, 'Update his/her profile photo', 'ID Number: 1919757448, Name: Lonie Grimes', '2024-11-19 05:46:33', '2024-11-19 05:46:33');
 
 -- --------------------------------------------------------
 
@@ -771,7 +835,8 @@ CREATE TABLE `messages` (
 INSERT INTO `messages` (`id`, `sender_id`, `sender_type`, `receiver_id`, `receiver_type`, `id_number`, `message`, `created_at`, `updated_at`) VALUES
 (1, 1, 'App\\Models\\Student\\StudentAccount', 1, 'App\\Models\\Teacher\\TeacherAccount', '818311', 'eyyyy', '2024-08-14 15:25:03', '2024-08-14 15:25:03'),
 (2, 1, 'App\\Models\\Teacher\\TeacherAccount', 1, 'App\\Models\\Student\\StudentAccount', '8554812056', 'kupal ka hahahaha', '2024-08-25 00:08:28', '2024-08-25 00:08:28'),
-(3, 1, 'App\\Models\\Admin\\AdminAccount', 1, 'App\\Models\\Teacher\\TeacherAccount', '1919757448', 'tae', '2024-08-31 01:44:11', '2024-08-31 01:44:11');
+(3, 1, 'App\\Models\\Admin\\AdminAccount', 1, 'App\\Models\\Teacher\\TeacherAccount', '1919757448', 'tae', '2024-08-31 01:44:11', '2024-08-31 01:44:11'),
+(4, 1, 'App\\Models\\Admin\\AdminAccount', 1, 'App\\Models\\Teacher\\TeacherAccount', '1919757448', 'gago amp', '2024-11-18 06:25:52', '2024-11-18 06:25:52');
 
 -- --------------------------------------------------------
 
@@ -808,7 +873,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2024_08_01_235232_create_student_handles_table', 1),
 (17, '2024_08_04_030803_create_absents_table', 1),
 (18, '2024_08_04_032257_create_presents_table', 1),
-(19, '2024_08_06_001256_create_face_scans_table', 1),
 (20, '2024_08_08_012247_create_qr_generates_table', 1),
 (21, 'z2024_07_24_074649_create_student_subjects_table', 1),
 (25, '2024_08_21_232604_create_attendance_histories_table', 3),
@@ -818,9 +882,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2024_09_06_132618_create_guidance_notifications_table', 4),
 (30, '2024_08_14_104433_create_announcements_table', 5),
 (31, '2024_10_04_132336_create_seen_announcements_table', 6),
-(32, '2024_10_06_031626_create_grading_headers_table', 7),
-(34, '2024_10_06_233213_create_highest_possible_score_grading_sheets_table', 8),
-(35, '2024_10_14_090328_create_student_grades_table', 9);
+(40, '2024_10_06_233213_create_highest_possible_score_grading_sheets_table', 7),
+(41, '2024_10_14_090328_create_student_grades_table', 7),
+(42, '2024_10_06_031626_create_grading_headers_table', 8),
+(43, '2024_08_06_001256_create_face_scans_table', 9),
+(44, '2024_11_19_105151_create_face_recognition_keys_table', 10);
 
 -- --------------------------------------------------------
 
@@ -856,7 +922,9 @@ CREATE TABLE `presents` (
 
 INSERT INTO `presents` (`id`, `student_id`, `subject_id`, `teacher_id`, `grade_handle_id`, `created_at`, `updated_at`) VALUES
 (2, 1, 21, 1, 1, '2024-08-17 16:42:36', '2024-08-17 16:42:36'),
-(3, 1, 29, 1, 1, '2024-08-25 00:57:14', '2024-08-25 00:57:14');
+(3, 1, 29, 1, 1, '2024-08-25 00:57:14', '2024-08-25 00:57:14'),
+(4, 1, 21, 1, 5, '2024-11-04 05:54:11', '2024-11-04 05:54:11'),
+(5, 1, 27, 1, 5, '2024-11-05 01:40:06', '2024-11-05 01:40:06');
 
 -- --------------------------------------------------------
 
@@ -879,30 +947,10 @@ CREATE TABLE `qr_generates` (
 
 INSERT INTO `qr_generates` (`id`, `subject_id`, `teacher_id`, `qr_code_id`, `created_at`, `updated_at`) VALUES
 (1, 21, 1, '66c1435fd91af', '2024-08-17 16:42:07', '2024-08-17 16:42:07'),
-(2, 21, 1, '66c14c669407d', '2024-08-17 17:20:38', '2024-08-17 17:20:38'),
-(3, 21, 1, '66c14d3a2eabf', '2024-08-17 17:24:10', '2024-08-17 17:24:10'),
-(4, 21, 1, '66c14f647e17d', '2024-08-17 17:33:24', '2024-08-17 17:33:24'),
+(2, 21, 4, '66c14c669407d', '2024-08-17 17:20:38', '2024-08-17 17:20:38'),
 (5, 21, 1, '66c14fd99d48b', '2024-08-17 17:35:21', '2024-08-17 17:35:21'),
 (6, 21, 1, '66c15003dbcad', '2024-08-17 17:36:03', '2024-08-17 17:36:03'),
-(7, 21, 1, '66c150236d1d7', '2024-08-17 17:36:35', '2024-08-17 17:36:35'),
-(8, 21, 1, '66c1503b46654', '2024-08-17 17:36:59', '2024-08-17 17:36:59'),
-(9, 21, 1, '66c1504d2f187', '2024-08-17 17:37:17', '2024-08-17 17:37:17'),
-(10, 21, 1, '66c150adae674', '2024-08-17 17:38:53', '2024-08-17 17:38:53'),
-(11, 21, 1, '66c1587f2f13f', '2024-08-17 18:12:15', '2024-08-17 18:12:15'),
-(12, 21, 1, '66c164f3e4972', '2024-08-17 19:05:23', '2024-08-17 19:05:23'),
-(13, 21, 1, '66c165276dd78', '2024-08-17 19:06:15', '2024-08-17 19:06:15'),
-(14, 21, 1, '66c17a103b41c', '2024-08-17 20:35:28', '2024-08-17 20:35:28'),
-(15, 21, 1, '66c17eb05bb3e', '2024-08-17 20:55:12', '2024-08-17 20:55:12'),
-(16, 21, 1, '66c17ed714220', '2024-08-17 20:55:51', '2024-08-17 20:55:51'),
-(17, 21, 1, '66c17fba322a8', '2024-08-17 20:59:38', '2024-08-17 20:59:38'),
-(18, 22, 1, '66c1803ad9a61', '2024-08-17 21:01:46', '2024-08-17 21:01:46'),
-(19, 21, 1, '66caaf306a3bd', '2024-08-24 20:12:32', '2024-08-24 20:12:32'),
-(20, 29, 1, '66cae90338763', '2024-08-25 00:19:15', '2024-08-25 00:19:15'),
-(21, 29, 1, '66caea2fc8464', '2024-08-25 00:24:15', '2024-08-25 00:24:15'),
-(22, 29, 1, '66caed534dfcf', '2024-08-25 00:37:39', '2024-08-25 00:37:39'),
-(23, 29, 1, '66caeee08e39c', '2024-08-25 00:44:16', '2024-08-25 00:44:16'),
-(24, 29, 1, '66caeee1ba618', '2024-08-25 00:44:17', '2024-08-25 00:44:17'),
-(25, 29, 1, '66caeee2b0761', '2024-08-25 00:44:18', '2024-08-25 00:44:18'),
+(7, 21, 5, '66c150236d1d7', '2024-08-17 17:36:35', '2024-08-17 17:36:35'),
 (26, 29, 1, '66caeee3d1a14', '2024-08-25 00:44:19', '2024-08-25 00:44:19'),
 (27, 29, 1, '66caeee50cfc6', '2024-08-25 00:44:21', '2024-08-25 00:44:21'),
 (28, 29, 1, '66caeee608f8e', '2024-08-25 00:44:22', '2024-08-25 00:44:22'),
@@ -1103,7 +1151,120 @@ INSERT INTO `qr_generates` (`id`, `subject_id`, `teacher_id`, `qr_code_id`, `cre
 (223, 22, 1, '66f7d5fae1fdb', '2024-09-28 02:10:02', '2024-09-28 02:10:02'),
 (224, 22, 1, '66f7d5fbc0e71', '2024-09-28 02:10:03', '2024-09-28 02:10:03'),
 (225, 22, 1, '66f7d6051eb67', '2024-09-28 02:10:13', '2024-09-28 02:10:13'),
-(226, 22, 1, '66f7d638ea354', '2024-09-28 02:11:04', '2024-09-28 02:11:04');
+(226, 22, 1, '66f7d638ea354', '2024-09-28 02:11:04', '2024-09-28 02:11:04'),
+(227, 21, 1, '672860ee8ea4e', '2024-11-04 05:51:42', '2024-11-04 05:51:42'),
+(228, 21, 1, '672860f20a990', '2024-11-04 05:51:46', '2024-11-04 05:51:46'),
+(229, 21, 1, '6728619008032', '2024-11-04 05:54:24', '2024-11-04 05:54:24'),
+(230, 21, 1, '67286288eeebb', '2024-11-04 05:58:33', '2024-11-04 05:58:33'),
+(231, 21, 1, '6728628d98392', '2024-11-04 05:58:37', '2024-11-04 05:58:37'),
+(232, 21, 1, '67286296e8612', '2024-11-04 05:58:47', '2024-11-04 05:58:47'),
+(233, 21, 1, '6728633f37495', '2024-11-04 06:01:35', '2024-11-04 06:01:35'),
+(234, 21, 1, '6728636c17058', '2024-11-04 06:02:20', '2024-11-04 06:02:20'),
+(235, 21, 1, '6728663b6c477', '2024-11-04 06:14:19', '2024-11-04 06:14:19'),
+(236, 21, 1, '6728666fb126a', '2024-11-04 06:15:11', '2024-11-04 06:15:11'),
+(237, 21, 1, '672866721f13e', '2024-11-04 06:15:14', '2024-11-04 06:15:14'),
+(238, 21, 1, '67286673e23da', '2024-11-04 06:15:15', '2024-11-04 06:15:15'),
+(239, 21, 1, '67286675d2c9b', '2024-11-04 06:15:17', '2024-11-04 06:15:17'),
+(240, 21, 1, '6728667e3b691', '2024-11-04 06:15:26', '2024-11-04 06:15:26'),
+(241, 21, 1, '672866862e2d8', '2024-11-04 06:15:34', '2024-11-04 06:15:34'),
+(242, 21, 1, '672866ae862f0', '2024-11-04 06:16:14', '2024-11-04 06:16:14'),
+(243, 21, 1, '672866b530262', '2024-11-04 06:16:21', '2024-11-04 06:16:21'),
+(244, 21, 1, '672866dd2028e', '2024-11-04 06:17:01', '2024-11-04 06:17:01'),
+(245, 21, 1, '6728683d6646c', '2024-11-04 06:22:53', '2024-11-04 06:22:53'),
+(246, 21, 1, '6728684126d51', '2024-11-04 06:22:57', '2024-11-04 06:22:57'),
+(247, 21, 1, '6728699a98581', '2024-11-04 06:28:42', '2024-11-04 06:28:42'),
+(248, 21, 1, '67286a4d97cc3', '2024-11-04 06:31:41', '2024-11-04 06:31:41'),
+(249, 21, 1, '67286a51c0ab3', '2024-11-04 06:31:45', '2024-11-04 06:31:45'),
+(250, 21, 1, '67286a5574a8b', '2024-11-04 06:31:49', '2024-11-04 06:31:49'),
+(251, 21, 1, '67286ac24c95e', '2024-11-04 06:33:38', '2024-11-04 06:33:38'),
+(252, 21, 1, '67286ac308fb7', '2024-11-04 06:33:39', '2024-11-04 06:33:39'),
+(253, 21, 1, '67286ad3df76c', '2024-11-04 06:33:55', '2024-11-04 06:33:55'),
+(254, 21, 1, '67286ad8a27e2', '2024-11-04 06:34:00', '2024-11-04 06:34:00'),
+(255, 21, 1, '67286ae5a104f', '2024-11-04 06:34:13', '2024-11-04 06:34:13'),
+(256, 21, 1, '67286afb676fd', '2024-11-04 06:34:35', '2024-11-04 06:34:35'),
+(257, 21, 1, '67286b6383de9', '2024-11-04 06:36:19', '2024-11-04 06:36:19'),
+(258, 21, 1, '67286b69ecc79', '2024-11-04 06:36:25', '2024-11-04 06:36:25'),
+(259, 21, 1, '67286b803d9d6', '2024-11-04 06:36:48', '2024-11-04 06:36:48'),
+(260, 21, 1, '67286b8496cf9', '2024-11-04 06:36:52', '2024-11-04 06:36:52'),
+(261, 21, 1, '67286b956e386', '2024-11-04 06:37:09', '2024-11-04 06:37:09'),
+(262, 21, 1, '67286ba1482db', '2024-11-04 06:37:21', '2024-11-04 06:37:21'),
+(263, 21, 1, '67286ba990d82', '2024-11-04 06:37:29', '2024-11-04 06:37:29'),
+(264, 21, 1, '67286bb210161', '2024-11-04 06:37:38', '2024-11-04 06:37:38'),
+(265, 21, 1, '67286bf2bae89', '2024-11-04 06:38:42', '2024-11-04 06:38:42'),
+(266, 21, 1, '67286c3d88fe8', '2024-11-04 06:39:57', '2024-11-04 06:39:57'),
+(267, 21, 1, '67286c45b5346', '2024-11-04 06:40:05', '2024-11-04 06:40:05'),
+(268, 21, 1, '67286d495da75', '2024-11-04 06:44:25', '2024-11-04 06:44:25'),
+(269, 21, 1, '67286d61abd59', '2024-11-04 06:44:49', '2024-11-04 06:44:49'),
+(270, 21, 1, '67286d6266573', '2024-11-04 06:44:50', '2024-11-04 06:44:50'),
+(271, 21, 1, '67286d62ce6a7', '2024-11-04 06:44:50', '2024-11-04 06:44:50'),
+(272, 21, 1, '67286d653681c', '2024-11-04 06:44:53', '2024-11-04 06:44:53'),
+(273, 21, 1, '67286d6823729', '2024-11-04 06:44:56', '2024-11-04 06:44:56'),
+(274, 21, 1, '67286d771dc96', '2024-11-04 06:45:11', '2024-11-04 06:45:11'),
+(275, 21, 1, '67286d78474c7', '2024-11-04 06:45:12', '2024-11-04 06:45:12'),
+(276, 21, 1, '67286d78ef3de', '2024-11-04 06:45:12', '2024-11-04 06:45:12'),
+(277, 21, 1, '67286d8caf4a9', '2024-11-04 06:45:32', '2024-11-04 06:45:32'),
+(278, 21, 1, '67286d8d61381', '2024-11-04 06:45:33', '2024-11-04 06:45:33'),
+(279, 21, 1, '67286e6ce3106', '2024-11-04 06:49:16', '2024-11-04 06:49:16'),
+(280, 21, 1, '67286e6de1e47', '2024-11-04 06:49:17', '2024-11-04 06:49:17'),
+(281, 21, 1, '67286e6e60070', '2024-11-04 06:49:18', '2024-11-04 06:49:18'),
+(282, 21, 1, '67286e7b4edb9', '2024-11-04 06:49:31', '2024-11-04 06:49:31'),
+(283, 21, 1, '67286e8d3a318', '2024-11-04 06:49:49', '2024-11-04 06:49:49'),
+(284, 21, 1, '67286e8f3ab87', '2024-11-04 06:49:51', '2024-11-04 06:49:51'),
+(285, 21, 1, '67286e922d36b', '2024-11-04 06:49:54', '2024-11-04 06:49:54'),
+(286, 21, 1, '67286e9439a7c', '2024-11-04 06:49:56', '2024-11-04 06:49:56'),
+(287, 21, 1, '67286f0f1261d', '2024-11-04 06:51:59', '2024-11-04 06:51:59'),
+(288, 21, 1, '67286f2517524', '2024-11-04 06:52:21', '2024-11-04 06:52:21'),
+(289, 21, 1, '67296bf76c8b1', '2024-11-05 00:51:03', '2024-11-05 00:51:03'),
+(290, 21, 1, '67296bfd8aa0c', '2024-11-05 00:51:09', '2024-11-05 00:51:09'),
+(291, 27, 1, '67296ca999bcc', '2024-11-05 00:54:01', '2024-11-05 00:54:01'),
+(292, 27, 1, '67296cb864156', '2024-11-05 00:54:16', '2024-11-05 00:54:16'),
+(293, 27, 1, '67296d04979f6', '2024-11-05 00:55:32', '2024-11-05 00:55:32'),
+(294, 27, 1, '67296d06dbdcb', '2024-11-05 00:55:34', '2024-11-05 00:55:34'),
+(295, 27, 1, '67296d095450d', '2024-11-05 00:55:37', '2024-11-05 00:55:37'),
+(296, 27, 1, '67296d0ab923c', '2024-11-05 00:55:38', '2024-11-05 00:55:38'),
+(297, 27, 1, '67296d0c6b38e', '2024-11-05 00:55:40', '2024-11-05 00:55:40'),
+(298, 27, 1, '67296d4fb0d1c', '2024-11-05 00:56:47', '2024-11-05 00:56:47'),
+(299, 27, 1, '67296d63dcde7', '2024-11-05 00:57:07', '2024-11-05 00:57:07'),
+(300, 27, 1, '67296d698b588', '2024-11-05 00:57:13', '2024-11-05 00:57:13'),
+(301, 27, 1, '67296d70c96b0', '2024-11-05 00:57:20', '2024-11-05 00:57:20'),
+(302, 27, 1, '67296d8164130', '2024-11-05 00:57:37', '2024-11-05 00:57:37'),
+(303, 27, 1, '67296d8682874', '2024-11-05 00:57:42', '2024-11-05 00:57:42'),
+(304, 27, 1, '67296d8ba1070', '2024-11-05 00:57:47', '2024-11-05 00:57:47'),
+(305, 27, 1, '67296d997be6e', '2024-11-05 00:58:01', '2024-11-05 00:58:01'),
+(306, 27, 1, '67296d9bce7c1', '2024-11-05 00:58:03', '2024-11-05 00:58:03'),
+(307, 27, 1, '67296d9c97eb9', '2024-11-05 00:58:04', '2024-11-05 00:58:04'),
+(308, 27, 1, '67296db2a2087', '2024-11-05 00:58:26', '2024-11-05 00:58:26'),
+(309, 27, 1, '67296dbc5ab1c', '2024-11-05 00:58:36', '2024-11-05 00:58:36'),
+(310, 27, 1, '67296dbf2a199', '2024-11-05 00:58:39', '2024-11-05 00:58:39'),
+(311, 27, 1, '67296dc0e69ce', '2024-11-05 00:58:40', '2024-11-05 00:58:40'),
+(312, 27, 1, '67296dc185bfd', '2024-11-05 00:58:41', '2024-11-05 00:58:41'),
+(313, 27, 1, '67296ddd72c3f', '2024-11-05 00:59:09', '2024-11-05 00:59:09'),
+(314, 27, 1, '67296f0b50b6d', '2024-11-05 01:04:11', '2024-11-05 01:04:11'),
+(315, 27, 1, '672970073a3ec', '2024-11-05 01:08:23', '2024-11-05 01:08:23'),
+(316, 27, 1, '67297012507de', '2024-11-05 01:08:34', '2024-11-05 01:08:34'),
+(317, 27, 1, '6729704306af9', '2024-11-05 01:09:23', '2024-11-05 01:09:23'),
+(318, 27, 1, '67297407bd156', '2024-11-05 01:25:27', '2024-11-05 01:25:27'),
+(319, 27, 1, '6729740e5b0ca', '2024-11-05 01:25:34', '2024-11-05 01:25:34'),
+(320, 27, 1, '672974181ee71', '2024-11-05 01:25:44', '2024-11-05 01:25:44'),
+(321, 27, 1, '6729741a9568f', '2024-11-05 01:25:46', '2024-11-05 01:25:46'),
+(322, 27, 1, '6729741cb8790', '2024-11-05 01:25:48', '2024-11-05 01:25:48'),
+(323, 27, 1, '6729741f03003', '2024-11-05 01:25:51', '2024-11-05 01:25:51'),
+(324, 27, 1, '672974263c434', '2024-11-05 01:25:58', '2024-11-05 01:25:58'),
+(325, 27, 1, '6729778ddf422', '2024-11-05 01:40:29', '2024-11-05 01:40:29'),
+(326, 27, 1, '672977aa1be94', '2024-11-05 01:40:58', '2024-11-05 01:40:58'),
+(327, 27, 1, '672977d34af00', '2024-11-05 01:41:39', '2024-11-05 01:41:39'),
+(328, 27, 1, '672977de4cb75', '2024-11-05 01:41:50', '2024-11-05 01:41:50'),
+(329, 27, 1, '672977f70507c', '2024-11-05 01:42:15', '2024-11-05 01:42:15'),
+(330, 27, 1, '672977faa87b6', '2024-11-05 01:42:18', '2024-11-05 01:42:18'),
+(331, 27, 1, '6729780ac25a6', '2024-11-05 01:42:34', '2024-11-05 01:42:34'),
+(332, 27, 1, '672978116eb14', '2024-11-05 01:42:41', '2024-11-05 01:42:41'),
+(333, 27, 1, '67297826de447', '2024-11-05 01:43:02', '2024-11-05 01:43:02'),
+(334, 27, 1, '672978290ceda', '2024-11-05 01:43:05', '2024-11-05 01:43:05'),
+(335, 27, 1, '6729783662127', '2024-11-05 01:43:18', '2024-11-05 01:43:18'),
+(336, 27, 1, '6729783ea1dff', '2024-11-05 01:43:26', '2024-11-05 01:43:26'),
+(337, 27, 1, '67297841272ec', '2024-11-05 01:43:29', '2024-11-05 01:43:29'),
+(338, 27, 1, '67297843127ed', '2024-11-05 01:43:31', '2024-11-05 01:43:31'),
+(339, 27, 1, '67297c97cd2cd', '2024-11-05 02:01:59', '2024-11-05 02:01:59');
 
 -- --------------------------------------------------------
 
@@ -1141,7 +1302,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('nAeQ9KD3GaxkfYcWschdcVgw0w0dLkRuJrzRpwEM', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiaWZYMk1ZR21JUGJaakFCeUpWbU43VEVvMFFRZnJFajNSNGVKMWFheSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1728954639);
+('H3Jr4FO67JMjlNNC2yOVqw0slynUSJJXQgv5GdkJ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoibXBQWVpSOWJZVGZHV1Y4RWJQcmxEYTNwa1ExN2hsTEs2Wkh0cGZyNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9mYWNlX3JlY29nbml0aW9uIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoxODoiYXV0aGVudGljYXRlZF91c2VyIjtiOjE7fQ==', 1732000303),
+('tgacDasJqvpQpyhp0wfQ0uUjIULeH75IML6NA29D', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMEhTVGRqTHM0NENIenFWOVpKenFqTzRMdmhZMUFyVDV2eDQwYlhaYSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9mYWNlX3JlY29nbml0aW9uIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTg6ImF1dGhlbnRpY2F0ZWRfdXNlciI7YjoxO30=', 1732000012);
 
 -- --------------------------------------------------------
 
@@ -1178,8 +1340,7 @@ CREATE TABLE `student_accounts` (
 --
 
 INSERT INTO `student_accounts` (`id`, `id_number`, `name`, `gender`, `extension_name`, `strand`, `section`, `grade`, `parents_contact_number`, `parents_email`, `username`, `password`, `email`, `role`, `profile`, `address`, `phone_number`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '818311', 'Aldrin Caballero', 'Male', NULL, 'ABM', 'D', 12, '09512793354', 'caballeroaldrin02@gmail.com', 'aldrin02', '$2y$12$q.L3PnhQR4QMOKKT4pHESeQ3EwbTMpNeCjhpqW33XCINZqf.fsz6C', 'caballeroaldrin02@gmail.com', 'Student', 'profiles/YxtMCg5wqgAcSiIBkZfarn1GH4maE5StP05e0BO6.jpg', 'Cabalhin Compound, Barangay Sampaloc', '09512793354', NULL, NULL, '2024-08-14 02:43:19', '2024-08-14 21:21:50'),
-(2, '539350', 'Jenny Rose Perez', 'Female', NULL, 'ABM', 'D', 12, '09512793354', 'caballeroaldrin02@gmail.com', 'jenny22', '$2y$12$ALHUVscRQ6LJF5sL5rg2hegUyk82eEwz9UApgQu94dklYrYVtBZly', 'jenny@gmail.com', 'Student', 'profiles/dbnhe8z9WLTaaupFPE8gWmxpC0EWVDnGWrSGwzSa.jpg', NULL, '09512793354', NULL, NULL, '2024-08-22 17:58:48', '2024-08-22 17:58:48');
+(1, '818311', 'Aldrin Caballero', 'Male', NULL, 'ABM', 'D', 12, '09512793354', 'caballeroaldrin02@gmail.com', 'aldrin02', '$2y$12$xG2iyL9AkvmzxerIlk1ZvO.ZQTwrY9DJIlurfowoqtxyrOv7ChFjK', 'caballeroaldrin02@gmail.com', 'Student', 'profiles/1730466986_WIN_20241026_16_52_50_Pro.jpg', 'Cabalhin Compound, Barangay Sampaloc', '09512793354', NULL, 'FXUJqaokx522eTYqSUqN875jynlYSbFz6lUp9aVvoDrkmkhkoyuQZ5CsUkeR', '2024-08-14 02:43:19', '2024-11-01 05:16:26');
 
 -- --------------------------------------------------------
 
@@ -1194,6 +1355,10 @@ CREATE TABLE `student_grades` (
   `grade` int(11) NOT NULL,
   `strand` varchar(255) NOT NULL,
   `section` varchar(255) NOT NULL,
+  `semester` varchar(255) DEFAULT NULL,
+  `quarter` varchar(255) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `track` varchar(255) DEFAULT NULL,
   `written_1` int(11) DEFAULT NULL,
   `written_2` int(11) DEFAULT NULL,
   `written_3` int(11) DEFAULT NULL,
@@ -1204,6 +1369,9 @@ CREATE TABLE `student_grades` (
   `written_8` int(11) DEFAULT NULL,
   `written_9` int(11) DEFAULT NULL,
   `written_10` int(11) DEFAULT NULL,
+  `written_total` int(11) DEFAULT NULL,
+  `written_ps` int(11) DEFAULT NULL,
+  `written_ws` int(11) DEFAULT NULL,
   `task_1` int(11) DEFAULT NULL,
   `task_2` int(11) DEFAULT NULL,
   `task_3` int(11) DEFAULT NULL,
@@ -1214,17 +1382,12 @@ CREATE TABLE `student_grades` (
   `task_8` int(11) DEFAULT NULL,
   `task_9` int(11) DEFAULT NULL,
   `task_10` int(11) DEFAULT NULL,
+  `task_total` int(11) DEFAULT NULL,
+  `task_ps` int(11) DEFAULT NULL,
+  `task_ws` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `student_grades`
---
-
-INSERT INTO `student_grades` (`id`, `teacher_id`, `student_id`, `grade`, `strand`, `section`, `written_1`, `written_2`, `written_3`, `written_4`, `written_5`, `written_6`, `written_7`, `written_8`, `written_9`, `written_10`, `task_1`, `task_2`, `task_3`, `task_4`, `task_5`, `task_6`, `task_7`, `task_8`, `task_9`, `task_10`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 12, 'ABM', 'D', 10, 9, 9, 8, 10, 7, 5, 10, 10, 9, 10, 6, 8, 9, 5, 7, 10, 10, 6, 8, '2024-10-14 04:58:58', '2024-10-14 05:55:58'),
-(2, 1, 2, 12, 'ABM', 'D', 10, 8, 10, 10, 10, 7, 10, 10, 9, 8, 10, 10, 9, 8, 9, 10, 10, 8, 7, 10, '2024-10-14 04:58:58', '2024-10-14 14:35:30');
 
 -- --------------------------------------------------------
 
@@ -1246,8 +1409,7 @@ CREATE TABLE `student_handles` (
 --
 
 INSERT INTO `student_handles` (`id`, `student_id`, `teacher_id`, `grade_handle_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 5, '2024-08-14 02:43:19', '2024-08-14 02:43:19'),
-(2, 2, 1, 5, '2024-08-22 17:58:49', '2024-08-22 17:58:49');
+(1, 1, 1, 5, '2024-08-14 02:43:19', '2024-08-14 02:43:19');
 
 -- --------------------------------------------------------
 
@@ -1268,12 +1430,9 @@ CREATE TABLE `student_images` (
 --
 
 INSERT INTO `student_images` (`id`, `student_id`, `image_path`, `created_at`, `updated_at`) VALUES
-(1, 1, 'face_images/Aldrin Caballero/0.jpg', '2024-08-14 02:43:19', '2024-08-14 02:43:19'),
-(2, 1, 'face_images/Aldrin Caballero/1.jpg', '2024-08-14 02:43:19', '2024-08-14 02:43:19'),
-(3, 1, 'face_images/Aldrin Caballero/2.jpg', '2024-08-14 02:43:19', '2024-08-14 02:43:19'),
-(4, 2, 'face_images/Jenny Rose Perez/0.jpg', '2024-08-22 17:58:49', '2024-08-22 17:58:49'),
-(5, 2, 'face_images/Jenny Rose Perez/1.jpg', '2024-08-22 17:58:49', '2024-08-22 17:58:49'),
-(6, 2, 'face_images/Jenny Rose Perez/2.jpg', '2024-08-22 17:58:49', '2024-08-22 17:58:49');
+(16, 1, 'face_images/Aldrin Caballero/0.jpg', '2024-11-01 05:16:26', '2024-11-01 05:16:26'),
+(17, 1, 'face_images/Aldrin Caballero/1.jpg', '2024-11-01 05:16:26', '2024-11-01 05:16:26'),
+(18, 1, 'face_images/Aldrin Caballero/2.jpg', '2024-11-01 05:16:26', '2024-11-01 05:16:26');
 
 -- --------------------------------------------------------
 
@@ -1303,8 +1462,7 @@ INSERT INTO `student_notifications` (`id`, `type`, `user_id`, `title`, `message`
 (1, 'alert', 1, 'Announcement', 'Hello everyone, our prelim is on 10/20/2024, 8:30AM at Anex building.\r\nSee you there guys.', 1, NULL, 'bell', 'medium', '2024-10-04 04:08:56', '2024-10-05 17:49:57'),
 (3, 'alert', 1, 'Announcement -Dereck Kertzmann', 'Classes suspension tomorrow because of Typhon, keep safe guys.', 1, NULL, 'bell', 'medium', '2024-10-04 04:29:34', '2024-10-05 17:49:57'),
 (5, 'alert', 1, 'Announcement -Dereck Kertzmann', 'Lorem ipsum dolor sit amet', 1, NULL, 'bell', 'medium', '2024-10-04 05:17:07', '2024-10-05 17:49:57'),
-(7, 'alert', 1, 'Announcement -Dereck Kertzmann', 'Lorem ipsum dolor sit amet', 1, NULL, 'bell', 'medium', '2024-10-04 05:30:18', '2024-10-05 17:49:57'),
-(8, 'alert', 2, 'Announcement -Dereck Kertzmann', 'Lorem ipsum dolor sit amet', 0, NULL, 'bell', 'medium', '2024-10-04 05:30:18', '2024-10-04 05:30:18');
+(7, 'alert', 1, 'Announcement -Dereck Kertzmann', 'Lorem ipsum dolor sit amet', 1, NULL, 'bell', 'medium', '2024-10-04 05:30:18', '2024-10-05 17:49:57');
 
 -- --------------------------------------------------------
 
@@ -1344,15 +1502,7 @@ INSERT INTO `student_subjects` (`id`, `student_id`, `subject_id`, `teacher_id`, 
 (1, 1, 23, 1, 5, '2024-08-14 22:10:57', '2024-08-14 22:10:57'),
 (2, 1, 21, 1, 5, '2024-08-14 22:12:17', '2024-08-14 22:12:17'),
 (3, 1, 22, 1, 5, '2024-08-14 22:12:39', '2024-08-14 22:12:39'),
-(4, 1, 27, 1, 5, '2024-08-15 01:54:49', '2024-08-15 01:54:49'),
-(5, 1, 28, 1, 5, '2024-08-15 01:56:04', '2024-08-15 01:56:04'),
-(6, 1, 29, 1, 5, '2024-08-15 19:35:30', '2024-08-15 19:35:30'),
-(7, 2, 21, 1, 5, '2024-08-25 01:26:33', '2024-08-25 01:26:33'),
-(8, 2, 22, 1, 5, '2024-08-25 01:26:38', '2024-08-25 01:26:38'),
-(9, 2, 23, 1, 5, '2024-08-25 01:26:42', '2024-08-25 01:26:42'),
-(10, 2, 28, 1, 5, '2024-08-25 01:26:53', '2024-08-25 01:26:53'),
-(11, 2, 27, 1, 5, '2024-08-25 01:26:57', '2024-08-25 01:26:57'),
-(12, 2, 29, 1, 5, '2024-08-25 01:27:02', '2024-08-25 01:27:02');
+(5, 1, 28, 1, 5, '2024-08-15 01:56:04', '2024-08-15 01:56:04');
 
 -- --------------------------------------------------------
 
@@ -1379,11 +1529,8 @@ INSERT INTO `subject_models` (`id`, `subject`, `day`, `grade_handle_id`, `teache
 (21, 'Earth and life science', 'Monday', 5, 1, '07:00 AM - 09:00 AM', '2024-08-14 21:22:33', '2024-08-14 21:22:33'),
 (22, 'Comprog 1', 'Monday', 5, 1, '10:00 AM - 12:00 PM', '2024-08-14 21:23:12', '2024-08-14 21:23:12'),
 (23, 'English', 'Monday', 5, 1, '10:00 PM - 03:00 PM', '2024-08-14 21:24:06', '2024-08-14 21:24:06'),
-(27, 'Math', 'Tuesday', 5, 1, '05:54 PM - 08:54 AM', '2024-08-15 01:54:32', '2024-08-15 01:54:32'),
 (28, 'Values', 'Tuesday', 5, 1, '06:55 PM - 07:55 PM', '2024-08-15 01:55:46', '2024-08-15 01:55:46'),
-(29, 'Tublot', 'Friday', 5, 1, '12:35 AM - 01:35 PM', '2024-08-15 19:35:18', '2024-08-15 19:35:18'),
-(30, 'Tae', 'Monday', 1, NULL, '11:40 PM - 01:40 AM', '2024-09-02 07:40:58', '2024-09-02 07:40:58'),
-(31, 'Tublot', 'Thursday', 1, 18, '11:42 PM - 02:42 AM', '2024-09-02 07:42:28', '2024-09-02 08:16:05');
+(37, 'Science', 'Monday', 1, 18, '01:25 PM - 06:22 PM', '2024-11-18 05:22:15', '2024-11-18 05:22:15');
 
 -- --------------------------------------------------------
 
@@ -1416,10 +1563,10 @@ CREATE TABLE `teacher_accounts` (
 --
 
 INSERT INTO `teacher_accounts` (`id`, `id_number`, `name`, `gender`, `position`, `username`, `password`, `extension_name`, `email`, `role`, `profile`, `address`, `phone_number`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '8554812056', 'Dereck Kertzmann', 'Female', 'Teacher 1', 'aldrin02', '$2y$12$B7kGV8tX/hCOLK61F4WCd.Vcjd/RHKJoUD1wYUhyC32S00qdQiVN2', NULL, 'caballeroaldrin02@gmail.com', 'Teacher', NULL, '67919 Corwin Island Suite 023\nPort Enochchester, AL 41977', '09649816857', NULL, 'TAJRNwg9BQodyYcorf1FBEA70bgXd9df9tJBMr2Q6hqJ40mGOVNQAL7GnJyV', '2024-08-14 02:11:23', '2024-08-14 02:11:23'),
+(1, '8554812056', 'Dereck Kertzmann', 'Female', 'Teacher 1', 'aldrin02', '$2y$12$B7kGV8tX/hCOLK61F4WCd.Vcjd/RHKJoUD1wYUhyC32S00qdQiVN2', NULL, 'caballeroaldrin02@gmail.com', 'Teacher', 'profiles/1730519263_WIN_20241026_16_52_53_Pro.jpg', '67919 Corwin Island Suite 023Port Enochchester, AL 41977', '09649816857', NULL, 'gCqB6Nn1ZS5N2pFY2FqOah7olytaEX0g2hJsMwxEn9T2CifhA7IxmVxa7avz', '2024-08-14 02:11:23', '2024-11-01 19:47:43'),
 (2, '8887376969', 'Elwyn Brown', 'Male', 'Teacher 2', 'shanahan.dennis', '$2y$12$IrbMD7wTXy9a60yxmmrMP.JqIMoU1MrR/0kACn.mGDSea2G0g4Hl.', NULL, 'julianne57@example.org', 'Teacher', NULL, '724 Bogan Dam Apt. 663\nIrvingshire, MN 17007', '09592998551', NULL, NULL, '2024-08-14 02:11:24', '2024-08-14 02:11:24'),
 (3, '8741541376', 'Doug Robel', 'Male', 'Teacher 2', 'elyssa19', '$2y$12$5nsIwqmXnKeUJreaqO6mnu4/ZspraoiQdQ2wEWfJHnZ3cBeEexnnq', NULL, 'pansy83@example.org', 'Teacher', NULL, '599 Stoltenberg Parkway Suite 191\nTabithaborough, ME 71153-4475', '09540691222', NULL, NULL, '2024-08-14 02:11:25', '2024-08-14 02:11:25'),
-(4, '2025239930', 'Kayli Howell', 'Male', 'Teacher 1', 'amoore', '$2y$12$3lK36ezLoRyyWS2haJJ1gO9wtEk3ns1/14YBF9ZW4eM/mIk637Poy', NULL, 'obrekke@example.org', 'Teacher', NULL, '19047 Stamm Hollow Apt. 298\nRessieberg, NM 19943-2706', '09717023064', NULL, NULL, '2024-08-14 02:11:26', '2024-08-14 02:11:26'),
+(4, '2025239930', 'Kayli Howell', 'Male', 'Teacher 1', 'amoore', '$2y$12$3lK36ezLoRyyWS2haJJ1gO9wtEk3ns1/14YBF9ZW4eM/mIk637Poy', NULL, 'obrekke@example.org', 'Teacher', NULL, '19047 Stamm Hollow Apt. 298Ressieberg, NM 19943-2706', '09717023064', NULL, NULL, '2024-08-14 02:11:26', '2024-10-27 03:20:39'),
 (5, '6150817998', 'Trace Leuschke', 'Male', 'Teacher 1', 'bayer.ena', '$2y$12$iSQd06xShCme1omCcRl5M.ZU95KOMxxyV7uH0ZhkcyGPLYd/BeMc.', NULL, 'hilbert92@example.net', 'Teacher', NULL, '9434 King Tunnel Suite 570\nGusside, NM 54221', '09241511020', NULL, NULL, '2024-08-14 02:11:27', '2024-08-14 02:11:27'),
 (6, '1156172394', 'Horace Dare', 'Male', 'Teacher 2', 'bayer.joesph', '$2y$12$Qt3.1CYNzDNPRvNu6F8KluR/GH1QEosEamBZaPIMVkyV0weapLOf6', NULL, 'ankunding.joanny@example.net', 'Teacher', NULL, '64599 Kirsten Mountain\nSchusterfurt, KY 29496-8019', '09374997592', NULL, NULL, '2024-08-14 02:11:28', '2024-08-14 02:11:28'),
 (7, '8885465685', 'Prof. Adelle Walsh PhD', 'Female', 'Teacher 3', 'veum.nina', '$2y$12$Xei10pv4vFbITgSH8WT.xOsQHojzOBlVmy3OvUSfrP2RfgOa/.ZrC', NULL, 'zane26@example.com', 'Teacher', NULL, '112 Corwin Pines\nEsmeraldaton, KS 40360-5648', '09119497234', NULL, NULL, '2024-08-14 02:11:29', '2024-08-14 02:11:29'),
@@ -1476,10 +1623,7 @@ INSERT INTO `teacher_grade_handles` (`id`, `grade`, `strand`, `section`, `teache
 (17, '12', 'ABM', 'A', 5, '2024-08-14 02:11:45', '2024-08-14 02:11:45'),
 (18, '11', 'ABM', 'D', 9, '2024-08-14 02:11:45', '2024-08-14 02:11:45'),
 (19, '11', 'HUMSS', 'D', 2, '2024-08-14 02:11:45', '2024-08-14 02:11:45'),
-(20, '11', 'ICT', 'D', 11, '2024-08-14 02:11:45', '2024-08-14 02:11:45'),
-(21, '12', 'ICT', 'B', 1, '2024-10-06 02:59:53', '2024-10-06 02:59:53'),
-(22, '11', 'ABM', 'B', 1, '2024-10-06 03:26:04', '2024-10-06 03:26:04'),
-(23, '12', 'ABM', 'A', 1, '2024-10-06 03:26:29', '2024-10-06 15:20:12');
+(20, '11', 'ICT', 'D', 11, '2024-08-14 02:11:45', '2024-08-14 02:11:45');
 
 -- --------------------------------------------------------
 
@@ -1510,7 +1654,6 @@ INSERT INTO `teacher_notifications` (`id`, `type`, `user_id`, `title`, `message`
 (2, 'reminder', 4, 'Maiores corrupti ut voluptatem et consequatur.', 'Similique et ut ullam rem sint velit. Atque nesciunt minima minus cupiditate ea et voluptas. Ea incidunt consectetur iste.', 0, 'http://damore.com/', 'envelope', 'low', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
 (3, 'alert', 7, 'Corrupti fuga laborum vitae eum sit.', 'Est quod a illum suscipit qui necessitatibus. Ut eum corporis qui esse nemo corrupti et. Laboriosam pariatur autem quia excepturi totam repudiandae. Occaecati voluptate nihil ut voluptates voluptatibus tempore velit atque.', 0, 'http://www.kshlerin.com/', 'envelope', 'medium', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
 (4, 'alert', 19, 'Aut hic laborum exercitationem.', 'Veritatis expedita voluptatem voluptatem qui. Fugiat animi et numquam esse tenetur blanditiis enim ipsa. Ab porro consectetur facere repudiandae.', 0, NULL, 'envelope', 'low', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
-(5, 'reminder', 1, 'Ab esse consequatur quasi assumenda distinctio.', 'Veniam id delectus ut aut vitae. Consequatur nulla perferendis architecto non reiciendis numquam.', 0, NULL, 'envelope', 'low', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
 (6, 'message', 3, 'Dolor nam sit nihil qui consectetur.', 'Possimus ullam voluptate et cum soluta aut officiis. Aliquam tempore voluptate quis pariatur qui. Deleniti voluptatem perferendis ea harum temporibus molestiae. Voluptatem veritatis tempore et laboriosam et et reiciendis. Vel dolor qui pariatur odit ut.', 0, NULL, 'envelope', 'low', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
 (7, 'alert', 10, 'Officiis eos vel nam assumenda id commodi.', 'Voluptatem nemo omnis excepturi eum aliquam ratione nisi iste. Repellat labore voluptatibus perspiciatis nihil laboriosam vitae error. Rerum vel fuga quis enim. Reiciendis in neque qui unde nam.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
 (8, 'message', 17, 'Et culpa sed molestiae numquam aspernatur sunt.', 'Repellendus omnis non mollitia aliquam sunt in. Ut pariatur voluptas incidunt ab. Similique ipsa ipsum velit.', 0, 'http://www.goodwin.com/hic-quibusdam-fugit-ea-necessitatibus-voluptas-reprehenderit', 'info-circle', 'low', '2024-09-07 04:15:17', '2024-09-07 04:15:17'),
@@ -1556,7 +1699,6 @@ INSERT INTO `teacher_notifications` (`id`, `type`, `user_id`, `title`, `message`
 (48, 'message', 15, 'Ex dolores qui amet recusandae est culpa.', 'Velit perspiciatis quisquam earum dolores explicabo et libero. Cupiditate maiores cum sapiente reiciendis inventore. Sint ullam et natus qui et. Dicta rerum consequuntur est iure iste ea.', 0, 'https://www.pfeffer.com/odit-qui-quia-eligendi-ut-at-dolores', 'info-circle', 'medium', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (49, 'alert', 20, 'Repudiandae molestiae ipsa harum ad qui.', 'Quia dolores error libero et neque nostrum. Saepe commodi ab aut voluptate cumque. Odio quia fugit non velit quia in blanditiis.', 0, NULL, 'info-circle', 'medium', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
 (50, 'alert', 8, 'Nihil neque quasi ut suscipit.', 'Laboriosam asperiores nihil laborum aut aut. Consequatur quaerat occaecati aut cumque enim sequi vel. Tempora accusamus qui facilis quo. Quos atque eos consectetur alias laborum quibusdam. Est dolorem et aliquam ut et.', 0, 'http://stark.com/', 'info-circle', 'medium', '2024-09-07 04:15:19', '2024-09-07 04:15:19'),
-(51, 'message', 1, 'Rerum dolorum amet asperiores.', 'Quis totam ut nobis nihil magni. Asperiores qui eius ea animi totam. Asperiores velit nam qui sequi et blanditiis. Dolorem et consequatur ad quia quis et ut ut.', 0, NULL, 'envelope', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (52, 'alert', 13, 'Sed quo esse libero facere magni.', 'Inventore voluptatem dignissimos corrupti. Vero in omnis qui repellat.', 0, 'https://www.volkman.com/tempore-aut-possimus-quia-ullam-maxime-autem-deleniti', 'bell', 'high', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (53, 'alert', 12, 'Aut magnam impedit quo.', 'Qui odio porro ut aut. Quo et veritatis et laboriosam eos quae. Aut omnis dolores sunt consequatur cupiditate aliquid.', 0, NULL, 'bell', 'low', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (54, 'alert', 18, 'Sunt consectetur sit eligendi placeat.', 'Ducimus optio est enim explicabo similique. Velit cupiditate voluptate optio quae hic aliquid. Voluptas ratione officiis fuga odit. Voluptates inventore repellendus tempore ut.', 0, 'http://kiehn.biz/', 'info-circle', 'low', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
@@ -1578,7 +1720,6 @@ INSERT INTO `teacher_notifications` (`id`, `type`, `user_id`, `title`, `message`
 (70, 'alert', 15, 'Perferendis temporibus et et aut error.', 'Molestiae incidunt vel tempore quam accusamus. Quis numquam doloribus libero quisquam. Vel voluptate quae sunt quis.', 0, 'http://durgan.info/', 'bell', 'high', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (71, 'alert', 13, 'Nulla molestiae eum voluptas error.', 'Odit ipsa facilis consequatur quasi omnis soluta. Architecto minus temporibus et veniam sed est quis. Non qui et qui molestiae ut dolorum.', 0, 'https://www.howell.com/iure-aut-dicta-ducimus-voluptate-temporibus-velit-voluptatum', 'bell', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (72, 'reminder', 10, 'Architecto quasi est labore nulla blanditiis iste.', 'Error architecto vero quia. Asperiores nemo cumque eum. Voluptate voluptas enim vel quos minima.', 0, NULL, 'bell', 'low', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
-(73, 'message', 1, 'Doloremque asperiores alias adipisci nesciunt.', 'Debitis ea sit est numquam enim in. Veritatis quod quisquam quia fugiat est dolor aut. Repellendus beatae quibusdam commodi. Impedit est ut quidem commodi occaecati architecto architecto.', 0, NULL, 'bell', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (74, 'alert', 4, 'Voluptates vel aut autem aliquam.', 'Repudiandae et ullam aliquam consectetur esse. Mollitia itaque et ab doloremque magnam dicta. Ut voluptatem vel et alias.', 0, NULL, 'envelope', 'high', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (75, 'message', 13, 'Et est odit et facilis.', 'Sit tenetur velit assumenda voluptatibus minima. Delectus necessitatibus nemo omnis consectetur voluptate. Sapiente voluptate non adipisci ut similique quas dolor.', 0, 'http://bergnaum.com/et-cum-voluptas-consectetur-quaerat-iure.html', 'bell', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
 (76, 'alert', 8, 'A rem dolores ullam consequatur officiis sapiente.', 'Architecto provident sint recusandae cum. Deleniti qui aut vel provident explicabo voluptas sed. Veniam molestiae nostrum ullam qui qui esse dolores quia.', 0, 'http://www.welch.com/in-consectetur-quasi-ut-perferendis-modi', 'envelope', 'medium', '2024-09-07 04:15:58', '2024-09-07 04:15:58'),
@@ -1626,7 +1767,8 @@ CREATE TABLE `teacher_otp_accounts` (
 --
 
 INSERT INTO `teacher_otp_accounts` (`id`, `email`, `otp`, `created_at`, `expires_at`) VALUES
-(1, 'caballeroaldrin02@gmail.com', '829094', '2024-10-14 22:49:32', '2024-10-14 14:59:19');
+(1, 'caballeroaldrin02@gmail.com', '829094', '2024-10-14 22:49:32', '2024-10-14 14:59:19'),
+(2, 'caballeroaldrin02@gmail.com', '189856', '2024-10-27 08:16:32', '2024-10-27 00:26:20');
 
 --
 -- Indexes for dumped tables
@@ -1687,6 +1829,12 @@ ALTER TABLE `cache`
 --
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `face_recognition_keys`
+--
+ALTER TABLE `face_recognition_keys`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `face_scans`
@@ -1902,13 +2050,13 @@ ALTER TABLE `absents`
 -- AUTO_INCREMENT for table `admin_accounts`
 --
 ALTER TABLE `admin_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `admin_notifications`
 --
 ALTER TABLE `admin_notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- AUTO_INCREMENT for table `admin_otp_accounts`
@@ -1926,13 +2074,19 @@ ALTER TABLE `announcements`
 -- AUTO_INCREMENT for table `attendance_histories`
 --
 ALTER TABLE `attendance_histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
+-- AUTO_INCREMENT for table `face_recognition_keys`
+--
+ALTER TABLE `face_recognition_keys`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `face_scans`
 --
 ALTER TABLE `face_scans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1944,7 +2098,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `grading_headers`
 --
 ALTER TABLE `grading_headers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guidance_accounts`
@@ -1968,13 +2122,13 @@ ALTER TABLE `guidance_otp_accounts`
 -- AUTO_INCREMENT for table `highest_possible_score_grading_sheets`
 --
 ALTER TABLE `highest_possible_score_grading_sheets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `histories`
 --
 ALTER TABLE `histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
 
 --
 -- AUTO_INCREMENT for table `jobs`
@@ -1986,25 +2140,25 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `presents`
 --
 ALTER TABLE `presents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `qr_generates`
 --
 ALTER TABLE `qr_generates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=340;
 
 --
 -- AUTO_INCREMENT for table `seen_announcements`
@@ -2016,25 +2170,25 @@ ALTER TABLE `seen_announcements`
 -- AUTO_INCREMENT for table `student_accounts`
 --
 ALTER TABLE `student_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student_grades`
 --
 ALTER TABLE `student_grades`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `student_handles`
 --
 ALTER TABLE `student_handles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student_images`
 --
 ALTER TABLE `student_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `student_notifications`
@@ -2052,13 +2206,13 @@ ALTER TABLE `student_otp_accounts`
 -- AUTO_INCREMENT for table `student_subjects`
 --
 ALTER TABLE `student_subjects`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `subject_models`
 --
 ALTER TABLE `subject_models`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `teacher_accounts`
@@ -2082,7 +2236,7 @@ ALTER TABLE `teacher_notifications`
 -- AUTO_INCREMENT for table `teacher_otp_accounts`
 --
 ALTER TABLE `teacher_otp_accounts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
