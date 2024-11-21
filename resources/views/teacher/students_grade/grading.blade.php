@@ -172,7 +172,7 @@
                 </div>
             </td>
             <td class="border p-2 text-center" colspan="3" rowspan="3">
-                Quarterly Assessment <br> (<span contenteditable="true" class="cursor-pointer" id="custom_quarterly_assessment_percentage"> 25% </span> <i class="fas fa-edit text-gray-400 cursor-pointer" onclick="$('#custom_quarterly_assessment_percentage').focus()"></i> )
+                Quarterly Assessment <br> (<span   id="custom_quarterly_assessment_percentage"> 25% </span> )
             </td>
             <td class="border p-2 text-center" rowspan="4">
                 Initial Grade
@@ -183,8 +183,8 @@
         </tr>
 
         <tr class="border">
-            <td class="border p-2" colspan="13">WRITTEN WORK (<span contenteditable="true" class="cursor-pointer" id="custom_written_percentage"> 25% </span> <i class="fas fa-edit text-gray-400 cursor-pointer" onclick="$('#custom_written_percentage').focus()"></i> ) </td>
-            <td class="border p-2" colspan="13">PERFORMANCE TASK (<span contenteditable="true" class="cursor-pointer" id="custom_performance_task_percentage"> 50% </span> <i class="fas fa-edit text-gray-400 cursor-pointer" onclick="$('#custom_performance_task_percentage').focus()"></i> )</td>
+            <td class="border p-2" colspan="13">WRITTEN WORK (<span   id="custom_written_percentage"> 25% </span>)  </td>
+            <td class="border p-2" colspan="13">PERFORMANCE TASK (<span  id="custom_performance_task_percentage"> 50% </span> )</td>
         </tr>
 
         <tr class="border">
