@@ -21,13 +21,7 @@ return new class extends Migration
             $table->string('school_year')->default('2023-2024')->nullable();
             
             // Added new fields
-            $table->string('semester')->nullable();
-            $table->string('quarter')->nullable();
-            $table->string('subject')->nullable();
-            $table->string('track')->nullable();
-            $table->string('grade')->nullable();
-            $table->string('strand')->nullable();
-            $table->string('section')->nullable();
+            $table->integer('grade_handle_id')->nullable();
 
             $table->string('written_work_percentage')->nullable();
             $table->string('performance_task_percentage')->nullable();

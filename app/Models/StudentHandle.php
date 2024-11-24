@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model};
 use App\Models\Student\StudentAccount;
+use App\Models\Admin\SubjectModel;
 
 class StudentHandle extends Model
 {
@@ -22,6 +23,11 @@ class StudentHandle extends Model
     public function gradeHandle()
     {
         return $this->belongsTo(TeacherGradeHandle::class, 'grade_handle_id');
+    }
+
+    public function subject()
+    {
+        return $this->belongsTo(SubjectModel::class, 'grade_handle_id');
     }
 
     public function account()

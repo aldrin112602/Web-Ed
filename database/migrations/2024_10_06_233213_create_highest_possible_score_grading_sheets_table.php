@@ -15,13 +15,8 @@ return new class extends Migration
             $table->id();
 
             // Added new fields
-            $table->string('semester')->nullable();
-            $table->string('quarter')->nullable();
-            $table->string('subject')->nullable();
-            $table->string('track')->nullable();
-            $table->string('grade')->nullable();
-            $table->string('strand')->nullable();
-            $table->string('section')->nullable();
+            $table->integer('grade_handle_id')->nullable();
+            
 
 
             // For Written Work

@@ -11,13 +11,8 @@ class HighestPossibleScoreGradingSheet extends Model
     protected $fillable = [
 
         // for new added fields
-        'semester',
-        'quarter',
-        'subject',
-        'track',
-        'grade',
-        'strand',
-        'section',
+        'grade_handle_id',
+        
 
         // for written
         'highest_possible_written_1',

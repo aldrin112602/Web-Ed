@@ -16,6 +16,13 @@ return new class extends Migration
             $table->string('grade')->nullable();
             $table->string('strand')->nullable();
             $table->string('section')->nullable();
+
+            // newly added columns
+            $table->string('semester')->nullable()->default('First semester');
+            $table->string('quarter')->nullable()->default('First quarter');
+            $table->string('subject')->nullable();
+            $table->string('track')->nullable();
+
             $table->unsignedBigInteger('teacher_id')->nullable();
             $table->timestamps();
 
