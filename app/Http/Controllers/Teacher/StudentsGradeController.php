@@ -42,13 +42,13 @@ class StudentsGradeController extends Controller
 
         // Handle Subjects / filter only grade, strand and section to get subjects
         $this->handleSubjects = TeacherGradeHandle::where('teacher_id', $this->user->id)
-        ->when($filters['grade'], fn($query, $grade) => $query->where('grade', $grade))
-        ->when($filters['strand'], fn($query, $strand) => $query->where('strand', $strand))
-        ->when($filters['section'], fn($query, $section) => $query->where('section', $section))
-        ->when($filters['subject'], fn($query, $subject) => $query->whereHas('subjects', fn($q) => $q->where('subject', $subject)))
-        ->distinct()
-        ->get();
-    
+            ->when($filters['grade'], fn($query, $grade) => $query->where('grade', $grade))
+            ->when($filters['strand'], fn($query, $strand) => $query->where('strand', $strand))
+            ->when($filters['section'], fn($query, $section) => $query->where('section', $section))
+            ->when($filters['subject'], fn($query, $subject) => $query->whereHas('subjects', fn($q) => $q->where('subject', $subject)))
+            ->distinct()
+            ->get();
+
 
         // All Students
         $this->allStudents = StudentHandle::with('account')
@@ -61,12 +61,12 @@ class StudentsGradeController extends Controller
 
 
 
-            
+
 
         // Male Students
         $this->allMaleStudents = $this->allStudents->filter(fn($student) => $student->account->gender === 'Male');
 
-        
+
 
         // Female Students
         $this->allFemaleStudents = $this->allStudents->filter(fn($student) => $student->account->gender === 'Female');
@@ -189,4 +189,44 @@ class StudentsGradeController extends Controller
             'subjects' => $subjects
         ]);
     }
+
+
+
+    /**
+     * //////////////////////
+     * //// REPORT CARD /////
+     * //////////////////////
+     */
+
+    //  FRONT PAGE
+    public function reportCardFront(Request $request)
+    {
+
+        return view(
+            'teacher.students_grade.report_card.report_card_front',
+            [
+                'user' => $this->user,
+                'handleSubjects' => $this->handleSubjects,
+            ]
+        );
+    }
+
+    //  BACK PAGE
+    public function reportCardBack(Request $request)
+    {
+
+        return view(
+            'teacher.students_grade.report_card.report_card_back',
+            [
+                'user' => $this->user,
+                'handleSubjects' => $this->handleSubjects,
+            ]
+        );
+    }
+
+    /**
+     * //////////////////////////
+     * ////END REPORT CARD /////
+     * /////////////////////////
+     */
 }

@@ -54,6 +54,12 @@ Route::prefix('teacher')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:teacher')->group(function () {
+
+        // Report card routes
+        Route::get('/report_card_front', [StudentsGradeController::class, 'reportCardFront'])->name('teacher.report_card_front');
+        Route::get('/report_card_back', [StudentsGradeController::class, 'reportCardBack'])->name('teacher.report_card_back');
+
+
         // routes for class histories
         Route::get('/class_history', [ClassHistory::class, 'index'])->name('teacher.class_history');
         Route::get('view_class_history/{id}', [ClassHistory::class, 'view_class_history'])->name('teacher.view_class_history');
