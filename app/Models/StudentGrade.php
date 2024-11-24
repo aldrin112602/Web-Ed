@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\StudentHandle;
+
 
 class StudentGrade extends Model
 {
@@ -13,13 +15,7 @@ class StudentGrade extends Model
     protected $fillable = [
         'teacher_id',
         'student_id',
-        'subject',
-        'track',
-        'semester',
-        'quarter',
-        'grade',
-        'strand',
-        'section',
+        'grade_handle_id',
         'written_1',
         'written_2',
         'written_3',
@@ -48,4 +44,9 @@ class StudentGrade extends Model
         'task_ws',
         
     ];
+
+    public function studentHandle()
+    {
+        return $this->belongsTo(StudentHandle::class, 'student_id', 'id');
+    }
 }

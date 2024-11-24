@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\{Factories\HasFactory, Model};
 use App\Models\Teacher\TeacherAccount;
+use App\Models\Admin\SubjectModel;
+
+
 
 class TeacherGradeHandle extends Model
 {
@@ -13,7 +16,13 @@ class TeacherGradeHandle extends Model
         'teacher_id',
         'grade',
         'strand',
-        'section'
+        'section',
+        // newly added columns
+        'semester',
+        'quarter',
+        'subject',
+        'track',
+
     ];
 
     public function teacher()
@@ -25,5 +34,11 @@ class TeacherGradeHandle extends Model
     public function students()
     {
         return $this->hasMany(StudentHandle::class, 'grade_handle_id');
+    }
+
+
+    public function subjects()
+    {
+        return $this->hasMany(SubjectModel::class, 'grade_handle_id', 'id');
     }
 }
