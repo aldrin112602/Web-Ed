@@ -198,28 +198,37 @@ class StudentsGradeController extends Controller
      * //////////////////////
      */
 
+
     //  FRONT PAGE
-    public function reportCardFront(Request $request)
+    public function reportCardFront(Request $request, $id)
     {
+
+        $student = StudentAccount::where('id', $id)
+        ->first();
 
         return view(
             'teacher.students_grade.report_card.report_card_front',
             [
                 'user' => $this->user,
                 'handleSubjects' => $this->handleSubjects,
+                'student' => $student
             ]
         );
     }
 
     //  BACK PAGE
-    public function reportCardBack(Request $request)
+    public function reportCardBack(Request $request, $id)
     {
+
+        $student = StudentAccount::where('id', $id)
+        ->first();
 
         return view(
             'teacher.students_grade.report_card.report_card_back',
             [
                 'user' => $this->user,
                 'handleSubjects' => $this->handleSubjects,
+                'student' => $student
             ]
         );
     }
