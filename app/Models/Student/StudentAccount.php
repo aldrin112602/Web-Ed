@@ -69,6 +69,11 @@ class StudentAccount extends Authenticatable
         return $this->hasMany(AttendanceHistory::class, 'student_id');
     }
 
+    public function attendanceHistories()
+    {
+        return $this->hasMany(AttendanceHistory::class, 'student_id');
+    }
+
 
     public function studentHandles()
     {
