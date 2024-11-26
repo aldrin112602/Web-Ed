@@ -57,35 +57,6 @@
 
         </div>
 
-
-        <!-- <div class="block md:flex align-center justify-between my-2 gap-5">
-            <div class="md:w-1/2 w-full">
-                <label for="strand" class="block text-gray-700 text-sm mb-1">Strand</label>
-                <select name="strand" id="strand" class="form-select w-full rounded border-gray-300 @error('strand') border-red-500 @enderror">
-                    <option value="" disabled class="hidden" selected>-- Select one --</option>
-                    <option value="ABM" {{ (old('strand') ?? $student->strand) == "ABM" ? "selected" : ""  }}>ABM</option>
-                    <option value="ICT" {{ (old('strand') ?? $student->strand) == "ICT" ? "selected" : ""  }}>ICT</option>
-                    <option value="H.E" {{ (old('strand') ?? $student->strand) == "H.E" ? "selected" : ""  }}>HE</option>
-                    <option value="HUMSS" {{ (old('strand') ?? $student->strand) == "HUMSS" ? "selected" : ""  }}>HUMSS</option>
-                </select>
-                @error('strand')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="md:w-1/2 w-full">
-                <label for="grade" class="block text-gray-700 text-sm mb-1">Grade</label>
-                <select name="grade" id="grade" class="form-select w-full rounded border-gray-300 @error('grade') border-red-500 @enderror">
-                    <option value="" disabled class="hidden" selected>-- Select one --</option>
-                    <option value="11" {{ (old('grade') ?? $student->grade) == "11" ? "selected" : ""  }}>Grade 11</option>
-                    <option value="12" {{ (old('grade') ?? $student->grade) == "12" ? "selected" : ""  }}>Grade 12</option>
-                </select>
-                @error('grade')
-                <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
-        </div> -->
         <div class="block md:flex align-center justify-between my-2 gap-5">
             <div class="md:w-1/2 w-full">
                 <label for="parents_contact_number" class="block text-gray-700 text-sm mb-1">Parents contact number</label>
@@ -114,12 +85,31 @@
             </div>
             <div class="md:w-1/2 w-full">
                 <label for="phone_number" class="block text-gray-700 text-sm mb-1">Phone number</label>
-                <input type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);"  class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $student->phone_number }}">
+                <input type="tel" id="phone_number" name="phone_number" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 11);" class="form-input w-full rounded border-gray-300 @error('phone_number') border-red-500 @enderror" value="{{ old('phone_number') ?? $student->phone_number }}">
                 @error('phone_number')
                 <span class="text-red-500 text-sm">{{ $message }}</span>
                 @enderror
             </div>
         </div>
+
+        <!-- Newly added fields -->
+        <div class="block md:flex align-center justify-between my-2 gap-5">
+            <div class="md:w-1/2 w-full">
+                <label for="lrn" class="block text-gray-700 text-sm mb-1">LRN (Learner Reference Number)</label>
+                <input type="number" id="lrn" name="lrn" maxlength="12" oninput="if(this.value.length > 11) this.value = this.value.slice(0, 12);" class="form-input w-full rounded border-gray-300 @error('lrn') border-red-500 @enderror" value="{{ old('lrn') ?? $student->lrn }}">
+                @error('lrn')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+            <div class="md:w-1/2 w-full">
+                <label for="birthdate" class="block text-gray-700 text-sm mb-1">Birthdate</label>
+                <input type="date" id="birthdate" name="birthdate" class="form-input w-full rounded border-gray-300 @error('birthdate') border-red-500 @enderror" value="{{ old('birthdate') ?? $student->birthdate }}">
+                @error('birthdate')
+                <span class="text-red-500 text-sm">{{ $message }}</span>
+                @enderror
+            </div>
+        </div>
+
 
         <div class="py-6">
             <hr>

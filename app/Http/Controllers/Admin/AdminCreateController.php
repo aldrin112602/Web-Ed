@@ -100,6 +100,8 @@ class AdminCreateController extends Controller
             'add_to' => 'required',
             'grade' => 'required',
             'parents_email' => 'required',
+            'lrn' => 'required|min:12|max:12',
+            'birthdate' => 'required',
             'parents_contact_number' => 'required|string|min:11|max:11',
             'email' => 'required|email|unique:student_accounts,email',
             'profile' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',

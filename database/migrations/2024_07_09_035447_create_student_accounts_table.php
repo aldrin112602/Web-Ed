@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('gender');
             $table->string('extension_name')->nullable();
+            $table->string('lrn')->nullable();
+            $table->string('birthdate')->nullable();
             $table->string('strand');
             $table->string('section')->nullable();
             $table->integer('grade');

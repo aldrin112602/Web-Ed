@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2024 at 10:29 AM
+-- Generation Time: Nov 26, 2024 at 04:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -651,6 +651,13 @@ CREATE TABLE `highest_possible_score_grading_sheets` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `highest_possible_score_grading_sheets`
+--
+
+INSERT INTO `highest_possible_score_grading_sheets` (`id`, `grade_handle_id`, `highest_possible_written_1`, `highest_possible_written_2`, `highest_possible_written_3`, `highest_possible_written_4`, `highest_possible_written_5`, `highest_possible_written_6`, `highest_possible_written_7`, `highest_possible_written_8`, `highest_possible_written_9`, `highest_possible_written_10`, `highest_possible_task_1`, `highest_possible_task_2`, `highest_possible_task_3`, `highest_possible_task_4`, `highest_possible_task_5`, `highest_possible_task_6`, `highest_possible_task_7`, `highest_possible_task_8`, `highest_possible_task_9`, `highest_possible_task_10`, `teacher_id`, `created_at`, `updated_at`) VALUES
+(1, NULL, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 1, '2024-11-26 03:33:55', '2024-11-26 03:33:55');
+
 -- --------------------------------------------------------
 
 --
@@ -764,7 +771,9 @@ INSERT INTO `histories` (`id`, `position`, `user_id`, `history`, `description`, 
 (90, 'Teacher', 1, 'Create student account', 'ID Number: 447686, Name: Aldrin Caballero', '2024-11-24 01:22:41', '2024-11-24 01:22:41'),
 (91, 'Teacher', 1, 'Added the subject  to Aldrin Caballero\'s account', NULL, '2024-11-24 01:24:30', '2024-11-24 01:24:30'),
 (92, 'Teacher', 1, 'Created a subject', 'Subject created: ', '2024-11-24 03:14:21', '2024-11-24 03:14:21'),
-(93, 'Teacher', 1, 'Added the subject  to Aldrin Caballero\'s account', NULL, '2024-11-24 03:15:07', '2024-11-24 03:15:07');
+(93, 'Teacher', 1, 'Added the subject  to Aldrin Caballero\'s account', NULL, '2024-11-24 03:15:07', '2024-11-24 03:15:07'),
+(94, 'Teacher', 1, 'Updated user account', 'ID Number: 447686, Name: Aldrin Caballero', '2024-11-26 03:10:55', '2024-11-26 03:10:55'),
+(95, 'Teacher', 1, 'Updated user account', 'ID Number: 447686, Name: Aldrin Caballero', '2024-11-26 03:14:01', '2024-11-26 03:14:01');
 
 -- --------------------------------------------------------
 
@@ -1297,7 +1306,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('Q00r8KWmFYkVF7boz3RtMJFg7S748W0fgdi41d8p', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiZkdGM3RJT2NBcXFLV1pZdjdna0F0bmdKaTBLRVFXTXpkMVkxNmZiMiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC90ZWFjaGVyL3JlcG9ydF9jYXJkX2Zyb250Lzc/aWQ9MSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTQ6ImxvZ2luX3RlYWNoZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1732526706);
+('m13M0y28SvHZQ5Q9cjcOtIMiwES3UlWsif2GSPVm', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiTDg5UUV5akV3SnZkSEthcUVnRmE3SHhCMjV1OVdveVp0WEpSUklUWiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTcyOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvdGVhY2hlci9ncmFkaW5nP2dyYWRlPTExJnNlY3Rpb249QSZzZW1lc3Rlcj1GaXJzdCUyMFNlbWVzdGVyJnN0cmFuZD1JQ1Qmc3ViamVjdD1FYXJ0aCUyMGFuZCUyMGxpZmUlMjBzY2llbmNlJnRyYWNrPUNvcmUlMjBTdWJqZWN0JTIwJTI4QWxsJTIwVHJhY2tzJTI5Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NDoibG9naW5fdGVhY2hlcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1732592045);
 
 -- --------------------------------------------------------
 
@@ -1323,6 +1332,8 @@ CREATE TABLE `student_accounts` (
   `profile` text DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
+  `lrn` varchar(255) DEFAULT NULL,
+  `birthdate` varchar(255) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1333,9 +1344,9 @@ CREATE TABLE `student_accounts` (
 -- Dumping data for table `student_accounts`
 --
 
-INSERT INTO `student_accounts` (`id`, `id_number`, `name`, `gender`, `extension_name`, `strand`, `section`, `grade`, `parents_contact_number`, `parents_email`, `username`, `password`, `email`, `role`, `profile`, `address`, `phone_number`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '818311', 'James Bond', 'Male', NULL, 'ABM', 'D', 12, '09512793354', 'caballeroaldrin02@gmail.com', 'aldrin02', '$2y$12$xG2iyL9AkvmzxerIlk1ZvO.ZQTwrY9DJIlurfowoqtxyrOv7ChFjK', 'caballeroaldrin02@gmail.com', 'Student', 'profiles/1730466986_WIN_20241026_16_52_50_Pro.jpg', 'Cabalhin Compound, Barangay Sampaloc', '09512793354', NULL, 'FXUJqaokx522eTYqSUqN875jynlYSbFz6lUp9aVvoDrkmkhkoyuQZ5CsUkeR', '2024-08-14 02:43:19', '2024-11-01 05:16:26'),
-(7, '447686', 'Aldrin Caballero', 'Male', NULL, 'ICT', 'A', 11, '09512793354', 'caballeroaldrin02@gmail.com', 'aldrin_02', '$2y$12$ePUKni3L40pbzyW62Q0SiOrtfnM0tL6g1Zkbn96u3kJMQtDpsQBeC', 'aldrincaballero94@gmail.com', 'Student', 'profiles/1732411361_WIN_20241124_09_21_24_Pro.jpg', NULL, '09512793354', NULL, NULL, '2024-11-24 01:22:41', '2024-11-24 01:22:41');
+INSERT INTO `student_accounts` (`id`, `id_number`, `name`, `gender`, `extension_name`, `strand`, `section`, `grade`, `parents_contact_number`, `parents_email`, `username`, `password`, `email`, `role`, `profile`, `address`, `phone_number`, `lrn`, `birthdate`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, '818311', 'James Bond', 'Male', NULL, 'ABM', 'D', 12, '09512793354', 'caballeroaldrin02@gmail.com', 'aldrin02', '$2y$12$xG2iyL9AkvmzxerIlk1ZvO.ZQTwrY9DJIlurfowoqtxyrOv7ChFjK', 'caballeroaldrin02@gmail.com', 'Student', 'profiles/1730466986_WIN_20241026_16_52_50_Pro.jpg', 'Cabalhin Compound, Barangay Sampaloc', '09512793354', NULL, NULL, NULL, 'FXUJqaokx522eTYqSUqN875jynlYSbFz6lUp9aVvoDrkmkhkoyuQZ5CsUkeR', '2024-08-14 02:43:19', '2024-11-01 05:16:26'),
+(7, '447686', 'Aldrin Caballero', 'Male', NULL, 'ICT', 'A', 11, '09512793354', 'aldrincaballero94@gmail.com', 'aldrin_02', '$2y$12$ePUKni3L40pbzyW62Q0SiOrtfnM0tL6g1Zkbn96u3kJMQtDpsQBeC', 'aldrincaballero94@gmail.com', 'Student', 'profiles/1732411361_WIN_20241124_09_21_24_Pro.jpg', NULL, '09512793354', NULL, NULL, NULL, NULL, '2024-11-24 01:22:41', '2024-11-24 01:22:41');
 
 -- --------------------------------------------------------
 
@@ -2105,13 +2116,13 @@ ALTER TABLE `guidance_otp_accounts`
 -- AUTO_INCREMENT for table `highest_possible_score_grading_sheets`
 --
 ALTER TABLE `highest_possible_score_grading_sheets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `histories`
 --
 ALTER TABLE `histories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `jobs`

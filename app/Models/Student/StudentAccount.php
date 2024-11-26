@@ -33,7 +33,9 @@ class StudentAccount extends Authenticatable
         'profile',
         'phone_number',
         'address',
-        'extension_name'
+        'extension_name',
+        'lrn',
+        'birthdate'
     ];
 
     public function setPasswordAttribute($value)
