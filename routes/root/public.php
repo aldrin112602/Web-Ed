@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     PublicController,
-    FaceRecognitionController
+    FaceRecognitionController,
+    SendMailAttendance
 };
 use Illuminate\Support\Facades\Auth;
 
@@ -49,3 +50,7 @@ Route::get('/face_recognition_auth', [FaceRecognitionController::class, 'viewPat
 
 Route::post('/face-recognition/validate-pattern', [FaceRecognitionController::class, 'validatePattern'])->name('face.recognition.validate');
 
+
+
+// For testing sendMailSttendance
+Route::get('/send_mail_attendance', [SendMailAttendance::class, 'sendAttendance'])->name('attendance.sendMail');

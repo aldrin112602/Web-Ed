@@ -33,7 +33,9 @@ class StudentAccount extends Authenticatable
         'profile',
         'phone_number',
         'address',
-        'extension_name'
+        'extension_name',
+        'lrn',
+        'birthdate'
     ];
 
     public function setPasswordAttribute($value)
@@ -65,6 +67,11 @@ class StudentAccount extends Authenticatable
 
 
     public function attendaceHistories()
+    {
+        return $this->hasMany(AttendanceHistory::class, 'student_id');
+    }
+
+    public function attendanceHistories()
     {
         return $this->hasMany(AttendanceHistory::class, 'student_id');
     }

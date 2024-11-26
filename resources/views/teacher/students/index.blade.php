@@ -126,8 +126,7 @@
                         <th class="py-3 px-2 text-center border">Gender</th>
                         <th class="py-3 px-2 text-center border">Grade</th>
                         <th class="py-3 px-2 text-center border">Strand</th>
-                        <th class="py-3 px-2 text-center border">Subjects</th>
-                        <th class="py-3 px-2 text-center border">Action</th>
+                        <th class="py-3 px-2 text-center border">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,15 +142,15 @@
                         <td class="py-2 text-center border">{{ $list->grade }}</td>
                         <td class="py-2 text-center border">{{ $list->strand }}</td>
                         <td class="py-2 text-center border">
-                            <a href="{{ route('teacher.view.subjects', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">View</a>
-                        </td>
-                        <td class="py-2 text-center border">
                             <a href="{{ route('teacher.edit.student', $list->id) }}?id={{request()->query('id')}}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>
-                            <button onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</button>
+                            <a href="#!" onclick="confirmDelete({{ $list->id }})" class="px-2 py-1 bg-red-500 text-white rounded-md">Delete</a>
                             <form id="delete-form-{{ $list->id }}" action="{{ route('teacher.delete.student', ['id' => $list->id]) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')
                             </form>
+                            |
+                            <a href="{{ route('teacher.view.subjects', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">Subjects</a>
+                            <a href="{{ route('teacher.report_card_front', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-green-600 text-white rounded-md">Report Card</a>
                         </td>
                     </tr>
                     @endforeach

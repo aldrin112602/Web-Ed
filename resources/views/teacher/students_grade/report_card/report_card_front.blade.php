@@ -34,9 +34,12 @@
         #report_card {
             width: 100%;
             height: auto;
-            position: static;
+            position: absolute;
             background-color: white;
             font-size: 0.75rem;
+            top: 0;
+            left: 0;
+            z-index: 200;
         }
 
         .border {
@@ -45,8 +48,11 @@
     }
 </style>
 <div class=" mx-auto p-8 bg-white overflow-auto">
-    <div class="flex my-3">
+    <div class="flex my-3 gap-3">
         <button onclick="window.print()" class="px-5 py-1 bg-blue-800 text-white rounded">Print Report Card</button>
+        | 
+        <a href="{{ route('teacher.report_card_front', $student->id) }}?id={{request()->query('id')}}" class="px-5 py-1 bg-green-800 text-white rounded">Front page</a>
+        <a href="{{ route('teacher.report_card_back', $student->id) }}?id={{request()->query('id')}}"  class="px-5 py-1 bg-purple-800 text-white rounded">Back page</a>
     </div>
     <div style="min-width: 100vw; min-height: 100vh" class="flex items-start justify-start border p-2" id="report_card">
         <!-- first column -->
@@ -143,30 +149,30 @@
             <div class="mb-8">
                 <div class="grid grid-cols-1 gap-4">
                     <div class="border-b border-gray-400">
-                        Name: <span class="ml-2">_________________________________</span>
+                        Name: <span class="ml-2 font-semibold">{{ $student->name }}</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="border-b border-gray-400">
-                            Age: <span class="ml-2">________________</span>
+                            Age: <span class="ml-2">{{ $student->age }}</span>
                         </div>
                         <div class="border-b border-gray-400">
-                            Sex: <span class="ml-2">________________</span>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="border-b border-gray-400">
-                            Grade: <span class="ml-2">________________</span>
-                        </div>
-                        <div class="border-b border-gray-400">
-                            Section: <span class="ml-2">________________</span>
+                            Sex: <span class="ml-2">{{ $student->gender }}</span>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="border-b border-gray-400">
-                            School Year: <span class="ml-2">________________</span>
+                            Grade: <span class="ml-2">{{ $student->grade }}</span>
                         </div>
                         <div class="border-b border-gray-400">
-                            LRN: <span class="ml-2">________________</span>
+                            Section: <span class="ml-2">{{ $student->section }}</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="border-b border-gray-400">
+                            School Year: <span class="ml-2">{{ $student->sy ?? '2024 - 2025' }}</span>
+                        </div>
+                        <div class="border-b border-gray-400">
+                            LRN: {{ $student->lrn ?? "N/A" }}<span class="ml-2"></span>
                         </div>
                     </div>
                 </div>
@@ -183,11 +189,11 @@
             <!-- Signatures -->
             <div class="grid grid-cols-2 gap-8 mb-8">
                 <div class="text-center">
-                    <div class="border-b border-gray-400 mb-1">____________________</div>
+                    <div class="border-b border-gray-400 mb-1" contenteditable="true">ARTCHIE P. TRAVIÑO</div>
                     <div>School Administrator</div>
                 </div>
                 <div class="text-center">
-                    <div class="border-b border-gray-400 mb-1">____________________</div>
+                    <div class="border-b border-gray-400 mb-1 uppercase" contenteditable="true">{{ $user->name }}</div>
                     <div>Teacher</div>
                 </div>
             </div>
@@ -197,23 +203,23 @@
                 <h3 class="font-bold mb-4 text-center">Certificate of Transfer</h3>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                     <div>
-                        Admitted to Grade: <span class="ml-2">________________</span>
+                        Admitted to Grade: <span class="ml-2 border-b border-gray-400" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     </div>
                     <div>
-                        Section: <span class="ml-2">________________</span>
+                        Section: <span class="ml-2 border-b border-gray-400" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     </div>
                 </div>
                 <div class="mb-4">
-                    Eligibility for admission to Grade: <span class="ml-2">________________</span>
+                    Eligibility for admission to Grade: <span class="ml-2 border-b border-gray-400" contenteditable="true">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 </div>
                 <p class="mb-4">Approved:</p>
                 <div class="grid grid-cols-2 gap-8">
                     <div class="text-center">
-                        <div class="border-b border-gray-400 mb-1">____________________</div>
+                        <div class="border-b border-gray-400 mb-1" contenteditable="">ARTCHIE P. TRAVIÑO</div>
                         <div>School Administrator</div>
                     </div>
                     <div class="text-center">
-                        <div class="border-b border-gray-400 mb-1">____________________</div>
+                        <div class="border-b border-gray-400 mb-1 uppercase" contenteditable="">{{ $user->name }}</div>
                         <div>Teacher</div>
                     </div>
                 </div>
@@ -231,7 +237,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-4">
-                    <div class="border-b border-gray-400 mb-1">____________________</div>
+                    <div class="mb-1">____________________</div>
                     <div>School Administrator</div>
                 </div>
             </div>

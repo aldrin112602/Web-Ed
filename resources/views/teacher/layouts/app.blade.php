@@ -195,19 +195,8 @@
                             <div role="none">
                                 <a href="{{ route('teacher.grading') }}" class="{{
                                            request()->is('teacher/grading') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
-                                    Grading
-                                </a>
-
-                                <!-- <a href="{{ route('teacher.custom_grade') }}" class="{{
-                                           request()->is('teacher/custom_grade') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
-                                    Custom Grade
-                                </a>
-
-
-                                <a href="{{ route('teacher.grading_sheet') }}" class="{{
-                                           request()->is('teacher/grading_sheet') ? 'bg-blue-50 text-blue-500' : 'hover:bg-blue-50 hover:text-blue-500 text-gray-700' }} block px-4 py-2 text-sm flex items-center justify-start gap-3" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fa-solid fa-list-ul"></i>
                                     Grading Sheet
-                                </a> -->
+                                </a>
 
                             </div>
                         </div>

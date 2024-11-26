@@ -288,6 +288,8 @@ class AccountManagementController extends Controller
                 'phone_number' => 'required|string|min:11|max:11',
                 'address' => 'nullable|string|max:255',
                 'parents_email' => 'required',
+                'lrn' => 'required|min:12|max:12',
+                'birthdate' => 'required',
                 'extension_name' => 'nullable|string|max:255',
                 'email' => 'required|email|max:255|unique:student_accounts,email,' . $user->id,
                 'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number,' . $user->id,
@@ -304,6 +306,8 @@ class AccountManagementController extends Controller
                 'parents_email' => $request->parents_email,
                 'extension_name' => $request->extension_name,
                 'parents_contact_number' => $request->parents_contact_number,
+                'lrn' => $request->lrn,
+                'birthdate' => $request->birthdate,
             ]);
 
             // Update password if provided
