@@ -17,7 +17,7 @@ class Account extends Controller
     {
         $this->mailerService = $mailerService;
     }
-    
+
     public function deleteStudentAccount(Request $request)
     {
         $id = request()->query('id');
@@ -113,6 +113,8 @@ class Account extends Controller
             'username' => 'required|string|unique:student_accounts,username',
             'password' => 'required|string|min:6|max:255',
             'parents_email' => 'required',
+            'lrn' => 'required|min:12|max:12',
+            'birthdate' => 'required',
             'parents_contact_number' => 'required|string|min:11|max:11',
             'email' => 'required|email|unique:student_accounts,email',
             'profile' => 'required|image|max:10240',
