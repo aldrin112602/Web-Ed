@@ -113,6 +113,8 @@ class StudentController extends Controller
                 'gender' => $request->gender,
                 'parents_email' => $request->parents_email,
                 'extension_name' => $request->extension_name,
+                'lrn' => $request->lrn,
+                'birthdate' => $request->birthdate,
                 'parents_contact_number' => $request->parents_contact_number,
             ]);
 

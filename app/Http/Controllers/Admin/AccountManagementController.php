@@ -306,6 +306,8 @@ class AccountManagementController extends Controller
                 'parents_email' => $request->parents_email,
                 'extension_name' => $request->extension_name,
                 'parents_contact_number' => $request->parents_contact_number,
+                'lrn' => $request->lrn,
+                'birthdate' => $request->birthdate,
             ]);
 
             // Update password if provided
