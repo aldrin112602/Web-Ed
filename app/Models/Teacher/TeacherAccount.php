@@ -11,6 +11,7 @@ use Illuminate\{
 };
 
 use App\Models\Message;
+use App\Models\TeacherGradeHandle;
 
 class TeacherAccount extends Authenticatable
 {
@@ -46,5 +47,10 @@ class TeacherAccount extends Authenticatable
     public function receivedMessages()
     {
         return $this->morphMany(Message::class, 'receiver');
+    }
+
+    public function grade_handle() 
+    {
+        return $this->belongsTo(TeacherGradeHandle::class, 'teacher_id');
     }
 }

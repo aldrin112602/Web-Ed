@@ -48,7 +48,7 @@
 
         <div class="flex items-center justify-between">
             <h1 class="font-semibold text-slate-600">ABSENT STUDENT LIST</h1>
-            
+
         </div>
 
         <hr class="my-3">
@@ -95,7 +95,10 @@
                             $account->gender
                         }}</td>
                         <td class="py-2 text-center border">{{ $account->strand }}</td>
-                        <a href="{{route('admin.view_attendance_history', $account->id) }}?status=absent" class="px-2 py-1 bg-blue-500 text-white rounded-md">View</a>
+                        <td class="py-2 text-center border">
+                            <a href="{{route('admin.view_attendance_history', $account->id) }}?status=absent" class="px-2 py-1 bg-blue-500 text-white rounded-md">View</a>
+                        </td>
+
                     </tr>
                     @endforeach
                 </tbody>

@@ -11,7 +11,8 @@ use Illuminate\{
 
 use App\Models\{
     Teacher\TeacherAccount,
-    Student\StudentAccount
+    Student\StudentAccount,
+    TeacherGradeHandle
 };
 
 class SubjectModel extends Authenticatable
@@ -32,6 +33,12 @@ class SubjectModel extends Authenticatable
     {
         return $this->belongsTo(TeacherAccount::class, 'teacher_id');
     }
+
+public function teacherHandle()
+{
+    return $this->hasOne(TeacherGradeHandle::class, 'teacher_id');
+}
+
 
     // Define the students relationship
     public function students()
