@@ -30,6 +30,11 @@ class TeacherGradeHandle extends Model
         return $this->belongsTo(TeacherAccount::class, 'teacher_id');
     }
 
+    public function teacherHandle()
+    {
+        return $this->belongsTo(SubjectModel::class, 'teacher_id');
+    }
+
 
     public function students()
     {

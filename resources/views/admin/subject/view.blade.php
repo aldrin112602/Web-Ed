@@ -8,13 +8,23 @@
     <form id="add-subject-form" method="POST" action="{{ route('admin.add.subject') }}" class="block md:flex items-center justify-start gap-2">
         @csrf
         <input type="hidden" name="student_id" value="{{ $student->id }}">
+        <input type="hidden" name="teacher_id" id="teacher_id">
+        <input type="hidden" name="grade_handle_id" id="grade_handle_id">
         <div>
             <label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Subject</label>
             <select name="subject" id="subject" class="form-select rounded-lg w-full md:w-60">
                 @foreach($subjects as $subject)
-                <option value="{{ $subject->id }}">{{ $subject->subject }} / Teacher: {{ $subject->teacherAccount->name ?? 'N/A' }} / G: {{$subject->teacherAccount->grade_handle ?? 'N/A'}}</option>
+                <option value="{{ $subject->id }}" data-teacher-id="{{ $subject->teacher_id }}" data-grade-handle-id="{{ $subject->grade_handle_id }}">{{ $subject->teacherAccount->name ?? 'N/A' }} / {{ $TeacherGradeHandle::where('id', $subject->grade_handle_id)->first()->grade ?? 'N/A'}} - {{ $TeacherGradeHandle::where('id', $subject->grade_handle_id)->first()->strand ?? 'N/A'}} ({{ $TeacherGradeHandle::where('id', $subject->grade_handle_id)->first()->section ?? 'N/A'}})</option>
                 @endforeach
             </select>
+
+            <script>
+                $('#subject').on('change', function(e) {
+                    $('#teacher_id').val($(this).find('option:selected').data('teacher-id'));
+                    $('#grade_handle_id').val($(this).find('option:selected').data('grade-handle-id'));
+                    
+                })
+            </script>
         </div>
         <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline mt-2 md:mt-7"><i class="fas fa-plus"></i> &nbsp;Subject</button>
     </form>
@@ -40,7 +50,9 @@
                 <td class="text-left p-3 border-b border-gray-200">{{ $student->strand ?? 'N/A' }}</td>
                 <td class="text-left p-3 border-b border-gray-200">{{ $student->section ?? 'N/A' }}</td>
                 <td class="text-left p-3 border-b border-gray-200">{{ $subject->teacherAccount->name ?? 'N/A' }}</td>
-                <td class="text-left p-3 border-b border-gray-200">G-{{ $subject->teacherAccount->grade_handle ?? 'N/A' }}</td>
+                <td class="text-left p-3 border-b border-gray-200">
+                {{ $TeacherGradeHandle::where('id', $subject->grade_handle_id)->first()->grade ?? 'N/A'}} - {{ $TeacherGradeHandle::where('id', $subject->grade_handle_id)->first()->strand ?? 'N/A'}} ({{ $TeacherGradeHandle::where('id', $subject->grade_handle_id)->first()->section ?? 'N/A'}})
+                </td>
                 <td class="text-left p-3 border-b border-gray-200">{{ $subject->subject }}</td>
                 <td class="text-left p-3 border-b border-gray-200">{{ $subject->time }}</td>
                 <td class="text-left p-3 border-b border-gray-200">
