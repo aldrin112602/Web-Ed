@@ -17,7 +17,7 @@ class AttendanceHistorySeeder extends Seeder
         $faker = Faker::create();
         $statuses = ['Present'];
 
-        foreach (range(1, 50) as $index) {
+        foreach (range(1, 200) as $index) {
             AttendanceHistory::create([
                 'subject_model_id' => SubjectModel::all()->random()->id,
                 'student_id' => StudentAccount::all()->random()->id,
