@@ -96,7 +96,7 @@
         </div>
         <div class="block md:flex h-screen items-start justify-start">
             <!-- sidebar -->
-            <div id="sideBar" class="hidden md:block  p-4 bg-white shadow border-r" style="height: 100%; min-width: 280px">
+            <div id="sideBar" class="hidden md:block  p-4 bg-white shadow border-r" style="min-height: 100vh; min-width: 280px">
                 <div class="p-3 flex items-center justify-start gap-3">
                     
                     <div class="flex items-center justify-start gap-1">

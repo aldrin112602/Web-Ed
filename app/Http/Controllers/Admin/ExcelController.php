@@ -136,6 +136,72 @@ class ExcelController extends Controller
         return $response;
     }
 
+    public function teacherExportStudentList()
+    {
+        $students = StudentAccount::whereHas('handles', function ($query) {
+            $query->where('teacher_id', Auth::id());
+        })->get();
+
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set the header
+        $sheet->setCellValue('A1', 'ID Number');
+        $sheet->setCellValue('B1', 'Name');
+        $sheet->setCellValue('C1', 'Gender');
+        $sheet->setCellValue('D1', 'Strand');
+        $sheet->setCellValue('E1', 'Grade');
+        $sheet->setCellValue('F1', 'Parent\'s Contact Number');
+        $sheet->setCellValue('G1', 'Username');
+        $sheet->setCellValue('H1', 'Email');
+        $sheet->setCellValue('I1', 'Role');
+        $sheet->setCellValue('J1', 'Phone Number');
+        $sheet->setCellValue('K1', 'Address');
+        $sheet->setCellValue('L1', 'Section');
+
+        // Populate data
+        $row = 2;
+        foreach ($students as $student) {
+            $sheet->setCellValue('A' . $row, $student->id_number);
+            $sheet->setCellValue('B' . $row, $student->name);
+            $sheet->setCellValue('C' . $row, $student->gender);
+            $sheet->setCellValue('D' . $row, $student->strand);
+            $sheet->setCellValue('E' . $row, $student->grade);
+            $sheet->setCellValue('F' . $row, $student->parents_contact_number);
+            $sheet->setCellValue('G' . $row, $student->username);
+            $sheet->setCellValue('H' . $row, $student->email);
+            $sheet->setCellValue('I' . $row, $student->role);
+            $sheet->setCellValue('J' . $row, $student->phone_number);
+            $sheet->setCellValue('K' . $row, $student->address);
+            $sheet->setCellValue('L' . $row, $student->section);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'student_list_' . uniqid() . '.xlsx';
+
+        $response = new StreamedResponse(function () use ($writer) {
+            $writer->save('php://output');
+        });
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        $auth_user = Auth::user();
+        History::create(
+            [
+                'user_id' => $auth_user->id,
+                'position' => $auth_user->role,
+                'history' => "Exported student list",
+                'description' => null
+            ]
+        );
+
+        return $response;
+    }
+
     public function exportGuidanceList()
     {
         $guidances = GuidanceAccount::all();

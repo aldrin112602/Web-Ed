@@ -213,6 +213,8 @@ Route::prefix('teacher')->group(function () {
         // export subjects list
         Route::prefix('export')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportTeacherSubjectList'])->name('teacher.export.subject');
+
+            Route::get('student_list', [ExcelController::class, 'teacherExportStudentList'])->name('teacher.export.student');
         });
     });
 });
