@@ -24,12 +24,33 @@
     <div class="flex justify-between items-center mb-4">
 
         <div>
-            <button onclick="window.print()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-400">Print</button>
+            <a onclick="window.print()" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-gray-400">Print</a>
             <a href="{{ route('teacher.export_attendance_history', $student->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600">Excel</a>
         </div>
-        <div class="relative">
-            <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <i class="fas fa-search absolute top-3 right-3 text-slate-500"></i>
+        <div class="flex items-center justify-end gap-2">
+
+            <select id="monthFilter" onchange="filterByMonth()"
+                class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="" selected class="hidden" disabled>Filter by Month</option>
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+                <option value="All">All</option>
+            </select>
+
+            <div class="relative">
+                <input oninput="w3.filterHTML('#tbl_list', '.tbl_tr', this.value)" type="text" placeholder="Search" class="w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fas fa-search absolute top-3 right-3 text-slate-500"></i>
+            </div>
         </div>
     </div>
 
@@ -65,7 +86,7 @@
 
                 @foreach ($attendace_histories as $history)
                 <tr class="border-b border-gray-200 hover:bg-gray-100 tbl_tr">
-                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                    <td class="date-cell py-3 px-6 text-left whitespace-nowrap">
                         {{ $history->date }}
                     </td>
                     <td class="py-3 px-6 text-left">
@@ -95,6 +116,26 @@
         </table>
         @endif
     </div>
-
 </div>
+
+
+<script>
+    function filterByMonth() {
+        const selectedMonth = document.getElementById("monthFilter").value;
+        const rows = document.querySelectorAll("#tbl_list .tbl_tr");
+
+        rows.forEach(row => {
+
+            if(selectedMonth == "All") {
+                row.style.display = "";
+                return;
+            }
+            const dateCell = row.querySelector(".date-cell");
+            const dateValue = dateCell ? dateCell.textContent.trim() : ""; 
+            
+            const month = dateValue ? dateValue.split("-")[1] : "";
+            row.style.display = selectedMonth && month !== selectedMonth ? "none" : "";
+        });
+    }
+</script>
 @endsection
