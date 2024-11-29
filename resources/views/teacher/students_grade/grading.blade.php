@@ -237,10 +237,11 @@
                     <td class="border p-2" id="highest_possible_task_total"></td>
                     <td class="border p-2" contenteditable="true">100.00</td>
                     <td class="border p-2" contenteditable="true" id="highest_possible_task">50%</td>
-                    <td class="border p-1 cursor-pointer" contenteditable="true">
+                    <td class="border p-1 cursor-pointer" data-id_quarterly="1" id="quarterly_assessment_total" data-cell-number="1" contenteditable="true">
+                        {{ $quarterlyAssessmentScore['quarterly_assessment_total'] ?? '' }}
                     </td>
                     <td class="border p-2" contenteditable="true">100.00</td>
-                    <td class="border p-2" contenteditable="true">25%</td>
+                    <td class="border p-2" contenteditable="true" id="highest_possible_quart">25%</td>
                     <td class="border p-2"></td>
                     <td class="border p-2"></td>
         </tr>
@@ -306,11 +307,17 @@
                     <td class="border p-2" data-for="performance_task_ps">{{ $studentGrade['task_ps'] ?? '0.00' }}</td>
                     <td class="border p-2" data-for="performance_task_ws">{{ $studentGrade['task_ws'] ?? '0.00' }}</td>
 
-                    <td class="border p-1 cursor-pointer" contenteditable="true"></td>
-                    <td class="border p-2"></td>
-                    <td class="border p-2"></td>
-                    <td class="border p-2"></td>
-                    <td class="border p-2"></td>
+                    @php
+                    $quarterAssessmentScore=$studentGrade ? $studentGrade['quart_1'] : 0;
+                    @endphp
+
+                    {{-- <td class="border p-1 cursor-pointer" contenteditable="true"></td> --}}
+                    <td data-for="quarterly_assessment" data-cell="11" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                        {{ $quarterAssessmentScore }}
+                    <td class="border p-2" data-for="quarterly_assessment_ps">{{ $studentGrade['quart_ps'] ?? '0.00' }}</td>
+                    <td class="border p-2" data-for="quarterly_assessment_ws">{{ $studentGrade['quart_ws'] ?? '0.00' }}</td>
+                    <td class="border p-2" data-for="initial_grade">{{ $studentGrade['initial_grade'] ?? '0.00' }}</td>
+                    <td class="border p-2" data-for="quarterly_grade">{{ $studentGrade['quarterly_grade'] ?? '0.00' }}</td>
         </tr>
         @endforeach
 
@@ -390,11 +397,17 @@
                         <td class="border p-2" data-for="performance_task_ps">{{ $studentGrade['task_ps'] ?? '0.00' }}</td>
                         <td class="border p-2" data-for="performance_task_ws">{{ $studentGrade['task_ws'] ?? '0.00' }}</td>
 
-                        <td class="border p-1 cursor-pointer" contenteditable="true"></td>
-                        <td class="border p-2"></td>
-                        <td class="border p-2"></td>
-                        <td class="border p-2"></td>
-                        <td class="border p-2"></td>
+                        @php
+                        $quarterAssessmentScore=$studentGrade ? $studentGrade['quart_1'] : 0;
+                        @endphp
+
+                        {{-- <td class="border p-1 cursor-pointer" contenteditable="true"></td> --}}
+                        <td data-for="quarterly_assessment" data-cell="11" data-user-id="{{ $student->account->id }}" class="border p-1 cursor-pointer" contenteditable="true">
+                            {{ $quarterAssessmentScore }}
+                        <td class="border p-2" data-for="quarterly_assessment_ps">{{ $studentGrade['quart_ps'] ?? '0.00' }}</td>
+                        <td class="border p-2" data-for="quarterly_assessment_ws">{{ $studentGrade['quart_ws'] ?? '0.00' }}</td>
+                        <td class="border p-2" data-for="initial_grade">{{ $studentGrade['initial_grade'] ?? '0.00' }}</td>
+                        <td class="border p-2" data-for="quarterly_grade">{{ $studentGrade['quarterly_grade'] ?? '0.00' }}</td>
             </tr>
             @endforeach
 
@@ -451,59 +464,128 @@
                 return
             }
             var d = [];
-            $("tr").each(function() {
+            $("tr").each(function () {
                 var e = $(this).find("td[data-user-id]").data("user-id");
                 if (e) {
+                    var grade = t.get("grade") || null;
+                    var strand = t.get("strand") || null;
+                    var section = t.get("section") || null;
+                    var subject = t.get("subject") || null;
+
+                    // Default grade_handle_id to null
+                    var grade_handle_id = null;
+
+                    // Fetch grade_handle_id dynamically
+                    if (grade && strand && section) {
+                        $.ajax({
+                            url: '{{ route("get.grade.id") }}',
+                            method: "GET",
+                            data: { grade: grade, strand: strand, section: section },
+                            async: false, // Synchronous request to wait for response
+                            success: function (response) {
+                                console.log(response.id);
+                                grade_handle_id = response.id; // Assign the fetched ID
+                            },
+                            error: function (error) {
+                                console.error("Error fetching grade_handle_id:", error);
+                            },
+                        });
+                    }
+
                     var s = {
                         student_id: e,
-                        grade: t.get("grade") || null,
-                        strand: t.get("strand") || null,
-                        section: t.get("section") || null,
+                        grade: grade,
+                        strand: strand,
+                        section: section,
+                        grade_handle_id: grade_handle_id, // Use the dynamically fetched ID
                         written_scores: {},
                         task_scores: {},
-                        written_total: parseFloat($(this).find('td[data-for="written_work_total"]').text().trim()) || 0,
-                        written_ps: parseFloat($(this).find('td[data-for="written_work_ps"]').text()) || 0,
-                        written_ws: parseFloat($(this).find('td[data-for="written_work_ws"]').text()) || 0,
+                        written_total: parseFloat(
+                            $(this).find('td[data-for="written_work_total"]').text().trim()
+                        ) || 0,
+                        written_ps: parseFloat(
+                            $(this).find('td[data-for="written_work_ps"]').text()
+                        ) || 0,
+                        written_ws: parseFloat(
+                            $(this).find('td[data-for="written_work_ws"]').text()
+                        ) || 0,
 
-                        task_total: parseFloat($(this).find('td[data-for="performance_task_total"]').text()) || 0,
-                        task_ps: parseFloat($(this).find('td[data-for="performance_task_ps"]').text()) || 0,
-                        task_ws: parseFloat($(this).find('td[data-for="performance_task_ws"]').text()) || 0,
+                        task_total: parseFloat(
+                            $(this).find('td[data-for="performance_task_total"]').text()
+                        ) || 0,
+                        task_ps: parseFloat(
+                            $(this).find('td[data-for="performance_task_ps"]').text()
+                        ) || 0,
+                        task_ws: parseFloat(
+                            $(this).find('td[data-for="performance_task_ws"]').text()
+                        ) || 0,
+
+                        quarter_total: parseFloat(
+                            $(this).find('td[data-for="quarterly_assessment"]').text()
+                        ) || 0,
+                        quart_ps: parseFloat(
+                            $(this).find('td[data-for="quarterly_assessment_ps"]').text()
+                        ) || 0,
+                        quart_ws: parseFloat(
+                            $(this).find('td[data-for="quarterly_assessment_ws"]').text()
+                        ) || 0,
+
+                        initial_grade: parseFloat(
+                            $(this).find('td[data-for="initial_grade"]').text()
+                        ) || 0,
+                        quarterly_grade: parseFloat(
+                            $(this).find('td[data-for="quarterly_grade"]').text()
+                        ) || 0,
                     };
-                    $(this).find('td[data-for="written_work"]').each(function() {
-                        var t = $(this).data("cell");
-                        s.written_scores["written_" + t] = parseFloat($(this).text()) || null
-                    }), $(this).find('td[data-for="performance_task"]').each(function() {
-                        var t = $(this).data("cell");
-                        s.task_scores["task_" + t] = parseFloat($(this).text()) || null
-                    }), d.push(s)
+
+                    $(this)
+                        .find('td[data-for="written_work"]')
+                        .each(function () {
+                            var t = $(this).data("cell");
+                            s.written_scores["written_" + t] = parseFloat($(this).text()) || null;
+                        });
+                    $(this)
+                        .find('td[data-for="performance_task"]')
+                        .each(function () {
+                            var t = $(this).data("cell");
+                            s.task_scores["task_" + t] = parseFloat($(this).text()) || null;
+                        });
+
+                    d.push(s);
                 }
-            }), $.ajax({
+            });
+
+            console.log(d);
+
+            // Send AJAX request with the updated data
+            $.ajax({
                 url: '{{ route("teacher.addHighestPossibleScore") }}',
                 type: "POST",
                 data: JSON.stringify({
                     ...e,
                     studentScores: d,
-
                 }),
                 contentType: "application/json",
                 headers: {
-                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
                 },
-                success: function(t) {
+                success: function (t) {
                     Swal.fire({
                         icon: "success",
                         title: "Success!",
-                        text: "Changes saved successfully!"
-                    }), console.log("Success:", t)
+                        text: "Changes saved successfully!",
+                    });
+                    console.log("Success:", t);
                 },
-                error: function(t) {
-                    console.error("Error:", t), Swal.fire({
+                error: function (t) {
+                    console.error("Error:", t);
+                    Swal.fire({
                         icon: "error",
                         title: "Error!",
-                        text: "There was a problem saving the changes. Please try again."
-                    })
-                }
-            })
+                        text: "There was a problem saving the changes. Please try again.",
+                    });
+                },
+            });
 
         }), $("td#highest_possible_score, td#performance_task_highest_possible_score").each(function() {
             $(this).on("blur", function(t) {
@@ -530,35 +612,110 @@
 
                     console.log(`td[data-for="${r}_total"]`)
 
+                    // Declare variables outside the if-else blocks
+                    let written_percentageScore = 0;
+                    let written_weightedScore = 0;
+                    let performance_percentageScore = 0;
+                    let performance_weightedScore = 0;
+                    let quarterly_percentageScore = 0;
+                    let quarterly_weightedScore = 0;
+                    let initialGrade = 0;
+                    let quarterlyGrade = 0;
 
                     $(e).closest("tr").find(`td[data-for="${r}_total"]`).text(a);
 
-
-                    let written_percentageScore = (a / parseFloat($('#highest_possible_written_total').text().trim())) * 100;
-                    let written_weightedScore = (written_percentageScore * percentToDecimal($('#highest_possible_ws').text().trim()));
-
-                    // performance task
-                    let performance_percentageScore = (a / parseFloat($('#highest_possible_task_total').text().trim())) * 100;
-                    let performance_weightedScore = (performance_percentageScore * percentToDecimal($('#highest_possible_task').text().trim()));
-
-                    // Update the PS and WS cells for the student
-                    if (r.trim() == 'written_work') {
+                    // written work
+                    // Calculate and store scores in data attributes
+                    if (r.trim() === 'written_work') {
+                        written_percentageScore = (a / parseFloat($('#highest_possible_written_total').text().trim())) * 100;
+                        written_weightedScore = written_percentageScore * percentToDecimal($('#highest_possible_ws').text().trim());
+                        // Store the weighted score in a data attribute
+                        $(e).closest("tr").attr('data-written-weighted-score', written_weightedScore);
                         $(e).closest("tr").find('td[data-for="written_work_ps"]').text(written_percentageScore.toFixed(2));
                         $(e).closest("tr").find('td[data-for="written_work_ws"]').text(written_weightedScore.toFixed(2));
-                    } else {
+                    } else if (r.trim() === 'performance_task') {
+                        performance_percentageScore = (a / parseFloat($('#highest_possible_task_total').text().trim())) * 100;
+                        performance_weightedScore = performance_percentageScore * percentToDecimal($('#highest_possible_task').text().trim());
+                        // Store the weighted score in a data attribute
+                        $(e).closest("tr").attr('data-performance-weighted-score', performance_weightedScore);
                         $(e).closest("tr").find('td[data-for="performance_task_ps"]').text(performance_percentageScore.toFixed(2));
                         $(e).closest("tr").find('td[data-for="performance_task_ws"]').text(performance_weightedScore.toFixed(2));
+                    } else if (r.trim() === 'quarterly_assessment') {
+                            quarterly_percentageScore = (a / parseFloat($('#quarterly_assessment_total').text().trim())) * 100;
+                            quarterly_weightedScore = quarterly_percentageScore * percentToDecimal($('#highest_possible_quart').text().trim());
+                            $(e).closest("tr").attr('data-quarterly-weighted-score', quarterly_weightedScore);
+
+                            // Retrieve stored scores
+                            written_weightedScore = parseFloat($(e).closest("tr").attr('data-written-weighted-score')) || 0;
+                            performance_weightedScore = parseFloat($(e).closest("tr").attr('data-performance-weighted-score')) || 0;
+
+                            // Calculate grades
+                            initialGrade = written_weightedScore + performance_weightedScore + quarterly_weightedScore;
+                            quarterlyGrade = transmuteGrade(initialGrade); // Use the transmutation function
+
+                            // Update table
+                            $(e).closest("tr").find('td[data-for="quarterly_assessment_ps"]').text(quarterly_percentageScore.toFixed(2));
+                            $(e).closest("tr").find('td[data-for="quarterly_assessment_ws"]').text(quarterly_weightedScore.toFixed(2));
+                            $(e).closest("tr").find('td[data-for="initial_grade"]').text(initialGrade.toFixed(2));
+                            $(e).closest("tr").find('td[data-for="quarterly_grade"]').text(quarterlyGrade);
                     }
 
                 })(this)
             })
         }) // window.addEventListener("beforeunload", function(t) {})
     });
+
+    
 </script>
 
 
 <!-- highest possible score event for getting total  -->
 <script>
+
+    function transmuteGrade(initialGrade) {
+        if (initialGrade === 100) return 100;
+        if (initialGrade >= 98.40) return 99;
+        if (initialGrade >= 96.80) return 98;
+        if (initialGrade >= 95.20) return 97;
+        if (initialGrade >= 93.60) return 96;
+        if (initialGrade >= 92.00) return 95;
+        if (initialGrade >= 90.40) return 94;
+        if (initialGrade >= 88.80) return 93;
+        if (initialGrade >= 87.20) return 92;
+        if (initialGrade >= 85.60) return 91;
+        if (initialGrade >= 84.00) return 90;
+        if (initialGrade >= 82.40) return 89;
+        if (initialGrade >= 80.80) return 88;
+        if (initialGrade >= 79.20) return 87;
+        if (initialGrade >= 77.60) return 86;
+        if (initialGrade >= 76.00) return 85;
+        if (initialGrade >= 74.40) return 84;
+        if (initialGrade >= 72.80) return 83;
+        if (initialGrade >= 71.20) return 82;
+        if (initialGrade >= 69.60) return 81;
+        if (initialGrade >= 68.00) return 80;
+        if (initialGrade >= 66.40) return 79;
+        if (initialGrade >= 64.80) return 78;
+        if (initialGrade >= 63.20) return 77;
+        if (initialGrade >= 61.60) return 76;
+        if (initialGrade >= 60.00) return 75;
+        if (initialGrade >= 56.00) return 74;
+        if (initialGrade >= 52.00) return 73;
+        if (initialGrade >= 48.00) return 72;
+        if (initialGrade >= 44.00) return 71;
+        if (initialGrade >= 40.00) return 70;
+        if (initialGrade >= 36.00) return 69;
+        if (initialGrade >= 32.00) return 68;
+        if (initialGrade >= 28.00) return 67;
+        if (initialGrade >= 24.00) return 66;
+        if (initialGrade >= 20.00) return 65;
+        if (initialGrade >= 16.00) return 64;
+        if (initialGrade >= 12.00) return 63;
+        if (initialGrade >= 8.00) return 62;
+        if (initialGrade >= 4.00) return 61;
+        return 60; // For grades below 4.00
+    }
+
     $(document).ready(function() {
 
         // Function to calculate total for written work
