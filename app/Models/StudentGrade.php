@@ -16,6 +16,10 @@ class StudentGrade extends Model
         'teacher_id',
         'student_id',
         'grade_handle_id',
+        'grade',
+        'strand',
+        'section',
+        'subject',
         'written_1',
         'written_2',
         'written_3',
@@ -42,6 +46,11 @@ class StudentGrade extends Model
         'task_total',
         'task_ps',
         'task_ws',
+        'quart_1',
+        'quart_ps',
+        'quart_ws',
+        'initial_grade',
+        'quarterly_grade'
         
     ];
 

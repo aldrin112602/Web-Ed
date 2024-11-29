@@ -166,6 +166,7 @@ Route::prefix('teacher')->group(function () {
 
 
         // Grade handle routes
+        Route::get('grade_handle/get-grade-id', [GradeHandleController::class, 'getGradeId'])->name('get.grade.id');
         Route::get('grade_handle/add', [GradeHandleController::class, 'viewAddHandleGrade'])->name('teacher.view.add_grade_handle');
         Route::post('grade_handle/add', [GradeHandleController::class, 'submitAddHandleGrade'])->name('teacher.submit.add_grade_handle');
         Route::get('grade_handle/edit/{id}', [GradeHandleController::class, 'viewUpdateGradeHandle'])->name('teacher.edit.grade_handle');
@@ -213,6 +214,8 @@ Route::prefix('teacher')->group(function () {
         // export subjects list
         Route::prefix('export')->group(function () {
             Route::get('subject_list', [ExcelController::class, 'exportTeacherSubjectList'])->name('teacher.export.subject');
+
+            Route::get('student_list', [ExcelController::class, 'teacherExportStudentList'])->name('teacher.export.student');
         });
     });
 });

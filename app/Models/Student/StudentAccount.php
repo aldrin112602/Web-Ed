@@ -81,4 +81,10 @@ class StudentAccount extends Authenticatable
     {
         return $this->hasMany(StudentHandle::class, 'student_id');
     }
+
+    public function handles()
+{
+    return $this->hasMany(StudentHandle::class, 'student_id', 'id');
+}
+
 }

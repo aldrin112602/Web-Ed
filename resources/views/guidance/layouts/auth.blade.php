@@ -39,20 +39,20 @@
                                 Welcome to the WebEd System! We're thrilled to have you join our platform dedicated to revolutionizing education through technology. Before you begin your journey with us, it's essential to understand the terms of use outlined in this agreement. By accessing or using WebEd, you agree to abide by these terms and conditions.
                             </p>
                             <br>
-                            <h4 class="text-md font-semibold text-gray-900">User Agreement:</h4>
+                            <h4 class="text-md font-semibold text-gray-900">Intellectual Property:</h4>
                             <p class="text-sm text-gray-500">
-                                As a user of the WebEd System, you must be a student of ark and agree to maintain the confidentiality of your account credentials. Your access to and use of our platform is subject to compliance with these terms and all applicable laws and regulations. You acknowledge that any violation of these terms may result in the termination of your account.
+                                All the content, design, code, and materials are exclusively owned by WebEd and protected by copyright and trademark laws. Unauthorized use and only the institution can only use the WebEd system. Any reproduction, or modification is prohibited without written consent. Use of trademarks, logos, or service marks requires prior permission. Unauthorized users are restricted. In the Data Privacy Act of 2012 (Republic Act 10173), the right to privacy and communication is protected while promoting safe information. It ensures the security and protection of personal data in both government and private systems.
                             </p>
                             <br>
-                            <h4 class="text-md font-semibold text-gray-900">Terms and Conditions:</h4>
-                            <ul class="text-sm text-gray-500 list-disc list-inside">
-                                <li>Users are prohibited from modifying, reproducing, or distributing the content provided on WebEd without prior consent, as it is protected by intellectual property laws.</li>
-                                <li>Your use of WebEd is also governed by our Privacy Policy, which outlines how we collect, use, and disclose your personal information.</li>
-                                <li>While we strive to provide uninterrupted access to our platform, we do not guarantee its continuous availability or that it will be error-free. Your use of WebEd is at your own risk.</li>
-                                <li>By using WebEd, you agree to indemnify and hold harmless our platform and its affiliates from any claims, damages, or liabilities arising from your use of the platform or violation of these terms.</li>
-                                <li>These terms and conditions are governed by the laws of [Jurisdiction], and any disputes arising under these terms shall be resolved in the courts of [Jurisdiction].</li>
-                                <li>WebEd reserves the right to update these terms and conditions at any time without prior notice. Continued use of the platform after such changes constitutes acceptance of the modified terms.</li>
-                            </ul>
+                            <h4 class="text-md font-semibold text-gray-900">User Agreement:</h4>
+                            <p class="text-sm text-gray-500">
+                                As a user of the WebEd System, you must be Admin, Teacher, Student, or Guidance of ARK Technological Inc. and agree to maintain the confidentiality of your account credentials. Your access to and use of our platform is subject to compliance with these terms and all applicable laws and regulations. You acknowledge that any violation of these terms may result in the termination of your account.
+                            </p>
+                            <br>
+                            <h4 class="text-md font-semibold text-gray-900">Terms and Conditions for Logging In:</h4>
+                            <p class="text-sm text-gray-500">
+                                By logging into this website, you agree to comply with our Terms and Conditions. You are responsible for maintaining the confidentiality of your account and password, and for all activities that occur under your account. Unauthorized use of your account or any security breaches must be reported immediately. We reserve the right to suspend or terminate accounts if there is any breach of these terms.
+                            </p>
                         </div>
                     </div>
                     <hr>
@@ -62,6 +62,7 @@
                 </div>
             </div>
         </div>
+
 
         <script>
             $(document).ready(function() {
