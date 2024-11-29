@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\{Http\Request, Support\Facades\Auth};
 use App\Models\{Admin\SubjectModel, Teacher\TeacherAccount, Student\StudentAccount, History};
 use App\Models\TeacherGradeHandle;
-
+use App\Models\StudentSubject;
 
 class SubjectController extends Controller
 {
@@ -18,6 +18,8 @@ class SubjectController extends Controller
             $user = Auth::guard('admin')->user();
 
             $grade_handle = TeacherGradeHandle::where('id', request()->query('grade_handle_id'))->first();
+
+            // dd($grade_handle);
 
             $subject_list = SubjectModel::where('teacher_id', request()->query('teacher_id'))->where('grade_handle_id', request()->query('grade_handle_id'))->paginate(10);
             
@@ -55,12 +57,19 @@ class SubjectController extends Controller
         if (Auth::guard('admin')->check()) {
             $user = Auth::guard('admin')->user();
             $student = StudentAccount::with('subjects.teacherAccount')->findOrFail($id);
-            $subjects = SubjectModel::with('teacherAccount')->paginate(10); // Paginate the subjects query
+            $subjects = SubjectModel::with('teacherAccount')->paginate(10);
+
+
+
+            // return response()->json($student);
+
+            
 
             return view('admin.subject.view', [
                 'user' => $user,
                 'student' => $student,
-                'subjects' => $subjects
+                'subjects' => $subjects,
+                'TeacherGradeHandle' => TeacherGradeHandle::class
             ]);
         }
 
@@ -106,11 +115,25 @@ class SubjectController extends Controller
             'student_id' => 'required|exists:student_accounts,id',
         ]);
 
+        // dd($request->all());
+
+
+        
+
         $student = StudentAccount::find($request->student_id);
         $subject = SubjectModel::find($request->subject);
 
         if ($student && $subject) {
-            $student->subjects()->attach($subject->id);
+            // $student->subjects()->attach($subject->id);
+
+            StudentSubject::create(
+                [
+                    'student_id' => $request->student_id,
+                    'teacher_id' => $request->teacher_id,
+                    'grade_handle_id' => $request->grade_handle_id,
+                    'subject_id' => $request->subject,
+                ]
+                );
             $auth_user = Auth::user();
             History::create(
                 [

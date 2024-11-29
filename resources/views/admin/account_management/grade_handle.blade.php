@@ -56,7 +56,7 @@
                         <td class="py-2 text-center border">{{ $list->section }}</td>
                         <td class="py-2 text-center border">{{ $list->time_ago }}</td>
                         <td class="py-2 text-center border">
-                            <a href="" class="px-2 py-1 bg-blue-800 text-white rounded-md">View</a>
+                            <a href="{{ route('admin.teacher.subject_list') }}?grade_handle_id={{$list->id}}" class="px-2 py-1 bg-blue-800 text-white rounded-md">View</a>
                         </td>
                         <td class="py-2 text-center border">
                             <a href="{{ route('admin.edit.grade_handle', $list->id) }}" class="px-2 py-1 bg-blue-500 text-white rounded-md">Edit</a>

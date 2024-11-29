@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\{
 };
 use App\Http\Controllers\Student\ExportController;
 use App\Http\Controllers\FaceRecognitionController;
+use App\Http\Controllers\Student\StudentController;
+
 
 // Admin routes
 Route::prefix('admin')->group(function () {
