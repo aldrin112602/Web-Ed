@@ -22,6 +22,25 @@ class GradeHandleController extends Controller
         ]);
     }
 
+    public function getGradeId(Request $request)
+    {
+        // Retrieve the grade, strand, and section from the query parameters
+        $grade = $request->query('grade');
+        $strand = $request->query('strand');
+        $section = $request->query('section');
+        
+        // Find the corresponding record in the teacher_grade_handle table
+        $teacherGradeHandle = TeacherGradeHandle::where('grade', $grade)
+                                                ->where('strand', $strand)
+                                                ->where('section', $section)
+                                                ->first();
+
+        // Return the id if found, otherwise return null
+        return response()->json([
+            'id' => $teacherGradeHandle ? $teacherGradeHandle->id : null
+        ]);
+    }
+
 public function updateGradeHandle(Request $request, $id)
 {
     $validatedData = $request->validate([

@@ -52,6 +52,12 @@ class HighestPossibleScore extends Controller
             'studentScores.*.task_total' => 'nullable|numeric',
             'studentScores.*.task_ps' => 'nullable|numeric',
             'studentScores.*.task_ws' => 'nullable|numeric',
+            'studentScores.*.quarter_total' => 'nullable|numeric',
+            'studentScores.*.quart_ps' => 'nullable|numeric',
+            'studentScores.*.quart_ws' => 'nullable|numeric',
+            'studentScores.*.initial_grade' => 'nullable|numeric',
+            'studentScores.*.quarterly_grade' => 'nullable|numeric',
+            'studentScores.*.grade_handle_id' => 'required|integer|exists:teacher_grade_handles,id',
         ]);
 
         // Save or update the highest possible scores
@@ -68,17 +74,23 @@ class HighestPossibleScore extends Controller
                 [
                     'student_id' => $studentData['student_id'],
                     'teacher_id' => Auth::id(),
+                ],
+                [
                     'grade' => $studentData['grade'],
                     'strand' => $studentData['strand'],
                     'section' => $studentData['section'],
-                ],
-                [
+                    'grade_handle_id' => $studentData['grade_handle_id'],
                     'written_total' => $studentData['written_total'] ?? 0,
                     'written_ps' => $studentData['written_ps'] ?? 0,
                     'written_ws' => $studentData['written_ws'] ?? 0,
                     'task_total' => $studentData['task_total'] ?? 0,
                     'task_ps' => $studentData['task_ps'] ?? 0,
                     'task_ws' => $studentData['task_ws'] ?? 0,
+                    'quart_1' => $studentData['quarter_total'] ?? 0,
+                    'quart_ps' => $studentData['quart_ps'] ?? 0,
+                    'quart_ws' => $studentData['quart_ws'] ?? 0,
+                    'initial_grade' => $studentData['initial_grade'] ?? 0,
+                    'quarterly_grade' => $studentData['quarterly_grade'] ?? 0,
                 ]
             );
 

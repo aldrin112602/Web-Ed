@@ -17,7 +17,10 @@ return new class extends Migration
             $table->integer('student_id');
 
             // newly added column
-            $table->integer('grade_handle_id');
+            $table->unsignedBigInteger('grade_handle_id');
+            $table->string('grade');
+            $table->string('strand');
+            $table->string('section');
 
             // For Written Work
             $table->integer('written_1')->nullable();
@@ -49,8 +52,16 @@ return new class extends Migration
             $table->integer('task_ps')->nullable();
             $table->integer('task_ws')->nullable();
 
-            
+            // For Quarterly Assessment
+            $table->integer('quart_1')->nullable();
+            $table->integer('quart_ps')->nullable();
+            $table->integer('quart_ws')->nullable();
+            $table->double('initial_grade', 8, 2)->nullable();
+            $table->integer('quarterly_grade')->nullable();
+
             $table->timestamps();
+
+            $table->foreign('grade_handle_id')->references('id')->on('teacher_grade_handles')->onDelete('cascade');
         });
     }
 
