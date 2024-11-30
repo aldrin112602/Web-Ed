@@ -204,9 +204,9 @@ class StudentsGradeController extends Controller
     {
 
         $student = StudentAccount::where('id', $id)
-        ->first();
+            ->first();
 
-        $grades = StudentGrade::where('student_grade', $id)->get();
+
 
         return view(
             'teacher.students_grade.report_card.report_card_front',
@@ -214,7 +214,6 @@ class StudentsGradeController extends Controller
                 'user' => $this->user,
                 'handleSubjects' => $this->handleSubjects,
                 'student' => $student,
-                'grade' => $grades
             ]
         );
     }
@@ -224,14 +223,40 @@ class StudentsGradeController extends Controller
     {
 
         $student = StudentAccount::where('id', $id)
-        ->first();
+            ->first();
+
+        $semesterQuarterCombinations = [
+            ['semester' => 'First Semester', 'quarter' => 'First Quarter'],
+            ['semester' => 'First Semester', 'quarter' => 'Second Quarter'],
+            ['semester' => 'Second Semester', 'quarter' => 'First Quarter'],
+            ['semester' => 'Second Semester', 'quarter' => 'Second Quarter'],
+        ];
+
+        $grades = collect($semesterQuarterCombinations)
+            ->mapWithKeys(function ($combination) use ($id) {
+                $key = "{$combination['semester']}_{$combination['quarter']}";
+                return [
+                    $key => StudentGrade::where('student_id', $id)
+                        ->where('semester', $combination['semester'])
+                        ->where('quarter', $combination['quarter'])
+                        ->get(),
+                ];
+            });
+
+
+            // dd($grades);
+
+
+
+
 
         return view(
             'teacher.students_grade.report_card.report_card_back',
             [
                 'user' => $this->user,
                 'handleSubjects' => $this->handleSubjects,
-                'student' => $student
+                'student' => $student,
+                'grades' => $grades
             ]
         );
     }
