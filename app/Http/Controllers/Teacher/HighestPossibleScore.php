@@ -15,6 +15,9 @@ class HighestPossibleScore extends Controller
      */
     public function store(Request $request)
     {
+        
+        // return response()->json($request->all(), 200);
+        
         // Validate incoming data
         $validatedData = $request->validate([
             'highest_possible_written_1' => 'integer|min:5|max:10|nullable',
@@ -46,6 +49,10 @@ class HighestPossibleScore extends Controller
             'studentScores.*.grade' => 'nullable|string',
             'studentScores.*.strand' => 'nullable|string',
             'studentScores.*.section' => 'nullable|string',
+            'studentScores.*.subject' => 'nullable|string',
+            'studentScores.*.semester' => 'nullable|string',
+            'studentScores.*.quarter' => 'nullable|string',
+            'studentScores.*.track' => 'nullable|string',
             'studentScores.*.written_total' => 'nullable|numeric',
             'studentScores.*.written_ps' => 'nullable|numeric',
             'studentScores.*.written_ws' => 'nullable|numeric',
@@ -79,6 +86,15 @@ class HighestPossibleScore extends Controller
                     'grade' => $studentData['grade'],
                     'strand' => $studentData['strand'],
                     'section' => $studentData['section'],
+
+                    // added on 11/30/2024
+                    'subject' => $studentData['subject'],
+                    'semester' => $studentData['semester'],
+                    'quarter' => $studentData['quarter'],
+                    'track' => $studentData['track'],
+                    // end -> added on 11/30/2024
+
+                    
                     'grade_handle_id' => $studentData['grade_handle_id'],
                     'written_total' => $studentData['written_total'] ?? 0,
                     'written_ps' => $studentData['written_ps'] ?? 0,

@@ -18,9 +18,17 @@ return new class extends Migration
 
             // newly added column
             $table->unsignedBigInteger('grade_handle_id');
-            $table->string('grade');
-            $table->string('strand');
-            $table->string('section');
+            $table->string('grade')->nullable();
+            $table->string('strand')->nullable();
+            $table->string('section')->nullable();
+            
+            // added on 11/30/2024
+            $table->string('subject')->nullable();
+            $table->string('semester')->nullable();
+            $table->string('quarter')->nullable();
+            $table->string('track')->nullable();
+
+            
 
             // For Written Work
             $table->integer('written_1')->nullable();

@@ -19,7 +19,14 @@ class StudentGrade extends Model
         'grade',
         'strand',
         'section',
+        
+        // added on 11/30/2024
+        'semester',
+        'quarter',
+        'track',
         'subject',
+        // End added on 11/30/2024
+
         'written_1',
         'written_2',
         'written_3',

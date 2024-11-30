@@ -206,12 +206,15 @@ class StudentsGradeController extends Controller
         $student = StudentAccount::where('id', $id)
         ->first();
 
+        $grades = StudentGrade::where('student_grade', $id)->get();
+
         return view(
             'teacher.students_grade.report_card.report_card_front',
             [
                 'user' => $this->user,
                 'handleSubjects' => $this->handleSubjects,
-                'student' => $student
+                'student' => $student,
+                'grade' => $grades
             ]
         );
     }

@@ -3,6 +3,7 @@
 @section('title', 'Generated Grade')
 
 @section('content')
+<br><br><br>
 <div class="max-w-2xl mx-auto mt-10 p-6 bg-white shadow-md rounded-md">
     <!-- Header Section -->
     <div class="text-center mb-8">
@@ -63,5 +64,7 @@
             </tr>
         </tbody>
     </table>
+    
 </div>
+<br><br><br>
 @endsection
