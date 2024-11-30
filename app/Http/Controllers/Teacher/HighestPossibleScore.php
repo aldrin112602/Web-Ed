@@ -81,6 +81,13 @@ class HighestPossibleScore extends Controller
                 [
                     'student_id' => $studentData['student_id'],
                     'teacher_id' => Auth::id(),
+                    'grade' => $studentData['grade'],
+                    'strand' => $studentData['strand'],
+                    'section' => $studentData['section'],
+                    'subject' => $studentData['subject'],
+                    'semester' => $studentData['semester'],
+                    'quarter' => $studentData['quarter'],
+                    'track' => $studentData['track'],
                 ],
                 [
                     'grade' => $studentData['grade'],

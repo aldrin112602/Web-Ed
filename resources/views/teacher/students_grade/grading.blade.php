@@ -56,8 +56,6 @@
                     <option value="" selected disabled class="hidden">-- Quarter --</option>
                     <option {{ request('quarter') == 'First Quarter' ? 'selected' : '' }} value="First Quarter">First Quarter</option>
                     <option {{ request('quarter') == 'Second Quarter' ? 'selected' : '' }} value="Second Quarter">Second Quarter</option>
-                    <option {{ request('quarter') == 'Third Quarter' ? 'selected' : '' }} value="Third Quarter">Third Quarter</option>
-                    <option {{ request('quarter') == 'Fourth Quarter' ? 'selected' : '' }} value="Fourth Quarter">Fourth Quarter</option>
                 </select>
             </td>
             <td class="border p-2" colspan="13">

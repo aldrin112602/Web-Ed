@@ -75,114 +75,21 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($grades['First Semester_First Quarter'] as $firstQuarter)
                         <tr>
-                            <td class="border border-gray-400 p-2 text-center">Oral Communication in Context</td>
+                            <td class="border border-gray-400 p-2 text-center">{{ $firstQuarter->subject }}</td>
+                            <td class="border border-gray-400 p-2 text-center">{{ $firstQuarter->quarterly_grade }}</td>
                             <td class="border border-gray-400 p-2 text-center">
-                                97
+                                {{ optional($grades['First Semester_Second Quarter']->firstWhere('subject', $firstQuarter->subject))->quarterly_grade ?? 'N/A' }}
                             </td>
                             <td class="border border-gray-400 p-2 text-center">
-                                95
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                96
+                                {{
+                        ($firstQuarter->quarterly_grade +
+                        optional($grades['First Semester_Second Quarter']->firstWhere('subject', $firstQuarter->subject))->quarterly_grade) / 2
+                    }}
                             </td>
                         </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Komunikasyon at Pananaliksik sa Wika at Kulturang Pilipino</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                91
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                93
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                92
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Contemporary Philippine Arts from the Regions</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                88
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                89
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                89
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">General Mathematics</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                89
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Earth and Life Science</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                91
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                87
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                89
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Understanding Culture, Society and Politics</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                92
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                91
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">English for Academic and Professional Purposes</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                89
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Empowerment Technologies (E-Tech)</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                86
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                88
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">ICT for Professional Tracks</td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                88
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                92
-                            </td>
-                            <td class="border border-gray-400 p-2 text-center">
-                                90
-                            </td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -199,64 +106,33 @@
                         </tr>
                         <tr>
                             <th class="border border-gray-400 p-2"></th>
-                            <th class="border border-gray-400 p-2 w-16 text-center">1</th>
-                            <th class="border border-gray-400 p-2 w-16 text-center">2</th>
+                            <th class="border border-gray-400 p-2 w-16 text-center">3</th>
+                            <th class="border border-gray-400 p-2 w-16 text-center">4</th>
                             <th class="border border-gray-400 p-2"></th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($grades['Second Semester_First Quarter'] as $thirdQuarter)
                         <tr>
-                            <td class="border border-gray-400 p-2 text-center">Reading and Writing Skills</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center">{{ $thirdQuarter->subject }}</td>
+                            <td class="border border-gray-400 p-2 text-center">{{ $thirdQuarter->quarterly_grade }}</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                {{ optional($grades['Second Semester_Second Quarter']->firstWhere('subject', $thirdQuarter->subject))->quarterly_grade ?? 'N/A' }}
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                {{
+                        ($thirdQuarter->quarterly_grade +
+                        optional($grades['Second Semester_Second Quarter']->firstWhere('subject', $thirdQuarter->subject))->quarterly_grade) / 2
+                    }}
+                            </td>
                         </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Pagsulat ng Pananaliksik (Sa Ibang Talaga Titigi sa Panitikan)</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">21st Century Literature from the Philippines and the World</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Statistics and Probability</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Personal Development/Pansariling Kaunlaran</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Inquiries sa Filipino sa Mling Larangan (Academic)</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Introduction to World Religions and Belief Systems</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2 text-center">Disciplines and Ideas in the Social Sciences</td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                            <td class="border border-gray-400 p-2 text-center"></td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
+
         </div>
+
 
         <div class="w-1/2">
             <!-- Core Values Section -->
