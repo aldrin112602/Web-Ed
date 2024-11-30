@@ -6,21 +6,20 @@
 
 <style>
     @media print {
-    #tbl {
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100vh;
-        background-color: white;
-    }
+        #tbl {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            background-color: white;
+        }
 
-    #tbl table tr th:last-child,
-    #tbl table tr td:last-child {
-        display: none !important;
+        #tbl table tr th:last-child,
+        #tbl table tr td:last-child {
+            display: none !important;
+        }
     }
-}
-
 </style>
 <div class="max-w-7xl mx-auto p-6 bg-white shadow-md h-full">
     <!-- Search and Actions -->
@@ -30,11 +29,24 @@
             <i class="fas fa-search absolute pointer-events-none right-5 top-3 text-slate-500"></i>
         </div>
         <div>
+            <select class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md mr-2">
+                @foreach (['First', 'Second'] as $sem)
+                    <option value="{{ $sem }} Semester">{{ $sem }} Semester</option>
+                @endforeach
+            </select>
+            
             <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md mr-2" onclick="window.print()">PRINT</button>
             <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md">DOWNLOAD GRADE</button>
         </div>
     </div>
 
+    @if (!$grades->isEmpty())
+    <div class="text-center p-10 bg-white">
+        <p>
+            No grades found, nothing to display at the moment.
+        </p>
+    </div>
+    @else
     <!-- Grades Table -->
     <div class="overflow-x-auto" id="tbl">
         <table class="min-w-full bg-white border border-gray-300" id="tbl_list">
@@ -77,5 +89,6 @@
             </tbody>
         </table>
     </div>
+    @endif
 </div>
 @endsection
