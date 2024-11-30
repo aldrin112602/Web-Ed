@@ -471,6 +471,9 @@
                     var strand = t.get("strand") || null;
                     var section = t.get("section") || null;
                     var subject = t.get("subject") || null;
+                    var semester = t.get("semester") || null;
+                    var quarter = t.get("quarter") || null;
+                    var track = t.get("track") || null;
 
                     // Default grade_handle_id to null
                     var grade_handle_id = null;
@@ -494,10 +497,14 @@
 
                     var s = {
                         student_id: e,
-                        grade: grade,
-                        strand: strand,
-                        section: section,
-                        grade_handle_id: grade_handle_id, // Use the dynamically fetched ID
+                        grade,
+                        strand,
+                        section,
+                        semester,
+                        quarter,
+                        track,
+                        subject,
+                        grade_handle_id, // Use the dynamically fetched ID
                         written_scores: {},
                         task_scores: {},
                         written_total: parseFloat(

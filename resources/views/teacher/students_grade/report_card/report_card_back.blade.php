@@ -76,111 +76,111 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="border border-gray-400 p-2">Oral Communication in Context</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>97</center>
+                            <td class="border border-gray-400 p-2 text-center">Oral Communication in Context</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                97
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>95</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                95
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>96</center>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2">Komunikasyon at Pananaliksik sa Wika at Kulturang Pilipino</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>91</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>93</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>92</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                96
                             </td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Contemporary Philippine Arts from the Regions</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>88</center>
+                            <td class="border border-gray-400 p-2 text-center">Komunikasyon at Pananaliksik sa Wika at Kulturang Pilipino</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                91
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>89</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                93
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>89</center>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2">General Mathematics</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>89</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                92
                             </td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Earth and Life Science</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>91</center>
+                            <td class="border border-gray-400 p-2 text-center">Contemporary Philippine Arts from the Regions</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                88
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>87</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                89
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>89</center>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2">Understanding Culture, Society and Politics</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>92</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>91</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                89
                             </td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">English for Academic and Professional Purposes</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
+                            <td class="border border-gray-400 p-2 text-center">General Mathematics</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>89</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                89
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="border border-gray-400 p-2">Empowerment Technologies (E-Tech)</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>86</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
-                            </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>88</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
                             </td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">ICT for Professional Tracks</td>
-                            <td class="border border-gray-400 p-2">
-                                <center>88</center>
+                            <td class="border border-gray-400 p-2 text-center">Earth and Life Science</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                91
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>92</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                87
                             </td>
-                            <td class="border border-gray-400 p-2">
-                                <center>90</center>
+                            <td class="border border-gray-400 p-2 text-center">
+                                89
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-400 p-2 text-center">Understanding Culture, Society and Politics</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                92
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                91
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-400 p-2 text-center">English for Academic and Professional Purposes</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                89
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-400 p-2 text-center">Empowerment Technologies (E-Tech)</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                86
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                88
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-gray-400 p-2 text-center">ICT for Professional Tracks</td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                88
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                92
+                            </td>
+                            <td class="border border-gray-400 p-2 text-center">
+                                90
                             </td>
                         </tr>
                     </tbody>
@@ -206,52 +206,52 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="border border-gray-400 p-2">Reading and Writing Skills</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Reading and Writing Skills</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Pagsulat ng Pananaliksik (Sa Ibang Talaga Titigi sa Panitikan)</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Pagsulat ng Pananaliksik (Sa Ibang Talaga Titigi sa Panitikan)</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">21st Century Literature from the Philippines and the World</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">21st Century Literature from the Philippines and the World</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Statistics and Probability</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Statistics and Probability</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Personal Development/Pansariling Kaunlaran</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Personal Development/Pansariling Kaunlaran</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Inquiries sa Filipino sa Mling Larangan (Academic)</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Inquiries sa Filipino sa Mling Larangan (Academic)</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Introduction to World Religions and Belief Systems</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Introduction to World Religions and Belief Systems</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                         <tr>
-                            <td class="border border-gray-400 p-2">Disciplines and Ideas in the Social Sciences</td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
-                            <td class="border border-gray-400 p-2"></td>
+                            <td class="border border-gray-400 p-2 text-center">Disciplines and Ideas in the Social Sciences</td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
+                            <td class="border border-gray-400 p-2 text-center"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -280,7 +280,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="border border-gray-400 p-2">1. MAKADIYOS</td>
+                                <td class="border border-gray-400 p-2 text-center">1. MAKADIYOS</td>
                                 <td class="border border-gray-400 p-2" style="font-size: smaller;">
                                     Expresses one's spiritual beliefs while respecting spiritual beliefs of others<br>
                                     Shows adherence to ethical principles by upholding truth
@@ -291,35 +291,35 @@
                                 <td class="border border-gray-400 p-2 w-12"></td>
                             </tr>
                             <tr>
-                                <td class="border border-gray-400 p-2">2. MAKATAO</td>
+                                <td class="border border-gray-400 p-2 text-center">2. MAKATAO</td>
                                 <td class="border border-gray-400 p-2" style="font-size: smaller;">
                                     Is sensitive to individual, social and cultural differences<br>
                                     Demonstrates contributions towards solidarity
                                 </td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
                             </tr>
                             <tr>
-                                <td class="border border-gray-400 p-2">3. MAKAKALIKASAN</td>
+                                <td class="border border-gray-400 p-2 text-center">3. MAKAKALIKASAN</td>
                                 <td class="border border-gray-400 p-2" style="font-size: smaller;">
                                     Cares for the environment and utilizes resources wisely, judiciously, and economically
                                 </td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
                             </tr>
                             <tr>
-                                <td class="border border-gray-400 p-2">4. MAKABANSA</td>
+                                <td class="border border-gray-400 p-2 text-center">4. MAKABANSA</td>
                                 <td class="border border-gray-400 p-2" style="font-size: smaller;">
                                     Demonstrates pride in being a Filipino; exercises the rights and responsibilities of a Filipino citizen
                                 </td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
-                                <td class="border border-gray-400 p-2"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
+                                <td class="border border-gray-400 p-2 text-center"></td>
                             </tr>
                         </tbody>
                     </table>
