@@ -27,7 +27,7 @@
         <a href="{{ route('teacher.form_137_back', $student->id) }}?id={{request()->query('id')}}" class="px-5 py-1 bg-purple-800 text-white rounded">Back page</a>
     </div>
 
-    <div id="form_137" class="border p-8 shadow-lg">
+    <div id="form_137" class="border p-8">
         <!-- Header Section -->
         <div class="text-center mb-4">
             <div class="flex justify-center gap-5 items-center mb-2">
