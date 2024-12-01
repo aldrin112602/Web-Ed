@@ -11,6 +11,7 @@ class GradeController extends Controller
     public function grades() {
 
         $grades = StudentGrade::where('student_id', Auth::id())->get();
+        
         return view('student.grade.grade', [
             'user' => Auth::user(),
             'grades' => $grades
