@@ -17,13 +17,17 @@
         <label for="otp" class="block text-gray-700 font-medium">OTP Code</label>
         <div id="otp-container" class="flex justify-between">
             <!-- Six input fields for the OTP -->
-            <input autofocus type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500">
-            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500">
-            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500">
-            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500">
-            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500">
-            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500">
+            <input autofocus type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
         </div>
+
+        @error('otp')
+        <span class="text-red-500 text-sm">{{ $message }}</span>
+        @enderror
 
         <input type="hidden" id="otp" name="otp">
         <span id="expiredMessage" class="text-red-500 text-sm hidden">The OTP has expired. Please request a new one.</span>
