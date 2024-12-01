@@ -55,6 +55,11 @@ Route::prefix('teacher')->group(function () {
      */
     Route::middleware('auth:teacher')->group(function () {
 
+
+        // Form 137 routes
+        Route::get('/form_137_front/{id}', [StudentsGradeController::class, 'form137Front'])->name('teacher.form_137_front');
+        Route::get('/form_137_back/{id}', [StudentsGradeController::class, 'form137Back'])->name('teacher.form_137_back');
+
         // Report card routes
         Route::get('/report_card_front/{id}', [StudentsGradeController::class, 'reportCardFront'])->name('teacher.report_card_front');
         Route::get('/report_card_back/{id}', [StudentsGradeController::class, 'reportCardBack'])->name('teacher.report_card_back');

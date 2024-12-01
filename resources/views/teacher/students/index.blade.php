@@ -155,7 +155,8 @@
                             </form>
                             |
                             <a href="{{ route('teacher.view.subjects', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-indigo-600 text-white rounded-md">Subjects</a>
-                            <a href="{{ route('teacher.report_card_front', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-green-600 text-white rounded-md">Report Card</a>
+                            <a href="{{ route('teacher.report_card_front', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-violet-600 text-white rounded-md">Report Card</a>
+                            <a href="{{ route('teacher.form_137_front', $list->id) }}?id={{ request()->query('id') }}" class="px-2 py-1 bg-green-600 text-white rounded-md">Form 137</a>
                         </td>
                     </tr>
                     @endforeach

@@ -191,6 +191,103 @@ class StudentsGradeController extends Controller
     }
 
 
+    /**
+     * ////////////////////////
+     * //// FORM 137 PAGE /////
+     * ////////////////////////
+     */
+
+
+    //  FRONT PAGE
+    public function form137Front(Request $request, $id)
+    {
+
+        $student = StudentAccount::where('id', $id)
+            ->first();
+
+
+
+            $semesterQuarterCombinations = [
+                ['semester' => 'First Semester', 'quarter' => 'First Quarter'],
+                ['semester' => 'First Semester', 'quarter' => 'Second Quarter'],
+                ['semester' => 'Second Semester', 'quarter' => 'First Quarter'],
+                ['semester' => 'Second Semester', 'quarter' => 'Second Quarter'],
+            ];
+    
+            $grades = collect($semesterQuarterCombinations)
+                ->mapWithKeys(function ($combination) use ($id) {
+                    $key = "{$combination['semester']}_{$combination['quarter']}";
+                    return [
+                        $key => StudentGrade::where('student_id', $id)
+                            ->where('semester', $combination['semester'])
+                            ->where('quarter', $combination['quarter'])
+                            ->get(),
+                    ];
+                });
+
+
+
+        return view(
+            'teacher.students_grade.form_137_card.form_137_front',
+            [
+                'user' => $this->user,
+                'handleSubjects' => $this->handleSubjects,
+                'student' => $student,
+                'grades' => $grades
+            ]
+        );
+    }
+
+    //  BACK PAGE
+    public function form137Back(Request $request, $id)
+    {
+
+        $student = StudentAccount::where('id', $id)
+            ->first();
+
+        $semesterQuarterCombinations = [
+            ['semester' => 'First Semester', 'quarter' => 'First Quarter'],
+            ['semester' => 'First Semester', 'quarter' => 'Second Quarter'],
+            ['semester' => 'Second Semester', 'quarter' => 'First Quarter'],
+            ['semester' => 'Second Semester', 'quarter' => 'Second Quarter'],
+        ];
+
+        $grades = collect($semesterQuarterCombinations)
+            ->mapWithKeys(function ($combination) use ($id) {
+                $key = "{$combination['semester']}_{$combination['quarter']}";
+                return [
+                    $key => StudentGrade::where('student_id', $id)
+                        ->where('semester', $combination['semester'])
+                        ->where('quarter', $combination['quarter'])
+                        ->get(),
+                ];
+            });
+
+
+            // dd($grades);
+
+
+
+
+
+        return view(
+            'teacher.students_grade.form_137_card.form_137_back',
+            [
+                'user' => $this->user,
+                'handleSubjects' => $this->handleSubjects,
+                'student' => $student,
+                'grades' => $grades
+            ]
+        );
+    }
+
+    /**
+     * ///////////////////////////
+     * ////END FORM 137 PAGE /////
+     * ///////////////////////////
+     */
+
+
 
     /**
      * //////////////////////
