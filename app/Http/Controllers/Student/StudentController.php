@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Student\StudentAccount;
 use App\Models\Teacher\TeacherAccount;
 use Illuminate\Http\Request;
-use App\Rules\TwoWords;
+use App\Rules\ValidFullName;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 use Illuminate\Support\Facades\Http;
 use App\Services\PHPMailerService;
@@ -184,7 +184,7 @@ public function handleLogin(Request $request)
             // Validate the input
             $request->validate([
                 'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
                 'gender' => 'required|string|in:Male,Female',
                 'address' => 'required|string|max:255',

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Rules\TwoWords;
+use App\Rules\ValidFullName;
 use Illuminate\Support\Facades\{Hash, Auth, Storage, Session};
 use App\Models\{Admin\SubjectModel, TeacherGradeHandle, StudentHandle};
 use App\Models\Student\StudentAccount;
@@ -203,7 +203,7 @@ class TeacherController extends Controller
             // Validate the input
             $request->validate([
                 'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'email' => 'required|email|max:255|unique:admin_accounts,email,' . $user->id,
                 'gender' => 'required|string|in:Male,Female',
                 'address' => 'required|string|max:255',

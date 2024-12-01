@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Rules\TwoWords;
+use App\Rules\ValidFullName;
+
 
 use Illuminate\{
     Http\Request,
@@ -281,7 +282,7 @@ class AccountManagementController extends Controller
 
             // Validate input
             $request->validate([
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'new_password' => 'nullable|string|min:6|max:255',
                 'parents_contact_number' => 'required|string|min:11|max:11',
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
@@ -438,7 +439,7 @@ class AccountManagementController extends Controller
             // Validate input
             $request->validate([
                 'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'new_password' => 'nullable|string|min:6|max:255',
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
@@ -564,7 +565,7 @@ class AccountManagementController extends Controller
             // Validate input
             $request->validate([
                 'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'new_password' => 'nullable|string|min:6|max:255',
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',
@@ -698,7 +699,7 @@ class AccountManagementController extends Controller
             // Validate input
             $request->validate([
                 'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number,' . $user->id,
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'new_password' => 'nullable|string|min:6|max:255',
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'phone_number' => 'required|string|min:11|max:11',

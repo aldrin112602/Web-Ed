@@ -3,7 +3,7 @@
 @section('title', 'Student List')
 @section('content')
 <div>
-    <div class="container mx-auto p-4 bg-white">
+    <div class="mx-auto p-4 bg-white">
 
 
         <!-- Modal -->
@@ -119,7 +119,7 @@
                     $('#tbl_list tbody tr').addClass('tbl_tr');
                 })
             </script>
-            <table id="tbl_list" class="min-w-full bg-white border border-gray-200">
+            <table id="tbl_list" class="w-screen bg-white border border-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="py-2 px-1 text-center border">

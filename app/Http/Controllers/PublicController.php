@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\{Http\Request, Support\Carbon};
 use App\Models\{Admin\AdminAccount, FaceScan};
-use App\Rules\TwoWords;
+use App\Rules\ValidFullName;
+
 
 class PublicController extends Controller
 {
@@ -96,7 +97,7 @@ class PublicController extends Controller
     {
         $request->validate([
             'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number',
-            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'name' => ['required', 'string', 'max:255', new ValidFullName],
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:admin_accounts,username',
             'password' => 'required|string|min:6|max:255',
