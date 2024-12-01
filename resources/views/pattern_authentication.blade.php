@@ -28,7 +28,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 80vh;
+            min-height: 100vh;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
         }
 
