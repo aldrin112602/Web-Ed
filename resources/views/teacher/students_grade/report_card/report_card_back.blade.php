@@ -63,15 +63,15 @@
                 <table class="w-full border-collapse border border-gray-400 mb-8">
                     <thead>
                         <tr>
-                            <th rowspan="1" class="border border-gray-400 p-2 w-1/2">Subjects</th>
+                            <th rowspan="2" class="border border-gray-400 p-2 w-1/2">Subjects</th>
                             <th colspan="2" class="border border-gray-400 p-2 text-center">Quarter</th>
-                            <th rowspan="1" class="border border-gray-400 p-2">Semester Final Grade</th>
+                            <th rowspan="2" class="border border-gray-400 p-2">Semester Final Grade</th>
                         </tr>
                         <tr>
-                            <th class="border border-gray-400 p-2"></th>
+                            
                             <th class="border border-gray-400 p-2 w-16 text-center">1</th>
                             <th class="border border-gray-400 p-2 w-16 text-center">2</th>
-                            <th class="border border-gray-400 p-2"></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -100,15 +100,15 @@
                 <table class="w-full border-collapse border border-gray-400 mb-8">
                     <thead>
                         <tr>
-                            <th rowspan="1" class="border border-gray-400 p-2 w-1/2">Subjects</th>
+                            <th rowspan="2" class="border border-gray-400 p-2 w-1/2">Subjects</th>
                             <th colspan="2" class="border border-gray-400 p-2 text-center">Quarter</th>
-                            <th rowspan="1" class="border border-gray-400 p-2">Semester Final Grade</th>
+                            <th rowspan="2" class="border border-gray-400 p-2">Semester Final Grade</th>
                         </tr>
                         <tr>
-                            <th class="border border-gray-400 p-2"></th>
+                            
                             <th class="border border-gray-400 p-2 w-16 text-center">3</th>
                             <th class="border border-gray-400 p-2 w-16 text-center">4</th>
-                            <th class="border border-gray-400 p-2"></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
