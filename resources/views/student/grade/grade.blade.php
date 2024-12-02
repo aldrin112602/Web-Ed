@@ -17,6 +17,7 @@
     }
 </style>
 <div class="max-w-7xl mx-auto p-6 bg-white shadow-md">
+
     <!-- Search and Actions -->
     <div class="flex justify-between items-center mb-4">
         <div class="relative">
@@ -25,7 +26,7 @@
         </div>
         <div>
             <a class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-md mr-2" onclick="window.print()">PRINT</a>
-            <a href="{{ route('student.download_grade') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md">DOWNLOAD GRADE</a>
+            <a href="{{ route('admin.student.download_grade', $student->id) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md">DOWNLOAD GRADE</a>
         </div>
     </div>
 
@@ -37,6 +38,7 @@
     </div>
     @else
     <!-- Grades Table -->
+    <h1 class="text-lg my-3 font-semibold">{{ $student->name }} / {{ $student->grade }} / {{ $student->strand }} / {{ $student->section }}</h1>
     <div class="overflow-x-auto" id="tbl">
         <table class="min-w-full bg-white border border-gray-300" id="tbl_list">
             <thead class="bg-gray-100">
