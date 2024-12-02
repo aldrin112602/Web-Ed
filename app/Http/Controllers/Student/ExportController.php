@@ -72,13 +72,13 @@ class ExportController extends Controller
 
 
     // export grade
-    public function exportGrades() 
+    public function exportGrades(Request $request, $id) 
     {
 
 
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $grades = StudentGrade::where('student_id', Auth::id())->get();
+        $grades = StudentGrade::where('student_id', ($id ?? Auth::id()))->get();
 
         // Set the header
         $sheet->setCellValue('A1', 'Subject');
@@ -101,7 +101,7 @@ class ExportController extends Controller
         }
 
         $writer = new Xlsx($spreadsheet);
-        $fileName = 'Summary_of_grades_for_' . StudentAccount::where('id', Auth::id())->first()->name . '__' . uniqid() . '.xlsx';
+        $fileName = 'Summary_of_grades_for_' . StudentAccount::where('id', ($id ?? Auth::id()))->first()->name . '__' . uniqid() . '.xlsx';
 
         $response = new StreamedResponse(function () use ($writer) {
             $writer->save('php://output');

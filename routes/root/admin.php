@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\{
 use App\Http\Controllers\Student\ExportController;
 use App\Http\Controllers\FaceRecognitionController;
 use App\Http\Controllers\Student\StudentController;
-
+use App\Http\Controllers\Student\GradeController;
 
 // Admin routes
 Route::prefix('admin')->group(function () {
@@ -47,6 +47,14 @@ Route::prefix('admin')->group(function () {
      * ///////////////////////////
      */
     Route::middleware('auth:admin')->group(function () {
+        
+        // grades
+        Route::get('student/grade/student_list', [AccountManagement::class, 'grade_student_list'])->name('admin.grade.student_list');
+        Route::get('student/grades/{id}', [GradeController::class, 'grades'])->name('admin.student.grades');
+        Route::get('student/viewGrades', [GradeController::class, 'viewGrades'])->name('admin.student.viewGrades');
+        // download grade
+        Route::get('student/download_grades/{id}', [ExportController::class, 'exportGrades'])->name('admin.student.download_grade');
+
 
         // pattern for face recognition
         Route::post('/face-recognition/create-pattern', [FaceRecognitionController::class, 'createPattern'])->name('face.recognition.create');
@@ -97,6 +105,8 @@ Route::prefix('admin')->group(function () {
         Route::post('/student/subjects/add', [SubjectController::class, 'addSubject'])->name('admin.add.subject');
         Route::delete('/student/subjects/delete/{studentId}/{subjectId}', [SubjectController::class, 'deleteStudentSubject'])->name('admin.delete.studentSubject');
 
+
+        
 
         // chat conversation
         Route::get('/chats', [AdminConversationController::class, 'index'])->name('admin.chats.index');
