@@ -71,7 +71,8 @@ Route::prefix('student')->group(function () {
         // grades
         Route::get('grades', [GradeController::class, 'grades'])->name('student.grades');
         Route::get('viewGrades', [GradeController::class, 'viewGrades'])->name('student.viewGrades');
-
+        // download grade
+        Route::get('download_grades', [ExportController::class, 'exportGrades'])->name('student.download_grade');
 
         // scan qr
         Route::post('/qr/scan', [QRCodeScanController::class, 'scanQRCode'])->name('qr.scan');

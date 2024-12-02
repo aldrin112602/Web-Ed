@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\{Support\Facades\Auth, Http\Request};
-use App\Rules\TwoWords;
+use App\Rules\ValidFullName;
 use App\Models\{
     Admin\AdminAccount,
     Guidance\GuidanceAccount,
@@ -34,7 +34,7 @@ class AdminCreateController extends Controller
     {
         $request->validate([
             'id_number' => 'required|min:5|max:255|unique:admin_accounts,id_number',
-            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'name' => ['required', 'string', 'max:255', new ValidFullName],
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:admin_accounts,username',
             'password' => 'required|string|min:6|max:255',
@@ -92,7 +92,7 @@ class AdminCreateController extends Controller
     {
         $request->validate([
             'id_number' => 'required|min:5|max:255|unique:student_accounts,id_number',
-            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'name' => ['required', 'string', 'max:255', new ValidFullName],
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:student_accounts,username',
             'password' => 'required|string|min:6|max:255',
@@ -189,7 +189,7 @@ class AdminCreateController extends Controller
     {
         $request->validate([
             'id_number' => 'required|min:5|max:255|unique:teacher_accounts,id_number',
-            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'name' => ['required', 'string', 'max:255', new ValidFullName],
             'gender' => 'required|string|in:Male,Female',
             'position' => 'required|string|max:255',
             'username' => 'required|string|unique:teacher_accounts,username',
@@ -246,7 +246,7 @@ class AdminCreateController extends Controller
     {
         $request->validate([
             'id_number' => 'required|min:5|max:255|unique:guidance_accounts,id_number',
-            'name' => ['required', 'string', 'max:255', new TwoWords],
+            'name' => ['required', 'string', 'max:255', new ValidFullName],
             'gender' => 'required|string|in:Male,Female',
             'username' => 'required|string|unique:guidance_accounts,username',
             'password' => 'required|string|min:6|max:255',

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Rules\TwoWords;
+use App\Rules\ValidFullName;
 use Illuminate\Support\Facades\{Auth, Storage};
 use App\Models\{TeacherGradeHandle, Student\StudentAccount, StudentImage, History};
 use App\Services\PHPMailerService;
@@ -89,7 +89,7 @@ class StudentController extends Controller
 
             // Validate input
             $request->validate([
-                'name' => ['required', 'string', 'max:255', new TwoWords],
+                'name' => ['required', 'string', 'max:255', new ValidFullName],
                 'new_password' => 'nullable|string|min:6|max:255',
                 'parents_contact_number' => 'required|string|min:11|max:11',
                 'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif',

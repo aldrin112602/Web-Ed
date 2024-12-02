@@ -15,14 +15,63 @@
 
     <div class="mb-6">
         <label for="otp" class="block text-gray-700 font-medium">OTP Code</label>
-        <input type="text" id="otp" name="otp" maxlength="6" placeholder="Enter your OTP" class="form-input w-full rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+        <div id="otp-container" class="flex justify-between">
+            <!-- Six input fields for the OTP -->
+            <input autofocus type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+            <input type="text" maxlength="1" class="otp-box form-input w-12 h-12 text-center rounded-lg border-gray-300 focus:ring-2 focus:ring-blue-500 @error('otp') border-red-500 @enderror">
+        </div>
+
         @error('otp')
         <span class="text-red-500 text-sm">{{ $message }}</span>
         @enderror
 
-
+        <input type="hidden" id="otp" name="otp">
         <span id="expiredMessage" class="text-red-500 text-sm hidden">The OTP has expired. Please request a new one.</span>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const otpInputs = document.querySelectorAll(".otp-box");
+                const hiddenOtpInput = document.getElementById("otp");
+
+                // Function to update the hidden input with the joined OTP
+                const updateHiddenOtpValue = () => {
+                    const otpValue = Array.from(otpInputs)
+                        .map(input => input.value)
+                        .join(""); // Join all values into a single string
+                    hiddenOtpInput.value = otpValue;
+                };
+
+                otpInputs.forEach((input, index) => {
+                    input.addEventListener("input", (e) => {
+                        const current = e.target;
+                        const next = otpInputs[index + 1];
+                        const prev = otpInputs[index - 1];
+
+                        if (current.value.length === 1 && next) {
+                            next.focus(); // Focus the next box if filled
+                        } else if (e.inputType === "deleteContentBackward" && prev) {
+                            prev.focus(); // Focus the previous box if deleted
+                        }
+
+                        updateHiddenOtpValue(); // Update the hidden input on each change
+                    });
+
+                    input.addEventListener("keydown", (e) => {
+                        if (e.key === "Backspace" && input.value === "") {
+                            const prev = otpInputs[index - 1];
+                            if (prev) {
+                                prev.focus(); // Focus the previous box on backspace
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
     </div>
+
 
     <div>
         <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-200">Verify OTP</button>
