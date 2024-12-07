@@ -66,7 +66,7 @@ This Agreement shall be governed by and construed in accordance with the laws of
 
 ### 11. Dispute Resolution 
 11.1. Any disputes arising from this Agreement shall first be resolved through good faith negotiations between the parties.  
-11.2. If negotiations fail, disputes shall be settled through arbitration in Metro Manila (Article 30 of the ADR Act)., in accordance with the rules of the Philippine Dispute Resolution Center.  
+11.2. If negotiations fail, disputes shall be settled through arbitration in **Metro Manila (Article 30 of the ADR Act)**., in accordance with the rules of the **Philippine Dispute Resolution Center**.  
 
 ---
 
