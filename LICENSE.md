@@ -1,6 +1,6 @@
 **JKK WebEd Management System License Agreement**  
 
-**Effective Date:** September, 2024
+**Effective Date:** Aug. 6, 2024
 **Last Updated:** Sat, Dec 7, 2024
 
 This Software License Agreement ("Agreement") is a legal agreement between you ("Licensee") and **Aldrin Caballero** ("Licensor") for the use of the JKK WebEd Management System ("Software"). By installing, accessing, or using the Software, the Licensee agrees to be bound by the terms of this Agreement.  
