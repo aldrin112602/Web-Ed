@@ -60,13 +60,13 @@ To the maximum extent permitted by law, Licensor shall not be liable for any ind
 ---
 
 ### 10. Governing Law 
-This Agreement shall be governed by and construed in accordance with the laws of the **Republic of the Philippines**, without regard to its conflict of laws principles.  
+This Agreement shall be governed by and construed in accordance with the laws of the **Republic of the Philippines**, including but not limited to **Republic Act No. 8293 (Intellectual Property Code of the Philippines)**, without regard to its conflict of laws principles.
 
 ---
 
 ### 11. Dispute Resolution 
 11.1. Any disputes arising from this Agreement shall first be resolved through good faith negotiations between the parties.  
-11.2. If negotiations fail, disputes shall be settled through arbitration in [Insert Arbitration Venue, e.g., Manila, Philippines], in accordance with the rules of the Philippine Dispute Resolution Center.  
+11.2. If negotiations fail, disputes shall be settled through arbitration in Metro Manila (Article 30 of the ADR Act)., in accordance with the rules of the Philippine Dispute Resolution Center.  
 
 ---
 
